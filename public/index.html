@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ipak Savdo — касса, склад и QR-оплата для малого бизнеса</title>
+    <meta name="description" content="Мобильное приложение для малого бизнеса: касса, склад, QR-оплата, электронный чек и отчёты со смартфона или планшета.">
+    <meta property="og:title" content="Ipak Savdo — касса, склад и QR-оплата">
+    <meta property="og:description" content="Продавайте быстрее, контролируйте остатки и принимайте оплату по QR в одном приложении.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark-green': '#005B45',
+                        'primary-green': '#007A5A',
+                        'cta-green': '#00C853',
+                        'accent-green': '#00A86B',
+                        'lime-accent': '#B7F34A',
+                        'soft-mint': '#EAF7F1',
+                        'soft-green-bg': '#F3FBF7',
+                        'text-dark': '#101828',
+                        'text-muted': '#667085',
+                        'card-border': '#E5E7EB',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
+        .fade-in-delay-1 { animation: fadeIn 0.6s ease-out 0.1s forwards; opacity: 0; }
+        .fade-in-delay-2 { animation: fadeIn 0.6s ease-out 0.2s forwards; opacity: 0; }
+        .fade-in-delay-3 { animation: fadeIn 0.6s ease-out 0.3s forwards; opacity: 0; }
+        .slide-up { animation: slideUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .bar-animate { animation: barHeight 2s ease-in-out infinite; }
+        @keyframes barHeight { 0%, 100% { height: 20%; } 50% { height: 80%; } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #007A5A; border-radius: 3px; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .accordion-content.open { max-height: 500px; }
+        .modal { display: none; }
+        .modal.open { display: flex; }
+    </style>
+</head>
+<body class="bg-white text-text-dark antialiased">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-primary-green flex items-center justify-center">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <path d="M3 9h18"/>
+                            <path d="M9 21V9"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-text-dark">Ipak Savdo</span>
+                </div>
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="#features" class="text-sm font-medium text-text-muted hover:text-primary-green transition-colors">Возможности</a>
+                    <a href="#workflow" class="text-sm font-medium text-text-muted hover:text-primary-green transition-colors">Как работает</a>
+                    <a href="#segments" class="text-sm font-medium text-text-muted hover:text-primary-green transition-colors">Для кого</a>
+                    <a href="#launch" class="text-sm font-medium text-text-muted hover:text-primary-green transition-colors">Тарифы</a>
+                    <a href="#faq" class="text-sm font-medium text-text-muted hover:text-primary-green transition-colors">FAQ</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-1 text-sm font-medium">
+                        <button onclick="setLang('ru')" id="btn-ru" class="px-2 py-1 rounded text-primary-green bg-soft-mint font-semibold">RU</button>
+                        <span class="text-card-border">|</span>
+                        <button onclick="setLang('uz')" id="btn-uz" class="px-2 py-1 rounded text-text-muted hover:text-text-dark">UZ</button>
+                    </div>
+                    <button onclick="openModal()" class="hidden sm:inline-flex items-center px-4 py-2 bg-cta-green text-white text-sm font-semibold rounded-lg hover:bg-accent-green transition-colors shadow-sm">Оставить заявку</button>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-text-dark">
+                        <svg id="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden bg-white border-b border-card-border hidden">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#features" class="block py-2 text-text-dark font-medium">Возможности</a>
+                <a href="#workflow" class="block py-2 text-text-dark font-medium">Как работает</a>
+                <a href="#segments" class="block py-2 text-text-dark font-medium">Для кого</a>
+                <a href="#launch" class="block py-2 text-text-dark font-medium">Тарифы</a>
+                <a href="#faq" class="block py-2 text-text-dark font-medium">FAQ</a>
+                <div class="flex items-center gap-2 pt-2 border-t border-card-border">
+                    <button onclick="setLang('ru')" class="px-3 py-1 rounded text-sm text-primary-green bg-soft-mint font-semibold">RU</button>
+                    <button onclick="setLang('uz')" class="px-3 py-1 rounded text-sm text-text-muted">UZ</button>
+                </div>
+                <button onclick="openModal()" class="w-full py-3 bg-cta-green text-white font-semibold rounded-lg">Оставить заявку</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative pt-24 lg:pt-32 pb-16 lg:pb-24 overflow-hidden bg-gradient-to-b from-soft-green-bg to-white">
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-lime-accent/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-soft-mint/50 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="space-y-6 slide-up">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-soft-mint rounded-full text-sm text-primary-green font-medium fade-in">
+                        <div class="w-2 h-2 rounded-full bg-cta-green"></div>
+                        Продукт экосистемы Ipak Yuli Bank
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-dark leading-tight fade-in-delay-1">
+                        Ipak Savdo — касса, склад и QR-оплата в одном приложении
+                    </h1>
+                    <p class="text-lg text-text-muted leading-relaxed max-w-xl fade-in-delay-2">
+                        Продавайте со смартфона или планшета, принимайте оплату по QR, отправляйте электронный чек и контролируйте остатки без тяжёлой ERP.
+                    </p>
+                    <div class="flex flex-wrap gap-2 fade-in-delay-2">
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-card-border text-sm text-text-dark shadow-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                            QR-оплата в момент продажи
+                        </div>
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-card-border text-sm text-text-dark shadow-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                            Остатки обновляются автоматически
+                        </div>
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-card-border text-sm text-text-dark shadow-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M12 3v18"/><path d="M3 12h18"/></svg>
+                            Работает при нестабильном интернете
+                        </div>
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-card-border text-sm text-text-dark shadow-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 3v18h18"/></svg>
+                            Отчёты по выручке и кассирам
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2 fade-in-delay-3">
+                        <button onclick="openModal()" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-cta-green text-white font-semibold rounded-xl hover:bg-accent-green transition-colors shadow-lg">
+                            Оставить заявку
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </button>
+                        <button onclick="openModal()" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-text-dark font-semibold rounded-xl border border-card-border hover:bg-soft-green-bg transition-colors">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                            Написать в Telegram
+                        </button>
+                    </div>
+                    <button onclick="openModal()" class="inline-flex items-center gap-2 text-sm text-text-muted hover:text-primary-green transition-colors fade-in-delay-3">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Смотреть демо
+                    </button>
+                    <p class="text-sm text-text-muted pt-2 fade-in-delay-3">Для магазинов у дома, минимаркетов, кафе, аптек и сервисных точек.</p>
+                </div>
+                <div class="relative float">
+                    <div class="relative mx-auto w-72 sm:w-80">
+                        <div class="relative bg-text-dark rounded-[2.5rem] p-3 shadow-2xl">
+                            <div class="bg-white rounded-[2rem] overflow-hidden">
+                                <div class="bg-primary-dark-green text-white px-6 py-2 flex justify-between items-center text-xs">
+                                    <span>9:41</span>
+                                    <div class="flex gap-1">
+                                        <div class="w-4 h-2.5 bg-white/30 rounded-sm"></div>
+                                        <div class="w-4 h-2.5 bg-white/30 rounded-sm"></div>
+                                        <div class="w-4 h-2.5 bg-white rounded-sm"></div>
+                                    </div>
+                                </div>
+                                <div class="p-4 space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-semibold text-text-dark">Ipak Savdo</span>
+                                        <div class="w-8 h-8 rounded-full bg-soft-mint flex items-center justify-center"><span class="text-xs font-bold text-primary-green">ИП</span></div>
+                                    </div>
+                                    <div class="bg-gradient-to-r from-primary-green to-accent-green rounded-xl p-3 text-white">
+                                        <p class="text-xs opacity-80">Выручка сегодня</p>
+                                        <p class="text-xl font-bold">3 450 000 сум</p>
+                                        <div class="flex gap-4 mt-2 text-xs opacity-80">
+                                            <span>42 продажи</span>
+                                            <span>Средний чек: 87 000</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between items-center py-2 border-b border-card-border">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 rounded-lg bg-soft-mint flex items-center justify-center text-xs">🥛</div>
+                                                <div><p class="text-sm font-medium">Молоко 1л</p><p class="text-xs text-text-muted">1 шт × 14 000</p></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">14 000</span>
+                                        </div>
+                                        <div class="flex justify-between items-center py-2 border-b border-card-border">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 rounded-lg bg-soft-mint flex items-center justify-center text-xs">🍞</div>
+                                                <div><p class="text-sm font-medium">Хлеб</p><p class="text-xs text-text-muted">1 шт × 4 000</p></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">4 000</span>
+                                        </div>
+                                        <div class="flex justify-between items-center py-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 rounded-lg bg-soft-mint flex items-center justify-center text-xs">☕</div>
+                                                <div><p class="text-sm font-medium">Кофе 3в1</p><p class="text-xs text-text-muted">1 шт × 2 500</p></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">2 500</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center pt-2 border-t-2 border-text-dark">
+                                        <span class="font-semibold">Итого</span>
+                                        <span class="text-lg font-bold text-primary-green">20 500 сум</span>
+                                    </div>
+                                    <button class="w-full py-3 bg-cta-green text-white font-semibold rounded-xl flex items-center justify-center gap-2">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                                        Оплатить по QR
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 px-3 py-2 rounded-lg text-white text-xs font-medium shadow-lg bg-cta-green">
+                            <div class="text-[10px] opacity-80">QR оплата</div>
+                            <div class="font-semibold">успешно</div>
+                        </div>
+                        <div class="absolute top-20 -left-8 px-3 py-2 rounded-lg text-white text-xs font-medium shadow-lg bg-primary-green">
+                            <div class="text-[10px] opacity-80">Остатки</div>
+                            <div class="font-semibold">обновлены</div>
+                        </div>
+                        <div class="absolute bottom-24 -right-6 px-3 py-2 rounded-lg text-white text-xs font-medium shadow-lg bg-accent-green">
+                            <div class="text-[10px] opacity-80">Чек</div>
+                            <div class="font-semibold">в Telegram</div>
+                        </div>
+                        <div class="absolute -bottom-4 left-8 px-3 py-2 rounded-lg text-white text-xs font-medium shadow-lg bg-primary-dark-green">
+                            <div class="text-[10px] opacity-80">Выручка</div>
+                            <div class="font-semibold">3 450 000 сум</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Strip -->
+    <section class="py-10 bg-white border-b border-card-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+                <div class="flex items-center gap-2 text-sm text-text-muted">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                    Готовится пилот с первыми торговыми точками
+                </div>
+                <div class="hidden sm:block w-px h-6 bg-card-border"></div>
+                <div class="flex items-center gap-2 text-sm text-text-muted">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                    Интеграции с QR-оплатой и фискализацией — в дорожной карте MVP
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark max-w-3xl mx-auto">
+                    Когда касса, склад и банк живут отдельно — бизнес теряет контроль
+                </h2>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 transition-colors slide-up">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Касса отдельно</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Продажи проходят через наличные, терминал и телефон, но не собираются в единую картину.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 transition-colors slide-up" style="animation-delay:0.1s">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Склад на глаз</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Остатки проверяются вручную, ошибки видны слишком поздно.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 transition-colors slide-up" style="animation-delay:0.2s">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5V11"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Чеки и оплата отдельно</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">QR, чек и списание товара не связаны в один быстрый сценарий.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 transition-colors slide-up" style="animation-delay:0.3s">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Нет понятных отчётов</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Собственник не видит выручку, топ-товары, возвраты и работу кассиров в реальном времени.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow -->
+    <section id="workflow" class="py-16 lg:py-24 bg-soft-green-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark mb-4">
+                    Одна система для ежедневной работы торговой точки
+                </h2>
+                <p class="text-text-muted max-w-2xl mx-auto">
+                    Кассир продаёт. Покупатель оплачивает. Склад обновляется. Собственник видит результат.
+                </p>
+            </div>
+            <div class="hidden lg:flex items-center justify-center gap-2">
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Скан</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Корзина</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Dynamic QR</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Оплата</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Чек</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Склад</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    </div>
+                    <span class="text-xs font-medium text-text-dark">Отчёт</span>
+                </div>
+            </div>
+            <!-- Mobile vertical -->
+            <div class="lg:hidden space-y-4 max-w-sm mx-auto">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Скан</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2" class="ml-auto rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Корзина</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2" class="ml-auto rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Dynamic QR</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2" class="ml-auto rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Оплата</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2" class="ml-auto rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Чек</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2" class="ml-auto rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Склад</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" stroke-width="2" class="ml-auto rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center shadow-sm flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    </div>
+                    <span class="text-sm font-medium text-text-dark">Отчёт</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Placeholder -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark mb-4">Посмотрите, как проходит продажа</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">Короткое демо покажет путь от сканирования товара до QR-оплаты, чека и обновления остатков.</p>
+            </div>
+            <div class="relative max-w-3xl mx-auto slide-up">
+                <div onclick="openDemoModal()" class="relative aspect-video bg-gradient-to-br from-primary-dark-green to-primary-green rounded-2xl overflow-hidden cursor-pointer group shadow-xl">
+                    <div class="absolute inset-0 opacity-20">
+                        <div class="absolute top-8 left-8 w-32 h-20 bg-white/10 rounded-lg"></div>
+                        <div class="absolute top-8 right-8 w-24 h-20 bg-white/10 rounded-lg"></div>
+                        <div class="absolute bottom-8 left-8 right-8 h-16 bg-white/10 rounded-lg"></div>
+                        <div class="absolute top-32 left-8 right-8 h-24 bg-white/5 rounded-lg"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 transition-colors">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                        <span class="text-white/80 text-sm font-medium">Смотреть демо</span>
+                        <span class="text-white/60 text-xs">2:30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Modal -->
+    <div id="demo-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black/60 backdrop-blur-sm p-4" onclick="closeDemoModal()">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl" onclick="event.stopPropagation()">
+            <div class="w-16 h-16 rounded-full bg-soft-mint flex items-center justify-center mx-auto mb-4">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-text-dark mb-2">Смотреть демо</h3>
+            <p class="text-text-muted mb-6">Демо-видео будет добавлено после запуска пилота.</p>
+            <button onclick="closeDemoModal()" class="px-6 py-2.5 bg-primary-green text-white font-semibold rounded-xl hover:bg-accent-green transition-colors">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section id="features" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark">Всё, что нужно точке продаж в первом релизе</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:shadow-lg hover:border-primary-green/20 transition-all slide-up">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Касса и продажа</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Сканер / камера, быстрый поиск товара, скидки, возврат, отложенный чек</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-card-border space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded bg-soft-mint flex items-center justify-center text-xs">📷</div>
+                            <div class="text-xs text-text-muted">Сканер / Камера</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-soft-mint rounded text-[10px] text-primary-green">Скидка 10%</span>
+                            <span class="px-2 py-1 bg-soft-mint rounded text-[10px] text-primary-green">Возврат</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:shadow-lg hover:border-primary-green/20 transition-all slide-up" style="animation-delay:0.1s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Каталог и склад</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">SKU, категории, бренды, штучные и весовые товары, остатки и списания</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-card-border space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-text-muted">Молоко 1л</span>
+                            <span class="font-medium">18 шт</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-text-muted">Хлеб</span>
+                            <span class="font-medium text-orange-500">6 шт ⚠️</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-soft-mint rounded-full overflow-hidden">
+                            <div class="w-1/4 h-full bg-orange-400 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:shadow-lg hover:border-primary-green/20 transition-all slide-up" style="animation-delay:0.2s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">QR и оплаты</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Static / dynamic QR, наличные, терминал, долг, смешанные оплаты</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-card-border flex items-center justify-center">
+                        <div class="w-20 h-20 border-2 border-primary-green rounded-lg flex items-center justify-center">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 4 -->
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:shadow-lg hover:border-primary-green/20 transition-all slide-up" style="animation-delay:0.3s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Фискализация и чек</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Электронный чек, печать опционально, доставка чека в Telegram</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-card-border space-y-2">
+                        <div class="text-center">
+                            <p class="text-xs font-semibold text-text-dark">Чек № 1042</p>
+                            <p class="text-[10px] text-text-muted">20 500 сум</p>
+                        </div>
+                        <div class="flex items-center gap-1 justify-center">
+                            <span class="text-[10px] bg-soft-mint px-2 py-0.5 rounded text-primary-green">✓ Telegram</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 5 -->
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:shadow-lg hover:border-primary-green/20 transition-all slide-up" style="animation-delay:0.4s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Роли и контроль</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">Владелец, кассир, несколько точек, контроль действий сотрудников</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-card-border space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-primary-green flex items-center justify-center text-[10px] text-white">В</div>
+                            <span class="text-xs">Владелец — полный доступ</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-accent-green flex items-center justify-center text-[10px] text-white">К</div>
+                            <span class="text-xs">Кассир — продажи</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 6 -->
+                <div class="p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:shadow-lg hover:border-primary-green/20 transition-all slide-up" style="animation-delay:0.5s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Отчёты</h3>
+                    <p class="text-sm text-text-muted leading-relaxed">День / неделя / месяц, топ-товары, средний чек, возвраты, кассиры</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-card-border">
+                        <div class="flex items-end gap-1 h-12">
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:40%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:65%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:45%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:80%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:55%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:70%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                            <div class="flex-1 bg-primary-green/20 rounded-t" style="height:90%"><div class="w-full bg-primary-green rounded-t" style="height:60%"></div></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-text-muted mt-1">
+                            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offline Callout -->
+    <section class="py-16 lg:py-24 bg-primary-dark-green text-white overflow-hidden relative">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-lime-accent rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-72 h-72 bg-primary-green rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="slide-up">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full text-sm text-lime-accent font-medium mb-6">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 18h.01"/><path d="M8 22h8a2 2 0 0 0 2-2v-5.5a2 2 0 0 0-.8-1.6l-4-3a2 2 0 0 0-2.4 0l-4 3a2 2 0 0 0-.8 1.6V20a2 2 0 0 0 2 2Z"/><path d="M10 10V4a2 2 0 0 1 4 0v6"/></svg>
+                        Offline-first
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Работает даже при нестабильном интернете</h2>
+                    <p class="text-white/80 leading-relaxed mb-6">Продажи не должны останавливаться из-за слабой связи. Ipak Savdo проектируется с offline-first логикой: кассир продолжает работать, а данные синхронизируются после восстановления интернета.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B7F34A" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            <span class="text-white/90 text-sm">Продажи продолжаются при слабой связи</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B7F34A" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            <span class="text-white/90 text-sm">Данные сохраняются локально</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B7F34A" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            <span class="text-white/90 text-sm">Синхронизация после восстановления интернета</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B7F34A" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            <span class="text-white/90 text-sm">Меньше риска остановить кассу в час пик</span>
+                        </li>
+                    </ul>
+                    <p class="mt-6 text-xs text-white/50">Offline-first логика заложена в архитектуру MVP.</p>
+                </div>
+                <div class="relative slide-up" style="animation-delay:0.2s">
+                    <div class="relative bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <div class="flex items-center justify-center gap-1 mb-6">
+                            <div class="w-3 bg-lime-accent rounded-full bar-animate" style="animation-delay:0s;height:32px"></div>
+                            <div class="w-3 bg-lime-accent rounded-full bar-animate" style="animation-delay:0.2s;height:24px"></div>
+                            <div class="w-3 bg-lime-accent rounded-full bar-animate" style="animation-delay:0.4s;height:40px"></div>
+                            <div class="w-3 bg-lime-accent rounded-full bar-animate" style="animation-delay:0.6s;height:16px"></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 bg-white/10 rounded-lg">
+                                <div class="w-2 h-2 rounded-full bg-lime-accent"></div>
+                                <span class="text-sm">Продажа #1042 — сохранено локально</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-white/10 rounded-lg">
+                                <div class="w-2 h-2 rounded-full bg-lime-accent"></div>
+                                <span class="text-sm">Продажа #1043 — сохранено локально</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg opacity-60">
+                                <div class="w-2 h-2 rounded-full bg-white/30 pulse-dot"></div>
+                                <span class="text-sm">Ожидание синхронизации...</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-lime-accent/20 rounded-lg text-center">
+                            <span class="text-sm text-lime-accent font-medium">✓ Синхронизация восстановлена</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Screens -->
+    <section class="py-16 lg:py-24 bg-soft-green-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark mb-4">Работает со смартфона, планшета и комплектом кассы</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="relative slide-up">
+                    <div class="bg-gradient-to-br from-primary-green to-accent-green rounded-2xl p-6 text-white h-full">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mb-4 opacity-80"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+                        <h3 class="text-xl font-bold mb-1">Смартфон</h3>
+                        <p class="text-white/80 text-sm">Сканирование и корзина</p>
+                        <div class="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-3 space-y-2">
+                            <div class="flex justify-between text-xs"><span class="opacity-70">Молоко 1л</span><span>14 000</span></div>
+                            <div class="flex justify-between text-xs"><span class="opacity-70">Хлеб</span><span>4 000</span></div>
+                            <div class="border-t border-white/20 pt-1 flex justify-between text-xs font-semibold"><span>Итого</span><span>18 000</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative slide-up" style="animation-delay:0.15s">
+                    <div class="bg-gradient-to-br from-primary-dark-green to-primary-green rounded-2xl p-6 text-white h-full">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mb-4 opacity-80"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+                        <h3 class="text-xl font-bold mb-1">Планшет</h3>
+                        <p class="text-white/80 text-sm">POS-режим кассира</p>
+                        <div class="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                            <div class="grid grid-cols-3 gap-1">
+                                <div class="aspect-square bg-white/20 rounded flex items-center justify-center text-xs">1</div>
+                                <div class="aspect-square bg-white/20 rounded flex items-center justify-center text-xs">2</div>
+                                <div class="aspect-square bg-white/20 rounded flex items-center justify-center text-xs">3</div>
+                                <div class="aspect-square bg-white/20 rounded flex items-center justify-center text-xs">4</div>
+                                <div class="aspect-square bg-white/20 rounded flex items-center justify-center text-xs">5</div>
+                                <div class="aspect-square bg-white/20 rounded flex items-center justify-center text-xs">6</div>
+                            </div>
+                            <div class="text-center text-xs opacity-70 mt-2">Быстрые кнопки</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative slide-up" style="animation-delay:0.3s">
+                    <div class="bg-gradient-to-br from-accent-green to-cta-green rounded-2xl p-6 text-white h-full">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mb-4 opacity-80"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+                        <h3 class="text-xl font-bold mb-1">Аналитика</h3>
+                        <p class="text-white/80 text-sm">Дашборд владельца</p>
+                        <div class="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                            <div class="flex items-end gap-1 h-16">
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:30%"></div>
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:50%"></div>
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:40%"></div>
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:70%"></div>
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:55%"></div>
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:70%"></div>
+                                <div class="flex-1 bg-white/30 rounded-t" style="height:90%"></div>
+                            </div>
+                            <div class="text-center text-xs opacity-70 mt-1">Выручка за неделю</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 lg:p-8 border border-card-border slide-up">
+                <div class="flex flex-col lg:flex-row items-center gap-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-soft-mint flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m7 7 5 5-5 5"/><path d="m12 7 5 5-5 5"/></svg>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-soft-mint flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        </div>
+                    </div>
+                    <div class="flex-1 text-center lg:text-left">
+                        <p class="text-text-muted text-sm">Для потоковых точек можно использовать планшет, 2D Bluetooth-сканер, принтер чеков и подставку.</p>
+                        <p class="text-primary-green font-semibold text-sm mt-1">Можно начать только со смартфона. Оборудование подключается по мере роста.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Segments -->
+    <section id="segments" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark">Для какого бизнеса подходит Ipak Savdo</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 hover:shadow-lg transition-all slide-up">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm group-hover:border-primary-green/30 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22V4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v18"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2 2 0 0 1-2-2V7"/><path d="M6 7v3a2 2 0 0 1-2 2a2 2 0 0 1-2-2V7"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Магазины у дома</h3>
+                    <p class="text-sm text-text-muted mb-3">Небольшой ассортимент, нужна простая касса и учёт.</p>
+                    <p class="text-sm text-primary-green font-medium">Ipak Savdo: сканер, QR, чек и базовый отчёт.</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 hover:shadow-lg transition-all slide-up" style="animation-delay:0.1s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm group-hover:border-primary-green/30 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22V4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v18"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2 2 0 0 1-2-2V7"/><path d="M6 7v3a2 2 0 0 1-2 2a2 2 0 0 1-2-2V7"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Минимаркеты</h3>
+                    <p class="text-sm text-text-muted mb-3">Много SKU, нужен контроль остатков и быстрая касса.</p>
+                    <p class="text-sm text-primary-green font-medium">Ipak Savdo: каталог, склад, QR, отчёт по кассиру.</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 hover:shadow-lg transition-all slide-up" style="animation-delay:0.2s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm group-hover:border-primary-green/30 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6.01" y1="2" y2="2"/><line x1="10" x2="10.01" y1="2" y2="2"/><line x1="14" x2="14.01" y1="2" y2="2"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Кафе и общепит</h3>
+                    <p class="text-sm text-text-muted mb-3">Меню, модификаторы, быстрый расчёт столиков.</p>
+                    <p class="text-sm text-primary-green font-medium">Ipak Savdo: каталог товаров, QR-оплата, чеки.</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 hover:shadow-lg transition-all slide-up" style="animation-delay:0.3s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm group-hover:border-primary-green/30 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Аптеки</h3>
+                    <p class="text-sm text-text-muted mb-3">Серийный учёт, сроки годности, отчётность.</p>
+                    <p class="text-sm text-primary-green font-medium">Ipak Savdo: остатки, отчёты, электронный чек.</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 hover:shadow-lg transition-all slide-up" style="animation-delay:0.4s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm group-hover:border-primary-green/30 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Одежда и бутики</h3>
+                    <p class="text-sm text-text-muted mb-3">Размеры, цвета, возвраты, сезонность.</p>
+                    <p class="text-sm text-primary-green font-medium">Ipak Savdo: SKU с атрибутами, возвраты, отчёты.</p>
+                </div>
+                <div class="group p-6 rounded-2xl bg-soft-green-bg border border-card-border hover:border-primary-green/30 hover:shadow-lg transition-all slide-up" style="animation-delay:0.5s">
+                    <div class="w-12 h-12 rounded-xl bg-white border border-card-border flex items-center justify-center mb-4 shadow-sm group-hover:border-primary-green/30 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Сервисные точки</h3>
+                    <p class="text-sm text-text-muted mb-3">Услуги, материалы, запись, расчёт.</p>
+                    <p class="text-sm text-primary-green font-medium">Ipak Savdo: услуги + товары, QR-оплата, чек.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 lg:py-24 bg-soft-green-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark">Что получает владелец бизнеса</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Быстрее продажи на кассе</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up" style="animation-delay:0.08s">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="m9 14 2 2 4-4"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Меньше ручного учёта</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up" style="animation-delay:0.16s">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Видны остатки и топ-товары</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up" style="animation-delay:0.24s">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Удобнее принимать оплату по QR</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up" style="animation-delay:0.32s">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Электронные чеки и фискализация</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up" style="animation-delay:0.4s">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Контроль сотрудников и точек</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 bg-white rounded-xl border border-card-border hover:shadow-md transition-shadow slide-up" style="animation-delay:0.48s">
+                    <div class="w-10 h-10 rounded-lg bg-soft-mint flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    </div>
+                    <p class="text-sm font-medium text-text-dark leading-relaxed pt-2">Отчёты для решений, а не Excel вручную</p>
+                </div>
+            </div>
+            <div class="bg-gradient-to-r from-primary-dark-green to-primary-green rounded-2xl p-8 text-white text-center slide-up">
+                <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B7F34A" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </div>
+                <p class="text-xl lg:text-2xl font-bold">Главное: собственник видит продажи, деньги и склад в одном месте.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark mb-4">Финтех-подход для малого бизнеса</h2>
+                <p class="text-text-muted max-w-3xl mx-auto">Ipak Savdo создаётся вокруг ежедневной операционки бизнеса. Сначала — простая касса и склад. Затем — маркетинг, loyalty, B2B-закупки и финансовые продукты.</p>
+            </div>
+            <div class="relative">
+                <div class="hidden lg:block absolute top-8 left-0 right-0 h-0.5 bg-card-border"></div>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="relative slide-up">
+                        <div class="hidden lg:flex justify-center mb-6">
+                            <div class="w-16 h-16 rounded-full bg-cta-green flex items-center justify-center shadow-lg z-10">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            </div>
+                        </div>
+                        <div class="bg-soft-green-bg rounded-2xl p-6 border border-card-border h-full">
+                            <div class="lg:hidden flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-cta-green flex items-center justify-center">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                                </div>
+                                <span class="text-xs font-semibold px-2 py-1 rounded-full bg-cta-green/10 text-cta-green">Сейчас</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-text-dark mb-2">Сейчас</h3>
+                            <p class="text-text-muted text-sm leading-relaxed">Касса, склад, QR, чек, отчёты</p>
+                            <div class="mt-4 flex items-center gap-2 text-cta-green text-sm font-medium">
+                                <div class="w-2 h-2 rounded-full bg-cta-green pulse-dot"></div>
+                                В разработке
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative slide-up" style="animation-delay:0.2s">
+                        <div class="hidden lg:flex justify-center mb-6">
+                            <div class="w-16 h-16 rounded-full bg-primary-green flex items-center justify-center shadow-lg z-10">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                        </div>
+                        <div class="bg-soft-green-bg rounded-2xl p-6 border border-card-border h-full">
+                            <div class="lg:hidden flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary-green flex items-center justify-center">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </div>
+                                <span class="text-xs font-semibold px-2 py-1 rounded-full bg-primary-green/10 text-primary-green">Скоро</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-text-dark mb-2">Скоро</h3>
+                            <p class="text-text-muted text-sm leading-relaxed">Telegram-маркетинг, акции, loyalty</p>
+                        </div>
+                    </div>
+                    <div class="relative slide-up" style="animation-delay:0.4s">
+                        <div class="hidden lg:flex justify-center mb-6">
+                            <div class="w-16 h-16 rounded-full bg-primary-dark-green flex items-center justify-center shadow-lg z-10">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                            </div>
+                        </div>
+                        <div class="bg-soft-green-bg rounded-2xl p-6 border border-card-border h-full">
+                            <div class="lg:hidden flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary-dark-green flex items-center justify-center">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                                </div>
+                                <span class="text-xs font-semibold px-2 py-1 rounded-full bg-primary-dark-green/10 text-primary-dark-green">Далее</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-text-dark mb-2">Далее</h3>
+                            <p class="text-text-muted text-sm leading-relaxed">Банк внутри, B2B-закупки, лимиты, факторинг, BNPL</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Launch Offer -->
+    <section id="launch" class="py-16 lg:py-24 bg-gradient-to-br from-primary-dark-green via-primary-green to-accent-green text-white overflow-hidden relative">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-lime-accent rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center slide-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-sm text-lime-accent font-medium mb-6">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                Ранний доступ
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Старт без тяжёлой ERP и больших затрат</h2>
+            <p class="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto mb-8">Для первых клиентов планируется ранний доступ и льготный период. Точные условия подключения будут доступны при запуске пилота.</p>
+            <button onclick="openModal()" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-dark-green font-bold rounded-xl hover:bg-soft-mint transition-colors shadow-xl">
+                Оставить заявку на ранний доступ
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- How to Start -->
+    <section class="py-16 lg:py-24 bg-soft-green-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark">Как начать работу</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center slide-up">
+                    <div class="w-16 h-16 rounded-2xl bg-white border border-card-border flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-cta-green text-white font-bold text-sm flex items-center justify-center mx-auto -mt-12 mb-4 relative z-10 border-4 border-soft-green-bg">1</div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Оставьте заявку</h3>
+                    <p class="text-sm text-text-muted">Укажите номер телефона, город и тип бизнеса.</p>
+                </div>
+                <div class="text-center slide-up" style="animation-delay:0.15s">
+                    <div class="w-16 h-16 rounded-2xl bg-white border border-card-border flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-cta-green text-white font-bold text-sm flex items-center justify-center mx-auto -mt-12 mb-4 relative z-10 border-4 border-soft-green-bg">2</div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Получите доступ к приложению</h3>
+                    <p class="text-sm text-text-muted">После подключения скачайте Ipak Savdo в Play Market.</p>
+                </div>
+                <div class="text-center slide-up" style="animation-delay:0.3s">
+                    <div class="w-16 h-16 rounded-2xl bg-white border border-card-border flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007A5A" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-cta-green text-white font-bold text-sm flex items-center justify-center mx-auto -mt-12 mb-4 relative z-10 border-4 border-soft-green-bg">3</div>
+                    <h3 class="text-lg font-semibold text-text-dark mb-2">Начните продавать</h3>
+                    <p class="text-sm text-text-muted">Добавьте товары, подключите QR и начните продажи.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lead Form -->
+    <section class="py-16 bg-white">
+        <div class="max-w-xl mx-auto px-4 sm:px-6">
+            <form id="leadForm" onsubmit="handleFormSubmit(event)" class="bg-soft-green-bg rounded-2xl p-6 lg:p-8 border border-card-border slide-up">
+                <h3 class="text-xl font-bold text-text-dark mb-6 text-center">Оставить заявку</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-text-dark mb-1.5">Имя *</label>
+                        <input required type="text" name="name" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="Иван Иванov">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-dark mb-1.5">Телефон *</label>
+                        <input required type="tel" name="phone" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="+998 90 123 45 67">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-dark mb-1.5">Тип бизнеса *</label>
+                        <select required name="businessType" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all appearance-none">
+                            <option value="">Выберите тип бизнеса</option>
+                            <option value="convenience">Магазин у дома</option>
+                            <option value="minimarket">Минимаркет</option>
+                            <option value="cafe">Кафе / общепит</option>
+                            <option value="pharmacy">Аптека</option>
+                            <option value="clothing">Одежда / бутик</option>
+                            <option value="service">Сервисная точка</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="toggleOptionalFields()" class="flex items-center gap-2 text-sm text-primary-green font-medium hover:text-accent-green transition-colors">
+                        <svg id="optional-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                        Показать дополнительные поля
+                    </button>
+                    <div id="optional-fields" class="hidden space-y-4 pt-2">
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Telegram username</label>
+                            <input type="text" name="telegram" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="@username">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Город / регион</label>
+                            <input type="text" name="city" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="Ташкент">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Количество торговых точек</label>
+                            <input type="number" name="points" min="1" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="1">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Комментарий</label>
+                            <textarea name="comment" rows="3" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all resize-none" placeholder="Дополнительная информация..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 bg-cta-green text-white font-semibold rounded-xl hover:bg-accent-green transition-colors shadow-lg flex items-center justify-center gap-2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                        Отправить заявку
+                    </button>
+                </div>
+            </form>
+            <div id="form-success" class="hidden p-8 bg-soft-green-bg rounded-2xl border border-card-border text-center">
+                <div class="w-16 h-16 rounded-full bg-cta-green/10 flex items-center justify-center mx-auto mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-text-dark mb-2">Заявка принята. Команда Ipak Savdo свяжется с вами.</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 lg:py-24 bg-soft-green-bg">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 slide-up">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-dark">Часто задаваемые вопросы</h2>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up">
+                    <button onclick="toggleAccordion(0)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Нужно ли покупать компьютер?</span>
+                        <svg id="faq-icon-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-0" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Нет. Ipak Savdo создаётся как mobile-first решение. Можно работать со смартфона или планшета.</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up" style="animation-delay:0.05s">
+                    <button onclick="toggleAccordion(1)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Можно ли использовать сканер?</span>
+                        <svg id="faq-icon-1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-1" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Да. Для быстрых продаж можно подключить 2D Bluetooth-сканер.</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up" style="animation-delay:0.1s">
+                    <button onclick="toggleAccordion(2)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Будет ли QR-оплата?</span>
+                        <svg id="faq-icon-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-2" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Да. Один из ключевых сценариев — QR-оплата прямо в момент продажи.</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up" style="animation-delay:0.15s">
+                    <button onclick="toggleAccordion(3)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Что происходит со складом после продажи?</span>
+                        <svg id="faq-icon-3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-3" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Остаток товара обновляется автоматически после продажи.</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up" style="animation-delay:0.2s">
+                    <button onclick="toggleAccordion(4)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Можно ли отправлять чек клиенту?</span>
+                        <svg id="faq-icon-4" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-4" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Да. Электронный чек можно отправлять в Telegram. Печать чека можно добавить опционально.</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up" style="animation-delay:0.25s">
+                    <button onclick="toggleAccordion(5)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Есть ли приложение в Play Market?</span>
+                        <svg id="faq-icon-5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-5" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Приложение готовится к публикации и будет доступно в Play Market.</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-card-border overflow-hidden slide-up" style="animation-delay:0.3s">
+                    <button onclick="toggleAccordion(6)" class="w-full flex items-center justify-between p-5 text-left hover:bg-soft-green-bg/50 transition-colors">
+                        <span class="font-medium text-text-dark pr-4">Для кого продукт не подходит?</span>
+                        <svg id="faq-icon-6" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" class="flex-shrink-0 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="faq-content-6" class="accordion-content">
+                        <div class="px-5 pb-5 text-sm text-text-muted leading-relaxed">Для крупных компаний со сложным ERP-процессом на старте лучше использовать индивидуальное внедрение. Ipak Savdo сначала фокусируется на микро и малом бизнесе.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary-dark-green text-white py-12 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                        </div>
+                        <span class="text-xl font-bold">Ipak Savdo</span>
+                    </div>
+                    <p class="text-white/60 text-sm leading-relaxed">Касса, склад и QR-оплата для малого бизнеса</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Навигация</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-white/60 hover:text-white text-sm transition-colors">Возможности</a></li>
+                        <li><a href="#workflow" class="text-white/60 hover:text-white text-sm transition-colors">Как работает</a></li>
+                        <li><a href="#segments" class="text-white/60 hover:text-white text-sm transition-colors">Для кого</a></li>
+                        <li><a href="#faq" class="text-white/60 hover:text-white text-sm transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Контакты</h4>
+                    <p class="text-white/60 text-sm">Для подключения оставьте заявку на сайте.</p>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-white/10 text-center">
+                <p class="text-white/40 text-sm">© 2026 Ipak Savdo. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-card-border shadow-2xl hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-sm text-text-muted text-center sm:text-left">Мы используем cookies для аналитики и улучшения работы сайта.</p>
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <button onclick="dismissCookie()" class="px-4 py-2 text-sm text-text-muted hover:text-text-dark transition-colors">Настроить позже</button>
+                    <button onclick="acceptCookie()" class="px-4 py-2 bg-cta-green text-white text-sm font-semibold rounded-lg hover:bg-accent-green transition-colors">Принять</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black/60 backdrop-blur-sm p-4" onclick="closeModal()">
+        <div class="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl" onclick="event.stopPropagation()">
+            <div class="sticky top-0 bg-white border-b border-card-border px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+                <h3 class="text-lg font-bold text-text-dark">Оставить заявку</h3>
+                <button onclick="closeModal()" class="p-2 hover:bg-soft-green-bg rounded-lg transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div id="modal-form-content">
+                    <form id="modalForm" onsubmit="handleModalSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Имя *</label>
+                            <input required type="text" name="name" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="Иван Иванов">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Телефон *</label>
+                            <input required type="tel" name="phone" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="+998 90 123 45 67">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-dark mb-1.5">Тип бизнеса *</label>
+                            <select required name="businessType" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all appearance-none">
+                                <option value="">Выберите тип бизнеса</option>
+                                <option value="convenience">Магазин у дома</option>
+                                <option value="minimarket">Минимаркет</option>
+                                <option value="cafe">Кафе / общепит</option>
+                                <option value="pharmacy">Аптека</option>
+                                <option value="clothing">Одежда / бутик</option>
+                                <option value="service">Сервисная точка</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="toggleModalOptional()" class="flex items-center gap-2 text-sm text-primary-green font-medium hover:text-accent-green transition-colors">
+                            <svg id="modal-optional-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                            Показать дополнительные поля
+                        </button>
+                        <div id="modal-optional-fields" class="hidden space-y-4 pt-2">
+                            <div>
+                                <label class="block text-sm font-medium text-text-dark mb-1.5">Telegram username</label>
+                                <input type="text" name="telegram" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="@username">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-dark mb-1.5">Город / регион</label>
+                                <input type="text" name="city" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="Ташкент">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-dark mb-1.5">Количество торговых точек</label>
+                                <input type="number" name="points" min="1" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all" placeholder="1">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-dark mb-1.5">Комментарий</label>
+                                <textarea name="comment" rows="3" class="w-full px-4 py-3 rounded-xl border border-card-border bg-white text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary-green/30 focus:border-primary-green transition-all resize-none" placeholder="Дополнительная информация..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 bg-cta-green text-white font-semibold rounded-xl hover:bg-accent-green transition-colors shadow-lg flex items-center justify-center gap-2">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                            Отправить заявку
+                        </button>
+                    </form>
+                </div>
+                <div id="modal-success" class="hidden text-center py-8">
+                    <div class="w-16 h-16 rounded-full bg-cta-green/10 flex items-center justify-center mx-auto mb-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-text-dark mb-2">Заявка принята. Команда Ipak Savdo свяжется с вами.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Mobile CTA -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-card-border shadow-lg lg:hidden">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <button onclick="openModal()" class="w-full py-3 bg-cta-green text-white font-semibold rounded-xl hover:bg-accent-green transition-colors flex items-center justify-center gap-2">
+                Оставить заявку
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 20) {
+                header.classList.add('bg-white/90', 'backdrop-blur-md', 'border-b', 'border-card-border', 'shadow-sm');
+                header.classList.remove('bg-transparent');
+            } else {
+                header.classList.remove('bg-white/90', 'backdrop-blur-md', 'border-b', 'border-card-border', 'shadow-sm');
+                header.classList.add('bg-transparent');
+            }
+        });
+
+        // Mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Demo modal
+        function openDemoModal() {
+            document.getElementById('demo-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDemoModal() {
+            document.getElementById('demo-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Contact modal
+        function openModal() {
+            document.getElementById('contact-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            document.getElementById('contact-modal').classList.remove('open');
+            document.body.style.overflow = '';
+            // Reset form
+            setTimeout(() => {
+                document.getElementById('modal-form-content').classList.remove('hidden');
+                document.getElementById('modal-success').classList.add('hidden');
+                document.getElementById('modalForm').reset();
+            }, 300);
+        }
+
+        // Optional fields toggle
+        function toggleOptionalFields() {
+            const fields = document.getElementById('optional-fields');
+            const chevron = document.getElementById('optional-chevron');
+            fields.classList.toggle('hidden');
+            chevron.style.transform = fields.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+        function toggleModalOptional() {
+            const fields = document.getElementById('modal-optional-fields');
+            const chevron = document.getElementById('modal-optional-chevron');
+            fields.classList.toggle('hidden');
+            chevron.style.transform = fields.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Form submissions
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            console.log('Lead form submitted:', data);
+            // TODO: connect to backend API or webhook
+            document.getElementById('leadForm').classList.add('hidden');
+            document.getElementById('form-success').classList.remove('hidden');
+        }
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            console.log('Modal form submitted:', data);
+            // TODO: connect to backend API or webhook
+            document.getElementById('modal-form-content').classList.add('hidden');
+            document.getElementById('modal-success').classList.remove('hidden');
+        }
+
+        // FAQ accordion
+        function toggleAccordion(index) {
+            const content = document.getElementById('faq-content-' + index);
+            const icon = document.getElementById('faq-icon-' + index);
+            const isOpen = content.classList.contains('open');
+
+            // Close all
+            for (let i = 0; i < 7; i++) {
+                document.getElementById('faq-content-' + i).classList.remove('open');
+                document.getElementById('faq-icon-' + i).style.transform = 'rotate(0deg)';
+            }
+
+            // Open clicked if was closed
+            if (!isOpen) {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Cookie consent
+        function acceptCookie() {
+            localStorage.setItem('cookieConsent', 'true');
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+        function dismissCookie() {
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+
+        // Show cookie banner if not accepted
+        if (!localStorage.getItem('cookieConsent')) {
+            document.getElementById('cookie-banner').classList.remove('hidden');
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide-up').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Language switcher (simple UI toggle)
+        function setLang(lang) {
+            const btnRu = document.getElementById('btn-ru');
+            const btnUz = document.getElementById('btn-uz');
+            if (lang === 'ru') {
+                btnRu.classList.add('text-primary-green', 'bg-soft-mint', 'font-semibold');
+                btnRu.classList.remove('text-text-muted');
+                btnUz.classList.remove('text-primary-green', 'bg-soft-mint', 'font-semibold');
+                btnUz.classList.add('text-text-muted');
+            } else {
+                btnUz.classList.add('text-primary-green', 'bg-soft-mint', 'font-semibold');
+                btnUz.classList.remove('text-text-muted');
+                btnRu.classList.remove('text-primary-green', 'bg-soft-mint', 'font-semibold');
+                btnRu.classList.add('text-text-muted');
+            }
+            // Note: Full language switch would require full page reload with translated content
+            // This is a UI demonstration - the full Next.js version has complete RU/UZ dictionaries
+        }
+    </script>
+</body>
+</html>
