@@ -28,6 +28,7 @@ import {
   ShoppingCart,
   Smartphone,
   Store,
+  Tablet,
   TrendingUp,
   Users,
   WifiOff,
@@ -88,7 +89,7 @@ const ru = {
     ["Каталог и склад", "Товары, категории, штучные и весовые позиции, остатки и списания."],
     ["QR-оплата", "Покупатель сканирует QR — оплата поступает мгновенно. Наличные, карта или QR."],
     ["Электронный чек", "Чек отправляется покупателю в Telegram. Печать можно подключить отдельно."],
-    ["Роли сотрудников", "Владелец видит всё, кассир работает только с продажами."],
+    ["Программа лояльности", "Бонусы, скидки и акции для постоянных покупателей — всё внутри приложения."],
     ["Отчёты", "Выручка за день, средний чек, топ-товары и работа кассиров — всё наглядно."],
   ],
 
@@ -113,14 +114,13 @@ const ru = {
   offlineBadge: "Работа при слабом интернете",
   offlineSteps: ["Продажа сохранена локально", "Интернет восстановился", "Данные синхронизированы"],
 
-  equipmentTitle: "Оборудование — по желанию",
-  equipmentText:
-    "Начните только со смартфона. Для потоковых точек подключите сканер штрих-кодов и принтер чеков.",
-  scanner: "Сканер штрих-кодов",
-  scannerText: "Ускоряет поиск товара и снижает ошибки на кассе.",
-  printer: "Принтер чеков 58 мм",
-  printerText: "Для тех, кому важен бумажный чек.",
-  openProduct: "Посмотреть на Uzum",
+  equipmentTitle: "Два формата — под ваш бизнес",
+  equipFullTitle: "Продуктовый магазин",
+  equipFullDesc: "Планшет + сканер штрих-кодов + термопринтер чеков. Полный контроль склада и быстрая работа с потоком покупателей.",
+  equipFullItems: ["Планшет", "Сканер штрих-кодов", "Термопринтер чеков"],
+  equipLiteTitle: "Магазин одежды и другие",
+  equipLiteDesc: "Приложение на Android или iOS — всё, что нужно. Простой учёт, QR-оплата и чек в Telegram прямо с телефона.",
+  equipLiteItems: ["Android-приложение", "iOS-приложение", "Без доп. оборудования"],
 
   roadmapTitle: "Что появится дальше",
   roadmap: [
@@ -134,6 +134,16 @@ const ru = {
   formName: "Имя",
   formPhone: "Телефон",
   formBusiness: "Тип бизнеса",
+  businessTypes: [
+    "Продуктовый магазин",
+    "Минимаркет",
+    "Кафе / ресторан",
+    "Аптека",
+    "Магазин одежды",
+    "Магазин электроники",
+    "Сервисная точка",
+    "Другое",
+  ],
   formComment: "Комментарий",
   optional: "Показать дополнительные поля",
   submit: "Отправить заявку",
@@ -226,7 +236,7 @@ const uz: typeof ru = {
     ["Katalog va ombor", "Tovarlar, kategoriyalar, donali va vaznli pozitsiyalar, qoldiqlar va hisobdan chiqarish."],
     ["QR-to'lov", "Xaridor QR-kodni skanerlaydi — to'lov bir zumda tushadi. Naqd, karta yoki QR."],
     ["Elektron chek", "Chek xaridorga Telegramga yuboriladi. Bosib chiqarishni alohida ulash mumkin."],
-    ["Xodim rollari", "Egasi hammasini ko'radi, kassir faqat sotuvlar bilan ishlaydi."],
+    ["Sodiqlik dasturi", "Doimiy xaridorlar uchun bonuslar, chegirmalar va aksiyalar — ilovaning o'zida."],
     ["Hisobotlar", "Kunlik tushum, o'rtacha chek, top-tovarlar va kassirlar ishi — hammasi ko'rinarli."],
   ],
 
@@ -251,14 +261,13 @@ const uz: typeof ru = {
   offlineBadge: "Zaif internetda ishlash",
   offlineSteps: ["Sotuv lokal saqlandi", "Internet tiklandi", "Ma'lumotlar sinxronlandi"],
 
-  equipmentTitle: "Jihozlar — ixtiyoriy",
-  equipmentText:
-    "Faqat smartfondan boshlang. Xaridor oqimi ko'p bo'lsa, shtrix-kod skaneri va chek printeri yordam beradi.",
-  scanner: "Shtrix-kod skaneri",
-  scannerText: "Tovarni tezroq topishga va kassada kamroq xato qilishga yordam beradi.",
-  printer: "58 mm chek printeri",
-  printerText: "Xaridorga qog'oz chek kerak bo'lsa foydali.",
-  openProduct: "Uzumda ko'rish",
+  equipmentTitle: "Ikki format — biznesingizga mos",
+  equipFullTitle: "Oziq-ovqat do'koni",
+  equipFullDesc: "Planshet + shtrix-kod skaneri + termoprinter. Omborni to'liq nazorat qilish va xaridorlar oqimi bilan tez ishlash.",
+  equipFullItems: ["Planshet", "Shtrix-kod skaneri", "Termoprinter"],
+  equipLiteTitle: "Kiyim do'koni va boshqalar",
+  equipLiteDesc: "Android yoki iOS ilovasi — kerakli hamma narsa. Oddiy hisob, QR-to'lov va Telegram chek to'g'ridan-to'g'ri telefondan.",
+  equipLiteItems: ["Android-ilova", "iOS-ilova", "Qo'shimcha jihozlarsiz"],
 
   roadmapTitle: "Keyin nimalar qo'shiladi",
   roadmap: [
@@ -272,6 +281,16 @@ const uz: typeof ru = {
   formName: "Ism",
   formPhone: "Telefon",
   formBusiness: "Biznes turi",
+  businessTypes: [
+    "Oziq-ovqat do'koni",
+    "Minimarket",
+    "Kafe / restoran",
+    "Dorixona",
+    "Kiyim do'koni",
+    "Elektronika do'koni",
+    "Xizmat nuqtasi",
+    "Boshqa",
+  ],
   formComment: "Izoh",
   optional: "Qo'shimcha maydonlarni ko'rsatish",
   submit: "Ariza yuborish",
@@ -508,22 +527,39 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Equipment */}
+      {/* Equipment — two tiers */}
       <Section id="equipment" title={t.equipmentTitle}>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
-              <ScanLine size={48} />
+          <div className="relative overflow-hidden rounded-2xl border-2 border-[#005B45] bg-white p-8 shadow-sm">
+            <div className="absolute right-4 top-4 rounded-lg bg-[#005B45] px-3 py-1 text-xs font-black text-white">PRO</div>
+            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
+              <Tablet size={32} />
             </div>
-            <h3 className="text-xl font-black">{t.scanner}</h3>
-            <p className="mt-2 text-base text-slate-600">{t.scannerText}</p>
+            <h3 className="text-xl font-black">{t.equipFullTitle}</h3>
+            <p className="mt-2 text-base leading-7 text-slate-600">{t.equipFullDesc}</p>
+            <div className="mt-5 grid gap-2">
+              {t.equipFullItems.map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                  <CheckCircle2 size={16} className="shrink-0 text-[#00A86B]" />
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
-              <Printer size={48} />
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
+              <Smartphone size={32} />
             </div>
-            <h3 className="text-xl font-black">{t.printer}</h3>
-            <p className="mt-2 text-base text-slate-600">{t.printerText}</p>
+            <h3 className="text-xl font-black">{t.equipLiteTitle}</h3>
+            <p className="mt-2 text-base leading-7 text-slate-600">{t.equipLiteDesc}</p>
+            <div className="mt-5 grid gap-2">
+              {t.equipLiteItems.map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                  <CheckCircle2 size={16} className="shrink-0 text-[#00A86B]" />
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
@@ -588,7 +624,7 @@ function Section({ id, title, subtitle, tinted, children }: { id?: string; title
 /* ── Feature cards ───────────────────────────────────────── */
 
 function FeatureCard({ index, title, text }: { index: number; title: string; text: string }) {
-  const icons = [ScanLine, Package, QrCode, Receipt, Users, BarChart3];
+  const icons = [ScanLine, Package, QrCode, Receipt, Heart, BarChart3];
   const Icon = icons[index] || CheckCircle2;
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
@@ -610,8 +646,13 @@ function LeadForm({ t, compact }: { t: typeof ru; compact?: boolean }) {
   return (
     <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className={cn("mx-auto grid max-w-xl gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm", compact && "shadow-none")}>
       <input required placeholder={t.formName} className={inputClass} />
-      <input required placeholder={t.formPhone} className={inputClass} />
-      <input required placeholder={t.formBusiness} className={inputClass} />
+      <input required placeholder={t.formPhone} type="tel" className={inputClass} />
+      <select required defaultValue="" className={cn(inputClass, "appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23667085%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-10")}>
+        <option value="" disabled>{t.formBusiness}</option>
+        {t.businessTypes.map((type) => (
+          <option key={type} value={type}>{type}</option>
+        ))}
+      </select>
       <button type="button" onClick={() => setExtra(!extra)} className="flex items-center gap-2 text-left text-sm font-black text-[#005B45]">
         <ChevronDown size={16} className={cn("transition", extra && "rotate-180")} />
         {t.optional}
@@ -813,8 +854,8 @@ function HeroScreenshot() {
 /* ── Logo ────────────────────────────────────────────────── */
 
 function Logo({ small = false }: { small?: boolean }) {
-  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-14 w-auto" />;
-  return <img src="/logo.png" alt="Ipak Savdo" className="h-24 w-auto" />;
+  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-14 w-auto object-contain" />;
+  return <img src="/logo.png" alt="Ipak Savdo" className="h-20 w-auto object-contain sm:h-24" />;
 }
 
 const inputClass =
