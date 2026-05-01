@@ -7,50 +7,41 @@ import {
   Check,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Coffee,
+  AlertTriangle,
+  FileText,
+  Heart,
   Menu,
-  MessageCircle,
   Package,
+  Pause,
+  Pill,
   Play,
   Printer,
   QrCode,
   Receipt,
   ScanLine,
   Send,
+  Shield,
   ShoppingCart,
   Smartphone,
   Store,
-  Tablet,
   TrendingUp,
   Users,
   WifiOff,
-  X,
-  AlertTriangle,
-  Clock,
-  FileText,
-  Heart,
-  Shield,
-  Zap,
-  Coffee,
-  Pill,
   Wrench,
-  ChevronLeft,
-  ChevronRight,
-  Pause,
+  X,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Locale = "ru" | "uz";
 
-const equipment = {
-  scanner:
-    "https://uzum.uz/ru/product/nastolnye-i-ruchnye-biryuzovyj---124-1230978?skuId=3858317",
-  printer:
-    "https://uzum.uz/ru/product/printer-chekov-58-778819?skuId=1862943",
-};
-
 const ru = {
-  nav: ["Возможности", "Как работает", "Оборудование", "FAQ"],
+  nav: ["Возможности", "Оборудование", "FAQ"],
   cta: "Оставить заявку",
   title: "Ipak Savdo — касса, склад и QR-оплата в одном приложении",
   subtitle:
@@ -188,7 +179,7 @@ const ru = {
 };
 
 const uz: typeof ru = {
-  nav: ["Imkoniyatlar", "Qanday ishlaydi", "Jihozlar", "FAQ"],
+  nav: ["Imkoniyatlar", "Jihozlar", "FAQ"],
   cta: "Ariza qoldirish",
   title: "Ipak Savdo — kassa, ombor va QR-to'lov bitta ilovada",
   subtitle:
@@ -331,7 +322,7 @@ export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
   const t = locale === "ru" ? ru : uz;
-  const ids = ["features", "workflow", "equipment", "faq"];
+  const ids = ["features", "equipment", "faq"];
 
   useEffect(() => {
     const saved = localStorage.getItem("ipak-locale") as Locale | null;
@@ -418,7 +409,7 @@ export default function LandingPage() {
               ))}
             </div>
           </div>
-          <HeroMockup t={t} />
+          <HeroScreenshot />
         </div>
       </section>
 
@@ -490,26 +481,8 @@ export default function LandingPage() {
       <Section id="features" title={t.featuresTitle}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {t.features.map(([title, text], index) => (
-            <FeatureCard key={title} index={index} title={title} text={text} t={t} />
+            <FeatureCard key={title} index={index} title={title} text={text} />
           ))}
-        </div>
-      </Section>
-
-      {/* Workflow */}
-      <Section id="workflow" title={t.workflowTitle} tinted>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
-          {t.workflowSteps.map((step, index) => {
-            const icons = [ScanLine, ShoppingCart, QrCode, CheckCircle2, Receipt, Package];
-            const Icon = icons[index] || CheckCircle2;
-            return (
-              <div key={step} className="rounded-lg border border-[#BDECD5] bg-white p-4 text-center">
-                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[#EAF7F1] text-[#005B45]">
-                  <Icon size={18} />
-                </div>
-                <div className="text-sm font-black">{step}</div>
-              </div>
-            );
-          })}
         </div>
       </Section>
 
@@ -536,22 +509,22 @@ export default function LandingPage() {
       </section>
 
       {/* Equipment */}
-      <Section id="equipment" title={t.equipmentTitle} subtitle={t.equipmentText}>
-        <div className="grid gap-4 md:grid-cols-2">
-          <EquipmentCard icon={<ScanLine />} title={t.scanner} text={t.scannerText} href={equipment.scanner} cta={t.openProduct} />
-          <EquipmentCard icon={<Printer />} title={t.printer} text={t.printerText} href={equipment.printer} cta={t.openProduct} />
-        </div>
-      </Section>
-
-      {/* Roadmap */}
-      <Section title={t.roadmapTitle} tinted>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {t.roadmap.map(([label, text]) => (
-            <div key={label} className="rounded-lg border border-slate-200 bg-white p-5">
-              <div className="text-sm font-black text-[#005B45]">{label}</div>
-              <p className="mt-2 font-bold leading-7 text-slate-700">{text}</p>
+      <Section id="equipment" title={t.equipmentTitle}>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+            <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
+              <ScanLine size={48} />
             </div>
-          ))}
+            <h3 className="text-xl font-black">{t.scanner}</h3>
+            <p className="mt-2 text-base text-slate-600">{t.scannerText}</p>
+          </div>
+          <div className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+            <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
+              <Printer size={48} />
+            </div>
+            <h3 className="text-xl font-black">{t.printer}</h3>
+            <p className="mt-2 text-base text-slate-600">{t.printerText}</p>
+          </div>
         </div>
       </Section>
 
@@ -614,61 +587,17 @@ function Section({ id, title, subtitle, tinted, children }: { id?: string; title
 
 /* ── Feature cards ───────────────────────────────────────── */
 
-function FeatureCard({ index, title, text, t }: { index: number; title: string; text: string; t: typeof ru }) {
+function FeatureCard({ index, title, text }: { index: number; title: string; text: string }) {
   const icons = [ScanLine, Package, QrCode, Receipt, Users, BarChart3];
   const Icon = icons[index] || CheckCircle2;
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#EAF7F1] text-[#005B45]">
-          <Icon />
-        </div>
-        <div>
-          <h3 className="text-xl font-black">{title}</h3>
-          <p className="mt-2 text-base leading-7 text-slate-600">{text}</p>
-        </div>
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#EAF7F1] text-[#005B45]">
+        <Icon size={24} />
       </div>
-      {index === 2 ? <MockQR t={t} /> : <MiniPreview index={index} t={t} />}
+      <h3 className="text-lg font-black">{title}</h3>
+      <p className="mt-2 text-base leading-7 text-slate-600">{text}</p>
     </div>
-  );
-}
-
-function MockQR({ t }: { t: typeof ru }) {
-  return (
-    <div className="mt-5 flex items-center gap-4 rounded-lg bg-[#F3FBF7] p-3">
-      <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white p-2">
-        <QrCode size={56} className="text-[#005B45]" />
-      </div>
-      <span className="text-sm font-bold text-slate-600">
-        <span className="block font-black text-[#005B45]">{t.qrCardTitle}</span>
-        <span>{t.qrCardHint}</span>
-      </span>
-    </div>
-  );
-}
-
-function MiniPreview({ index, t }: { index: number; t: typeof ru }) {
-  const row = t.miniPreviews[Math.min(index, t.miniPreviews.length - 1)];
-  return (
-    <div className="mt-5 flex justify-between rounded-lg bg-[#F3FBF7] p-3 text-sm font-bold">
-      <span>{row[0]}</span>
-      <span className="text-[#005B45]">{row[1]}</span>
-    </div>
-  );
-}
-
-/* ── Equipment ───────────────────────────────────────────── */
-
-function EquipmentCard({ icon, title, text, href, cta }: { icon: React.ReactNode; title: string; text: string; href: string; cta: string }) {
-  return (
-    <a href={href} target="_blank" rel="noreferrer" className="group flex gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:border-[#00A86B]/40">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#EAF7F1] text-[#005B45]">{icon}</div>
-      <span>
-        <span className="block text-xl font-black">{title}</span>
-        <span className="mt-2 block text-base leading-7 text-slate-600">{text}</span>
-        <span className="mt-3 inline-flex items-center gap-2 font-black text-[#005B45]">{cta}<ArrowRight size={16} /></span>
-      </span>
-    </a>
   );
 }
 
@@ -855,12 +784,11 @@ function DemoModal({ t, close }: { t: typeof ru; close: () => void }) {
   );
 }
 
-/* ── Hero Mockup ─────────────────────────────────────────── */
+/* ── Hero Screenshot ──────────────────────────────────────── */
 
-function HeroMockup({ t }: { t: typeof ru }) {
+function HeroScreenshot() {
   return (
     <div className="relative mx-auto w-full min-w-0 max-w-[calc(100vw-2rem)] sm:max-w-xl">
-      {/* Browser chrome */}
       <div className="overflow-hidden rounded-[16px] border border-slate-200 bg-[#F1F3F5] shadow-2xl">
         <div className="flex items-center gap-2 border-b border-slate-200 bg-[#F8F9FA] px-4 py-2.5">
           <div className="flex gap-1.5">
@@ -872,49 +800,11 @@ function HeroMockup({ t }: { t: typeof ru }) {
             app.ipaksavdo.uz
           </div>
         </div>
-        <div className="bg-white p-4 sm:p-5">
-          <div className="flex items-center justify-between">
-            <Logo small />
-            <span className="rounded-lg bg-[#F3FBF7] px-3 py-2 text-xs font-black text-[#005B45]">{t.heroOnline}</span>
-          </div>
-          <div className="mt-5 grid min-w-0 gap-2 sm:grid-cols-3 sm:gap-3">
-            {[
-              [t.heroRevenue, t.heroRevenueVal],
-              [t.heroAvgCheck, t.heroAvgCheckVal],
-              [t.heroSales, t.heroSalesVal],
-            ].map(([label, val]) => (
-              <div key={label} className="min-w-0 rounded-lg border border-slate-200 p-3">
-                <div className="text-xs text-slate-500">{label}</div>
-                <div className="mt-1 text-sm font-black">{val}</div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
-            <PhoneSale t={t} />
-            <div className="min-w-0 rounded-lg border border-slate-200 bg-[#F3FBF7] p-4">
-              <div className="font-black text-[#005B45]">{t.heroReceiptSent}</div>
-              <p className="mt-3 break-words text-sm font-bold text-slate-600">{t.heroReceiptDetail}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PhoneSale({ t }: { t: typeof ru }) {
-  return (
-    <div className="min-w-0 rounded-lg border border-slate-200 p-4">
-      <div className="font-black">{t.heroSaleTitle}</div>
-      {t.heroItems.map((item) => (
-        <div key={item} className="mt-3 flex items-start justify-between gap-3 rounded-lg bg-[#F8FBFA] p-3 text-sm font-bold">
-          <span className="min-w-0">{item}</span>
-          <span className="shrink-0">{t.heroItemPrice}</span>
-        </div>
-      ))}
-      <div className="mt-4 flex flex-wrap justify-between gap-2 font-black text-[#005B45]">
-        <span>{t.heroTotal}</span>
-        <span>{t.heroTotalVal}</span>
+        <img
+          src="/app-screenshot.jpg"
+          alt="Ipak Savdo — интерфейс кассы"
+          className="block w-full"
+        />
       </div>
     </div>
   );
@@ -923,8 +813,8 @@ function PhoneSale({ t }: { t: typeof ru }) {
 /* ── Logo ────────────────────────────────────────────────── */
 
 function Logo({ small = false }: { small?: boolean }) {
-  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-8 w-auto" />;
-  return <img src="/logo.png" alt="Ipak Savdo" className="h-12 w-auto" />;
+  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-10 w-auto" />;
+  return <img src="/logo.png" alt="Ipak Savdo" className="h-16 w-auto" />;
 }
 
 const inputClass =
