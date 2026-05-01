@@ -923,26 +923,8 @@ function PhoneSale({ t }: { t: typeof ru }) {
 /* ── Logo ────────────────────────────────────────────────── */
 
 function Logo({ small = false }: { small?: boolean }) {
-  if (small) return <Barcode className="h-8 w-8" />;
-  return (
-    <span className="inline-flex items-center gap-3">
-      <Barcode className="h-12 w-12" />
-      <span className="grid leading-none">
-        <span className="text-[26px] font-black text-[#00742A]">ipak</span>
-        <span className="-mt-0.5 text-[26px] font-black text-[#38DD3E]">savdo</span>
-      </span>
-    </span>
-  );
-}
-
-function Barcode({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 64 64" className={className} fill="none" aria-hidden="true">
-      {[5, 13, 21, 29, 37, 45, 53].map((x, i) => <rect key={x} x={x} y="8" width={i % 2 === 0 ? 4 : 3} height="48" rx="1.2" fill={i < 4 ? "#008529" : "#37DD3B"} />)}
-      <path d="M21 56C23 39 27 30 32 23C37 30 41 39 43 56" fill="#008529" opacity="0.82" />
-      <path d="M29 56C30 43 31 33 32 22C33 33 34 43 35 56" fill="#37DD3B" />
-    </svg>
-  );
+  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-8 w-auto" />;
+  return <img src="/logo.png" alt="Ipak Savdo" className="h-12 w-auto" />;
 }
 
 const inputClass =
