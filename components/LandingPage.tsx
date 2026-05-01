@@ -343,7 +343,7 @@ export default function LandingPage() {
     <main className="min-h-screen bg-white text-slate-950">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="section-shell flex h-20 items-center justify-between gap-4">
+        <div className="section-shell flex h-28 items-center justify-between gap-4">
           <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
             <Logo />
           </button>
@@ -813,8 +813,8 @@ function HeroScreenshot() {
 /* ── Logo ────────────────────────────────────────────────── */
 
 function Logo({ small = false }: { small?: boolean }) {
-  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-10 w-auto" />;
-  return <img src="/logo.png" alt="Ipak Savdo" className="h-16 w-auto" />;
+  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-14 w-auto" />;
+  return <img src="/logo.png" alt="Ipak Savdo" className="h-24 w-auto" />;
 }
 
 const inputClass =
