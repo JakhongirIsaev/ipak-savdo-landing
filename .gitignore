@@ -33,6 +33,9 @@ qa-*.png
 # Vercel
 .vercel
 
+# Git worktrees (created by subagent-driven-development workflow)
+.worktrees/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
