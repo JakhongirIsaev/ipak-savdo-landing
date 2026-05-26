@@ -1,6 +1,8 @@
 import { db, leads } from "@/lib/db";
 import { desc } from "drizzle-orm";
 import { buildWhereClause, parseLeadFilters, PAGE_SIZE } from "@/lib/admin/filters";
+import { STATUS_META } from "@/lib/admin/status-meta";
+import { StatusDropdown } from "./[id]/status-dropdown";
 
 export const dynamic = "force-dynamic";
 
@@ -31,7 +33,12 @@ export default async function AdminLeadsPage({
   return (
     <main className="mx-auto max-w-7xl p-6 font-mono text-sm">
       <header className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">Ipak Savdo · Leads</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">BirLiy · Leads</h1>
+          <nav className="text-sm text-ink-500">
+            <a href="/admin/dashboard" className="hover:text-ink-900">Dashboard</a>
+          </nav>
+        </div>
         <a
           href={exportUrl}
           className="rounded-md bg-[#02691A] px-4 py-2 font-semibold text-white"
@@ -54,6 +61,14 @@ export default async function AdminLeadsPage({
           <option value="service">service</option>
           <option value="other">other</option>
         </select>
+        <select name="status" defaultValue={searchParams.status as string ?? ""} className="rounded border px-2 py-1">
+          <option value="">все статусы</option>
+          <option value="new">🆕 Новый</option>
+          <option value="contacted">📞 В работе</option>
+          <option value="demo">📅 Демо</option>
+          <option value="won">🏆 Выигран</option>
+          <option value="lost">❌ Проигран</option>
+        </select>
         <select name="equipment" defaultValue={searchParams.equipment as string ?? "any"} className="rounded border px-2 py-1">
           <option value="any">оборудование: любое</option>
           <option value="yes">да</option>
@@ -74,6 +89,8 @@ export default async function AdminLeadsPage({
               <th className="border px-2 py-1">Владелец</th>
               <th className="border px-2 py-1">Контакт</th>
               <th className="border px-2 py-1">Обор.</th>
+              <th className="border px-2 py-1">Статус</th>
+              <th className="border px-2 py-1">Изм.</th>
               <th className="border px-2 py-1">Источник</th>
               <th className="border px-2 py-1">UTM</th>
               <th className="border px-2 py-1">Lang</th>
@@ -83,13 +100,24 @@ export default async function AdminLeadsPage({
           <tbody>
             {rows.map((r) => (
               <tr key={r.id} className="even:bg-slate-50">
-                <td className="border px-2 py-1">{r.id}</td>
+                <td className="border px-2 py-1">
+                  <a href={`/admin/leads/${r.id}`} className="font-mono text-ink-900 hover:underline">#{r.id}</a>
+                </td>
                 <td className="border px-2 py-1 whitespace-nowrap">{r.createdAt.toISOString()}</td>
                 <td className="border px-2 py-1">{r.businessName}</td>
                 <td className="border px-2 py-1">{r.businessType === "other" ? r.businessTypeOther : r.businessType}</td>
                 <td className="border px-2 py-1">{r.ownerName}</td>
                 <td className="border px-2 py-1">{r.ownerContact}</td>
                 <td className="border px-2 py-1 text-center">{r.needsEquipment ? "✓" : ""}</td>
+                <td className="border px-2 py-1">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-block h-2 w-2 rounded-full ${STATUS_META[r.status].dotClass}`} />
+                    <StatusDropdown leadId={r.id} currentStatus={r.status} />
+                  </div>
+                </td>
+                <td className="border px-2 py-1 text-xs text-ink-500">
+                  {r.lastChangedBy ?? "—"}
+                </td>
                 <td className="border px-2 py-1">{r.source}</td>
                 <td className="border px-2 py-1 text-xs text-slate-500">
                   {[r.utmSource, r.utmMedium, r.utmCampaign].filter(Boolean).join(" / ")}
