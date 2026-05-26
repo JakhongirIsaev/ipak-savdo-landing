@@ -1,5 +1,6 @@
 import type { Lead, BusinessType } from "@/lib/db/schema";
 import { escapeHtml } from "@/lib/html-escape";
+import { STATUS_META } from "@/lib/admin/status-meta";
 
 const businessTypeLabelsRu: Record<BusinessType, string> = {
   shop: "магазин",
@@ -10,6 +11,20 @@ const businessTypeLabelsRu: Record<BusinessType, string> = {
   service: "сервис",
   other: "другое",
 };
+
+function formatTashkentTimeShort(date: Date): string {
+  const fmt = new Intl.DateTimeFormat("ru-RU", {
+    timeZone: "Asia/Tashkent",
+    day: "2-digit",
+    month: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const parts = fmt.formatToParts(date);
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${get("day")}.${get("month")} ${get("hour")}:${get("minute")}`;
+}
 
 function formatTashkentTime(date: Date): string {
   const fmt = new Intl.DateTimeFormat("ru-RU", {
@@ -32,7 +47,15 @@ export function formatLeadMessage(lead: Lead, siteUrl: string): string {
       ? escapeHtml(lead.businessTypeOther)
       : businessTypeLabelsRu[lead.businessType];
 
+  const meta = STATUS_META[lead.status] ?? STATUS_META.new;
+  let statusLine = `${meta.emoji} <b>${meta.labelEn}</b>`;
+  if (lead.lastChangedBy && lead.lastStatusChangeAt) {
+    statusLine += ` · ${escapeHtml(lead.lastChangedBy)} · ${formatTashkentTimeShort(lead.lastStatusChangeAt)}`;
+  }
+
   const lines: string[] = [
+    statusLine,
+    "",
     `🎯 <b>Новая заявка #${lead.id}</b>`,
     "",
     `🏪 <b>Бизнес:</b> ${escapeHtml(lead.businessName)} (${typeLabel})`,

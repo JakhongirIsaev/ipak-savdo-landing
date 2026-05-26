@@ -78,4 +78,27 @@ describe("formatLeadMessage", () => {
     const msg = formatLeadMessage(lead, "https://example.com");
     expect(msg).not.toContain("кампания");
   });
+
+  it("prepends a status line with the status emoji and label", () => {
+    const msg = formatLeadMessage(baseLead, "https://example.com");
+    expect(msg.startsWith("🆕 <b>NEW</b>")).toBe(true);
+  });
+
+  it("appends actor + Tashkent time on the status line when last_changed_by is set", () => {
+    const lead = {
+      ...baseLead,
+      status: "demo" as const,
+      lastChangedBy: "@science369",
+      lastStatusChangeAt: new Date("2026-05-25T13:42:00Z"),
+    };
+    const msg = formatLeadMessage(lead, "https://example.com");
+    expect(msg).toMatch(/📅 <b>DEMO<\/b> · @science369 · 25\.05 18:42/);
+  });
+
+  it("omits actor suffix when last_changed_by is null", () => {
+    const lead = { ...baseLead, status: "new" as const, lastChangedBy: null, lastStatusChangeAt: null };
+    const msg = formatLeadMessage(lead, "https://example.com");
+    const firstLine = msg.split("\n")[0];
+    expect(firstLine).toBe("🆕 <b>NEW</b>");
+  });
 });
