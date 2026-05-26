@@ -11,6 +11,7 @@ describe("parseLeadFilters", () => {
       equipment: null,
       q: null,
       page: 1,
+      status: null,
     });
   });
 
@@ -50,5 +51,15 @@ describe("parseLeadFilters", () => {
     expect(parseLeadFilters(new URLSearchParams({ page: "3" })).page).toBe(3);
     expect(parseLeadFilters(new URLSearchParams({ page: "0" })).page).toBe(1);
     expect(parseLeadFilters(new URLSearchParams({ page: "abc" })).page).toBe(1);
+  });
+
+  it("parses status", () => {
+    const f = parseLeadFilters(new URLSearchParams({ status: "won" }));
+    expect(f.status).toBe("won");
+  });
+
+  it("rejects unknown status", () => {
+    const f = parseLeadFilters(new URLSearchParams({ status: "spaceship" }));
+    expect(f.status).toBeNull();
   });
 });
