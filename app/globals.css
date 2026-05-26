@@ -32,6 +32,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Sticky header (h-[72px]) compensation: anchor-scrolled sections need top margin */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
 body {
   margin: 0;
   background: var(--paper);
