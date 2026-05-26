@@ -135,6 +135,7 @@ export const dictionary = {
     formName: "Имя",
     formPhone: "Телефон",
     formBusinessType: "Тип бизнеса",
+    formBusiness: "Тип бизнеса",
     formOptional: "Показать дополнительные поля",
     formTelegram: "Telegram username",
     formCity: "Город / регион",
@@ -142,6 +143,17 @@ export const dictionary = {
     formComment: "Комментарий",
     formSubmit: "Отправить заявку",
     formSuccess: "Заявка принята. Команда Ipak Savdo свяжется с вами.",
+    formBusinessName: "Название бизнеса",
+    formNeedsEquipment: "Нужно оборудование (касса, принтер, сканер)",
+    formBusinessTypeOther: "Уточните вид бизнеса",
+    formSubmitError: "Не удалось отправить. Попробуйте ещё раз или напишите нам в Telegram.",
+    formRateLimited: "Слишком много заявок с одного устройства. Попробуйте через 10 минут.",
+    formValidationError: "Проверьте поля и попробуйте ещё раз.",
+    // Order matches BUSINESS_TYPE_VALUES in components/LeadForm.tsx — DO NOT REORDER
+    businessTypes: ["Магазин", "Кафе", "Ресторан", "Рынок", "Красота", "Сервис", "Другое"] as const,
+    success: "Заявка принята. Команда Ipak Savdo свяжется с вами.",
+    submit: "Отправить заявку",
+    optional: "Показать дополнительные поля",
 
     // FAQ
     faqTitle: "Часто задаваемые вопросы",
@@ -317,6 +329,7 @@ export const dictionary = {
     formName: "Ism",
     formPhone: "Telefon",
     formBusinessType: "Biznes turi",
+    formBusiness: "Biznes turi",
     formOptional: "Qo'shimcha maydonlarni ko'rsatish",
     formTelegram: "Telegram username",
     formCity: "Shahar / viloyat",
@@ -324,6 +337,17 @@ export const dictionary = {
     formComment: "Izoh",
     formSubmit: "Ariza yuborish",
     formSuccess: "Ariza qabul qilindi. Ipak Savdo jamoasi siz bilan bog'lanadi.",
+    formBusinessName: "Biznes nomi",
+    formNeedsEquipment: "Jihoz kerak (kassa, printer, skaner)",
+    formBusinessTypeOther: "Biznes turini aniqlang",
+    formSubmitError: "Yuborib bo'lmadi. Yana urinib ko'ring yoki bizga Telegramda yozing.",
+    formRateLimited: "Bitta qurilmadan juda ko'p so'rov. 10 daqiqadan keyin urinib ko'ring.",
+    formValidationError: "Maydonlarni tekshiring va yana urinib ko'ring.",
+    // Order matches BUSINESS_TYPE_VALUES in components/LeadForm.tsx — DO NOT REORDER
+    businessTypes: ["Do'kon", "Kafe", "Restoran", "Bozor", "Go'zallik", "Xizmat", "Boshqa"] as const,
+    success: "Ariza qabul qilindi. Ipak Savdo jamoasi siz bilan bog'lanadi.",
+    submit: "Ariza yuborish",
+    optional: "Qo'shimcha maydonlarni ko'rsatish",
 
     // FAQ
     faqTitle: "Tez-tez so'raladigan savollar",
@@ -370,3 +394,5 @@ export const dictionary = {
 export function getDictionary(locale: Locale) {
   return dictionary[locale];
 }
+
+export type Dict = ReturnType<typeof getDictionary>;
