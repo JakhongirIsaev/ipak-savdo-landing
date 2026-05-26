@@ -1,4 +1,4 @@
-import { pgTable, serial, text, boolean, timestamp, index } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, boolean, timestamp, index, integer } from "drizzle-orm/pg-core";
 
 export const businessTypes = ["shop", "cafe", "restaurant", "market", "beauty", "service", "other"] as const;
 export type BusinessType = (typeof businessTypes)[number];
@@ -30,6 +30,9 @@ export const leads = pgTable(
     language: text("language", { enum: languages }).notNull(),
     status: text("status", { enum: leadStatuses }).notNull().default("new"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    lastStatusChangeAt: timestamp("last_status_change_at", { withTimezone: true }),
+    lastChangedBy: text("last_changed_by"),
+    telegramMessageId: text("telegram_message_id"),
   },
   (t) => ({
     createdAtIdx: index("leads_created_at_idx").on(t.createdAt),
@@ -40,3 +43,21 @@ export const leads = pgTable(
 
 export type Lead = typeof leads.$inferSelect;
 export type NewLead = typeof leads.$inferInsert;
+
+export const leadEvents = pgTable(
+  "lead_events",
+  {
+    id: serial("id").primaryKey(),
+    leadId: integer("lead_id").notNull().references(() => leads.id, { onDelete: "cascade" }),
+    fromStatus: text("from_status", { enum: leadStatuses }),
+    toStatus: text("to_status", { enum: leadStatuses }).notNull(),
+    actor: text("actor").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    leadIdx: index("lead_events_lead_idx").on(t.leadId, t.createdAt),
+  }),
+);
+
+export type LeadEvent = typeof leadEvents.$inferSelect;
+export type NewLeadEvent = typeof leadEvents.$inferInsert;
