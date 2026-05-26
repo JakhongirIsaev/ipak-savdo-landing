@@ -11,6 +11,17 @@ interface StackedBarsProps {
   height: number;
 }
 
+const MAX_BAR_WIDTH = 48;
+
+function pickTicks(maxTotal: number): number[] {
+  if (maxTotal <= 1) return [1];
+  if (maxTotal <= 4) {
+    return Array.from({ length: maxTotal }, (_, i) => i + 1);
+  }
+  const candidates = [0.25, 0.5, 0.75, 1].map((f) => Math.round(maxTotal * f));
+  return Array.from(new Set(candidates)).filter((v) => v > 0);
+}
+
 export function StackedBars({ data, width, height }: StackedBarsProps) {
   const padding = { top: 16, right: 8, bottom: 24, left: 32 };
   const days = Array.from(new Set(data.map((d) => d.day))).sort();
@@ -26,9 +37,18 @@ export function StackedBars({ data, width, height }: StackedBarsProps) {
   );
   const maxTotal = Math.max(1, ...totals);
 
-  const colWidth = days.length === 0 ? 0 : (width - padding.left - padding.right) / days.length;
-  const barWidth = Math.max(2, colWidth - 2);
   const plotHeight = height - padding.top - padding.bottom;
+  const availableWidth = width - padding.left - padding.right;
+  const naturalColWidth = days.length === 0 ? 0 : availableWidth / days.length;
+  const barWidth = Math.min(MAX_BAR_WIDTH, Math.max(2, naturalColWidth - 2));
+  // Center bars when there are few days and natural column is wider than MAX_BAR_WIDTH
+  const colStep = days.length === 0
+    ? 0
+    : Math.min(naturalColWidth, MAX_BAR_WIDTH + 8);
+  const groupWidth = days.length * colStep;
+  const startX = padding.left + Math.max(0, (availableWidth - groupWidth) / 2);
+
+  const ticks = pickTicks(maxTotal);
 
   return (
     <svg
@@ -39,23 +59,36 @@ export function StackedBars({ data, width, height }: StackedBarsProps) {
       aria-label={`Лиды по дням за последние ${days.length} дн.`}
       className="block"
     >
-      {[0.25, 0.5, 0.75, 1].map((frac, i) => {
-        const y = padding.top + plotHeight * (1 - frac);
+      {ticks.map((tickValue, i) => {
+        const y = padding.top + plotHeight * (1 - tickValue / maxTotal);
         return (
           <g key={i}>
             <line x1={padding.left} y1={y} x2={width - padding.right} y2={y}
               stroke="#E8EBE5" strokeWidth={1} />
             <text x={padding.left - 4} y={y + 3} textAnchor="end"
               fontSize="10" fill="#6B7682" fontFamily="var(--font-body)">
-              {Math.round(maxTotal * frac)}
+              {tickValue}
             </text>
           </g>
         );
       })}
 
+      {days.length === 0 && (
+        <text
+          x={width / 2}
+          y={padding.top + plotHeight / 2}
+          textAnchor="middle"
+          fontSize="13"
+          fill="#6B7682"
+          fontFamily="var(--font-body)"
+        >
+          Нет данных за период
+        </text>
+      )}
+
       {days.map((day, i) => {
         const dayData = data.filter((d) => d.day === day);
-        const x = padding.left + i * colWidth + 1;
+        const x = startX + i * colStep + (colStep - barWidth) / 2;
         let yCursor = padding.top + plotHeight;
         return (
           <g key={day} className="day">

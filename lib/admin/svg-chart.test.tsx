@@ -20,6 +20,39 @@ describe("StackedBars", () => {
     const html = renderToString(<StackedBars data={[]} width={600} height={200} />);
     expect(html).toContain("<svg");
     expect(html).not.toMatch(/<g class="day"/);
+    expect(html).toContain("Нет данных за период");
+  });
+
+  it("does not duplicate Y-axis tick labels when maxTotal is small", () => {
+    // With maxTotal=1, the old code would render "1 1 1 0" (Math.round of 0.25/0.5/0.75/1)
+    const data = [{ day: "2026-05-26", source: "instagram", count: 1 }];
+    const html = renderToString(<StackedBars data={data} width={600} height={200} />);
+    // Extract Y-axis label numbers (text elements with text-anchor=end)
+    const labels = [...html.matchAll(/<text[^>]*text-anchor="end"[^>]*>([^<]+)<\/text>/g)]
+      .map((m) => m[1]);
+    // Should be just ["1"], not ["1","1","1","0"]
+    expect(labels).toEqual(["1"]);
+  });
+
+  it("uses integer ticks when maxTotal is 4 or less", () => {
+    const data = [
+      { day: "2026-05-25", source: "instagram", count: 3 },
+      { day: "2026-05-26", source: "instagram", count: 1 },
+    ];
+    const html = renderToString(<StackedBars data={data} width={600} height={200} />);
+    const labels = [...html.matchAll(/<text[^>]*text-anchor="end"[^>]*>([^<]+)<\/text>/g)]
+      .map((m) => m[1]);
+    expect(labels).toEqual(["1", "2", "3"]);
+  });
+
+  it("caps bar width at MAX_BAR_WIDTH (48px) for sparse data", () => {
+    // With 1 day and width=600, the old code would render a bar ~558px wide
+    const data = [{ day: "2026-05-26", source: "instagram", count: 1 }];
+    const html = renderToString(<StackedBars data={data} width={600} height={200} />);
+    const barWidths = [...html.matchAll(/<rect[^>]*width="([\d.]+)"/g)]
+      .map((m) => parseFloat(m[1]));
+    const maxBarW = Math.max(...barWidths);
+    expect(maxBarW).toBeLessThanOrEqual(48);
   });
 });
 
