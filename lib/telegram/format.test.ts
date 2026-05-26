@@ -21,6 +21,9 @@ const baseLead: Lead = {
   language: "ru",
   status: "new",
   createdAt: new Date("2026-05-25T13:42:00Z"),
+  lastStatusChangeAt: null,
+  lastChangedBy: null,
+  telegramMessageId: null,
 };
 
 describe("formatLeadMessage", () => {

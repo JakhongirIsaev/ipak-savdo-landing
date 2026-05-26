@@ -21,6 +21,9 @@ const lead: Lead = {
   language: "ru",
   status: "new",
   createdAt: new Date(),
+  lastStatusChangeAt: null,
+  lastChangedBy: null,
+  telegramMessageId: null,
 };
 
 describe("notifyNewLead", () => {
