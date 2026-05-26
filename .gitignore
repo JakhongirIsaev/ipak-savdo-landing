@@ -40,6 +40,18 @@ qa-*.png
 # Git worktrees (created by subagent-driven-development workflow)
 .worktrees/
 
+# Subagent swarm worktrees (legacy, orphaned)
+.swarm/
+
+# gstack project artifacts (local-only)
+.gstack/
+
+# Internal research artifacts (product walks, QA captures)
+.research/
+
+# Local dev test logs
+dev-server-test.log
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
