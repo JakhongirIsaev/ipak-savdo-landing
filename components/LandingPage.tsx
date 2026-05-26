@@ -11,6 +11,7 @@ import { Pain } from "@/components/landing/Pain";
 import { Capabilities } from "@/components/landing/Capabilities";
 import { VoiceInsert } from "@/components/landing/VoiceInsert";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import { ForOwner } from "@/components/landing/ForOwner";
 import { WhyBirliy } from "@/components/landing/WhyBirliy";
 import { Equipment } from "@/components/landing/Equipment";
 import { Roadmap } from "@/components/landing/Roadmap";
@@ -49,6 +50,7 @@ export default function LandingPage() {
       <Capabilities t={t} />
       <VoiceInsert t={t} />
       <HowItWorks id="how-it-works" t={t.howItWorks} />
+      <ForOwner id="owner" t={t.owner} />
       <WhyBirliy t={t} />
       <Equipment t={t} />
       <Roadmap t={t} />
