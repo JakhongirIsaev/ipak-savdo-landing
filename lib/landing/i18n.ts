@@ -345,14 +345,12 @@ const ru = {
         links: [
           { label: "Ранний доступ", href: "#lead" },
           { label: "Оборудование", href: "#equipment" },
-          { label: "Что внутри", href: "#capabilities" },
+          { label: "Цена", href: "#freemium" },
         ],
       },
       {
         title: "Контакт",
-        links: [
-          { label: "Написать в Telegram", href: "https://t.me/birliy_uz" },
-        ],
+        links: [],
       },
     ],
     phone: "+998 90 000-00-00",
@@ -705,18 +703,16 @@ const uz: typeof ru = {
         links: [
           { label: "Erta kirish", href: "#lead" },
           { label: "Jihozlar", href: "#equipment" },
-          { label: "Ichida nima bor", href: "#capabilities" },
+          { label: "Narx", href: "#freemium" },
         ],
       },
       {
-        title: "Aloqa",
-        links: [
-          { label: "Telegramda yozish", href: "https://t.me/birliy_uz" },
-        ],
+        title: "Kontakt",
+        links: [],
       },
     ],
     phone: "+998 90 000-00-00",
-    copyright: "© 2026 BirLiy. Produkct Ipak Yuli Bank.",
+    copyright: "© 2026 BirLiy. Ipak Yuli Bank mahsuloti.",
     tagline: "Sizning biznesingiz. Bitta joyda.",
   },
 
