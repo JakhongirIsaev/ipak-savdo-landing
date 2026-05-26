@@ -67,15 +67,4 @@ describe("leadInputSchema", () => {
     const result = leadInputSchema.safeParse({ ...valid, language: "en" });
     expect(result.success).toBe(false);
   });
-
-  it("ignores honeypot when empty", () => {
-    const result = leadInputSchema.safeParse({ ...valid, _hp: "" });
-    expect(result.success).toBe(true);
-  });
-
-  it("accepts honeypot when filled (separate gate handles it)", () => {
-    // The schema does not reject _hp; the route handler treats non-empty _hp as silent-200.
-    const result = leadInputSchema.safeParse({ ...valid, _hp: "bot" });
-    expect(result.success).toBe(true);
-  });
 });

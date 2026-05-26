@@ -15,7 +15,6 @@ export const leadInputSchema = z
     utm_medium: z.string().trim().max(100).optional().nullable(),
     utm_campaign: z.string().trim().max(100).optional().nullable(),
     language: z.enum(languages),
-    _hp: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.business_type === "other") {

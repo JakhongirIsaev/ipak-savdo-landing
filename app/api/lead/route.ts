@@ -21,6 +21,10 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
 
+  if (typeof raw === "object" && raw !== null && "_hp" in raw && typeof (raw as { _hp: unknown })._hp === "string" && (raw as { _hp: string })._hp.length > 0) {
+    return Response.json({ ok: true, id: 0 });
+  }
+
   const parsed = leadInputSchema.safeParse(raw);
   if (!parsed.success) {
     return Response.json(
@@ -29,10 +33,6 @@ export async function POST(req: Request): Promise<Response> {
     );
   }
   const data = parsed.data;
-
-  if (data._hp && data._hp.length > 0) {
-    return Response.json({ ok: true, id: 0 });
-  }
 
   try {
     const [inserted] = await db
