@@ -13,8 +13,11 @@ import { VoiceInsert } from "@/components/landing/VoiceInsert";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { ForOwner } from "@/components/landing/ForOwner";
 import { WhyBirliy } from "@/components/landing/WhyBirliy";
+import { SegmentsV2 } from "@/components/landing/SegmentsV2";
 import { Equipment } from "@/components/landing/Equipment";
+import { Freemium } from "@/components/landing/Freemium";
 import { Roadmap } from "@/components/landing/Roadmap";
+import { EarlyAccess } from "@/components/landing/EarlyAccess";
 import { LeadSection } from "@/components/landing/LeadSection";
 import { FAQ } from "@/components/landing/FAQ";
 import { Footer } from "@/components/landing/Footer";
@@ -52,8 +55,11 @@ export default function LandingPage() {
       <HowItWorks id="how-it-works" t={t.howItWorks} />
       <ForOwner id="owner" t={t.owner} />
       <WhyBirliy t={t} />
+      <SegmentsV2 id="segments" t={t.segmentsV2} />
       <Equipment t={t} />
+      <Freemium id="freemium" t={t.freemium} />
       <Roadmap t={t} />
+      <EarlyAccess t={t.earlyAccess} />
       <LeadSection t={t} locale={locale} attribution={attribution} />
       <FAQ t={t} />
       <Footer t={t} locale={locale} switchLocale={switchLocale} />
