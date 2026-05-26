@@ -1,4 +1,5 @@
-import { db, leads } from "@/lib/db";
+import { db, leads, leadEvents } from "@/lib/db";
+import { eq } from "drizzle-orm";
 import { leadInputSchema } from "@/lib/validators/lead";
 import { leadRateLimiter } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/http/get-ip";
@@ -56,7 +57,22 @@ export async function POST(req: Request): Promise<Response> {
       })
       .returning();
 
-    void notifyNewLead(inserted);
+    // Initial audit-log row
+    await db.insert(leadEvents).values({
+      leadId: inserted.id,
+      fromStatus: null,
+      toStatus: "new",
+      actor: "system",
+    });
+
+    // Notify + capture message_id
+    const { messageId } = await notifyNewLead(inserted);
+    if (messageId) {
+      await db
+        .update(leads)
+        .set({ telegramMessageId: messageId })
+        .where(eq(leads.id, inserted.id));
+    }
 
     return Response.json({ ok: true, id: inserted.id });
   } catch (err) {

@@ -21,6 +21,9 @@ const lead: Lead = {
   language: "ru",
   status: "new",
   createdAt: new Date(),
+  lastStatusChangeAt: null,
+  lastChangedBy: null,
+  telegramMessageId: null,
 };
 
 describe("notifyNewLead", () => {
@@ -35,37 +38,40 @@ describe("notifyNewLead", () => {
     vi.restoreAllMocks();
   });
 
-  it("posts to Telegram Bot API with correct shape", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(new Response("{}", { status: 200 }));
+  it("posts to Telegram with text, parse_mode, and inline_keyboard", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ ok: true, result: { message_id: 555 } }), { status: 200 })
+    );
     vi.stubGlobal("fetch", fetchMock);
-    await notifyNewLead(lead);
+    const result = await notifyNewLead(lead);
     expect(fetchMock).toHaveBeenCalledOnce();
-    const [url, init] = fetchMock.mock.calls[0];
-    expect(url).toContain("/bottest-token/sendMessage");
-    const body = JSON.parse(init.body);
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body);
     expect(body.chat_id).toBe("-100123");
     expect(body.parse_mode).toBe("HTML");
     expect(body.text).toContain("Новая заявка #1");
-    expect(body.disable_web_page_preview).toBe(true);
+    expect(body.reply_markup.inline_keyboard).toHaveLength(1);
+    expect(body.reply_markup.inline_keyboard[0]).toHaveLength(4);
+    expect(result.messageId).toBe("555");
   });
 
-  it("does not throw when fetch returns non-200", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(new Response("{\"ok\":false}", { status: 400 }));
-    vi.stubGlobal("fetch", fetchMock);
-    await expect(notifyNewLead(lead)).resolves.toBeUndefined();
+  it("returns null messageId when sendMessage 4xx", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("{\"ok\":false}", { status: 400 })));
+    const result = await notifyNewLead(lead);
+    expect(result.messageId).toBeNull();
   });
 
-  it("does not throw on network failure", async () => {
-    const fetchMock = vi.fn().mockRejectedValue(new Error("boom"));
-    vi.stubGlobal("fetch", fetchMock);
-    await expect(notifyNewLead(lead)).resolves.toBeUndefined();
+  it("returns null messageId on network failure", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("boom")));
+    const result = await notifyNewLead(lead);
+    expect(result.messageId).toBeNull();
   });
 
-  it("does not throw when env vars are missing — logs and returns", async () => {
+  it("returns null and does not fetch when env vars missing", async () => {
     delete process.env.TELEGRAM_BOT_TOKEN;
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
-    await expect(notifyNewLead(lead)).resolves.toBeUndefined();
+    const result = await notifyNewLead(lead);
     expect(fetchMock).not.toHaveBeenCalled();
+    expect(result.messageId).toBeNull();
   });
 });

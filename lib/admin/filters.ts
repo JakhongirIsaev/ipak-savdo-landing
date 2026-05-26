@@ -1,5 +1,5 @@
 import { and, between, eq, gte, ilike, lte, or, type SQL } from "drizzle-orm";
-import { leads, type BusinessType, businessTypes } from "@/lib/db/schema";
+import { leads, leadStatuses, type BusinessType, type LeadStatus, businessTypes } from "@/lib/db/schema";
 
 export interface LeadFilters {
   from: Date | null;
@@ -9,6 +9,7 @@ export interface LeadFilters {
   equipment: boolean | null;
   q: string | null;
   page: number;
+  status: LeadStatus | null;
 }
 
 export const PAGE_SIZE = 50;
@@ -40,6 +41,12 @@ export function parseLeadFilters(params: URLSearchParams): LeadFilters {
   const pageRaw = pageStr ? parseInt(pageStr, 10) : 1;
   const page = !pageRaw || pageRaw < 1 || isNaN(pageRaw) ? 1 : pageRaw;
 
+  const statusStr = params.get("status");
+  const status: LeadStatus | null =
+    statusStr && (leadStatuses as readonly string[]).includes(statusStr)
+      ? (statusStr as LeadStatus)
+      : null;
+
   return {
     from: parseDay(fromStr),
     to: parseDay(toStr, true),
@@ -48,6 +55,7 @@ export function parseLeadFilters(params: URLSearchParams): LeadFilters {
     equipment,
     q: q && q.length > 0 ? q : null,
     page,
+    status,
   };
 }
 
@@ -59,6 +67,7 @@ export function buildWhereClause(filters: LeadFilters): SQL | undefined {
   if (filters.source) clauses.push(eq(leads.source, filters.source));
   if (filters.businessType) clauses.push(eq(leads.businessType, filters.businessType));
   if (filters.equipment !== null) clauses.push(eq(leads.needsEquipment, filters.equipment));
+  if (filters.status) clauses.push(eq(leads.status, filters.status));
   if (filters.q) {
     const like = `%${filters.q}%`;
     const orClause = or(ilike(leads.businessName, like), ilike(leads.ownerName, like));

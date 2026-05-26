@@ -48,3 +48,40 @@ Railway service `ipak-savdo-landing`. On every push to `main`:
 - **Sub-3 (planned):** Behavioral analytics via PostHog Cloud (funnel, heatmaps, recordings)
 
 Design docs in `docs/superpowers/specs/`.
+
+## Sales pipeline (Sub-2 — shipped)
+
+- `/admin/dashboard` — 6 KPI tiles + 30-day stacked bars + funnel + top sources
+- `/admin/leads/[id]` — single-lead detail + chronological event timeline
+- Status transitions via inline buttons in Telegram OR via the dropdown in the leads table
+
+### One-time webhook registration
+
+After deploying Sub-2 to production:
+
+```bash
+TOKEN=...                                   # your bot token
+SECRET=$(openssl rand -hex 32)              # save to Railway as TELEGRAM_WEBHOOK_SECRET
+URL=https://your-domain/api/telegram/webhook
+
+curl -X POST "https://api.telegram.org/bot$TOKEN/setWebhook" \
+  -d "url=$URL" \
+  -d "secret_token=$SECRET" \
+  -d "allowed_updates=[\"callback_query\",\"message\"]"
+```
+
+Verify:
+
+```bash
+curl "https://api.telegram.org/bot$TOKEN/getWebhookInfo"
+```
+
+### Backfilling event history
+
+For leads created before Sub-2 shipped:
+
+```bash
+pnpm tsx scripts/backfill-events.ts
+```
+
+This is idempotent — it only adds a `lead_events` row for leads that have none.
