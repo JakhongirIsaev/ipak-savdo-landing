@@ -280,7 +280,7 @@ const ru = {
   },
 
   freemium: {
-    eyebrow: "06 / Цена",
+    eyebrow: "07 / Цена",
     headline: "Бесплатно 6 месяцев. Без условий.",
     body: "BirLiy сейчас в этапе раннего доступа. Первая когорта пилотных клиентов получает полный функционал бесплатно — на 6 месяцев. Никаких ограничений по числу чеков, товаров или операций. Платные тарифы появятся после периода раннего доступа — когда мы будем уверены, что продукт точно решает вашу задачу.",
     bullets: [
@@ -301,7 +301,7 @@ const ru = {
   },
 
   earlyAccess: {
-    eyebrow: "08 / Ранний доступ",
+    eyebrow: "09 / Ранний доступ",
     headline: "Мы запускаемся с первой когортой пилотов",
     body: "BirLiy сейчас работает в первых пилотных магазинах Ташкента. Подключение занимает один день: установка приложения, импорт каталога, первое обучение кассира — мы делаем всё это с вами. 6 месяцев без оплаты. Если вы хотите быть в первой когорте — оставьте заявку.",
     promises: [
@@ -639,7 +639,7 @@ const uz: typeof ru = {
   },
 
   freemium: {
-    eyebrow: "06 / Narx",
+    eyebrow: "07 / Narx",
     headline: "6 oy bepul. Shartlarsiz.",
     body: "BirLiy hozir erta kirish bosqichida. Birinchi pilot mijozlar kogortalari to'liq funksionallikni bepul oladi — 6 oy davomida. Cheklar, tovarlar yoki operatsiyalar soni bo'yicha cheklov yo'q. Pullik tariflar erta kirish davridan keyin paydo bo'ladi — mahsulot sizning muammoingizni aniq hal qilishiga ishonch hosil qilganimizda.",
     bullets: [
@@ -660,7 +660,7 @@ const uz: typeof ru = {
   },
 
   earlyAccess: {
-    eyebrow: "08 / Erta kirish",
+    eyebrow: "09 / Erta kirish",
     headline: "Biz birinchi pilot kogorta bilan ishga tushmoqdamiz",
     body: "BirLiy hozir Toshkentning birinchi pilot do'konlarida ishlayapti. Ulanish bir kun davom etadi: ilovani o'rnatish, katalogni import qilish, kassirni birinchi o'qitish — bularni biz siz bilan birgalikda qilamiz. 6 oy to'lovsiz. Birinchi kohortada bo'lishni istasangiz — ariza qoldiring.",
     promises: [

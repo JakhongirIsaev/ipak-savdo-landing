@@ -17,7 +17,7 @@ export function LeadSection({ t, locale, attribution }: LeadSectionProps) {
       <div className="section-shell grid gap-16 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
-            05 / {t.formTitle}
+            {t.formTitle}
           </p>
           <h2 className="mt-5 max-w-[14ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
             {t.formTitle}

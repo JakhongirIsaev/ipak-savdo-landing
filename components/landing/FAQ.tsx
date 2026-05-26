@@ -12,7 +12,7 @@ export function FAQ({ t }: { t: LandingDict }) {
       <div className="section-shell">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
-            06 / {t.faqTitle}
+            10 / {t.faqTitle}
           </p>
           <h2 className="mt-5 max-w-[16ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
             {t.faqTitle}

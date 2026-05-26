@@ -6,7 +6,7 @@ export function Roadmap({ t }: { t: LandingDict }) {
       <div className="section-shell">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
-            04 / {t.roadmapTitle}
+            08 / {t.roadmapTitle}
           </p>
           <h2 className="mt-5 max-w-[20ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
             {t.roadmapTitle}
