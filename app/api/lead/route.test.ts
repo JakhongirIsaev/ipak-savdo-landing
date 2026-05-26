@@ -3,26 +3,69 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 // Mocks must be hoisted before importing the route.
 vi.mock("@/lib/db", () => {
   const insertedRows: any[] = [];
-  return {
-    db: {
-      insert: () => ({
-        values: (row: any) => ({
-          returning: async () => {
-            const inserted = { ...row, id: insertedRows.length + 1, createdAt: new Date() };
+  const eventRows: any[] = [];
+  const updates: any[] = [];
+
+  const insertChain = (table: { __id: string }) => ({
+    values: (row: any) => {
+      const out: any = {
+        returning: async () => {
+          if (table.__id === "leads") {
+            const inserted = {
+              ...row,
+              id: insertedRows.length + 1,
+              createdAt: new Date(),
+              status: "new",
+              telegramMessageId: null,
+              lastStatusChangeAt: null,
+              lastChangedBy: null,
+            };
             insertedRows.push(inserted);
             return [inserted];
+          }
+          if (table.__id === "leadEvents") {
+            eventRows.push(row);
+            return [];
+          }
+          return [];
+        },
+        then: (resolve: (v: undefined) => void) => {
+          if (table.__id === "leadEvents") {
+            eventRows.push(row);
+          }
+          resolve(undefined);
+        },
+      };
+      return out;
+    },
+  });
+
+  return {
+    db: {
+      insert: insertChain,
+      update: () => ({
+        set: (patch: any) => ({
+          where: async () => {
+            updates.push(patch);
           },
         }),
       }),
     },
-    leads: {},
+    leads: { __id: "leads" },
+    leadEvents: { __id: "leadEvents" },
     __getInserted: () => insertedRows,
-    __reset: () => insertedRows.splice(0),
+    __getEvents: () => eventRows,
+    __getUpdates: () => updates,
+    __reset: () => {
+      insertedRows.splice(0);
+      eventRows.splice(0);
+      updates.splice(0);
+    },
   };
 });
 
 vi.mock("@/lib/telegram/notify", () => ({
-  notifyNewLead: vi.fn().mockResolvedValue(undefined),
+  notifyNewLead: vi.fn().mockResolvedValue({ messageId: "555" }),
 }));
 
 import { POST } from "./route";
@@ -62,6 +105,14 @@ describe("POST /api/lead", () => {
     expect(typeof json.id).toBe("number");
     expect((dbMod as any).__getInserted()).toHaveLength(1);
     expect(notifyNewLead).toHaveBeenCalledOnce();
+    expect((dbMod as any).__getEvents()).toHaveLength(1);
+    expect((dbMod as any).__getEvents()[0]).toMatchObject({
+      fromStatus: null,
+      toStatus: "new",
+      actor: "system",
+    });
+    expect((dbMod as any).__getUpdates()).toHaveLength(1);
+    expect((dbMod as any).__getUpdates()[0]).toMatchObject({ telegramMessageId: "555" });
   });
 
   it("returns 400 on validation failure", async () => {
@@ -76,6 +127,8 @@ describe("POST /api/lead", () => {
     const res = await POST(makeReq({ ...validBody, _hp: "bot-trap" }, "3.3.3.3"));
     expect(res.status).toBe(200);
     expect((dbMod as any).__getInserted()).toHaveLength(0);
+    expect((dbMod as any).__getEvents()).toHaveLength(0);
+    expect((dbMod as any).__getUpdates()).toHaveLength(0);
     expect(notifyNewLead).not.toHaveBeenCalled();
   });
 
