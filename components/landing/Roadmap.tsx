@@ -13,7 +13,7 @@ export function Roadmap({ t }: { t: LandingDict }) {
           </h2>
         </div>
 
-        <div className="mt-16 grid gap-12 border-t border-ink-900/10 pt-12 md:grid-cols-3 md:gap-8">
+        <div className="mt-16 grid gap-12 border-t border-ink-900/10 pt-12 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           {t.roadmap.map(([label, body], i) => (
             <div key={label} className="relative">
               <div className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">

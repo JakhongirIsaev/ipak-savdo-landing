@@ -89,9 +89,10 @@ const ru = {
 
   roadmapTitle: "Что дальше",
   roadmap: [
-    ["Сейчас", "Касса, склад, QR-оплата, электронный чек, отчёты."],
-    ["Скоро", "Акции, скидки и уведомления клиентам в Telegram."],
-    ["Далее", "Закупки у поставщиков и банковские сервисы для бизнеса."],
+    ["Сейчас", "Касса, склад, QR-оплата, электронный чек, отчёты, Telegram-бот."],
+    ["Q3 2026", "Программа лояльности, акции и скидки клиентам, расширенный Telegram-marketing."],
+    ["Q4 2026", "Подключение к банковским сервисам Ipak Yuli внутри приложения."],
+    ["2027", "B2B-маркетплейс закупок у поставщиков + лимиты, факторинг, BNPL."],
   ],
 
   formTitle: "Оставьте заявку",
@@ -447,9 +448,10 @@ const uz: typeof ru = {
 
   roadmapTitle: "Keyin nima",
   roadmap: [
-    ["Hozir", "Kassa, ombor, QR-to'lov, elektron chek, hisobotlar."],
-    ["Tez orada", "Aksiyalar, chegirmalar va mijozlarga Telegram xabarnomalar."],
-    ["Keyinchalik", "Yetkazib beruvchilardan xarid va biznes uchun bank xizmatlari."],
+    ["Hozir", "Kassa, ombor, QR-to'lov, elektron chek, hisobotlar, Telegram-bot."],
+    ["Q3 2026", "Sodiqlik dasturi, mijozlarga aksiyalar va chegirmalar, kengaytirilgan Telegram-marketing."],
+    ["Q4 2026", "Ilova ichida Ipak Yuli bank xizmatlariga ulanish."],
+    ["2027", "Yetkazib beruvchilardan B2B-marketplace + limitlar, faktoring, BNPL."],
   ],
 
   formTitle: "Ariza qoldiring",
