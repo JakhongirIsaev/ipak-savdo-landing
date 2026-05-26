@@ -1,0 +1,21 @@
+interface PainProps {
+  t: { eyebrow: string; headline: string; body: string };
+}
+
+export function Pain({ t }: PainProps) {
+  return (
+    <section className="border-t border-mist py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">{t.eyebrow}</p>
+          <h2 className="mt-5 max-w-[18ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.headline}
+          </h2>
+          <p className="mt-8 max-w-[58ch] text-[19px] font-light leading-relaxed text-ink-700">
+            {t.body}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

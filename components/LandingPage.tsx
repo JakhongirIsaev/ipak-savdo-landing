@@ -7,6 +7,7 @@ import type { Locale } from "@/components/landing/_shared";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { TrustStrip } from "@/components/landing/TrustStrip";
+import { Pain } from "@/components/landing/Pain";
 import { Capabilities } from "@/components/landing/Capabilities";
 import { VoiceInsert } from "@/components/landing/VoiceInsert";
 import { ProductMoment } from "@/components/landing/ProductMoment";
@@ -44,6 +45,7 @@ export default function LandingPage() {
       <Header t={t} locale={locale} switchLocale={switchLocale} scrollTo={scrollTo} navTargets={navTargets} />
       <Hero t={t} />
       <TrustStrip t={t.trustStrip} />
+      <Pain t={t.pain} />
       <Capabilities t={t} />
       <VoiceInsert t={t} />
       <ProductMoment t={t} />
