@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import LeadFormStandalone from "@/components/LeadForm";
 import { useAttribution } from "@/lib/use-attribution";
 import { dicts, type LandingDict } from "@/lib/landing/i18n";
+import { TrustStrip } from "@/components/landing/TrustStrip";
 
 type Locale = "ru" | "uz";
 
@@ -61,6 +62,7 @@ export default function LandingPage() {
     <main className="min-h-screen bg-paper text-ink-900 antialiased">
       <Header t={t} locale={locale} switchLocale={switchLocale} scrollTo={scrollTo} navTargets={navTargets} />
       <Hero t={t} />
+      <TrustStrip t={t.trustStrip} />
       <Capabilities t={t} />
       <VoiceInsert t={t} />
       <ProductMoment t={t} />
