@@ -9,28 +9,53 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "primary-dark-green": "#005B45",
-        "primary-green": "#007A5A",
-        "cta-green": "#00C853",
-        "accent-green": "#00A86B",
-        "lime-accent": "#B7F34A",
-        "soft-mint": "#EAF7F1",
-        "soft-green-bg": "#F3FBF7",
-        "text-dark": "#101828",
-        "text-muted": "#667085",
-        "card-border": "#E5E7EB",
+        // BirLiy Green scale
+        green: {
+          50: "#ECFAEE",
+          100: "#D6F3DD",
+          300: "#7ED99A",
+          500: "#03B73D",
+          700: "#027F2E",
+          800: "#015521",
+        },
+        // BirLiy ink/paper/mist
+        ink: {
+          900: "#0B1826",
+          700: "#3B4756",
+          500: "#6B7682",
+        },
+        paper: "#F6F7F4",
+        mist: "#E8EBE5",
+        // Signals — UI states only, never decoration
+        warn: "#FFC83D",
+        stop: "#E5484D",
+        info: "#3C82F6",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
+      letterSpacing: {
+        // Sora display headlines benefit from slightly tighter tracking
+        tightish: "-0.015em",
+      },
+      transitionTimingFunction: {
+        // BirLiy default ease-out — settle, don't bounce
+        "birliy": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      },
+      transitionDuration: {
+        "120": "120ms",
+        "320": "320ms",
+        "600": "600ms",
       },
       animation: {
-        "float": "float 6s ease-in-out infinite",
-        "pulse-slow": "pulse 3s ease-in-out infinite",
+        "settle-in": "settleIn 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both",
       },
       keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
+        settleIn: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
     },

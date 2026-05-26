@@ -1,63 +1,46 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ArrowRight,
-  BarChart3,
   Check,
-  CheckCircle2,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Coffee,
-  AlertTriangle,
-  FileText,
-  Heart,
-  Menu,
-  Package,
-  Pause,
-  Pill,
-  Play,
-  Printer,
-  QrCode,
-  Receipt,
   ScanLine,
-  Shield,
-  ShoppingCart,
-  Smartphone,
-  Store,
-  Tablet,
-  TrendingUp,
-  Users,
+  Package,
+  QrCode,
   WifiOff,
-  Wrench,
-  X,
-  Zap,
+  BarChart3,
+  Tablet,
+  Smartphone,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 import LeadFormStandalone from "@/components/LeadForm";
 import { useAttribution } from "@/lib/use-attribution";
 
 type Locale = "ru" | "uz";
 
+/* ────────────────────────────────────────────────────────────
+   Copy. Plain, practical, unhurried. Short sentences. Real verbs.
+   Both dicts MUST stay structurally identical (typeof ru === typeof uz).
+   ──────────────────────────────────────────────────────────── */
+
 const ru = {
   nav: ["Возможности", "Оборудование", "FAQ"],
   cta: "Оставить заявку",
-  title: "Ipak Savdo — касса, склад и QR-оплата в одном приложении",
+  title: "Ваш бизнес. В одном месте.",
   subtitle:
-    "Продавайте со смартфона или планшета, принимайте оплату по QR, отправляйте электронный чек и контролируйте остатки — без сложных программ.",
+    "BirLiy собирает кассу, склад и оплаты в одну спокойную поверхность. Без вкладок, без переключений — одна рабочая среда на смартфоне или планшете.",
   telegram: "Написать в Telegram",
   demo: "Смотреть демо",
-  trust: "Для магазинов у дома, минимаркетов, кафе, аптек и сервисных точек.",
+  trust: "Магазины у дома, минимаркеты, кафе, аптеки, сервисные точки.",
   badges: [
     "QR-оплата в момент продажи",
     "Остатки обновляются автоматически",
     "Работа при слабом интернете",
     "Отчёты по выручке и кассирам",
   ],
-  ecosystemBadge: "Продукт экосистемы Ipak Yuli Bank",
+  ecosystemBadge: "Workspace для бизнеса",
 
   problemTitle: "Знакомые проблемы?",
   problems: [
@@ -67,31 +50,31 @@ const ru = {
     ["Нет времени разбираться", "Сложные программы требуют обучения, настройки и компьютера."],
   ],
 
-  segmentsTitle: "Для кого Ipak Savdo",
+  segmentsTitle: "Для кого BirLiy",
   segments: [
-    ["Магазины у дома", "Продукты, бытовая химия, повседневные товары — быстрые продажи и понятный учёт."],
-    ["Минимаркеты", "Сотни позиций, несколько кассиров — нужен контроль остатков и выручки."],
-    ["Кафе и точки питания", "Быстрый заказ, оплата по QR, чек в Telegram — без лишних устройств."],
-    ["Аптеки", "Точный учёт по наименованиям, контроль сроков и остатков."],
+    ["Магазины у дома", "Продукты, бытовая химия, повседневные товары."],
+    ["Минимаркеты", "Сотни позиций, несколько кассиров, контроль остатков."],
+    ["Кафе и точки питания", "Быстрый заказ, оплата по QR, чек в Telegram."],
+    ["Аптеки", "Точный учёт по наименованиям, контроль сроков."],
     ["Сервисные точки", "Ремонт, химчистка, ателье — приём оплаты и учёт заказов."],
   ],
 
-  benefitsTitle: "Почему выбирают Ipak Savdo",
+  benefitsTitle: "Почему BirLiy",
   benefits: [
-    ["Начните за 5 минут", "Скачайте приложение, добавьте товары — и сразу продавайте. Без установки программ и оборудования."],
-    ["Всё в одном месте", "Касса, склад, QR-оплата, чеки и отчёты — в одном приложении на вашем смартфоне."],
-    ["Понятно без обучения", "Интерфейс создан для тех, кто никогда не работал с кассовыми программами."],
-    ["Надёжная связь с банком", "Продукт экосистемы Ipak Yuli Bank — безопасные платежи и поддержка."],
+    ["Начните за пять минут", "Скачайте приложение, добавьте товары — и продавайте. Без установок и оборудования."],
+    ["Всё в одной поверхности", "Касса, склад, QR-оплата, чеки и отчёты — без вкладок и переключений."],
+    ["Понятно без обучения", "Интерфейс собран для тех, кто никогда не работал с кассовыми программами."],
+    ["Спокойный фон для шумной работы", "Меньше частей — больше ясности. Поверхность не отвлекает кассира от покупателя."],
   ],
 
-  featuresTitle: "Что умеет Ipak Savdo",
+  featuresTitle: "Что делает BirLiy",
   features: [
-    ["Касса и продажи", "Сканер или камера, быстрый поиск товара, скидки, возврат и отложенный чек."],
+    ["Касса и продажи", "Сканер или камера, быстрый поиск, скидки, возврат, отложенный чек."],
     ["Каталог и склад", "Товары, категории, штучные и весовые позиции, остатки и списания."],
     ["QR-оплата", "Покупатель сканирует QR — оплата поступает мгновенно. Наличные, карта или QR."],
-    ["Электронный чек", "Чек отправляется покупателю в Telegram. Печать можно подключить отдельно."],
-    ["Программа лояльности", "Бонусы, скидки и акции для постоянных покупателей — всё внутри приложения."],
-    ["Отчёты", "Выручка за день, средний чек, топ-товары и работа кассиров — всё наглядно."],
+    ["Электронный чек", "Чек уходит покупателю в Telegram. Печать можно подключить отдельно."],
+    ["Программа лояльности", "Бонусы, скидки и акции для постоянных покупателей."],
+    ["Отчёты", "Выручка за день, средний чек, топ-товары, работа кассиров."],
   ],
 
   workflowTitle: "Как проходит продажа",
@@ -111,27 +94,28 @@ const ru = {
 
   offlineTitle: "Интернет пропал? Касса работает",
   offlineText:
-    "Кассир продолжает пробивать товары. Когда связь восстановится, все продажи и остатки синхронизируются автоматически.",
+    "Кассир продолжает пробивать товары. Когда связь восстановится, всё синхронизируется автоматически.",
   offlineBadge: "Работа при слабом интернете",
   offlineSteps: ["Продажа сохранена локально", "Интернет восстановился", "Данные синхронизированы"],
 
-  equipmentTitle: "Два формата — под ваш бизнес",
+  equipmentTitle: "Два формата под ваш бизнес",
   equipFullTitle: "Продуктовый магазин",
-  equipFullDesc: "Планшет + сканер штрих-кодов + термопринтер чеков. Полный контроль склада и быстрая работа с потоком покупателей.",
+  equipFullDesc: "Планшет, сканер штрих-кодов и термопринтер чеков. Полный контроль склада и быстрый поток покупателей.",
   equipFullItems: ["Планшет", "Сканер штрих-кодов", "Термопринтер чеков"],
   equipLiteTitle: "Магазин одежды и другие",
   equipLiteDesc: "Приложение на Android или iOS — всё, что нужно. Простой учёт, QR-оплата и чек в Telegram прямо с телефона.",
   equipLiteItems: ["Android-приложение", "iOS-приложение", "Без доп. оборудования"],
 
-  roadmapTitle: "Что появится дальше",
+  roadmapTitle: "Что дальше",
   roadmap: [
-    ["Сейчас", "Касса, склад, QR-оплата, электронный чек, отчёты"],
-    ["Скоро", "Акции, скидки и уведомления клиентам в Telegram"],
-    ["Далее", "Закупки у поставщиков и удобные банковские сервисы для бизнеса"],
+    ["Сейчас", "Касса, склад, QR-оплата, электронный чек, отчёты."],
+    ["Скоро", "Акции, скидки и уведомления клиентам в Telegram."],
+    ["Далее", "Закупки у поставщиков и банковские сервисы для бизнеса."],
   ],
 
-  formTitle: "Заявка на ранний доступ",
-  success: "Заявка принята. Команда Ipak Savdo свяжется с вами.",
+  formTitle: "Оставьте заявку",
+  formIntro: "Расскажем, как BirLiy подходит под ваш формат. Без обзвонов и навязчивости.",
+  success: "Заявка принята. Команда BirLiy свяжется с вами.",
   formName: "Имя",
   formPhone: "Телефон",
   formBusiness: "Тип бизнеса",
@@ -155,26 +139,31 @@ const ru = {
   optional: "Показать дополнительные поля",
   submit: "Отправить заявку",
 
-  faqTitle: "Часто задаваемые вопросы",
+  faqTitle: "Вопросы и ответы",
   faq: [
     ["Нужно ли покупать компьютер?", "Нет. Достаточно смартфона или планшета."],
     ["Можно ли подключить сканер?", "Да. Подойдёт любой 2D Bluetooth-сканер."],
     ["Как работает QR-оплата?", "Покупатель сканирует QR-код на экране — деньги поступают на счёт мгновенно."],
-    ["Что происходит со складом после продажи?", "Остаток товара обновляется автоматически после каждой продажи."],
+    ["Что происходит со складом после продажи?", "Остаток обновляется автоматически после каждой продажи."],
     ["Приложение работает без интернета?", "Да. Продажи сохраняются и синхронизируются, когда связь вернётся."],
   ],
+
+  voiceTitle: "Меньше частей. Больше ясности.",
+  voiceBody:
+    "BirLiy собирает разрозненную работу — продажи, склад, оплаты — в одну спокойную поверхность. Касса не борется со складом. Склад не борется с отчётами. Всё движется в одном направлении: вперёд.",
 
   cookie: "Мы используем cookies для аналитики и улучшения работы сайта.",
   accept: "Принять",
   later: "Позже",
 
   heroOnline: "Онлайн",
-  heroRevenue: "Выручка",
+  heroRevenue: "Выручка за день",
   heroAvgCheck: "Средний чек",
   heroSales: "Продаж",
   heroRevenueVal: "3 450 000",
   heroAvgCheckVal: "87 000",
   heroSalesVal: "42",
+  heroCurrency: "сум",
   heroSaleTitle: "Продажа",
   heroItems: ["Молоко 1л", "Хлеб", "Кофе 3в1"],
   heroItemPrice: "14 000",
@@ -182,15 +171,21 @@ const ru = {
   heroTotalVal: "20 500 сум",
   heroReceiptSent: "Чек отправлен",
   heroReceiptDetail: "Telegram · 20 500 сум",
+  heroLast: "Последняя продажа",
+  heroLastTime: "минуту назад",
 
-  demoTitle: "Как работает Ipak Savdo",
+  productCaption: "BirLiy — спокойная рабочая поверхность. Один экран на всё.",
+  footerTagline: "Ваш бизнес. В одном месте.",
+  footerSmall: "© 2026 BirLiy. Продукт Ipak Yuli Bank.",
+
+  demoTitle: "Как работает BirLiy",
   demoSteps: [
-    ["Сканирование товара", "Наведите камеру или используйте сканер — товар мгновенно добавляется в чек."],
-    ["Формирование корзины", "Все товары в одном списке. Можно менять количество, добавлять скидку."],
+    ["Сканирование товара", "Наведите камеру или используйте сканер — товар добавляется в чек."],
+    ["Формирование корзины", "Все товары в одном списке. Меняйте количество, добавляйте скидку."],
     ["QR-оплата", "На экране появляется QR-код. Покупатель сканирует — оплата проходит мгновенно."],
-    ["Подтверждение оплаты", "Деньги поступили на счёт. Кассир видит подтверждение на экране."],
-    ["Отправка чека", "Электронный чек уходит покупателю в Telegram. Можно напечатать, если нужно."],
-    ["Обновление склада", "Остатки пересчитаны автоматически. Владелец видит актуальные данные в отчёте."],
+    ["Подтверждение оплаты", "Деньги поступили на счёт. Кассир видит подтверждение."],
+    ["Отправка чека", "Электронный чек уходит покупателю в Telegram. Можно напечатать."],
+    ["Обновление склада", "Остатки пересчитаны автоматически. Владелец видит дашборд."],
   ],
   demoClose: "Закрыть",
 };
@@ -198,19 +193,19 @@ const ru = {
 const uz: typeof ru = {
   nav: ["Imkoniyatlar", "Jihozlar", "FAQ"],
   cta: "Ariza qoldirish",
-  title: "Ipak Savdo — kassa, ombor va QR-to'lov bitta ilovada",
+  title: "Sizning biznesingiz. Bitta joyda.",
   subtitle:
-    "Smartfon yoki planshetdan soting, QR orqali to'lov qabul qiling, elektron chek yuboring va qoldiqlarni nazorat qiling — murakkab dasturlarsiz.",
+    "BirLiy kassa, ombor va to'lovlarni bitta tinch sirtga yig'adi. Varaqlar va o'tishlarsiz — bitta ish muhiti smartfon yoki planshetda.",
   telegram: "Telegram orqali yozish",
   demo: "Demoni ko'rish",
-  trust: "Uy yonidagi do'konlar, minimarketlar, kafelar, dorixonalar va xizmat nuqtalari uchun.",
+  trust: "Uy yonidagi do'konlar, minimarketlar, kafelar, dorixonalar va xizmat nuqtalari.",
   badges: [
     "Sotuv paytida QR-to'lov",
     "Qoldiqlar avtomatik yangilanadi",
     "Zaif internetda ishlaydi",
     "Tushum va kassirlar bo'yicha hisobotlar",
   ],
-  ecosystemBadge: "Ipak Yuli Bank ekotizimi mahsuloti",
+  ecosystemBadge: "Biznes uchun workspace",
 
   problemTitle: "Tanish muammolar?",
   problems: [
@@ -220,31 +215,31 @@ const uz: typeof ru = {
     ["Tushunish qiyin", "Murakkab dasturlar o'rganish, sozlash va kompyuter talab qiladi."],
   ],
 
-  segmentsTitle: "Ipak Savdo kim uchun",
+  segmentsTitle: "BirLiy kim uchun",
   segments: [
-    ["Uy yonidagi do'konlar", "Oziq-ovqat, maishiy kimyo, kundalik tovarlar — tez sotish va tushunarli hisob."],
-    ["Minimarketlar", "Yuzlab tovar, bir necha kassir — qoldiq va tushumni nazorat qilish kerak."],
-    ["Kafelar va ovqatlanish nuqtalari", "Tez buyurtma, QR orqali to'lov, Telegram chek — ortiqcha qurilmasiz."],
-    ["Dorixonalar", "Nomlar bo'yicha aniq hisob, muddat va qoldiqlarni nazorat."],
-    ["Xizmat nuqtalari", "Ta'mirlash, kimyoviy tozalash, tikuvchilik — to'lov qabul qilish va buyurtma hisobi."],
+    ["Uy yonidagi do'konlar", "Oziq-ovqat, maishiy kimyo, kundalik tovarlar."],
+    ["Minimarketlar", "Yuzlab tovar, bir necha kassir, qoldiq nazorati."],
+    ["Kafelar va ovqatlanish", "Tez buyurtma, QR orqali to'lov, Telegram chek."],
+    ["Dorixonalar", "Nomlar bo'yicha aniq hisob, muddat nazorati."],
+    ["Xizmat nuqtalari", "Ta'mirlash, kimyoviy tozalash, tikuvchilik — to'lov va buyurtma hisobi."],
   ],
 
-  benefitsTitle: "Nima uchun Ipak Savdoni tanlashadi",
+  benefitsTitle: "Nima uchun BirLiy",
   benefits: [
-    ["5 daqiqada boshlang", "Ilovani yuklab oling, tovarlarni qo'shing — va darhol soting. Dastur o'rnatish va jihozlarsiz."],
-    ["Hammasi bir joyda", "Kassa, ombor, QR-to'lov, cheklar va hisobotlar — smartfoningizdagi bitta ilovada."],
-    ["O'rganishsiz tushunarli", "Interfeys kassa dasturlari bilan hech qachon ishlamagan kishilar uchun yaratilgan."],
-    ["Bank bilan ishonchli aloqa", "Ipak Yuli Bank ekotizimi mahsuloti — xavfsiz to'lovlar va qo'llab-quvvatlash."],
+    ["Besh daqiqada boshlang", "Ilovani yuklab oling, tovarlarni qo'shing — va soting. O'rnatish va jihozlarsiz."],
+    ["Hammasi bitta sirtda", "Kassa, ombor, QR-to'lov, cheklar va hisobotlar — varaqlarsiz va o'tishlarsiz."],
+    ["O'rganishsiz tushunarli", "Interfeys kassa dasturlari bilan hech qachon ishlamagan kishilar uchun."],
+    ["Shovqinli ish uchun tinch sirt", "Kamroq qism — ko'proq aniqlik. Sirt kassirni xaridordan chalg'itmaydi."],
   ],
 
-  featuresTitle: "Ipak Savdo nimalarni qila oladi",
+  featuresTitle: "BirLiy nima qiladi",
   features: [
-    ["Kassa va sotuvlar", "Skaner yoki kamera, tez tovar qidirish, chegirmalar, qaytarish va kechiktirilgan chek."],
+    ["Kassa va sotuvlar", "Skaner yoki kamera, tez qidirish, chegirmalar, qaytarish, kechiktirilgan chek."],
     ["Katalog va ombor", "Tovarlar, kategoriyalar, donali va vaznli pozitsiyalar, qoldiqlar va hisobdan chiqarish."],
     ["QR-to'lov", "Xaridor QR-kodni skanerlaydi — to'lov bir zumda tushadi. Naqd, karta yoki QR."],
     ["Elektron chek", "Chek xaridorga Telegramga yuboriladi. Bosib chiqarishni alohida ulash mumkin."],
-    ["Sodiqlik dasturi", "Doimiy xaridorlar uchun bonuslar, chegirmalar va aksiyalar — ilovaning o'zida."],
-    ["Hisobotlar", "Kunlik tushum, o'rtacha chek, top-tovarlar va kassirlar ishi — hammasi ko'rinarli."],
+    ["Sodiqlik dasturi", "Doimiy xaridorlar uchun bonuslar, chegirmalar va aksiyalar."],
+    ["Hisobotlar", "Kunlik tushum, o'rtacha chek, top-tovarlar, kassirlar ishi."],
   ],
 
   workflowTitle: "Sotuv qanday o'tadi",
@@ -264,27 +259,28 @@ const uz: typeof ru = {
 
   offlineTitle: "Internet uzildi? Kassa ishlaydi",
   offlineText:
-    "Kassir tovarlarni sotishda davom etadi. Aloqa tiklanganda barcha sotuvlar va qoldiqlar avtomatik sinxronlanadi.",
+    "Kassir tovarlarni sotishda davom etadi. Aloqa tiklanganda hammasi avtomatik sinxronlanadi.",
   offlineBadge: "Zaif internetda ishlash",
   offlineSteps: ["Sotuv lokal saqlandi", "Internet tiklandi", "Ma'lumotlar sinxronlandi"],
 
-  equipmentTitle: "Ikki format — biznesingizga mos",
+  equipmentTitle: "Biznesingizga mos ikki format",
   equipFullTitle: "Oziq-ovqat do'koni",
-  equipFullDesc: "Planshet + shtrix-kod skaneri + termoprinter. Omborni to'liq nazorat qilish va xaridorlar oqimi bilan tez ishlash.",
+  equipFullDesc: "Planshet, shtrix-kod skaneri va termoprinter. Omborni to'liq nazorat va tez xaridor oqimi.",
   equipFullItems: ["Planshet", "Shtrix-kod skaneri", "Termoprinter"],
   equipLiteTitle: "Kiyim do'koni va boshqalar",
   equipLiteDesc: "Android yoki iOS ilovasi — kerakli hamma narsa. Oddiy hisob, QR-to'lov va Telegram chek to'g'ridan-to'g'ri telefondan.",
   equipLiteItems: ["Android-ilova", "iOS-ilova", "Qo'shimcha jihozlarsiz"],
 
-  roadmapTitle: "Keyin nimalar qo'shiladi",
+  roadmapTitle: "Keyin nima",
   roadmap: [
-    ["Hozir", "Kassa, ombor, QR-to'lov, elektron chek, hisobotlar"],
-    ["Tez orada", "Aksiyalar, chegirmalar va mijozlarga Telegram xabarnomalar"],
-    ["Keyinchalik", "Yetkazib beruvchilardan xarid va biznes uchun qulay bank xizmatlari"],
+    ["Hozir", "Kassa, ombor, QR-to'lov, elektron chek, hisobotlar."],
+    ["Tez orada", "Aksiyalar, chegirmalar va mijozlarga Telegram xabarnomalar."],
+    ["Keyinchalik", "Yetkazib beruvchilardan xarid va biznes uchun bank xizmatlari."],
   ],
 
-  formTitle: "Erta kirish uchun ariza",
-  success: "Ariza qabul qilindi. Ipak Savdo jamoasi siz bilan bog'lanadi.",
+  formTitle: "Ariza qoldiring",
+  formIntro: "BirLiy formatingizga qanday mos kelishini aytib beramiz. Qo'ng'iroq va bezovta qilishlarsiz.",
+  success: "Ariza qabul qilindi. BirLiy jamoasi siz bilan bog'lanadi.",
   formName: "Ism",
   formPhone: "Telefon",
   formBusiness: "Biznes turi",
@@ -308,7 +304,7 @@ const uz: typeof ru = {
   optional: "Qo'shimcha maydonlarni ko'rsatish",
   submit: "Ariza yuborish",
 
-  faqTitle: "Tez-tez so'raladigan savollar",
+  faqTitle: "Savol va javoblar",
   faq: [
     ["Kompyuter sotib olish kerakmi?", "Yo'q. Smartfon yoki planshet yetarli."],
     ["Skaner ulash mumkinmi?", "Ha. Har qanday 2D Bluetooth-skaner mos keladi."],
@@ -317,17 +313,22 @@ const uz: typeof ru = {
     ["Ilova internetsiz ishlaydi?", "Ha. Sotuvlar saqlanadi va aloqa tiklanganda sinxronlanadi."],
   ],
 
+  voiceTitle: "Kamroq qism. Ko'proq aniqlik.",
+  voiceBody:
+    "BirLiy tarqoq ishni — sotuvlar, ombor, to'lovlar — bitta tinch sirtga yig'adi. Kassa ombor bilan kurashmaydi. Ombor hisobotlar bilan kurashmaydi. Hammasi bir yo'nalishda: oldinga.",
+
   cookie: "Sayt tahlili va ishlashini yaxshilash uchun cookies ishlatamiz.",
   accept: "Qabul qilish",
   later: "Keyinroq",
 
   heroOnline: "Onlayn",
-  heroRevenue: "Tushum",
+  heroRevenue: "Kunlik tushum",
   heroAvgCheck: "O'rtacha chek",
   heroSales: "Sotuvlar",
   heroRevenueVal: "3 450 000",
   heroAvgCheckVal: "87 000",
   heroSalesVal: "42",
+  heroCurrency: "so'm",
   heroSaleTitle: "Sotuv",
   heroItems: ["Sut 1l", "Non", "Kofe 3in1"],
   heroItemPrice: "14 000",
@@ -335,512 +336,653 @@ const uz: typeof ru = {
   heroTotalVal: "20 500 so'm",
   heroReceiptSent: "Chek yuborildi",
   heroReceiptDetail: "Telegram · 20 500 so'm",
+  heroLast: "Oxirgi sotuv",
+  heroLastTime: "bir daqiqa oldin",
 
-  demoTitle: "Ipak Savdo qanday ishlaydi",
+  productCaption: "BirLiy — tinch ish sirti. Bitta ekran hamma narsa uchun.",
+  footerTagline: "Sizning biznesingiz. Bitta joyda.",
+  footerSmall: "© 2026 BirLiy. Ipak Yuli Bank mahsuloti.",
+
+  demoTitle: "BirLiy qanday ishlaydi",
   demoSteps: [
-    ["Tovarni skanerlash", "Kamerani yo'naltiring yoki skaner ishlating — tovar bir zumda chekka qo'shiladi."],
+    ["Tovarni skanerlash", "Kamerani yo'naltiring yoki skaner ishlating — tovar chekka qo'shiladi."],
     ["Savatni shakllantirish", "Barcha tovarlar bitta ro'yxatda. Miqdorni o'zgartirish, chegirma qo'shish mumkin."],
     ["QR-to'lov", "Ekranda QR-kod paydo bo'ladi. Xaridor skanerlaydi — to'lov bir zumda o'tadi."],
     ["To'lov tasdiqlandi", "Pul hisobga tushdi. Kassir ekranda tasdiqlashni ko'radi."],
-    ["Chek yuborish", "Elektron chek xaridorga Telegramga yuboriladi. Kerak bo'lsa bosib chiqarish mumkin."],
-    ["Ombor yangilandi", "Qoldiqlar avtomatik qayta hisoblandi. Egasi hisobotda dolzarb ma'lumotlarni ko'radi."],
+    ["Chek yuborish", "Elektron chek xaridorga Telegramga yuboriladi. Bosib chiqarish mumkin."],
+    ["Ombor yangilandi", "Qoldiqlar avtomatik qayta hisoblandi. Egasi dashbordda ko'radi."],
   ],
   demoClose: "Yopish",
 };
 
+/* ────────────────────────────────────────────────────────────
+   Motion: BirLiy curve. Settle, don't bounce.
+   ──────────────────────────────────────────────────────────── */
+
+const EASE = [0.2, 0.8, 0.2, 1] as const;
+const settle = (delay: number) => ({
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: EASE, delay },
+});
+
+/* ────────────────────────────────────────────────────────────
+   Component
+   ──────────────────────────────────────────────────────────── */
+
 export default function LandingPage() {
   const [locale, setLocale] = useState<Locale>("ru");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [demoOpen, setDemoOpen] = useState(false);
   const attribution = useAttribution();
   const t = locale === "ru" ? ru : uz;
-  const ids = ["features", "equipment", "faq"];
 
   useEffect(() => {
-    const saved = localStorage.getItem("ipak-locale") as Locale | null;
+    const saved = localStorage.getItem("birliy-locale") as Locale | null;
     if (saved === "ru" || saved === "uz") setLocale(saved);
   }, []);
 
   const switchLocale = useCallback((loc: Locale) => {
     setLocale(loc);
-    localStorage.setItem("ipak-locale", loc);
+    localStorage.setItem("birliy-locale", loc);
   }, []);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
   };
 
+  const navTargets = ["capabilities", "equipment", "faq"];
+
   return (
-    <main className="min-h-screen bg-white text-slate-950">
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="section-shell flex h-28 items-center justify-between gap-4">
-          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-            <Logo />
-          </button>
-          <nav className="hidden items-center gap-7 lg:flex">
-            {t.nav.map((item, index) => (
-              <button key={item} type="button" onClick={() => scrollTo(ids[index])} className="text-sm font-bold text-slate-600 hover:text-[#005B45]">
-                {item}
-              </button>
-            ))}
-          </nav>
-          <div className="flex items-center gap-2">
-            <button type="button" onClick={() => switchLocale("ru")} className={langClass(locale === "ru")}>RU</button>
-            <button type="button" onClick={() => switchLocale("uz")} className={langClass(locale === "uz")}>UZ</button>
-            <button type="button" onClick={() => setModalOpen(true)} className="hidden rounded-lg bg-[#00C853] px-4 py-3 text-sm font-black text-white shadow-[0_14px_28px_rgba(0,200,83,0.22)] sm:block">
-              {t.cta}
-            </button>
-            <button type="button" onClick={() => setMenuOpen(!menuOpen)} className="rounded-lg border border-slate-200 p-3 lg:hidden">
-              {menuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-        </div>
-        {menuOpen && (
-          <div className="section-shell grid gap-2 border-t border-slate-200 bg-white py-4 lg:hidden">
-            {t.nav.map((item, index) => (
-              <button key={item} type="button" onClick={() => scrollTo(ids[index])} className="rounded-lg px-2 py-3 text-left font-bold">
-                {item}
-              </button>
-            ))}
-          </div>
-        )}
-      </header>
-
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
-        <div className="absolute inset-0 green-grid opacity-70" />
-        <div className="section-shell relative grid gap-10 py-12 lg:grid-cols-[0.88fr_1.12fr] lg:py-20">
-          <div className="min-w-0 max-w-[calc(100vw-2rem)]">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-lg border border-[#BDECD5] bg-[#F3FBF7] px-3 py-2 text-xs font-black text-[#005B45]">
-              <CheckCircle2 size={15} />
-              {t.ecosystemBadge}
-            </div>
-            <h1 className="max-w-[760px] text-balance text-[34px] font-black leading-[1.06] tracking-normal sm:text-5xl lg:text-[60px]">
-              {t.title}
-            </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">{t.subtitle}</p>
-            <div className="mt-7 flex w-full max-w-[calc(100vw-2rem)] flex-col gap-3 sm:flex-row">
-              <button type="button" onClick={() => setModalOpen(true)} className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#00C853] px-5 py-4 text-sm font-black text-white sm:w-auto">
-                {t.cta}
-                <ArrowRight size={18} />
-              </button>
-              <button type="button" onClick={() => setDemoOpen(true)} className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#00A86B]/30 bg-white px-5 py-4 text-sm font-black text-[#005B45] sm:w-auto">
-                <Play size={18} />
-                {t.demo}
-              </button>
-            </div>
-            <p className="mt-5 text-sm text-slate-500">{t.trust}</p>
-            <div className="mt-6 grid w-full max-w-[calc(100vw-2rem)] gap-2 sm:grid-cols-2">
-              {t.badges.map((badge) => (
-                <div key={badge} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700">
-                  <CheckCircle2 size={16} className="shrink-0 text-[#00A86B]" />
-                  {badge}
-                </div>
-              ))}
-            </div>
-          </div>
-          <HeroScreenshot />
-        </div>
-      </section>
-
-      {/* Problem */}
-      <Section title={t.problemTitle} tinted>
-        <div className="grid gap-4 md:grid-cols-2">
-          {t.problems.map(([title, text], i) => {
-            const icons = [FileText, TrendingUp, AlertTriangle, Clock];
-            const Icon = icons[i] || AlertTriangle;
-            return (
-              <div key={title} className="flex gap-4 rounded-lg border border-red-200/60 bg-white p-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-500">
-                  <Icon size={22} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-black">{title}</h3>
-                  <p className="mt-1 text-base leading-7 text-slate-600">{text}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </Section>
-
-      {/* Segments */}
-      <Section title={t.segmentsTitle}>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {t.segments.map(([title, text], i) => {
-            const icons = [Store, ShoppingCart, Coffee, Pill, Wrench];
-            const Icon = icons[i] || Store;
-            return (
-              <div key={title} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-[#EAF7F1] text-[#005B45]">
-                  <Icon size={22} />
-                </div>
-                <h3 className="text-lg font-black">{title}</h3>
-                <p className="mt-1 text-base leading-7 text-slate-600">{text}</p>
-              </div>
-            );
-          })}
-        </div>
-      </Section>
-
-      {/* Benefits */}
-      <section className="border-y border-[#BDECD5] bg-[#F3FBF7] py-16 lg:py-20">
-        <div className="section-shell">
-          <h2 className="mx-auto mb-10 max-w-3xl text-center text-3xl font-black leading-tight sm:text-4xl">{t.benefitsTitle}</h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {t.benefits.map(([title, text], i) => {
-              const icons = [Zap, Smartphone, Heart, Shield];
-              const Icon = icons[i] || CheckCircle2;
-              return (
-                <div key={title} className="flex gap-4 rounded-lg border border-[#BDECD5] bg-white p-5">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#EAF7F1] text-[#005B45]">
-                    <Icon size={22} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-black">{title}</h3>
-                    <p className="mt-1 text-base leading-7 text-slate-600">{text}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <Section id="features" title={t.featuresTitle}>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {t.features.map(([title, text], index) => (
-            <FeatureCard key={title} index={index} title={title} text={text} />
-          ))}
-        </div>
-      </Section>
-
-      {/* Offline */}
-      <section className="bg-[#005B45] py-16 text-white lg:py-20">
-        <div className="section-shell grid gap-8 lg:grid-cols-2">
-          <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-xs font-black text-[#B7F34A]">
-              <WifiOff size={16} />
-              {t.offlineBadge}
-            </div>
-            <h2 className="text-3xl font-black sm:text-4xl">{t.offlineTitle}</h2>
-            <p className="mt-5 text-lg leading-8 text-white/80">{t.offlineText}</p>
-          </div>
-          <div className="grid gap-3">
-            {t.offlineSteps.map((step, index) => (
-              <div key={step} className="flex items-center gap-4 rounded-lg border border-white/20 bg-white/10 p-4">
-                <Check className="shrink-0 text-[#B7F34A]" />
-                <span className="font-bold">{index + 1}. {step}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Equipment — two tiers */}
-      <Section id="equipment" title={t.equipmentTitle}>
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="relative overflow-hidden rounded-2xl border-2 border-[#005B45] bg-white p-8 shadow-sm">
-            <div className="absolute right-4 top-4 rounded-lg bg-[#005B45] px-3 py-1 text-xs font-black text-white">PRO</div>
-            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
-              <Tablet size={32} />
-            </div>
-            <h3 className="text-xl font-black">{t.equipFullTitle}</h3>
-            <p className="mt-2 text-base leading-7 text-slate-600">{t.equipFullDesc}</p>
-            <div className="mt-5 grid gap-2">
-              {t.equipFullItems.map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm font-bold text-slate-700">
-                  <CheckCircle2 size={16} className="shrink-0 text-[#00A86B]" />
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
-              <Smartphone size={32} />
-            </div>
-            <h3 className="text-xl font-black">{t.equipLiteTitle}</h3>
-            <p className="mt-2 text-base leading-7 text-slate-600">{t.equipLiteDesc}</p>
-            <div className="mt-5 grid gap-2">
-              {t.equipLiteItems.map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm font-bold text-slate-700">
-                  <CheckCircle2 size={16} className="shrink-0 text-[#00A86B]" />
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Lead Form */}
-      <Section title={t.formTitle}>
-        <LeadFormStandalone t={t} locale={locale} attribution={attribution} />
-      </Section>
-
-      {/* FAQ */}
-      <Section id="faq" title={t.faqTitle} tinted>
-        <FAQ items={t.faq} />
-      </Section>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-10">
-        <div className="section-shell flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Logo />
-          <p className="text-sm font-bold text-slate-500">© 2026 Ipak Savdo</p>
-        </div>
-      </footer>
-
-      {/* Cookie */}
+    <main className="min-h-screen bg-paper text-ink-900 antialiased">
+      <Header t={t} locale={locale} switchLocale={switchLocale} scrollTo={scrollTo} navTargets={navTargets} />
+      <Hero t={t} />
+      <Capabilities t={t} />
+      <VoiceInsert t={t} />
+      <ProductMoment t={t} />
+      <WhyBirliy t={t} />
+      <Equipment t={t} />
+      <Roadmap t={t} />
+      <LeadSection t={t} locale={locale} attribution={attribution} />
+      <FAQ t={t} />
+      <Footer t={t} locale={locale} switchLocale={switchLocale} />
       <Cookie t={t} />
-
-      {/* Sticky mobile CTA */}
-      <button type="button" onClick={() => setModalOpen(true)} className="fixed bottom-4 left-4 right-4 z-30 rounded-lg bg-[#00C853] px-5 py-4 text-base font-black text-white shadow-2xl md:hidden">
-        {t.cta}
-      </button>
-
-      {/* Lead form modal */}
-      {modalOpen && <Modal close={() => setModalOpen(false)}><LeadFormStandalone t={t} locale={locale} compact attribution={attribution} /></Modal>}
-
-      {/* Demo modal */}
-      <AnimatePresence>
-        {demoOpen && <DemoModal t={t} close={() => setDemoOpen(false)} />}
-      </AnimatePresence>
     </main>
   );
 }
 
-/* ── Helpers ─────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────
+   Header — sticky, minimal, ~72px
+   ──────────────────────────────────────────────────────────── */
 
-function langClass(active: boolean) {
-  return cn("rounded-lg border border-slate-200 px-3 py-2 text-xs font-black", active ? "bg-[#EAF7F1] text-[#005B45]" : "bg-white text-slate-500");
+interface HeaderProps {
+  t: typeof ru;
+  locale: Locale;
+  switchLocale: (loc: Locale) => void;
+  scrollTo: (id: string) => void;
+  navTargets: readonly string[];
 }
 
-function Section({ id, title, subtitle, tinted, children }: { id?: string; title: string; subtitle?: string; tinted?: boolean; children: React.ReactNode }) {
+function Header({ t, locale, switchLocale, scrollTo, navTargets }: HeaderProps) {
   return (
-    <section id={id} className={cn("py-16 lg:py-20", tinted ? "border-y border-slate-200 bg-[#F8FBFA]" : "bg-white")}>
-      <div className="section-shell">
-        <div className="mx-auto mb-10 max-w-3xl text-center">
-          <h2 className="text-3xl font-black leading-tight sm:text-4xl">{title}</h2>
-          {subtitle && <p className="mt-4 text-lg leading-8 text-slate-600">{subtitle}</p>}
-        </div>
-        {children}
-      </div>
-    </section>
-  );
-}
+    <header className="sticky top-0 z-40 border-b border-mist bg-paper/85 backdrop-blur">
+      <div className="section-shell flex h-[72px] items-center justify-between gap-6">
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="BirLiy"
+          className="shrink-0"
+        >
+          <img src="/birliy-wordmark.svg" alt="BirLiy" className="h-7 w-auto" />
+        </button>
 
-/* ── Feature cards ───────────────────────────────────────── */
+        <nav className="hidden items-center gap-8 md:flex">
+          {t.nav.map((item, i) => (
+            <button
+              key={item}
+              type="button"
+              onClick={() => scrollTo(navTargets[i])}
+              className="text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+            >
+              {item}
+            </button>
+          ))}
+        </nav>
 
-function FeatureCard({ index, title, text }: { index: number; title: string; text: string }) {
-  const icons = [ScanLine, Package, QrCode, Receipt, Heart, BarChart3];
-  const Icon = icons[index] || CheckCircle2;
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#EAF7F1] text-[#005B45]">
-        <Icon size={24} />
-      </div>
-      <h3 className="text-lg font-black">{title}</h3>
-      <p className="mt-2 text-base leading-7 text-slate-600">{text}</p>
-    </div>
-  );
-}
-
-/* ── FAQ ─────────────────────────────────────────────────── */
-
-function FAQ({ items }: { items: readonly string[][] }) {
-  const [open, setOpen] = useState(0);
-  return (
-    <div className="mx-auto grid max-w-4xl gap-3">
-      {items.map(([q, a], index) => (
-        <div key={q} className="rounded-lg border border-slate-200 bg-white">
-          <button type="button" onClick={() => setOpen(open === index ? -1 : index)} className="flex w-full items-center justify-between gap-4 p-4 text-left font-black">
-            {q}
-            <ChevronDown className={cn("shrink-0 text-[#005B45] transition", open === index && "rotate-180")} />
+        <div className="flex items-center gap-3">
+          <LangPill locale={locale} switchLocale={switchLocale} />
+          <button
+            type="button"
+            onClick={() => scrollTo("lead")}
+            className="hidden items-center gap-2 rounded-full bg-green-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-700 sm:inline-flex"
+          >
+            {t.cta}
           </button>
-          {open === index && <p className="px-4 pb-4 leading-7 text-slate-600">{a}</p>}
         </div>
+      </div>
+    </header>
+  );
+}
+
+function LangPill({ locale, switchLocale }: { locale: Locale; switchLocale: (loc: Locale) => void }) {
+  return (
+    <div className="inline-flex items-center rounded-full border border-mist bg-paper p-0.5 text-xs font-medium">
+      {(["ru", "uz"] as const).map((loc) => (
+        <button
+          key={loc}
+          type="button"
+          onClick={() => switchLocale(loc)}
+          className={cn(
+            "rounded-full px-3 py-1.5 transition-colors duration-200 ease-birliy",
+            locale === loc ? "bg-ink-900 text-paper" : "text-ink-500 hover:text-ink-900",
+          )}
+        >
+          {loc.toUpperCase()}
+        </button>
       ))}
     </div>
   );
 }
 
-/* ── Cookie ──────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────
+   Hero — 7/12 + 5/12, single orchestrated settle-in
+   ──────────────────────────────────────────────────────────── */
+
+function Hero({ t }: { t: typeof ru }) {
+  return (
+    <section className="relative">
+      <div className="section-shell grid items-center gap-16 py-24 lg:grid-cols-12 lg:gap-12 lg:py-32">
+        <div className="lg:col-span-7">
+          <motion.p
+            {...settle(0)}
+            className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500"
+          >
+            {t.ecosystemBadge}
+          </motion.p>
+
+          <motion.h1
+            {...settle(0.08)}
+            className="mt-6 max-w-[15ch] text-balance font-display text-5xl font-bold leading-[1.04] tracking-tightish text-ink-900 sm:text-6xl lg:text-[80px]"
+          >
+            {t.title}
+          </motion.h1>
+
+          <motion.p
+            {...settle(0.16)}
+            className="mt-7 max-w-[58ch] text-[19px] font-light leading-relaxed text-ink-700 sm:text-[22px]"
+          >
+            {t.subtitle}
+          </motion.p>
+
+          <motion.div
+            {...settle(0.24)}
+            className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+          >
+            <a
+              href="#lead"
+              className="inline-flex items-center gap-2 rounded-full bg-green-500 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-700"
+            >
+              {t.cta}
+              <ArrowRight size={16} strokeWidth={1.75} />
+            </a>
+            <a
+              href="https://t.me/birliy_uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+            >
+              {t.telegram}
+              <ArrowRight size={14} strokeWidth={1.75} className="opacity-60" />
+            </a>
+          </motion.div>
+
+          <motion.p
+            {...settle(0.32)}
+            className="mt-8 text-sm leading-relaxed text-ink-500"
+          >
+            {t.trust}
+          </motion.p>
+        </div>
+
+        <motion.div {...settle(0.32)} className="lg:col-span-5">
+          <HeroStatCard t={t} />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function HeroStatCard({ t }: { t: typeof ru }) {
+  return (
+    <div className="rounded-3xl border border-mist bg-white p-7 shadow-[0_1px_2px_rgba(11,24,38,0.04)]">
+      <div className="flex items-center justify-between">
+        <div className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+          {t.heroOnline}
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-medium text-ink-500">
+          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+          live
+        </div>
+      </div>
+
+      <div className="mt-7">
+        <div className="text-xs font-medium uppercase tracking-wider text-ink-500">
+          {t.heroRevenue}
+        </div>
+        <div className="mt-3 flex items-baseline gap-2">
+          <span className="font-display text-5xl font-bold tracking-tightish text-ink-900 tabular-nums">
+            {t.heroRevenueVal}
+          </span>
+          <span className="text-base font-medium text-ink-500">{t.heroCurrency}</span>
+        </div>
+      </div>
+
+      <div className="mt-8 grid grid-cols-2 gap-6 border-t border-mist pt-6">
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wider text-ink-500">
+            {t.heroAvgCheck}
+          </div>
+          <div className="mt-2 font-display text-2xl font-semibold tracking-tightish text-ink-900 tabular-nums">
+            {t.heroAvgCheckVal}
+          </div>
+        </div>
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wider text-ink-500">
+            {t.heroSales}
+          </div>
+          <div className="mt-2 font-display text-2xl font-semibold tracking-tightish text-ink-900 tabular-nums">
+            {t.heroSalesVal}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-7 flex items-center justify-between border-t border-mist pt-5 text-sm">
+        <div className="text-ink-500">{t.heroLast}</div>
+        <div className="font-medium text-ink-700 tabular-nums">{t.heroTotalVal}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Capabilities — 3 columns, no card backgrounds
+   ──────────────────────────────────────────────────────────── */
+
+function Capabilities({ t }: { t: typeof ru }) {
+  // pick top 3 + offline as a 4th caption-line
+  const cap = [
+    { icon: ScanLine, title: t.features[0][0], body: t.features[0][1] },
+    { icon: Package, title: t.features[1][0], body: t.features[1][1] },
+    { icon: QrCode, title: t.features[2][0], body: t.features[2][1] },
+  ];
+
+  return (
+    <section id="capabilities" className="border-t border-mist py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+            01 / {t.featuresTitle}
+          </p>
+          <h2 className="mt-5 max-w-[20ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.featuresTitle}
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-12 border-t border-mist pt-16 md:grid-cols-3 md:gap-10">
+          {cap.map(({ icon: Icon, title, body }) => (
+            <div key={title} className="max-w-sm">
+              <Icon size={24} strokeWidth={1.5} className="text-ink-900" />
+              <h3 className="mt-5 font-display text-xl font-semibold tracking-tightish text-ink-900">
+                {title}
+              </h3>
+              <p className="mt-3 text-[17px] leading-[1.55] text-ink-700">{body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 flex items-start gap-3 border-t border-mist pt-8 text-sm text-ink-500">
+          <WifiOff size={18} strokeWidth={1.5} className="mt-0.5 shrink-0" />
+          <p className="max-w-2xl leading-relaxed">
+            {t.offlineBadge}. {t.offlineText}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Voice insert — the quiet centerpiece
+   ──────────────────────────────────────────────────────────── */
+
+function VoiceInsert({ t }: { t: typeof ru }) {
+  return (
+    <section className="border-t border-mist bg-mist/40 py-32 lg:py-40">
+      <div className="section-shell">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-tightish text-ink-900 sm:text-[40px]">
+            {t.voiceTitle}
+          </h2>
+          <p className="mt-8 max-w-[62ch] text-[22px] font-light leading-[1.55] text-ink-700">
+            {t.voiceBody}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Product moment — one large screenshot, minimal caption
+   ──────────────────────────────────────────────────────────── */
+
+function ProductMoment({ t }: { t: typeof ru }) {
+  return (
+    <section className="border-t border-mist py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="overflow-hidden rounded-2xl border border-mist bg-mist">
+          <img
+            src="/app-screenshot.jpg"
+            alt="BirLiy — рабочая поверхность"
+            className="block w-full"
+          />
+        </div>
+        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-ink-500">{t.productCaption}</p>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Why BirLiy — 2x2 type-only
+   ──────────────────────────────────────────────────────────── */
+
+function WhyBirliy({ t }: { t: typeof ru }) {
+  return (
+    <section className="border-t border-mist py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+            02 / {t.benefitsTitle}
+          </p>
+          <h2 className="mt-5 max-w-[18ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.benefitsTitle}
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-x-12 gap-y-14 border-t border-mist pt-16 md:grid-cols-2">
+          {t.benefits.map(([title, body]) => (
+            <div key={title} className="max-w-md">
+              <h3 className="font-display text-2xl font-semibold leading-tight tracking-tightish text-ink-900">
+                {title}
+              </h3>
+              <p className="mt-4 text-[17px] leading-[1.55] text-ink-700">{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Equipment — 2 columns, type + check lists
+   ──────────────────────────────────────────────────────────── */
+
+function Equipment({ t }: { t: typeof ru }) {
+  return (
+    <section id="equipment" className="border-t border-mist py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+            03 / {t.equipmentTitle}
+          </p>
+          <h2 className="mt-5 max-w-[20ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.equipmentTitle}
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-x-16 gap-y-14 border-t border-mist pt-16 md:grid-cols-2">
+          <EquipmentColumn
+            icon={Tablet}
+            title={t.equipFullTitle}
+            desc={t.equipFullDesc}
+            items={t.equipFullItems}
+          />
+          <EquipmentColumn
+            icon={Smartphone}
+            title={t.equipLiteTitle}
+            desc={t.equipLiteDesc}
+            items={t.equipLiteItems}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+interface EquipmentColumnProps {
+  icon: typeof Tablet;
+  title: string;
+  desc: string;
+  items: readonly string[];
+}
+
+function EquipmentColumn({ icon: Icon, title, desc, items }: EquipmentColumnProps) {
+  return (
+    <div>
+      <Icon size={24} strokeWidth={1.5} className="text-ink-900" />
+      <h3 className="mt-5 font-display text-2xl font-semibold tracking-tightish text-ink-900">
+        {title}
+      </h3>
+      <p className="mt-3 max-w-md text-[17px] leading-[1.55] text-ink-700">{desc}</p>
+      <ul className="mt-6 space-y-3">
+        {items.map((item) => (
+          <li key={item} className="flex items-center gap-3 text-[15px] text-ink-700">
+            <Check size={16} strokeWidth={1.5} className="shrink-0 text-ink-500" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Roadmap — minimal 3-step horizontal sequence
+   ──────────────────────────────────────────────────────────── */
+
+function Roadmap({ t }: { t: typeof ru }) {
+  return (
+    <section className="border-t border-mist bg-mist/40 py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+            04 / {t.roadmapTitle}
+          </p>
+          <h2 className="mt-5 max-w-[20ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.roadmapTitle}
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-12 border-t border-ink-900/10 pt-12 md:grid-cols-3 md:gap-8">
+          {t.roadmap.map(([label, body], i) => (
+            <div key={label} className="relative">
+              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+                {label}
+              </div>
+              <p className="mt-4 text-[17px] leading-[1.55] text-ink-900">{body}</p>
+              {i < t.roadmap.length - 1 && (
+                <div className="absolute right-0 top-2 hidden h-px w-12 -translate-y-1/2 bg-ink-900/15 md:block" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Lead form section
+   ──────────────────────────────────────────────────────────── */
+
+interface LeadSectionProps {
+  t: typeof ru;
+  locale: Locale;
+  attribution: ReturnType<typeof useAttribution>;
+}
+
+function LeadSection({ t, locale, attribution }: LeadSectionProps) {
+  return (
+    <section id="lead" className="border-t border-mist bg-paper py-24 lg:py-32">
+      <div className="section-shell grid gap-16 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+            05 / {t.formTitle}
+          </p>
+          <h2 className="mt-5 max-w-[14ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.formTitle}
+          </h2>
+          <p className="mt-6 max-w-md text-[17px] leading-[1.55] text-ink-700">{t.formIntro}</p>
+        </div>
+
+        <div className="lg:col-span-7">
+          <LeadFormStandalone t={t} locale={locale} attribution={attribution} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   FAQ — minimal collapsible list, hairlines only
+   ──────────────────────────────────────────────────────────── */
+
+function FAQ({ t }: { t: typeof ru }) {
+  const [open, setOpen] = useState(0);
+  return (
+    <section id="faq" className="border-t border-mist py-24 lg:py-32">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+            06 / {t.faqTitle}
+          </p>
+          <h2 className="mt-5 max-w-[16ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
+            {t.faqTitle}
+          </h2>
+        </div>
+
+        <div className="mt-16 border-t border-mist">
+          {t.faq.map(([q, a], i) => {
+            const isOpen = open === i;
+            return (
+              <div key={q} className="border-b border-mist">
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? -1 : i)}
+                  className="flex w-full items-start justify-between gap-6 py-6 text-left"
+                >
+                  <span className="font-display text-lg font-semibold leading-snug tracking-tightish text-ink-900 sm:text-xl">
+                    {q}
+                  </span>
+                  <ChevronDown
+                    size={20}
+                    strokeWidth={1.5}
+                    className={cn(
+                      "mt-1 shrink-0 text-ink-500 transition-transform duration-320 ease-birliy",
+                      isOpen && "rotate-180 text-ink-900",
+                    )}
+                  />
+                </button>
+                {isOpen && (
+                  <p className="max-w-2xl pb-6 pr-10 text-[17px] leading-[1.55] text-ink-700">
+                    {a}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Footer
+   ──────────────────────────────────────────────────────────── */
+
+interface FooterProps {
+  t: typeof ru;
+  locale: Locale;
+  switchLocale: (loc: Locale) => void;
+}
+
+function Footer({ t, locale, switchLocale }: FooterProps) {
+  return (
+    <footer className="border-t border-mist py-16">
+      <div className="section-shell">
+        <div className="flex flex-col items-start justify-between gap-10 sm:flex-row sm:items-end">
+          <div>
+            <img src="/birliy-wordmark.svg" alt="BirLiy" className="h-8 w-auto" />
+            <p className="mt-5 max-w-xs text-base leading-relaxed text-ink-700">{t.footerTagline}</p>
+          </div>
+
+          <div className="flex flex-col items-start gap-4 sm:items-end">
+            <LangPill locale={locale} switchLocale={switchLocale} />
+            <a
+              href="https://t.me/birliy_uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+            >
+              {t.telegram}
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-12 border-t border-mist pt-6 text-xs leading-relaxed text-ink-500">
+          {t.footerSmall}
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────
+   Cookie banner
+   ──────────────────────────────────────────────────────────── */
 
 function Cookie({ t }: { t: typeof ru }) {
   const [show, setShow] = useState(false);
-  useEffect(() => setShow(localStorage.getItem("ipak-cookie-ok") !== "true"), []);
-  if (!show) return null;
-  return (
-    <div className="fixed bottom-24 left-4 right-4 z-30 rounded-lg border border-slate-200 bg-white p-4 shadow-xl md:bottom-6 md:left-auto md:right-6 md:w-[520px] md:max-w-[calc(100vw-3rem)]">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-bold text-slate-600">{t.cookie}</p>
-        <div className="flex gap-2">
-          <button type="button" onClick={() => { localStorage.setItem("ipak-cookie-ok", "true"); setShow(false); }} className="rounded-lg bg-[#005B45] px-4 py-2 font-black text-white">{t.accept}</button>
-          <button type="button" onClick={() => setShow(false)} className="rounded-lg border border-slate-200 px-4 py-2 font-black">{t.later}</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Modal ───────────────────────────────────────────────── */
-
-function Modal({ close, children }: { close: () => void; children: React.ReactNode }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4" onClick={close}>
-      <div className="w-full max-w-xl rounded-lg bg-white p-4" onClick={(e) => e.stopPropagation()}>
-        <button type="button" onClick={close} className="mb-3 ml-auto block rounded-lg border border-slate-200 p-2"><X /></button>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/* ── Demo Modal (animated 6-step walkthrough) ────────────── */
-
-function DemoModal({ t, close }: { t: typeof ru; close: () => void }) {
-  const [step, setStep] = useState(0);
-  const [playing, setPlaying] = useState(true);
-  const total = t.demoSteps.length;
-
   useEffect(() => {
-    if (!playing) return;
-    const timer = setInterval(() => {
-      setStep((s) => (s + 1) % total);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [playing, total]);
+    setShow(localStorage.getItem("birliy-cookie-ok") !== "true");
+  }, []);
+  if (!show) return null;
 
-  const icons = [ScanLine, ShoppingCart, QrCode, CheckCircle2, Receipt, Package];
-  const Icon = icons[step] || CheckCircle2;
+  const accept = () => {
+    localStorage.setItem("birliy-cookie-ok", "true");
+    setShow(false);
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4"
-      onClick={close}
-    >
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        className="w-full max-w-lg rounded-2xl bg-white shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-          <h3 className="text-lg font-black">{t.demoTitle}</h3>
-          <button type="button" onClick={close} className="rounded-lg border border-slate-200 p-2">
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="px-5 py-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
-              className="text-center"
-            >
-              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF7F1] text-[#005B45]">
-                <Icon size={32} />
-              </div>
-              <div className="text-sm font-black text-[#005B45]">
-                {step + 1} / {total}
-              </div>
-              <h4 className="mt-2 text-xl font-black">{t.demoSteps[step][0]}</h4>
-              <p className="mx-auto mt-3 max-w-sm text-base leading-7 text-slate-600">{t.demoSteps[step][1]}</p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Progress bar */}
-        <div className="px-5">
-          <div className="flex gap-1.5">
-            {t.demoSteps.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => { setStep(i); setPlaying(false); }}
-                className={cn(
-                  "h-1.5 flex-1 rounded-full transition-colors",
-                  i === step ? "bg-[#00C853]" : i < step ? "bg-[#00C853]/40" : "bg-slate-200"
-                )}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Controls */}
-        <div className="flex items-center justify-between px-5 py-4">
-          <button
-            type="button"
-            onClick={() => { setStep((step - 1 + total) % total); setPlaying(false); }}
-            className="rounded-lg border border-slate-200 p-2"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setPlaying(!playing)}
-            className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-black text-[#005B45]"
-          >
-            {playing ? <Pause size={16} /> : <Play size={16} />}
-          </button>
-          <button
-            type="button"
-            onClick={() => { setStep((step + 1) % total); setPlaying(false); }}
-            className="rounded-lg border border-slate-200 p-2"
-          >
-            <ChevronRight size={18} />
-          </button>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ── Hero Screenshot ──────────────────────────────────────── */
-
-function HeroScreenshot() {
-  return (
-    <div className="relative mx-auto w-full min-w-0 max-w-[calc(100vw-2rem)] sm:max-w-xl">
-      <div className="overflow-hidden rounded-[16px] border border-slate-200 bg-[#F1F3F5] shadow-2xl">
-        <div className="flex items-center gap-2 border-b border-slate-200 bg-[#F8F9FA] px-4 py-2.5">
-          <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded-full bg-[#FF5F57]" />
-            <div className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
-            <div className="h-3 w-3 rounded-full bg-[#28C840]" />
-          </div>
-          <div className="ml-3 flex-1 rounded-md bg-white px-3 py-1 text-xs text-slate-400">
-            app.ipaksavdo.uz
-          </div>
-        </div>
-        <img
-          src="/app-screenshot.jpg"
-          alt="Ipak Savdo — интерфейс кассы"
-          className="block w-full"
-        />
+    <div className="fixed bottom-4 left-4 right-4 z-30 rounded-2xl border border-mist bg-white p-5 shadow-[0_8px_32px_rgba(11,24,38,0.08)] md:bottom-6 md:left-auto md:right-6 md:max-w-md">
+      <p className="text-sm leading-relaxed text-ink-700">{t.cookie}</p>
+      <div className="mt-4 flex gap-2">
+        <button
+          type="button"
+          onClick={accept}
+          className="rounded-full bg-ink-900 px-4 py-2 text-sm font-medium text-paper transition-colors duration-200 ease-birliy hover:bg-ink-700"
+        >
+          {t.accept}
+        </button>
+        <button
+          type="button"
+          onClick={() => setShow(false)}
+          className="rounded-full border border-mist px-4 py-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+        >
+          {t.later}
+        </button>
       </div>
     </div>
   );
 }
-
-/* ── Logo ────────────────────────────────────────────────── */
-
-function Logo({ small = false }: { small?: boolean }) {
-  if (small) return <img src="/logo.png" alt="Ipak Savdo" className="h-14 w-auto object-contain" />;
-  return <img src="/logo.png" alt="Ipak Savdo" className="h-20 w-auto object-contain sm:h-24" />;
-}
-
-

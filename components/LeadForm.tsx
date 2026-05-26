@@ -8,7 +8,7 @@ const BUSINESS_TYPE_VALUES = ["shop", "cafe", "restaurant", "market", "beauty", 
 type BusinessTypeValue = (typeof BUSINESS_TYPE_VALUES)[number];
 
 const inputClass =
-  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base font-bold outline-none focus:border-[#02691A] focus:ring-4 focus:ring-[#02691A]/15";
+  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base font-bold outline-none focus:border-[#03B73D] focus:ring-4 focus:ring-[#03B73D]/15";
 
 const SELECT_CHEVRON_BG =
   "appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23667085%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-10";
@@ -54,7 +54,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
 
   if (state === "sent") {
     return (
-      <div className="mx-auto max-w-xl rounded-lg border border-[#CFE6D5] bg-white p-8 text-center text-xl font-semibold text-[#024B13]">
+      <div className="mx-auto max-w-xl rounded-lg border border-[#D6F3DD] bg-white p-8 text-center text-xl font-semibold text-[#015521]">
         {t.success}
       </div>
     );
@@ -148,15 +148,15 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         <input required name="business_type_other" placeholder={t.formBusinessTypeOther} className={inputClass} />
       )}
 
-      <label className="flex items-center gap-3 text-sm font-semibold text-[#024B13]">
-        <input type="checkbox" name="needs_equipment" className="h-5 w-5 rounded border-slate-300 text-[#02691A]" />
+      <label className="flex items-center gap-3 text-sm font-semibold text-[#015521]">
+        <input type="checkbox" name="needs_equipment" className="h-5 w-5 rounded border-slate-300 text-[#03B73D]" />
         {t.formNeedsEquipment}
       </label>
 
       <button
         type="button"
         onClick={() => setExtra(!extra)}
-        className="flex items-center gap-2 text-left text-sm font-semibold text-[#024B13]"
+        className="flex items-center gap-2 text-left text-sm font-semibold text-[#015521]"
       >
         <ChevronDown size={16} className={cn("transition", extra && "rotate-180")} />
         {t.optional}
@@ -174,7 +174,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
       <button
         type="submit"
         disabled={state === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#02691A] px-5 py-4 font-semibold text-white disabled:opacity-60"
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#03B73D] px-5 py-4 font-semibold text-white disabled:opacity-60"
       >
         <Send size={18} />
         {state === "submitting" ? "..." : t.submit}
