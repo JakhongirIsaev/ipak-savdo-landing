@@ -50,9 +50,9 @@ export default function LandingPage() {
       <Hero t={t} />
       <TrustStrip t={t.trustStrip} />
       <Pain t={t.pain} />
+      <HowItWorks id="how-it-works" t={t.howItWorks} />
       <Capabilities t={t} />
       <VoiceInsert t={t} />
-      <HowItWorks id="how-it-works" t={t.howItWorks} />
       <ForOwner id="owner" t={t.owner} />
       <WhyBirliy t={t} />
       <SegmentsV2 id="segments" t={t.segmentsV2} />
