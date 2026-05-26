@@ -17,343 +17,9 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import LeadFormStandalone from "@/components/LeadForm";
 import { useAttribution } from "@/lib/use-attribution";
+import { dicts, type LandingDict } from "@/lib/landing/i18n";
 
 type Locale = "ru" | "uz";
-
-/* ────────────────────────────────────────────────────────────
-   Copy. Plain, practical, unhurried. Short sentences. Real verbs.
-   Both dicts MUST stay structurally identical (typeof ru === typeof uz).
-   ──────────────────────────────────────────────────────────── */
-
-const ru = {
-  nav: ["Возможности", "Оборудование", "FAQ"],
-  cta: "Оставить заявку",
-  title: "Ваш бизнес. В одном месте.",
-  subtitle:
-    "BirLiy собирает кассу, склад и оплаты в одну спокойную поверхность. Без вкладок, без переключений — одна рабочая среда на смартфоне или планшете.",
-  telegram: "Написать в Telegram",
-  demo: "Смотреть демо",
-  trust: "Магазины у дома, минимаркеты, кафе, аптеки, сервисные точки.",
-  badges: [
-    "QR-оплата в момент продажи",
-    "Остатки обновляются автоматически",
-    "Работа при слабом интернете",
-    "Отчёты по выручке и кассирам",
-  ],
-  ecosystemBadge: "Workspace для бизнеса",
-
-  problemTitle: "Знакомые проблемы?",
-  problems: [
-    ["Блокнот вместо учёта", "Товары записываются в тетрадь, остатки теряются, пересчёт занимает часы."],
-    ["Деньги мимо кассы", "Без чёткого учёта сложно понять, сколько реально заработал за день."],
-    ["Клиент уходит без сдачи", "Нет терминала, нет QR — покупатель уходит в соседний магазин."],
-    ["Нет времени разбираться", "Сложные программы требуют обучения, настройки и компьютера."],
-  ],
-
-  segmentsTitle: "Для кого BirLiy",
-  segments: [
-    ["Магазины у дома", "Продукты, бытовая химия, повседневные товары."],
-    ["Минимаркеты", "Сотни позиций, несколько кассиров, контроль остатков."],
-    ["Кафе и точки питания", "Быстрый заказ, оплата по QR, чек в Telegram."],
-    ["Аптеки", "Точный учёт по наименованиям, контроль сроков."],
-    ["Сервисные точки", "Ремонт, химчистка, ателье — приём оплаты и учёт заказов."],
-  ],
-
-  benefitsTitle: "Почему BirLiy",
-  benefits: [
-    ["Начните за пять минут", "Скачайте приложение, добавьте товары — и продавайте. Без установок и оборудования."],
-    ["Всё в одной поверхности", "Касса, склад, QR-оплата, чеки и отчёты — без вкладок и переключений."],
-    ["Понятно без обучения", "Интерфейс собран для тех, кто никогда не работал с кассовыми программами."],
-    ["Спокойный фон для шумной работы", "Меньше частей — больше ясности. Поверхность не отвлекает кассира от покупателя."],
-  ],
-
-  featuresTitle: "Что делает BirLiy",
-  features: [
-    ["Касса и продажи", "Сканер или камера, быстрый поиск, скидки, возврат, отложенный чек."],
-    ["Каталог и склад", "Товары, категории, штучные и весовые позиции, остатки и списания."],
-    ["QR-оплата", "Покупатель сканирует QR — оплата поступает мгновенно. Наличные, карта или QR."],
-    ["Электронный чек", "Чек уходит покупателю в Telegram. Печать можно подключить отдельно."],
-    ["Программа лояльности", "Бонусы, скидки и акции для постоянных покупателей."],
-    ["Отчёты", "Выручка за день, средний чек, топ-товары, работа кассиров."],
-  ],
-
-  workflowTitle: "Как проходит продажа",
-  workflowSteps: ["Сканирование", "Корзина", "QR-оплата", "Подтверждение", "Чек", "Склад обновлён"],
-
-  qrCardTitle: "QR-оплата",
-  qrCardLabel: "Пример QR-кода",
-  qrCardHint: "Покупатель сканирует — оплата поступает мгновенно",
-
-  miniPreviews: [
-    ["Сканер", "быстрый поиск"],
-    ["Остатки", "18 шт"],
-    ["Чек", "Telegram"],
-    ["Доступ", "владелец / кассир"],
-    ["Выручка", "3 450 000 сум"],
-  ],
-
-  offlineTitle: "Интернет пропал? Касса работает",
-  offlineText:
-    "Кассир продолжает пробивать товары. Когда связь восстановится, всё синхронизируется автоматически.",
-  offlineBadge: "Работа при слабом интернете",
-  offlineSteps: ["Продажа сохранена локально", "Интернет восстановился", "Данные синхронизированы"],
-
-  equipmentTitle: "Два формата под ваш бизнес",
-  equipFullTitle: "Продуктовый магазин",
-  equipFullDesc: "Планшет, сканер штрих-кодов и термопринтер чеков. Полный контроль склада и быстрый поток покупателей.",
-  equipFullItems: ["Планшет", "Сканер штрих-кодов", "Термопринтер чеков"],
-  equipLiteTitle: "Магазин одежды и другие",
-  equipLiteDesc: "Приложение на Android или iOS — всё, что нужно. Простой учёт, QR-оплата и чек в Telegram прямо с телефона.",
-  equipLiteItems: ["Android-приложение", "iOS-приложение", "Без доп. оборудования"],
-
-  roadmapTitle: "Что дальше",
-  roadmap: [
-    ["Сейчас", "Касса, склад, QR-оплата, электронный чек, отчёты."],
-    ["Скоро", "Акции, скидки и уведомления клиентам в Telegram."],
-    ["Далее", "Закупки у поставщиков и банковские сервисы для бизнеса."],
-  ],
-
-  formTitle: "Оставьте заявку",
-  formIntro: "Расскажем, как BirLiy подходит под ваш формат. Без обзвонов и навязчивости.",
-  success: "Заявка принята. Команда BirLiy свяжется с вами.",
-  formName: "Имя",
-  formPhone: "Телефон",
-  formBusiness: "Тип бизнеса",
-  formBusinessName: "Название бизнеса",
-  formNeedsEquipment: "Нужно оборудование (касса, принтер, сканер)",
-  formBusinessTypeOther: "Уточните вид бизнеса",
-  formSubmitError: "Не удалось отправить. Попробуйте ещё раз или напишите нам в Telegram.",
-  formRateLimited: "Слишком много заявок с одного устройства. Попробуйте через 10 минут.",
-  formValidationError: "Проверьте поля и попробуйте ещё раз.",
-  // Order matches BUSINESS_TYPE_VALUES in components/LeadForm.tsx — DO NOT REORDER
-  businessTypes: [
-    "Магазин",
-    "Кафе",
-    "Ресторан",
-    "Рынок / точка",
-    "Салон красоты",
-    "Сервис",
-    "Другое",
-  ],
-  formComment: "Комментарий",
-  optional: "Показать дополнительные поля",
-  submit: "Отправить заявку",
-
-  faqTitle: "Вопросы и ответы",
-  faq: [
-    ["Нужно ли покупать компьютер?", "Нет. Достаточно смартфона или планшета."],
-    ["Можно ли подключить сканер?", "Да. Подойдёт любой 2D Bluetooth-сканер."],
-    ["Как работает QR-оплата?", "Покупатель сканирует QR-код на экране — деньги поступают на счёт мгновенно."],
-    ["Что происходит со складом после продажи?", "Остаток обновляется автоматически после каждой продажи."],
-    ["Приложение работает без интернета?", "Да. Продажи сохраняются и синхронизируются, когда связь вернётся."],
-  ],
-
-  voiceTitle: "Меньше частей. Больше ясности.",
-  voiceBody:
-    "BirLiy собирает разрозненную работу — продажи, склад, оплаты — в одну спокойную поверхность. Касса не борется со складом. Склад не борется с отчётами. Всё движется в одном направлении: вперёд.",
-
-  cookie: "Мы используем cookies для аналитики и улучшения работы сайта.",
-  accept: "Принять",
-  later: "Позже",
-
-  heroOnline: "Онлайн",
-  heroRevenue: "Выручка за день",
-  heroAvgCheck: "Средний чек",
-  heroSales: "Продаж",
-  heroRevenueVal: "3 450 000",
-  heroAvgCheckVal: "87 000",
-  heroSalesVal: "42",
-  heroCurrency: "сум",
-  heroSaleTitle: "Продажа",
-  heroItems: ["Молоко 1л", "Хлеб", "Кофе 3в1"],
-  heroItemPrice: "14 000",
-  heroTotal: "Итого",
-  heroTotalVal: "20 500 сум",
-  heroReceiptSent: "Чек отправлен",
-  heroReceiptDetail: "Telegram · 20 500 сум",
-  heroLast: "Последняя продажа",
-  heroLastTime: "минуту назад",
-
-  productCaption: "BirLiy — спокойная рабочая поверхность. Один экран на всё.",
-  footerTagline: "Ваш бизнес. В одном месте.",
-  footerSmall: "© 2026 BirLiy. Продукт Ipak Yuli Bank.",
-
-  demoTitle: "Как работает BirLiy",
-  demoSteps: [
-    ["Сканирование товара", "Наведите камеру или используйте сканер — товар добавляется в чек."],
-    ["Формирование корзины", "Все товары в одном списке. Меняйте количество, добавляйте скидку."],
-    ["QR-оплата", "На экране появляется QR-код. Покупатель сканирует — оплата проходит мгновенно."],
-    ["Подтверждение оплаты", "Деньги поступили на счёт. Кассир видит подтверждение."],
-    ["Отправка чека", "Электронный чек уходит покупателю в Telegram. Можно напечатать."],
-    ["Обновление склада", "Остатки пересчитаны автоматически. Владелец видит дашборд."],
-  ],
-  demoClose: "Закрыть",
-};
-
-const uz: typeof ru = {
-  nav: ["Imkoniyatlar", "Jihozlar", "FAQ"],
-  cta: "Ariza qoldirish",
-  title: "Sizning biznesingiz. Bitta joyda.",
-  subtitle:
-    "BirLiy kassa, ombor va to'lovlarni bitta tinch sirtga yig'adi. Varaqlar va o'tishlarsiz — bitta ish muhiti smartfon yoki planshetda.",
-  telegram: "Telegram orqali yozish",
-  demo: "Demoni ko'rish",
-  trust: "Uy yonidagi do'konlar, minimarketlar, kafelar, dorixonalar va xizmat nuqtalari.",
-  badges: [
-    "Sotuv paytida QR-to'lov",
-    "Qoldiqlar avtomatik yangilanadi",
-    "Zaif internetda ishlaydi",
-    "Tushum va kassirlar bo'yicha hisobotlar",
-  ],
-  ecosystemBadge: "Biznes uchun workspace",
-
-  problemTitle: "Tanish muammolar?",
-  problems: [
-    ["Daftar o'rniga hisob", "Tovarlar daftarga yoziladi, qoldiqlar yo'qoladi, qayta hisoblash soatlab davom etadi."],
-    ["Pul kassadan chetda", "Aniq hisobsiz kunlik daromadni bilish qiyin."],
-    ["Mijoz qaytib ketadi", "Terminal yo'q, QR yo'q — xaridor qo'shni do'konga ketadi."],
-    ["Tushunish qiyin", "Murakkab dasturlar o'rganish, sozlash va kompyuter talab qiladi."],
-  ],
-
-  segmentsTitle: "BirLiy kim uchun",
-  segments: [
-    ["Uy yonidagi do'konlar", "Oziq-ovqat, maishiy kimyo, kundalik tovarlar."],
-    ["Minimarketlar", "Yuzlab tovar, bir necha kassir, qoldiq nazorati."],
-    ["Kafelar va ovqatlanish", "Tez buyurtma, QR orqali to'lov, Telegram chek."],
-    ["Dorixonalar", "Nomlar bo'yicha aniq hisob, muddat nazorati."],
-    ["Xizmat nuqtalari", "Ta'mirlash, kimyoviy tozalash, tikuvchilik — to'lov va buyurtma hisobi."],
-  ],
-
-  benefitsTitle: "Nima uchun BirLiy",
-  benefits: [
-    ["Besh daqiqada boshlang", "Ilovani yuklab oling, tovarlarni qo'shing — va soting. O'rnatish va jihozlarsiz."],
-    ["Hammasi bitta sirtda", "Kassa, ombor, QR-to'lov, cheklar va hisobotlar — varaqlarsiz va o'tishlarsiz."],
-    ["O'rganishsiz tushunarli", "Interfeys kassa dasturlari bilan hech qachon ishlamagan kishilar uchun."],
-    ["Shovqinli ish uchun tinch sirt", "Kamroq qism — ko'proq aniqlik. Sirt kassirni xaridordan chalg'itmaydi."],
-  ],
-
-  featuresTitle: "BirLiy nima qiladi",
-  features: [
-    ["Kassa va sotuvlar", "Skaner yoki kamera, tez qidirish, chegirmalar, qaytarish, kechiktirilgan chek."],
-    ["Katalog va ombor", "Tovarlar, kategoriyalar, donali va vaznli pozitsiyalar, qoldiqlar va hisobdan chiqarish."],
-    ["QR-to'lov", "Xaridor QR-kodni skanerlaydi — to'lov bir zumda tushadi. Naqd, karta yoki QR."],
-    ["Elektron chek", "Chek xaridorga Telegramga yuboriladi. Bosib chiqarishni alohida ulash mumkin."],
-    ["Sodiqlik dasturi", "Doimiy xaridorlar uchun bonuslar, chegirmalar va aksiyalar."],
-    ["Hisobotlar", "Kunlik tushum, o'rtacha chek, top-tovarlar, kassirlar ishi."],
-  ],
-
-  workflowTitle: "Sotuv qanday o'tadi",
-  workflowSteps: ["Skanerlash", "Savat", "QR-to'lov", "Tasdiqlash", "Chek", "Ombor yangilandi"],
-
-  qrCardTitle: "QR-to'lov",
-  qrCardLabel: "QR-kod namunasi",
-  qrCardHint: "Xaridor skanerlaydi — to'lov bir zumda tushadi",
-
-  miniPreviews: [
-    ["Skaner", "tez qidirish"],
-    ["Qoldiq", "18 dona"],
-    ["Chek", "Telegram"],
-    ["Kirish", "egasi / kassir"],
-    ["Tushum", "3 450 000 so'm"],
-  ],
-
-  offlineTitle: "Internet uzildi? Kassa ishlaydi",
-  offlineText:
-    "Kassir tovarlarni sotishda davom etadi. Aloqa tiklanganda hammasi avtomatik sinxronlanadi.",
-  offlineBadge: "Zaif internetda ishlash",
-  offlineSteps: ["Sotuv lokal saqlandi", "Internet tiklandi", "Ma'lumotlar sinxronlandi"],
-
-  equipmentTitle: "Biznesingizga mos ikki format",
-  equipFullTitle: "Oziq-ovqat do'koni",
-  equipFullDesc: "Planshet, shtrix-kod skaneri va termoprinter. Omborni to'liq nazorat va tez xaridor oqimi.",
-  equipFullItems: ["Planshet", "Shtrix-kod skaneri", "Termoprinter"],
-  equipLiteTitle: "Kiyim do'koni va boshqalar",
-  equipLiteDesc: "Android yoki iOS ilovasi — kerakli hamma narsa. Oddiy hisob, QR-to'lov va Telegram chek to'g'ridan-to'g'ri telefondan.",
-  equipLiteItems: ["Android-ilova", "iOS-ilova", "Qo'shimcha jihozlarsiz"],
-
-  roadmapTitle: "Keyin nima",
-  roadmap: [
-    ["Hozir", "Kassa, ombor, QR-to'lov, elektron chek, hisobotlar."],
-    ["Tez orada", "Aksiyalar, chegirmalar va mijozlarga Telegram xabarnomalar."],
-    ["Keyinchalik", "Yetkazib beruvchilardan xarid va biznes uchun bank xizmatlari."],
-  ],
-
-  formTitle: "Ariza qoldiring",
-  formIntro: "BirLiy formatingizga qanday mos kelishini aytib beramiz. Qo'ng'iroq va bezovta qilishlarsiz.",
-  success: "Ariza qabul qilindi. BirLiy jamoasi siz bilan bog'lanadi.",
-  formName: "Ism",
-  formPhone: "Telefon",
-  formBusiness: "Biznes turi",
-  formBusinessName: "Biznes nomi",
-  formNeedsEquipment: "Jihoz kerak (kassa, printer, skaner)",
-  formBusinessTypeOther: "Biznes turini aniqlang",
-  formSubmitError: "Yuborib bo'lmadi. Yana urinib ko'ring yoki bizga Telegramda yozing.",
-  formRateLimited: "Bitta qurilmadan juda ko'p so'rov. 10 daqiqadan keyin urinib ko'ring.",
-  formValidationError: "Maydonlarni tekshiring va yana urinib ko'ring.",
-  // Order matches BUSINESS_TYPE_VALUES in components/LeadForm.tsx — DO NOT REORDER
-  businessTypes: [
-    "Do'kon",
-    "Kafe",
-    "Restoran",
-    "Bozor",
-    "Go'zallik saloni",
-    "Xizmat",
-    "Boshqa",
-  ],
-  formComment: "Izoh",
-  optional: "Qo'shimcha maydonlarni ko'rsatish",
-  submit: "Ariza yuborish",
-
-  faqTitle: "Savol va javoblar",
-  faq: [
-    ["Kompyuter sotib olish kerakmi?", "Yo'q. Smartfon yoki planshet yetarli."],
-    ["Skaner ulash mumkinmi?", "Ha. Har qanday 2D Bluetooth-skaner mos keladi."],
-    ["QR-to'lov qanday ishlaydi?", "Xaridor ekrandagi QR-kodni skanerlaydi — pul hisobga bir zumda tushadi."],
-    ["Sotuvdan keyin omborga nima bo'ladi?", "Tovar qoldig'i har bir sotuvdan keyin avtomatik yangilanadi."],
-    ["Ilova internetsiz ishlaydi?", "Ha. Sotuvlar saqlanadi va aloqa tiklanganda sinxronlanadi."],
-  ],
-
-  voiceTitle: "Kamroq qism. Ko'proq aniqlik.",
-  voiceBody:
-    "BirLiy tarqoq ishni — sotuvlar, ombor, to'lovlar — bitta tinch sirtga yig'adi. Kassa ombor bilan kurashmaydi. Ombor hisobotlar bilan kurashmaydi. Hammasi bir yo'nalishda: oldinga.",
-
-  cookie: "Sayt tahlili va ishlashini yaxshilash uchun cookies ishlatamiz.",
-  accept: "Qabul qilish",
-  later: "Keyinroq",
-
-  heroOnline: "Onlayn",
-  heroRevenue: "Kunlik tushum",
-  heroAvgCheck: "O'rtacha chek",
-  heroSales: "Sotuvlar",
-  heroRevenueVal: "3 450 000",
-  heroAvgCheckVal: "87 000",
-  heroSalesVal: "42",
-  heroCurrency: "so'm",
-  heroSaleTitle: "Sotuv",
-  heroItems: ["Sut 1l", "Non", "Kofe 3in1"],
-  heroItemPrice: "14 000",
-  heroTotal: "Jami",
-  heroTotalVal: "20 500 so'm",
-  heroReceiptSent: "Chek yuborildi",
-  heroReceiptDetail: "Telegram · 20 500 so'm",
-  heroLast: "Oxirgi sotuv",
-  heroLastTime: "bir daqiqa oldin",
-
-  productCaption: "BirLiy — tinch ish sirti. Bitta ekran hamma narsa uchun.",
-  footerTagline: "Sizning biznesingiz. Bitta joyda.",
-  footerSmall: "© 2026 BirLiy. Ipak Yuli Bank mahsuloti.",
-
-  demoTitle: "BirLiy qanday ishlaydi",
-  demoSteps: [
-    ["Tovarni skanerlash", "Kamerani yo'naltiring yoki skaner ishlating — tovar chekka qo'shiladi."],
-    ["Savatni shakllantirish", "Barcha tovarlar bitta ro'yxatda. Miqdorni o'zgartirish, chegirma qo'shish mumkin."],
-    ["QR-to'lov", "Ekranda QR-kod paydo bo'ladi. Xaridor skanerlaydi — to'lov bir zumda o'tadi."],
-    ["To'lov tasdiqlandi", "Pul hisobga tushdi. Kassir ekranda tasdiqlashni ko'radi."],
-    ["Chek yuborish", "Elektron chek xaridorga Telegramga yuboriladi. Bosib chiqarish mumkin."],
-    ["Ombor yangilandi", "Qoldiqlar avtomatik qayta hisoblandi. Egasi dashbordda ko'radi."],
-  ],
-  demoClose: "Yopish",
-};
 
 /* ────────────────────────────────────────────────────────────
    Motion: BirLiy curve. Settle, don't bounce.
@@ -373,7 +39,7 @@ const settle = (delay: number) => ({
 export default function LandingPage() {
   const [locale, setLocale] = useState<Locale>("ru");
   const attribution = useAttribution();
-  const t = locale === "ru" ? ru : uz;
+  const t = dicts[locale];
 
   useEffect(() => {
     const saved = localStorage.getItem("birliy-locale") as Locale | null;
@@ -414,7 +80,7 @@ export default function LandingPage() {
    ──────────────────────────────────────────────────────────── */
 
 interface HeaderProps {
-  t: typeof ru;
+  t: LandingDict;
   locale: Locale;
   switchLocale: (loc: Locale) => void;
   scrollTo: (id: string) => void;
@@ -486,7 +152,7 @@ function LangPill({ locale, switchLocale }: { locale: Locale; switchLocale: (loc
    Hero — 7/12 + 5/12, single orchestrated settle-in
    ──────────────────────────────────────────────────────────── */
 
-function Hero({ t }: { t: typeof ru }) {
+function Hero({ t }: { t: LandingDict }) {
   return (
     <section className="relative">
       <div className="section-shell grid items-center gap-16 py-24 lg:grid-cols-12 lg:gap-12 lg:py-32">
@@ -550,7 +216,7 @@ function Hero({ t }: { t: typeof ru }) {
   );
 }
 
-function HeroStatCard({ t }: { t: typeof ru }) {
+function HeroStatCard({ t }: { t: LandingDict }) {
   return (
     <div className="rounded-3xl border border-mist bg-white p-7 shadow-[0_1px_2px_rgba(11,24,38,0.04)]">
       <div className="flex items-center justify-between">
@@ -606,7 +272,7 @@ function HeroStatCard({ t }: { t: typeof ru }) {
    Capabilities — 3 columns, no card backgrounds
    ──────────────────────────────────────────────────────────── */
 
-function Capabilities({ t }: { t: typeof ru }) {
+function Capabilities({ t }: { t: LandingDict }) {
   // pick top 3 + offline as a 4th caption-line
   const cap = [
     { icon: ScanLine, title: t.features[0][0], body: t.features[0][1] },
@@ -653,7 +319,7 @@ function Capabilities({ t }: { t: typeof ru }) {
    Voice insert — the quiet centerpiece
    ──────────────────────────────────────────────────────────── */
 
-function VoiceInsert({ t }: { t: typeof ru }) {
+function VoiceInsert({ t }: { t: LandingDict }) {
   return (
     <section className="border-t border-mist bg-mist/40 py-32 lg:py-40">
       <div className="section-shell">
@@ -674,7 +340,7 @@ function VoiceInsert({ t }: { t: typeof ru }) {
    Product moment — one large screenshot, minimal caption
    ──────────────────────────────────────────────────────────── */
 
-function ProductMoment({ t }: { t: typeof ru }) {
+function ProductMoment({ t }: { t: LandingDict }) {
   return (
     <section className="border-t border-mist py-24 lg:py-32">
       <div className="section-shell">
@@ -695,7 +361,7 @@ function ProductMoment({ t }: { t: typeof ru }) {
    Why BirLiy — 2x2 type-only
    ──────────────────────────────────────────────────────────── */
 
-function WhyBirliy({ t }: { t: typeof ru }) {
+function WhyBirliy({ t }: { t: LandingDict }) {
   return (
     <section className="border-t border-mist py-24 lg:py-32">
       <div className="section-shell">
@@ -727,7 +393,7 @@ function WhyBirliy({ t }: { t: typeof ru }) {
    Equipment — 2 columns, type + check lists
    ──────────────────────────────────────────────────────────── */
 
-function Equipment({ t }: { t: typeof ru }) {
+function Equipment({ t }: { t: LandingDict }) {
   return (
     <section id="equipment" className="border-t border-mist py-24 lg:py-32">
       <div className="section-shell">
@@ -790,7 +456,7 @@ function EquipmentColumn({ icon: Icon, title, desc, items }: EquipmentColumnProp
    Roadmap — minimal 3-step horizontal sequence
    ──────────────────────────────────────────────────────────── */
 
-function Roadmap({ t }: { t: typeof ru }) {
+function Roadmap({ t }: { t: LandingDict }) {
   return (
     <section className="border-t border-mist bg-mist/40 py-24 lg:py-32">
       <div className="section-shell">
@@ -826,7 +492,7 @@ function Roadmap({ t }: { t: typeof ru }) {
    ──────────────────────────────────────────────────────────── */
 
 interface LeadSectionProps {
-  t: typeof ru;
+  t: LandingDict;
   locale: Locale;
   attribution: ReturnType<typeof useAttribution>;
 }
@@ -857,7 +523,7 @@ function LeadSection({ t, locale, attribution }: LeadSectionProps) {
    FAQ — minimal collapsible list, hairlines only
    ──────────────────────────────────────────────────────────── */
 
-function FAQ({ t }: { t: typeof ru }) {
+function FAQ({ t }: { t: LandingDict }) {
   const [open, setOpen] = useState(0);
   return (
     <section id="faq" className="border-t border-mist py-24 lg:py-32">
@@ -912,7 +578,7 @@ function FAQ({ t }: { t: typeof ru }) {
    ──────────────────────────────────────────────────────────── */
 
 interface FooterProps {
-  t: typeof ru;
+  t: LandingDict;
   locale: Locale;
   switchLocale: (loc: Locale) => void;
 }
@@ -952,7 +618,7 @@ function Footer({ t, locale, switchLocale }: FooterProps) {
    Cookie banner
    ──────────────────────────────────────────────────────────── */
 
-function Cookie({ t }: { t: typeof ru }) {
+function Cookie({ t }: { t: LandingDict }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
     setShow(localStorage.getItem("birliy-cookie-ok") !== "true");
