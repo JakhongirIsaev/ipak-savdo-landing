@@ -4,7 +4,7 @@ import { handleTelegramUpdate, type WebhookDeps } from "./webhook";
 const baseLead = {
   id: 42,
   businessName: "BillzCafe",
-  businessType: "cafe",
+  businessType: "cafe" as const,
   businessTypeOther: null,
   ownerName: "Иван",
   ownerContact: "+998901234567",
