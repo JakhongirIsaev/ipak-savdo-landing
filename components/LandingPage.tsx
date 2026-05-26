@@ -23,7 +23,6 @@ import {
   QrCode,
   Receipt,
   ScanLine,
-  Send,
   Shield,
   ShoppingCart,
   Smartphone,
@@ -38,6 +37,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import LeadFormStandalone from "@/components/LeadForm";
+import { useAttribution } from "@/lib/use-attribution";
 
 type Locale = "ru" | "uz";
 
@@ -134,14 +135,20 @@ const ru = {
   formName: "Имя",
   formPhone: "Телефон",
   formBusiness: "Тип бизнеса",
+  formBusinessName: "Название бизнеса",
+  formNeedsEquipment: "Нужно оборудование (касса, принтер, сканер)",
+  formBusinessTypeOther: "Уточните вид бизнеса",
+  formSubmitError: "Не удалось отправить. Попробуйте ещё раз или напишите нам в Telegram.",
+  formRateLimited: "Слишком много заявок с одного устройства. Попробуйте через 10 минут.",
+  formValidationError: "Проверьте поля и попробуйте ещё раз.",
+  // Order matches BUSINESS_TYPE_VALUES in components/LeadForm.tsx — DO NOT REORDER
   businessTypes: [
-    "Продуктовый магазин",
-    "Минимаркет",
-    "Кафе / ресторан",
-    "Аптека",
-    "Магазин одежды",
-    "Магазин электроники",
-    "Сервисная точка",
+    "Магазин",
+    "Кафе",
+    "Ресторан",
+    "Рынок / точка",
+    "Салон красоты",
+    "Сервис",
     "Другое",
   ],
   formComment: "Комментарий",
@@ -281,14 +288,20 @@ const uz: typeof ru = {
   formName: "Ism",
   formPhone: "Telefon",
   formBusiness: "Biznes turi",
+  formBusinessName: "Biznes nomi",
+  formNeedsEquipment: "Jihoz kerak (kassa, printer, skaner)",
+  formBusinessTypeOther: "Biznes turini aniqlang",
+  formSubmitError: "Yuborib bo'lmadi. Yana urinib ko'ring yoki bizga Telegramda yozing.",
+  formRateLimited: "Bitta qurilmadan juda ko'p so'rov. 10 daqiqadan keyin urinib ko'ring.",
+  formValidationError: "Maydonlarni tekshiring va yana urinib ko'ring.",
+  // Order matches BUSINESS_TYPE_VALUES in components/LeadForm.tsx — DO NOT REORDER
   businessTypes: [
-    "Oziq-ovqat do'koni",
-    "Minimarket",
-    "Kafe / restoran",
-    "Dorixona",
-    "Kiyim do'koni",
-    "Elektronika do'koni",
-    "Xizmat nuqtasi",
+    "Do'kon",
+    "Kafe",
+    "Restoran",
+    "Bozor",
+    "Go'zallik saloni",
+    "Xizmat",
     "Boshqa",
   ],
   formComment: "Izoh",
@@ -340,6 +353,7 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
+  const attribution = useAttribution();
   const t = locale === "ru" ? ru : uz;
   const ids = ["features", "equipment", "faq"];
 
@@ -566,7 +580,7 @@ export default function LandingPage() {
 
       {/* Lead Form */}
       <Section title={t.formTitle}>
-        <LeadForm t={t} />
+        <LeadFormStandalone t={t} locale={locale} attribution={attribution} />
       </Section>
 
       {/* FAQ */}
@@ -591,7 +605,7 @@ export default function LandingPage() {
       </button>
 
       {/* Lead form modal */}
-      {modalOpen && <Modal close={() => setModalOpen(false)}><LeadForm t={t} compact /></Modal>}
+      {modalOpen && <Modal close={() => setModalOpen(false)}><LeadFormStandalone t={t} locale={locale} compact attribution={attribution} /></Modal>}
 
       {/* Demo modal */}
       <AnimatePresence>
@@ -634,35 +648,6 @@ function FeatureCard({ index, title, text }: { index: number; title: string; tex
       <h3 className="text-lg font-black">{title}</h3>
       <p className="mt-2 text-base leading-7 text-slate-600">{text}</p>
     </div>
-  );
-}
-
-/* ── Lead form ───────────────────────────────────────────── */
-
-function LeadForm({ t, compact }: { t: typeof ru; compact?: boolean }) {
-  const [sent, setSent] = useState(false);
-  const [extra, setExtra] = useState(false);
-  if (sent) return <div className="mx-auto max-w-xl rounded-lg border border-[#BDECD5] bg-white p-8 text-center text-xl font-black text-[#005B45]">{t.success}</div>;
-  return (
-    <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className={cn("mx-auto grid max-w-xl gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm", compact && "shadow-none")}>
-      <input required placeholder={t.formName} className={inputClass} />
-      <input required placeholder={t.formPhone} type="tel" className={inputClass} />
-      <select required defaultValue="" className={cn(inputClass, "appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23667085%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-10")}>
-        <option value="" disabled>{t.formBusiness}</option>
-        {t.businessTypes.map((type) => (
-          <option key={type} value={type}>{type}</option>
-        ))}
-      </select>
-      <button type="button" onClick={() => setExtra(!extra)} className="flex items-center gap-2 text-left text-sm font-black text-[#005B45]">
-        <ChevronDown size={16} className={cn("transition", extra && "rotate-180")} />
-        {t.optional}
-      </button>
-      {extra && <textarea placeholder={t.formComment} rows={3} className={cn(inputClass, "resize-none")} />}
-      <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#00C853] px-5 py-4 font-black text-white">
-        <Send size={18} />
-        {t.submit}
-      </button>
-    </form>
   );
 }
 
@@ -858,5 +843,4 @@ function Logo({ small = false }: { small?: boolean }) {
   return <img src="/logo.png" alt="Ipak Savdo" className="h-20 w-auto object-contain sm:h-24" />;
 }
 
-const inputClass =
-  "w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base font-bold outline-none focus:border-[#00A86B] focus:ring-4 focus:ring-[#00A86B]/20";
+

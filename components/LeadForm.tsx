@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { ChevronDown, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Dict, Locale } from "@/lib/locale";
-
 // Order matches BUSINESS_TYPE_VALUES below — DO NOT REORDER
 const BUSINESS_TYPE_VALUES = ["shop", "cafe", "restaurant", "market", "beauty", "service", "other"] as const;
 type BusinessTypeValue = (typeof BUSINESS_TYPE_VALUES)[number];
@@ -15,9 +13,28 @@ const inputClass =
 const SELECT_CHEVRON_BG =
   "appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23667085%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-10";
 
+export type LeadFormLocale = "ru" | "uz";
+
+export interface LeadFormDict {
+  formBusinessName: string;
+  formName: string;
+  formPhone: string;
+  formBusiness: string;
+  formBusinessTypeOther: string;
+  formNeedsEquipment: string;
+  formComment: string;
+  optional: string;
+  submit: string;
+  success: string;
+  formSubmitError: string;
+  formRateLimited: string;
+  formValidationError: string;
+  businessTypes: readonly string[];
+}
+
 export interface LeadFormProps {
-  t: Dict;
-  locale?: Locale;
+  t: LeadFormDict;
+  locale?: LeadFormLocale;
   compact?: boolean;
   attribution?: {
     source?: string;
