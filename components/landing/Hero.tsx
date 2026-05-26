@@ -95,12 +95,10 @@ export function Hero({ t }: { t: LandingDict }) {
               <ArrowRight size={16} strokeWidth={1.75} />
             </a>
             <a
-              href="https://t.me/birliy_uz"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#how-it-works"
               className="inline-flex items-center gap-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
             >
-              {t.telegram}
+              {t.heroV2.secondaryCta}
               <ArrowRight size={14} strokeWidth={1.75} className="opacity-60" />
             </a>
           </motion.div>
@@ -109,7 +107,7 @@ export function Hero({ t }: { t: LandingDict }) {
             {...settle(0.32)}
             className="mt-8 text-sm leading-relaxed text-ink-500"
           >
-            {t.trust}
+            {t.heroV2.trustLine}
           </motion.p>
         </div>
 
