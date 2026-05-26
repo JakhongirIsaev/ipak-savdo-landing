@@ -22,6 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 dev-server.log
+dev_output.txt
+
+# OMC orchestration state
+.omc/
 
 # Local QA captures
 qa-*.png
