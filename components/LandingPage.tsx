@@ -10,7 +10,7 @@ import { TrustStrip } from "@/components/landing/TrustStrip";
 import { Pain } from "@/components/landing/Pain";
 import { Capabilities } from "@/components/landing/Capabilities";
 import { VoiceInsert } from "@/components/landing/VoiceInsert";
-import { ProductMoment } from "@/components/landing/ProductMoment";
+import { HowItWorks } from "@/components/landing/HowItWorks";
 import { WhyBirliy } from "@/components/landing/WhyBirliy";
 import { Equipment } from "@/components/landing/Equipment";
 import { Roadmap } from "@/components/landing/Roadmap";
@@ -48,7 +48,7 @@ export default function LandingPage() {
       <Pain t={t.pain} />
       <Capabilities t={t} />
       <VoiceInsert t={t} />
-      <ProductMoment t={t} />
+      <HowItWorks id="how-it-works" t={t.howItWorks} />
       <WhyBirliy t={t} />
       <Equipment t={t} />
       <Roadmap t={t} />

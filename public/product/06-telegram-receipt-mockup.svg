@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" fill="none">
+  <!-- Phone frame -->
+  <rect width="320" height="480" rx="24" fill="#0B1826"/>
+  <!-- Status bar notch area -->
+  <rect x="120" y="10" width="80" height="6" rx="3" fill="#1a2a3a"/>
+
+  <!-- Chat background -->
+  <rect x="16" y="36" width="288" height="424" rx="12" fill="#1a2d44"/>
+
+  <!-- Telegram header bar -->
+  <rect x="16" y="36" width="288" height="48" rx="0" fill="#17212b"/>
+  <rect x="16" y="36" width="288" height="48" rx="12" fill="#17212b"/>
+  <rect x="16" y="60" width="288" height="24" fill="#17212b"/>
+
+  <!-- Back arrow -->
+  <path d="M34 60 L26 60" stroke="#5c8eb0" stroke-width="2" stroke-linecap="round"/>
+  <path d="M30 55 L25 60 L30 65" stroke="#5c8eb0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Avatar circle -->
+  <circle cx="56" cy="60" r="16" fill="#03B73D"/>
+  <text x="56" y="65" font-family="sans-serif" font-size="13" font-weight="700" fill="white" text-anchor="middle">B</text>
+
+  <!-- Contact name + status -->
+  <text x="80" y="55" font-family="sans-serif" font-size="13" font-weight="600" fill="#ffffff">BirLiy</text>
+  <text x="80" y="70" font-family="sans-serif" font-size="10" fill="#7aa3c0">бот</text>
+
+  <!-- Message bubble (incoming — left side) -->
+  <rect x="24" y="104" width="226" height="222" rx="16" fill="#17212b"/>
+  <!-- Bubble tail -->
+  <path d="M24 120 L14 128 L24 128 Z" fill="#17212b"/>
+
+  <!-- Bubble top: BirLiy header inside bubble -->
+  <circle cx="44" cy="126" r="12" fill="#03B73D"/>
+  <text x="44" y="131" font-family="sans-serif" font-size="10" font-weight="700" fill="white" text-anchor="middle">B</text>
+  <text x="62" y="122" font-family="sans-serif" font-size="11" font-weight="600" fill="#03B73D">BirLiy</text>
+  <text x="62" y="135" font-family="sans-serif" font-size="9" fill="#7aa3c0">Электронный чек</text>
+
+  <!-- Receipt title -->
+  <text x="44" y="165" font-family="sans-serif" font-size="11" fill="#8b9daf">Чек №3</text>
+
+  <!-- Big amount -->
+  <text x="44" y="196" font-family="sans-serif" font-size="24" font-weight="700" fill="#03B73D">20 500 сум</text>
+
+  <!-- Items count -->
+  <text x="44" y="216" font-family="sans-serif" font-size="11" fill="#8b9daf">3 позиции</text>
+
+  <!-- Hairline divider 1 -->
+  <line x1="44" y1="228" x2="236" y2="228" stroke="#2d3f52" stroke-width="1"/>
+
+  <!-- Line items -->
+  <text x="44" y="248" font-family="sans-serif" font-size="12" fill="#cdd8e3">Молоко 1л</text>
+  <text x="236" y="248" font-family="sans-serif" font-size="12" fill="#cdd8e3" text-anchor="end">14 000</text>
+
+  <text x="44" y="268" font-family="sans-serif" font-size="12" fill="#cdd8e3">Хлеб</text>
+  <text x="236" y="268" font-family="sans-serif" font-size="12" fill="#cdd8e3" text-anchor="end">4 000</text>
+
+  <text x="44" y="288" font-family="sans-serif" font-size="12" fill="#cdd8e3">Кофе 3в1</text>
+  <text x="236" y="288" font-family="sans-serif" font-size="12" fill="#cdd8e3" text-anchor="end">2 500</text>
+
+  <!-- Hairline divider 2 -->
+  <line x1="44" y1="300" x2="236" y2="300" stroke="#2d3f52" stroke-width="1"/>
+
+  <!-- Timestamp bottom-right of bubble -->
+  <text x="236" y="318" font-family="sans-serif" font-size="10" fill="#5a7a94" text-anchor="end">12:34</text>
+
+  <!-- Bottom navigation bar hint -->
+  <rect x="80" y="456" width="160" height="4" rx="2" fill="#2a3d50"/>
+</svg>
