@@ -127,6 +127,11 @@ const ru = {
     ["Как работает QR-оплата?", "Покупатель сканирует QR-код на экране — деньги поступают на счёт мгновенно."],
     ["Что происходит со складом после продажи?", "Остаток обновляется автоматически после каждой продажи."],
     ["Приложение работает без интернета?", "Да. Продажи сохраняются и синхронизируются, когда связь вернётся."],
+    ["Можно ли импортировать товары?", "Да, из Excel. Также в продукте уже доступна база 9 000+ распространённых SKU — многие товары находятся сразу."],
+    ["Сколько кассиров можно завести?", "На периоде раннего доступа — без ограничений. Роли: Владелец / Кассир / Суперадмин. Каждый кассир заходит по PIN."],
+    ["Что с фискализацией?", "Фискализация продаж идёт через инфраструктуру ГНК Узбекистана в рамках экосистемы Ipak Yuli Bank."],
+    ["Что насчёт безопасности?", "Данные хранятся в инфраструктуре Ipak Yuli Bank. Доступ — по PIN, с разделением ролей. Все действия попадают в полный журнал событий."],
+    ["Можно ли работать на нескольких точках?", "Да. Сводные отчёты и кросс-точечный контроль кассиров доступны для бизнесов с несколькими точками."],
   ],
 
   voiceTitle: "Меньше частей. Больше ясности.",
@@ -482,6 +487,11 @@ const uz: typeof ru = {
     ["QR-to'lov qanday ishlaydi?", "Xaridor ekrandagi QR-kodni skanerlaydi — pul hisobga bir zumda tushadi."],
     ["Sotuvdan keyin omborga nima bo'ladi?", "Tovar qoldig'i har bir sotuvdan keyin avtomatik yangilanadi."],
     ["Ilova internetsiz ishlaydi?", "Ha. Sotuvlar saqlanadi va aloqa tiklanganda sinxronlanadi."],
+    ["Tovarlarni import qilish mumkinmi?", "Ha, Excel orqali. Bundan tashqari mahsulotda 9 000+ keng tarqalgan SKU bazasi mavjud — ko'p tovarlar darhol topiladi."],
+    ["Nechta kassir yaratish mumkin?", "Erta kirish davrida cheklov yo'q. Rollar: Egasi / Kassir / Superadmin. Har bir kassir PIN bilan kiradi."],
+    ["Fiskalizatsiya qanday?", "Sotuvlar fiskalizatsiyasi Ipak Yuli Bank ekotizimi doirasida O'zbekiston DSK infratuzilmasi orqali amalga oshiriladi."],
+    ["Xavfsizlik qanday?", "Ma'lumotlar Ipak Yuli Bank infratuzilmasida saqlanadi. Kirish — PIN orqali, rollar ajratilgan. Barcha harakatlar to'liq voqealar jurnaliga tushadi."],
+    ["Bir necha nuqtada ishlash mumkinmi?", "Ha. Bir nechta nuqtaga ega bizneslar uchun yig'ma hisobotlar va kassirlarni nuqtalararo nazorat qilish mavjud."],
   ],
 
   voiceTitle: "Kamroq qism. Ko'proq aniqlik.",
