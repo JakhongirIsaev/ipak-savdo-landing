@@ -1,4 +1,4 @@
-# BirLiy / Ipak Savdo Landing — project guidance for Claude
+# BirLiy Landing — project guidance for Claude
 
 ## Project context
 
