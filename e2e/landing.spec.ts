@@ -195,6 +195,10 @@ test("lead form rejects invalid phone (HTML5 type=tel + required)", async ({ pag
 test("cookie banner can be dismissed", async ({ page }) => {
   await page.goto("/");
 
+  // Cookie banner is intentionally hidden until the user scrolls past the hero
+  // (or after a 4s fallback). Trigger the scroll so the banner appears.
+  await page.evaluate(() => window.scrollTo(0, 400));
+
   const banner = page.getByText("Мы используем cookies", { exact: false });
   await expect(banner).toBeVisible();
 

@@ -7,13 +7,14 @@ interface HowItWorksT {
 }
 interface HowItWorksProps { id: string; t: HowItWorksT }
 
-const STEP_IMAGES = [
-  "/product/16-kassa-empty.png",
-  "/product/17-kassa-item-added.png",
-  "/product/18-payment-screen.png",
-  "/product/19-payment-cash.png",
-  "/product/20-payment-success.png",
-  "/product/06-telegram-receipt-mockup.svg",
+interface StepImage { src: string; w: number; h: number }
+const STEP_IMAGES: readonly StepImage[] = [
+  { src: "/product/16-kassa-empty.png", w: 1037, h: 597 },
+  { src: "/product/17-kassa-item-added.png", w: 1037, h: 597 },
+  { src: "/product/18-payment-screen.png", w: 1037, h: 597 },
+  { src: "/product/19-payment-cash.png", w: 1037, h: 597 },
+  { src: "/product/20-payment-success.png", w: 1037, h: 597 },
+  { src: "/product/06-telegram-receipt-mockup.svg", w: 360, h: 540 },
 ];
 
 export function HowItWorks({ id, t }: HowItWorksProps) {
@@ -32,7 +33,14 @@ export function HowItWorks({ id, t }: HowItWorksProps) {
           {t.steps.map((step, i) => (
             <li key={step.num} className="step">
               <div className="overflow-hidden rounded-2xl border border-mist bg-mist">
-                <img src={STEP_IMAGES[i]} alt={step.label} className="block w-full" loading="lazy" />
+                <img
+                  src={STEP_IMAGES[i].src}
+                  width={STEP_IMAGES[i].w}
+                  height={STEP_IMAGES[i].h}
+                  alt={step.label}
+                  className="block h-auto w-full"
+                  loading="lazy"
+                />
               </div>
               <div className="mt-5">
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">{step.num}</span>

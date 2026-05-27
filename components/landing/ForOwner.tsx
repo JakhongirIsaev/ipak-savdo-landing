@@ -28,7 +28,14 @@ export function ForOwner({ id, t }: { id: string; t: OwnerT }) {
         </div>
         <div className="lg:col-span-7">
           <div className="overflow-hidden rounded-2xl border border-mist bg-mist">
-            <img src="/product/10-reports.png" alt="Отчёты BirLiy" className="block w-full" loading="lazy" />
+            <img
+              src="/product/10-reports.png"
+              width={1037}
+              height={597}
+              alt="Отчёты BirLiy"
+              className="block h-auto w-full"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>

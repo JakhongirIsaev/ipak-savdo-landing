@@ -17,7 +17,7 @@ export function LangPill({ locale, switchLocale }: LangPillProps) {
           type="button"
           onClick={() => switchLocale(loc)}
           className={cn(
-            "rounded-full px-3 py-1.5 transition-colors duration-200 ease-birliy",
+            "rounded-full px-3.5 py-2 transition-colors duration-200 ease-birliy",
             locale === loc ? "bg-ink-900 text-paper" : "text-ink-500 hover:text-ink-900",
           )}
         >

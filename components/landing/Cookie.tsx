@@ -6,7 +6,19 @@ import { type LandingDict } from "@/lib/landing/i18n";
 export function Cookie({ t }: { t: LandingDict }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    setShow(localStorage.getItem("birliy-cookie-ok") !== "true");
+    if (localStorage.getItem("birliy-cookie-ok") === "true") return;
+    const onScroll = () => {
+      if (window.scrollY > 200) {
+        setShow(true);
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const fallback = setTimeout(() => setShow(true), 4000);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(fallback);
+    };
   }, []);
   if (!show) return null;
 

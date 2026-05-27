@@ -96,7 +96,7 @@ export function Hero({ t }: { t: LandingDict }) {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center gap-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+              className="inline-flex items-center gap-2 px-2 py-3 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
             >
               {t.heroV2.secondaryCta}
               <ArrowRight size={14} strokeWidth={1.75} className="opacity-60" />
