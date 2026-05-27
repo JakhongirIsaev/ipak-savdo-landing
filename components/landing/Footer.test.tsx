@@ -17,7 +17,7 @@ describe("Footer", () => {
     expect(html).toContain('href="tel:+998900000000"');
     expect(html).toContain("+998 90 000-00-00");
     // logo
-    expect(html).toContain("/birliy-wordmark.svg");
+    expect(html).toContain("/birliy-wordmark.png");
     // copyright
     expect(html).toContain("© 2026 BirLiy");
     // tagline

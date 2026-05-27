@@ -22,7 +22,7 @@ export function Header({ t, locale, switchLocale, scrollTo, navTargets }: Header
           aria-label="BirLiy"
           className="shrink-0"
         >
-          <img src="/birliy-wordmark.svg" alt="BirLiy" className="h-7 w-auto" />
+          <img src="/birliy-wordmark.png" width={1269} height={425} alt="BirLiy" className="h-7 w-auto" />
         </button>
 
         <nav className="hidden items-center gap-8 md:flex">

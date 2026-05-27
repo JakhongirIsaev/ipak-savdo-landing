@@ -19,7 +19,7 @@ export function Footer({
       <div className="section-shell">
         <div className="grid gap-12 lg:grid-cols-5 lg:gap-8">
           <div className="lg:col-span-1">
-            <img src="/birliy-wordmark.svg" alt="BirLiy" className="h-8 w-auto" />
+            <img src="/birliy-wordmark.png" width={1269} height={425} alt="BirLiy" className="h-8 w-auto" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink-700">{f.tagline}</p>
           </div>
           {f.columns.map((col) => (
