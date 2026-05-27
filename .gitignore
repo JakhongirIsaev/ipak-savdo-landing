@@ -51,6 +51,12 @@ qa-*.png
 
 # Local dev test logs
 dev-server-test.log
+.dev-e2e.log
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
 
 # TypeScript
 *.tsbuildinfo
