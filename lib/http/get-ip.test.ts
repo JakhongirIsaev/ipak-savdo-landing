@@ -5,9 +5,17 @@ const makeRequest = (headers: Record<string, string>): Request =>
   new Request("http://example.com", { headers });
 
 describe("getClientIp", () => {
-  it("returns first IP from X-Forwarded-For", () => {
+  it("prefers X-Real-IP (Railway-set, not client-spoofable)", () => {
+    const req = makeRequest({
+      "x-real-ip": "9.9.9.9",
+      "x-forwarded-for": "1.2.3.4, 5.6.7.8",
+    });
+    expect(getClientIp(req)).toBe("9.9.9.9");
+  });
+
+  it("returns LAST IP from X-Forwarded-For when X-Real-IP missing (Railway appends real client)", () => {
     const req = makeRequest({ "x-forwarded-for": "1.2.3.4, 5.6.7.8" });
-    expect(getClientIp(req)).toBe("1.2.3.4");
+    expect(getClientIp(req)).toBe("5.6.7.8");
   });
 
   it("trims whitespace around IP", () => {

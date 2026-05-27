@@ -76,7 +76,10 @@ export async function POST(req: Request): Promise<Response> {
 
     return Response.json({ ok: true, id: inserted.id });
   } catch (err) {
-    console.error("Lead insert failed", err, { raw });
+    console.error("Lead insert failed", err, {
+      business_type: data.business_type,
+      language: data.language,
+    });
     return Response.json({ ok: false, error: "server" }, { status: 500 });
   }
 }
