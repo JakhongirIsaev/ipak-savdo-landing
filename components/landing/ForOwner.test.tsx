@@ -20,6 +20,6 @@ describe("ForOwner", () => {
     expect(html).toContain("Bullet 1");
     expect(html).toContain("Bullet 2");
     expect(html).toContain("Bullet 3");
-    expect(html).toContain("/product/10-reports.png");
+    expect(html).toContain('alt="Отчёты BirLiy"');
   });
 });

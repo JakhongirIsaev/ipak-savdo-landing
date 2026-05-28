@@ -1,4 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
+import reportsImg from "@/public/product/10-reports.png";
 
 interface OwnerT {
   eyebrow: string;
@@ -29,7 +30,7 @@ export function ForOwner({ id, t }: { id: string; t: OwnerT }) {
         <div className="lg:col-span-7">
           <div className="overflow-hidden rounded-2xl border border-mist bg-mist">
             <img
-              src="/product/10-reports.png"
+              src={reportsImg.src}
               width={1037}
               height={597}
               alt="Отчёты BirLiy"
