@@ -21,7 +21,7 @@ const ru = {
     "Работа при слабом интернете",
     "Отчёты по выручке и кассирам",
   ],
-  ecosystemBadge: "Workspace для бизнеса",
+  ecosystemBadge: "Рабочая среда для бизнеса",
 
   problemTitle: "Знакомые проблемы?",
   problems: [
@@ -159,6 +159,7 @@ const ru = {
   heroReceiptDetail: "Telegram · 20 500 сум",
   heroLast: "Последняя продажа",
   heroLastTime: "минуту назад",
+  heroLive: "сейчас",
 
   productCaption: "BirLiy — спокойная рабочая поверхность. Один экран на всё.",
   footerTagline: "Ваш бизнес. В одном месте.",
@@ -180,7 +181,7 @@ const ru = {
   trustStrip: {
     bank: "Продукт Ipak Yuli Bank",
     catalogSize: "9 000+ товаров в базе",
-    pilot: "Open pilot 2026",
+    pilot: "Ранний доступ 2026",
   },
 
   pain: {
@@ -224,7 +225,7 @@ const ru = {
       },
       {
         title: "Отчёты с дельтой",
-        body: "KPI с изменением к прошлому периоду, hourly chart, топ-товары, по кассирам.",
+        body: "Показатели с изменением к прошлому периоду, почасовой график, топ-товары, по кассирам.",
         metric: "День, неделя, месяц — за один взгляд",
       },
       {
@@ -247,7 +248,7 @@ const ru = {
     bullets: [
       "Реальная выручка с дельтой ±%",
       "Журнал смен и кассиров",
-      "Audit log всех действий: что продано, что списано, что возвращено",
+      "Журнал всех действий: что продано, что списано, что возвращено",
     ],
   },
 
@@ -360,7 +361,7 @@ const ru = {
 
   heroV2: {
     secondaryCta: "Посмотреть как работает",
-    trustLine: "Продукт Ipak Yuli Bank · Open pilot 2026",
+    trustLine: "Продукт Ipak Yuli Bank · Ранний доступ 2026",
   },
 };
 
@@ -379,7 +380,7 @@ const uz: typeof ru = {
     "Zaif internetda ishlaydi",
     "Tushum va kassirlar bo'yicha hisobotlar",
   ],
-  ecosystemBadge: "Biznes uchun workspace",
+  ecosystemBadge: "Biznes uchun ish muhiti",
 
   problemTitle: "Tanish muammolar?",
   problems: [
@@ -517,6 +518,7 @@ const uz: typeof ru = {
   heroReceiptDetail: "Telegram · 20 500 so'm",
   heroLast: "Oxirgi sotuv",
   heroLastTime: "bir daqiqa oldin",
+  heroLive: "hozir",
 
   productCaption: "BirLiy — tinch ish sirti. Bitta ekran hamma narsa uchun.",
   footerTagline: "Sizning biznesingiz. Bitta joyda.",
@@ -538,7 +540,7 @@ const uz: typeof ru = {
   trustStrip: {
     bank: "Ipak Yuli Bank mahsuloti",
     catalogSize: "9 000+ tovar bazada",
-    pilot: "Open pilot 2026",
+    pilot: "Erta kirish 2026",
   },
 
   pain: {
@@ -605,7 +607,7 @@ const uz: typeof ru = {
     bullets: [
       "Delta ±% bilan real tushum",
       "Smenalar va kassirlar jurnali",
-      "Barcha harakatlarning audit logi: nima sotildi, nima hisobdan chiqarildi, nima qaytarildi",
+      "Barcha harakatlar jurnali: nima sotildi, nima hisobdan chiqarildi, nima qaytarildi",
     ],
   },
 
@@ -718,7 +720,7 @@ const uz: typeof ru = {
 
   heroV2: {
     secondaryCta: "Qanday ishlashini ko'rish",
-    trustLine: "Ipak Yuli Bank mahsuloti · Open pilot 2026",
+    trustLine: "Ipak Yuli Bank mahsuloti · Erta kirish 2026",
   },
 };
 

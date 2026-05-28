@@ -14,7 +14,7 @@ function HeroStatCard({ t }: { t: LandingDict }) {
         </div>
         <div className="flex items-center gap-1.5 text-xs font-medium text-ink-500">
           <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-          live
+          {t.heroLive}
         </div>
       </div>
 
