@@ -174,7 +174,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
       <button
         type="submit"
         disabled={state === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-500 px-5 py-4 font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-700 disabled:opacity-60"
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-4 font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-800 disabled:opacity-60"
       >
         <Send size={18} />
         {state === "submitting" ? "..." : t.submit}

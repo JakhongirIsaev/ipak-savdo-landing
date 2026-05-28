@@ -89,7 +89,7 @@ export function Hero({ t }: { t: LandingDict }) {
           >
             <a
               href="#lead"
-              className="inline-flex items-center gap-2 rounded-full bg-green-500 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-700"
+              className="inline-flex items-center gap-2 rounded-full bg-green-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-800"
             >
               {t.cta}
               <ArrowRight size={16} strokeWidth={1.75} />

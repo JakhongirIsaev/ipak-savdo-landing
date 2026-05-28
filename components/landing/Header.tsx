@@ -43,7 +43,7 @@ export function Header({ t, locale, switchLocale, scrollTo, navTargets }: Header
           <button
             type="button"
             onClick={() => scrollTo("lead")}
-            className="hidden items-center gap-2 rounded-full bg-green-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-700 sm:inline-flex"
+            className="hidden items-center gap-2 rounded-full bg-green-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-800 sm:inline-flex"
           >
             {t.cta}
           </button>
