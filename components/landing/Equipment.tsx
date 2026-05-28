@@ -1,8 +1,8 @@
-import { Check, Tablet, Smartphone } from "lucide-react";
+import { Check, Store, Smartphone } from "lucide-react";
 import { type LandingDict } from "@/lib/landing/i18n";
 
 interface EquipmentColumnProps {
-  icon: typeof Tablet;
+  icon: typeof Store;
   title: string;
   desc: string;
   items: readonly string[];
@@ -43,7 +43,7 @@ export function Equipment({ t }: { t: LandingDict }) {
 
         <div className="mt-16 grid gap-x-16 gap-y-14 border-t border-mist pt-16 md:grid-cols-2">
           <EquipmentColumn
-            icon={Tablet}
+            icon={Store}
             title={t.equipFullTitle}
             desc={t.equipFullDesc}
             items={t.equipFullItems}
