@@ -3,7 +3,7 @@ import { businessTypes, languages } from "@/lib/db/schema";
 
 export const leadInputSchema = z
   .object({
-    business_name: z.string().trim().min(2).max(100),
+    business_name: z.string().trim().max(100).optional().nullable(),
     business_type: z.enum(businessTypes),
     business_type_other: z.string().trim().min(1).max(50).optional().nullable(),
     owner_name: z.string().trim().min(2).max(50),

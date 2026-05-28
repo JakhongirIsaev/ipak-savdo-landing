@@ -118,7 +118,7 @@ const ru = {
     "Другое",
   ],
   formComment: "Комментарий",
-  optional: "Показать дополнительные поля",
+  optional: "Уточнить детали (необязательно)",
   submit: "Отправить заявку",
 
   faqTitle: "Вопросы и ответы",
@@ -478,7 +478,7 @@ const uz: typeof ru = {
     "Boshqa",
   ],
   formComment: "Izoh",
-  optional: "Qo'shimcha maydonlarni ko'rsatish",
+  optional: "Tafsilotlarni aniqlash (ixtiyoriy)",
   submit: "Ariza yuborish",
 
   faqTitle: "Savol va javoblar",

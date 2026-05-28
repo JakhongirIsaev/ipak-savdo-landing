@@ -39,7 +39,7 @@ export async function POST(req: Request): Promise<Response> {
     const [inserted] = await db
       .insert(leads)
       .values({
-        businessName: data.business_name,
+        businessName: data.business_name ?? "",
         businessType: data.business_type,
         businessTypeOther: data.business_type_other ?? null,
         ownerName: data.owner_name,

@@ -127,7 +127,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         className="absolute -left-[9999px] h-0 w-0 opacity-0"
       />
 
-      <input required name="business_name" placeholder={t.formBusinessName} className={inputClass} />
+      <input name="business_name" placeholder={t.formBusinessName} className={inputClass} />
       <input required name="owner_name" placeholder={t.formName} className={inputClass} />
       <input required name="owner_contact" type="tel" placeholder={t.formPhone} className={inputClass} />
       <select

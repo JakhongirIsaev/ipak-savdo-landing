@@ -116,7 +116,7 @@ describe("POST /api/lead", () => {
   });
 
   it("returns 400 on validation failure", async () => {
-    const res = await POST(makeReq({ ...validBody, business_name: "" }, "2.2.2.2"));
+    const res = await POST(makeReq({ ...validBody, business_type: "spaceship" }, "2.2.2.2"));
     expect(res.status).toBe(400);
     const json = await res.json();
     expect(json.ok).toBe(false);

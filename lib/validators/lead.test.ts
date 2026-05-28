@@ -16,14 +16,16 @@ describe("leadInputSchema", () => {
     expect(result.success).toBe(true);
   });
 
-  it("rejects empty business_name", () => {
+  it("accepts empty business_name (optional)", () => {
     const result = leadInputSchema.safeParse({ ...valid, business_name: "" });
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 
-  it("rejects business_name shorter than 2 chars", () => {
-    const result = leadInputSchema.safeParse({ ...valid, business_name: "X" });
-    expect(result.success).toBe(false);
+  it("accepts a missing business_name (optional)", () => {
+    const { business_name, ...withoutName } = valid;
+    void business_name;
+    const result = leadInputSchema.safeParse(withoutName);
+    expect(result.success).toBe(true);
   });
 
   it("rejects unknown business_type", () => {
