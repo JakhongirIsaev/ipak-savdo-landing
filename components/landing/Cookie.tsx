@@ -47,14 +47,14 @@ export function Cookie({ t }: { t: LandingDict }) {
         <button
           type="button"
           onClick={accept}
-          className="rounded-full bg-ink-900 px-4 py-2 text-sm font-medium text-paper transition-colors duration-200 ease-birliy hover:bg-ink-700"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-ink-900 px-4 py-2 text-sm font-medium text-paper transition-colors duration-200 ease-birliy hover:bg-ink-700"
         >
           {t.accept}
         </button>
         <button
           type="button"
           onClick={() => setShow(false)}
-          className="rounded-full border border-mist px-4 py-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-mist px-4 py-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
         >
           {t.later}
         </button>

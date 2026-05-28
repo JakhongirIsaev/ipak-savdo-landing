@@ -31,7 +31,7 @@ export function Footer({
                     <li key={`${col.title}-${link.label}`}>
                       <a
                         href={link.href}
-                        className="text-sm text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+                        className="inline-block py-1.5 text-sm text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
                       >
                         {link.label}
                       </a>

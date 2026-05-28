@@ -156,7 +156,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
       <button
         type="button"
         onClick={() => setExtra(!extra)}
-        className="flex items-center gap-2 text-left text-sm font-semibold text-ink-700"
+        className="flex min-h-11 items-center gap-2 text-left text-sm font-semibold text-ink-700"
       >
         <ChevronDown size={16} className={cn("transition", extra && "rotate-180")} />
         {t.optional}

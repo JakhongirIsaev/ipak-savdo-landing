@@ -20,7 +20,7 @@ export function Header({ t, locale, switchLocale, scrollTo, navTargets }: Header
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="BirLiy"
-          className="shrink-0"
+          className="flex min-h-11 shrink-0 items-center py-2"
         >
           <img src="/birliy-wordmark.png" width={1269} height={425} alt="BirLiy" className="h-7 w-auto" />
         </button>
@@ -31,7 +31,7 @@ export function Header({ t, locale, switchLocale, scrollTo, navTargets }: Header
               key={item}
               type="button"
               onClick={() => scrollTo(navTargets[i])}
-              className="text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
+              className="flex min-h-11 items-center py-2 text-sm font-medium text-ink-700 transition-colors duration-200 ease-birliy hover:text-ink-900"
             >
               {item}
             </button>
