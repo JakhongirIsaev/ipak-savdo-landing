@@ -1,3 +1,5 @@
+import { ArrowRight } from "lucide-react";
+
 interface Step { num: string; label: string; caption: string }
 interface HowItWorksT {
   eyebrow: string;
@@ -5,7 +7,7 @@ interface HowItWorksT {
   intro: string;
   steps: readonly Step[];
 }
-interface HowItWorksProps { id: string; t: HowItWorksT }
+interface HowItWorksProps { id: string; t: HowItWorksT; ctaLabel: string }
 
 interface StepImage { src: string; w: number; h: number }
 const STEP_IMAGES: readonly StepImage[] = [
@@ -17,7 +19,7 @@ const STEP_IMAGES: readonly StepImage[] = [
   { src: "/product/06-telegram-receipt-mockup.svg", w: 360, h: 540 },
 ];
 
-export function HowItWorks({ id, t }: HowItWorksProps) {
+export function HowItWorks({ id, t, ctaLabel }: HowItWorksProps) {
   return (
     <section id={id} className="border-t border-mist py-24 lg:py-32">
       <div className="section-shell">
@@ -50,6 +52,14 @@ export function HowItWorks({ id, t }: HowItWorksProps) {
             </li>
           ))}
         </ol>
+
+        <a
+          href="#lead"
+          className="mt-12 inline-flex items-center gap-2 rounded-full bg-green-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-800"
+        >
+          {ctaLabel}
+          <ArrowRight size={16} strokeWidth={1.75} />
+        </a>
       </div>
     </section>
   );

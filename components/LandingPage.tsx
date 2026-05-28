@@ -50,7 +50,7 @@ export default function LandingPage() {
       <Hero t={t} />
       <TrustStrip t={t.trustStrip} />
       <Pain t={t.pain} />
-      <HowItWorks id="how-it-works" t={t.howItWorks} />
+      <HowItWorks id="how-it-works" t={t.howItWorks} ctaLabel={t.cta} />
       <Capabilities t={t} />
       <VoiceInsert t={t} />
       <ForOwner id="owner" t={t.owner} />

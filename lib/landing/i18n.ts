@@ -160,6 +160,7 @@ const ru = {
   heroLast: "Последняя продажа",
   heroLastTime: "минуту назад",
   heroLive: "сейчас",
+  heroOfferNote: "Первые 6 месяцев — бесплатно, без карты",
 
   productCaption: "BirLiy — спокойная рабочая поверхность. Один экран на всё.",
   footerTagline: "Ваш бизнес. В одном месте.",
@@ -519,6 +520,7 @@ const uz: typeof ru = {
   heroLast: "Oxirgi sotuv",
   heroLastTime: "bir daqiqa oldin",
   heroLive: "hozir",
+  heroOfferNote: "Birinchi 6 oy — bepul, kartasiz",
 
   productCaption: "BirLiy — tinch ish sirti. Bitta ekran hamma narsa uchun.",
   footerTagline: "Sizning biznesingiz. Bitta joyda.",

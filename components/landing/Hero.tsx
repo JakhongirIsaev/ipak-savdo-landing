@@ -103,6 +103,10 @@ export function Hero({ t }: { t: LandingDict }) {
             </a>
           </motion.div>
 
+          <motion.p {...settle(0.28)} className="mt-4 text-sm text-ink-500">
+            {t.heroOfferNote}
+          </motion.p>
+
           <motion.p
             {...settle(0.32)}
             className="mt-8 text-sm leading-relaxed text-ink-500"

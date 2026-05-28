@@ -17,9 +17,10 @@ describe("HowItWorks", () => {
         { num: "06", label: "Чек в Telegram", caption: "Уходит покупателю" },
       ],
     };
-    const html = renderToString(<HowItWorks id="how-it-works" t={t} />);
+    const html = renderToString(<HowItWorks id="how-it-works" t={t} ctaLabel="Оставить заявку" />);
     expect(html).toContain('id="how-it-works"');
     expect(html).toContain("Продажа за 15 секунд");
+    expect(html).toContain("Оставить заявку");
     expect(html).toContain("Один экран. Шесть шагов.");
     const liCount = (html.match(/<li[^>]*class="step"/g) ?? []).length;
     expect(liCount).toBe(6);
