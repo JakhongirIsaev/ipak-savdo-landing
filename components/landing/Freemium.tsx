@@ -21,7 +21,7 @@ export function Freemium({ id, t }: { id: string; t: FreemiumT }) {
         <div className="mt-16 grid gap-12 border-t border-mist pt-16 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <div className="flex items-baseline gap-4">
-              <span className="font-display text-[120px] font-bold leading-none tracking-tightish text-green-700 tabular-nums">6</span>
+              <span className="font-display text-[120px] font-bold leading-none tracking-tightish text-ink-900 tabular-nums">6</span>
               <span className="font-display text-xl font-semibold text-ink-700">
                 месяцев<br />бесплатно
               </span>

@@ -148,7 +148,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         <input required name="business_type_other" placeholder={t.formBusinessTypeOther} className={inputClass} />
       )}
 
-      <label className="flex items-center gap-3 text-sm font-semibold text-green-800">
+      <label className="flex items-center gap-3 text-sm font-semibold text-ink-700">
         <input type="checkbox" name="needs_equipment" className="h-5 w-5 rounded border-mist text-green-500" />
         {t.formNeedsEquipment}
       </label>
@@ -156,7 +156,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
       <button
         type="button"
         onClick={() => setExtra(!extra)}
-        className="flex items-center gap-2 text-left text-sm font-semibold text-green-800"
+        className="flex items-center gap-2 text-left text-sm font-semibold text-ink-700"
       >
         <ChevronDown size={16} className={cn("transition", extra && "rotate-180")} />
         {t.optional}
