@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { type LandingDict } from "@/lib/landing/i18n";
 import { settle } from "@/components/landing/_shared";
 
@@ -58,33 +58,34 @@ function HeroStatCard({ t }: { t: LandingDict }) {
 }
 
 export function Hero({ t }: { t: LandingDict }) {
+  const reduce = useReducedMotion() ?? false;
   return (
     <section className="relative">
       <div className="section-shell grid items-center gap-16 py-24 lg:grid-cols-12 lg:gap-12 lg:py-32">
         <div className="lg:col-span-7">
           <motion.p
-            {...settle(0)}
+            {...settle(0, reduce)}
             className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500"
           >
             {t.ecosystemBadge}
           </motion.p>
 
           <motion.h1
-            {...settle(0.08)}
+            {...settle(0.08, reduce)}
             className="mt-6 max-w-[15ch] text-balance font-display text-5xl font-bold leading-[1.04] tracking-tightish text-ink-900 sm:text-6xl lg:text-[80px]"
           >
             {t.title}
           </motion.h1>
 
           <motion.p
-            {...settle(0.16)}
+            {...settle(0.16, reduce)}
             className="mt-7 max-w-[58ch] text-[19px] font-light leading-relaxed text-ink-700 sm:text-[22px]"
           >
             {t.subtitle}
           </motion.p>
 
           <motion.div
-            {...settle(0.24)}
+            {...settle(0.24, reduce)}
             className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
             <a
@@ -103,19 +104,19 @@ export function Hero({ t }: { t: LandingDict }) {
             </a>
           </motion.div>
 
-          <motion.p {...settle(0.28)} className="mt-4 text-sm text-ink-500">
+          <motion.p {...settle(0.28, reduce)} className="mt-4 text-sm text-ink-500">
             {t.heroOfferNote}
           </motion.p>
 
           <motion.p
-            {...settle(0.32)}
+            {...settle(0.32, reduce)}
             className="mt-8 text-sm leading-relaxed text-ink-500"
           >
             {t.heroV2.trustLine}
           </motion.p>
         </div>
 
-        <motion.div {...settle(0.32)} className="lg:col-span-5">
+        <motion.div {...settle(0.32, reduce)} className="lg:col-span-5">
           <HeroStatCard t={t} />
         </motion.div>
       </div>

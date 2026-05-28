@@ -18,7 +18,12 @@ export function Header({ t, locale, switchLocale, scrollTo, navTargets }: Header
       <div className="section-shell flex h-[72px] items-center justify-between gap-6">
         <button
           type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            })
+          }
           aria-label="BirLiy"
           className="flex min-h-11 shrink-0 items-center py-2"
         >

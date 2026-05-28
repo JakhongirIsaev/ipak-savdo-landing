@@ -30,40 +30,47 @@ export default function LandingPage() {
 
   useEffect(() => {
     const saved = localStorage.getItem("birliy-locale") as Locale | null;
-    if (saved === "ru" || saved === "uz") setLocale(saved);
+    if (saved === "ru" || saved === "uz") {
+      setLocale(saved);
+      document.documentElement.lang = saved;
+    }
   }, []);
 
   const switchLocale = useCallback((loc: Locale) => {
     setLocale(loc);
     localStorage.setItem("birliy-locale", loc);
+    document.documentElement.lang = loc;
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    document.getElementById(id)?.scrollIntoView({ behavior });
   };
 
   const navTargets = ["capabilities", "equipment", "faq"];
 
   return (
-    <main className="min-h-screen bg-paper text-ink-900 antialiased">
+    <div className="min-h-screen bg-paper text-ink-900 antialiased">
       <Header t={t} locale={locale} switchLocale={switchLocale} scrollTo={scrollTo} navTargets={navTargets} />
-      <Hero t={t} />
-      <TrustStrip t={t.trustStrip} />
-      <Pain t={t.pain} />
-      <HowItWorks id="how-it-works" t={t.howItWorks} ctaLabel={t.cta} />
-      <Capabilities t={t} />
-      <VoiceInsert t={t} />
-      <ForOwner id="owner" t={t.owner} />
-      <WhyBirliy t={t} />
-      <SegmentsV2 id="segments" t={t.segmentsV2} />
-      <Equipment t={t} />
-      <Freemium id="freemium" t={t.freemium} />
-      <Roadmap t={t} />
-      <EarlyAccess t={t.earlyAccess} />
-      <LeadSection t={t} locale={locale} attribution={attribution} />
-      <FAQ t={t} />
+      <main>
+        <Hero t={t} />
+        <TrustStrip t={t.trustStrip} />
+        <Pain t={t.pain} />
+        <HowItWorks id="how-it-works" t={t.howItWorks} ctaLabel={t.cta} />
+        <Capabilities t={t} />
+        <VoiceInsert t={t} />
+        <ForOwner id="owner" t={t.owner} />
+        <WhyBirliy t={t} />
+        <SegmentsV2 id="segments" t={t.segmentsV2} />
+        <Equipment t={t} />
+        <Freemium id="freemium" t={t.freemium} />
+        <Roadmap t={t} />
+        <EarlyAccess t={t.earlyAccess} />
+        <LeadSection t={t} locale={locale} attribution={attribution} />
+        <FAQ t={t} />
+      </main>
       <Footer t={t} locale={locale} switchLocale={switchLocale} />
       <Cookie t={t} />
-    </main>
+    </div>
   );
 }
