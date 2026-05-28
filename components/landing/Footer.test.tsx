@@ -14,8 +14,8 @@ describe("Footer", () => {
     expect(html).toContain("Подключение");
     expect(html).toContain("Контакт");
     // phone as tel: link
-    expect(html).toContain('href="tel:+998900000000"');
-    expect(html).toContain("+998 90 000-00-00");
+    expect(html).toContain('href="tel:+998974212454"');
+    expect(html).toContain("+998 97 421 24 54");
     // logo
     expect(html).toContain("/birliy-wordmark.png");
     // copyright
