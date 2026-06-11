@@ -30,12 +30,13 @@ export function StatusDropdown({ leadId, currentStatus }: { leadId: number; curr
   };
 
   return (
-    <div className="flex flex-col items-end gap-1">
+    <div className="inline-flex flex-col items-start gap-1">
       <select
+        aria-label="Изменить статус заявки"
         disabled={pending}
         value={currentStatus}
         onChange={(e) => change(e.target.value as LeadStatus)}
-        className="rounded-md border border-mist bg-white px-3 py-2 text-sm font-medium text-ink-900 disabled:opacity-50"
+        className="cursor-pointer rounded-full border border-mist bg-white px-3.5 py-1.5 text-sm font-medium text-ink-900 transition-colors duration-200 ease-birliy hover:border-ink-500 focus:outline-none focus:ring-4 focus:ring-[#03B73D]/15 disabled:opacity-50"
       >
         {STATUSES.map((s) => (
           <option key={s} value={s}>

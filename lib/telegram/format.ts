@@ -41,6 +41,27 @@ function formatTashkentTime(date: Date): string {
   return `${get("day")}.${get("month")}.${get("year")}, ${get("hour")}:${get("minute")}`;
 }
 
+export function formatLeadPhotoCaption(lead: Lead): string {
+  const typeLabel =
+    lead.businessType === "other" && lead.businessTypeOther
+      ? escapeHtml(lead.businessTypeOther)
+      : businessTypeLabelsRu[lead.businessType];
+
+  const lines: string[] = [
+    `🎯 <b>Заявка #${lead.id}</b>`,
+    "",
+    `🏪 <b>Бизнес:</b> ${escapeHtml(lead.businessName)} (${typeLabel})`,
+    `👤 <b>Владелец:</b> ${escapeHtml(lead.ownerName)}`,
+    `📞 <b>Контакт:</b> ${escapeHtml(lead.ownerContact)}`,
+  ];
+
+  if (lead.city && lead.city.trim().length > 0) {
+    lines.push(`📍 <b>Город:</b> ${escapeHtml(lead.city)}`);
+  }
+
+  return lines.join("\n");
+}
+
 export function formatLeadMessage(lead: Lead, siteUrl: string): string {
   const typeLabel =
     lead.businessType === "other" && lead.businessTypeOther
@@ -63,6 +84,10 @@ export function formatLeadMessage(lead: Lead, siteUrl: string): string {
     `📞 <b>Контакт:</b> ${escapeHtml(lead.ownerContact)}`,
     `🛠 <b>Оборудование:</b> ${lead.needsEquipment ? "да" : "нет"}`,
   ];
+
+  if (lead.city && lead.city.trim().length > 0) {
+    lines.push(`📍 <b>Город:</b> ${escapeHtml(lead.city)}`);
+  }
 
   if (lead.comment && lead.comment.trim().length > 0) {
     lines.push(`💬 <b>Комментарий:</b> «${escapeHtml(lead.comment)}»`);

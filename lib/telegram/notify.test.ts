@@ -24,6 +24,13 @@ const lead: Lead = {
   lastStatusChangeAt: null,
   lastChangedBy: null,
   telegramMessageId: null,
+  city: null,
+  patentFileId: null,
+  passportFileId: null,
+  shopPhotoFileId: null,
+  patentStoragePath: null,
+  passportStoragePath: null,
+  shopStoragePath: null,
 };
 
 describe("notifyNewLead", () => {
@@ -49,9 +56,61 @@ describe("notifyNewLead", () => {
     expect(body.chat_id).toBe("-100123");
     expect(body.parse_mode).toBe("HTML");
     expect(body.text).toContain("Новая заявка #1");
-    expect(body.reply_markup.inline_keyboard).toHaveLength(1);
-    expect(body.reply_markup.inline_keyboard[0]).toHaveLength(4);
+    expect(body.reply_markup.inline_keyboard).toHaveLength(4);
+    expect(body.reply_markup.inline_keyboard.flat()).toHaveLength(4);
     expect(result.messageId).toBe("555");
+  });
+
+  it("bundles patent/passport/shop photos into one media group with an info caption", async () => {
+    const withPhotos: Lead = {
+      ...lead,
+      city: "Ташкент, Чиланзар",
+      patentFileId: "PAT",
+      passportFileId: "PASS",
+      shopPhotoFileId: "SHOP",
+    };
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ ok: true, result: { message_id: 7 } }), { status: 200 })
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await notifyNewLead(withPhotos);
+
+    // call 1 = sendMessage (card+buttons), call 2 = sendMediaGroup (album)
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const url2 = fetchMock.mock.calls[1][0] as string;
+    expect(url2).toContain("/sendMediaGroup");
+    const body2 = JSON.parse(fetchMock.mock.calls[1][1].body);
+    expect(body2.media).toHaveLength(3);
+    expect(body2.media[0].type).toBe("photo");
+    expect(body2.media[0].media).toBe("PAT");
+    expect(body2.media[0].parse_mode).toBe("HTML");
+    expect(body2.media[0].caption).toContain("Заявка #1");
+    expect(body2.media[0].caption).toContain("Ташкент, Чиланзар");
+    expect(body2.media[0].caption).toContain("Патент");
+    expect(body2.media[1].media).toBe("PASS");
+    expect(body2.media[1].caption).toContain("Паспорт");
+    expect(body2.media[2].media).toBe("SHOP");
+    expect(body2.media[2].caption).toContain("магазин");
+  });
+
+  it("sends a single photo (not a media group) when only one document is present", async () => {
+    const onePhoto: Lead = { ...lead, patentFileId: "PAT" };
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ ok: true, result: { message_id: 9 } }), { status: 200 })
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await notifyNewLead(onePhoto);
+
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const url2 = fetchMock.mock.calls[1][0] as string;
+    expect(url2).toContain("/sendPhoto");
+    const body2 = JSON.parse(fetchMock.mock.calls[1][1].body);
+    expect(body2.photo).toBe("PAT");
+    expect(body2.parse_mode).toBe("HTML");
+    expect(body2.caption).toContain("Заявка #1");
+    expect(body2.caption).toContain("Патент");
   });
 
   it("returns null messageId when sendMessage 4xx", async () => {

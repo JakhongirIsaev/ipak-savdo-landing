@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "@textlint/text": {
+      "extensions": [".tsx", ".ts"]
+    }
+  },
+  "rules": {
+    "prh": {
+      "rulePaths": ["./prh.yml"]
+    }
+  }
+}

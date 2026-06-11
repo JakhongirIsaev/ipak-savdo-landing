@@ -9,9 +9,11 @@
 const ru = {
   nav: ["Возможности", "Оборудование", "FAQ"],
   cta: "Оставить заявку",
+  ctaShort: "Заявка",
+  stickyNote: "Старт 49 000 сум/мес",
   title: "Ваш бизнес. В одном месте.",
   subtitle:
-    "BirLiy собирает кассу, склад и оплаты в одну спокойную поверхность. Без вкладок, без переключений — одна рабочая среда на смартфоне или планшете.",
+    "Касса, склад и оплаты — в одном приложении на телефоне. Вечером цифры сходятся сами: видно, сколько продали, что осталось, где деньги. Без отдельных программ и ночных подсчётов.",
   telegram: "Написать в Telegram",
   demo: "Смотреть демо",
   trust: "Магазины у дома, минимаркеты, кафе, аптеки, сервисные точки.",
@@ -79,7 +81,7 @@ const ru = {
   offlineBadge: "Работа при слабом интернете",
   offlineSteps: ["Продажа сохранена локально", "Интернет восстановился", "Данные синхронизированы"],
 
-  equipmentTitle: "Два формата под ваш бизнес",
+  equipmentTitle: "Начните с телефона. Оборудование — по желанию",
   equipFullTitle: "Продуктовый магазин",
   equipFullDesc: "Планшет, сканер штрих-кодов и термопринтер чеков. Полный контроль склада и быстрый поток покупателей.",
   equipFullItems: ["Планшет", "Сканер штрих-кодов", "Термопринтер чеков"],
@@ -87,21 +89,13 @@ const ru = {
   equipLiteDesc: "Приложение на Android или iOS — всё, что нужно. Простой учёт, QR-оплата и чек в Telegram прямо с телефона.",
   equipLiteItems: ["Android-приложение", "iOS-приложение", "Без доп. оборудования"],
 
-  roadmapTitle: "Что дальше",
-  roadmap: [
-    ["Сейчас", "Касса, склад, QR-оплата, электронный чек, отчёты, Telegram-бот."],
-    ["Q3 2026", "Программа лояльности, акции и скидки клиентам, расширенный Telegram-marketing."],
-    ["Q4 2026", "Подключение к банковским сервисам Ipak Yuli внутри приложения."],
-    ["2027", "B2B-маркетплейс закупок у поставщиков + лимиты, факторинг, BNPL."],
-  ],
-
   formTitle: "Оставьте заявку",
-  formIntro: "Расскажем, как BirLiy подходит под ваш формат. Без обзвонов и навязчивости.",
+  formIntro: "Заполните за минуту — пришлём ссылку и ответим на вопросы в Telegram. Подключаем за один день.",
   success: "Заявка принята. Команда BirLiy свяжется с вами.",
   formName: "Имя",
   formPhone: "Телефон",
   formBusiness: "Тип бизнеса",
-  formBusinessName: "Название бизнеса",
+  formBusinessName: "Официальное название магазина",
   formNeedsEquipment: "Нужно оборудование (касса, сканер)",
   formBusinessTypeOther: "Уточните вид бизнеса",
   formSubmitError: "Не удалось отправить. Попробуйте ещё раз или напишите нам в Telegram.",
@@ -120,17 +114,28 @@ const ru = {
   formComment: "Комментарий",
   optional: "Уточнить детали (необязательно)",
   submit: "Отправить заявку",
+  formSecurity: "Доступ по PIN, разделение ролей и полный журнал действий — данные защищены.",
+  formDocsTitle: "Документы для заявки",
+  formDocsNote: "Приложите 3 фото: патент, паспорт директора/владельца и витрину магазина. Передаются по защищённому каналу — доступ только у команды BirLiy.",
+  formPatent: "Фото патента",
+  formPassport: "Фото паспорта директора/владельца",
+  formShop: "Фото магазина",
+  formFilePick: "Выбрать фото",
+  formFileTooBig: "Файл слишком большой — максимум 10 МБ.",
+  formFileWrongType: "Нужно фото: JPG, PNG или WEBP.",
+  formFilesRequired: "Приложите все три фото: патент, паспорт и магазин.",
 
   faqTitle: "Вопросы и ответы",
   faq: [
+    ["Я не разбираюсь в технологиях. Справлюсь?", "Да. BirLiy сделан для владельцев магазинов, не для айтишников. Отсканировал товар → выбрал оплату → чек ушёл. Кассир осваивает за 30 минут, а в первый день мы помогаем лично."],
+    ["Сколько стоит BirLiy?", "Первые 6 месяцев: 49 000 сум в месяц, дальше 149 000 сум в месяц. Полный функционал, без скрытых платежей. Списаний без вашего согласия не будет: цену вы знаете заранее."],
     ["Нужно ли покупать компьютер?", "Нет. Достаточно смартфона или планшета."],
     ["Можно ли подключить сканер?", "Да. Подойдёт любой 2D Bluetooth-сканер."],
-    ["Как работает QR-оплата?", "Покупатель сканирует QR-код на экране — деньги поступают на счёт мгновенно."],
+    ["Как работает QR-оплата?", "Покупатель сканирует QR-код на экране, и деньги поступают на счёт мгновенно."],
     ["Что происходит со складом после продажи?", "Остаток обновляется автоматически после каждой продажи."],
     ["Приложение работает без интернета?", "Да. Продажи сохраняются и синхронизируются, когда связь вернётся."],
-    ["Можно ли импортировать товары?", "Да, из Excel. Также в продукте уже доступна база 9 000+ распространённых SKU — многие товары находятся сразу."],
-    ["Сколько кассиров можно завести?", "На периоде раннего доступа — без ограничений. Роли: Владелец / Кассир / Суперадмин. Каждый кассир заходит по PIN."],
-    ["Что насчёт безопасности?", "Данные хранятся в инфраструктуре Ipak Yuli Bank. Доступ — по PIN, с разделением ролей. Все действия попадают в полный журнал событий."],
+    ["Можно ли импортировать товары?", "Да, из Excel. Также в продукте уже доступна база 9 000+ распространённых SKU: многие товары находятся сразу."],
+    ["Сколько кассиров можно завести?", "На периоде раннего доступа без ограничений. Роли: Владелец / Кассир / Суперадмин. Каждый кассир заходит по PIN."],
     ["Можно ли работать на нескольких точках?", "Да. Сводные отчёты и кросс-точечный контроль кассиров доступны для бизнесов с несколькими точками."],
   ],
 
@@ -160,11 +165,11 @@ const ru = {
   heroLast: "Последняя продажа",
   heroLastTime: "минуту назад",
   heroLive: "сейчас",
-  heroOfferNote: "Первые 6 месяцев — бесплатно, без карты",
+  heroOfferNote: "Первые 6 месяцев — 49 000 сум/мес, дальше 149 000",
 
   productCaption: "BirLiy — спокойная рабочая поверхность. Один экран на всё.",
   footerTagline: "Ваш бизнес. В одном месте.",
-  footerSmall: "© 2026 BirLiy. Продукт Ipak Yuli Bank.",
+  footerSmall: "© 2026 BirLiy.",
 
   demoTitle: "Как работает BirLiy",
   demoSteps: [
@@ -180,15 +185,15 @@ const ru = {
   // ── v2 keys (unused by current UI; consumed by v2 section components) ──
 
   trustStrip: {
-    bank: "Продукт Ipak Yuli Bank",
+    bank: "Сделано для Узбекистана",
     catalogSize: "9 000+ товаров в базе",
     pilot: "Ранний доступ 2026",
   },
 
   pain: {
     eyebrow: "01 / Знакомо?",
-    headline: "Касса отдельно. Склад отдельно. Банк отдельно. Вы — нигде вместе.",
-    body: "Кассир пробивает чек на одном устройстве. Остатки ведутся в тетради. Платежи приходят на терминал банка. Чтобы понять, сколько вы заработали сегодня — нужно сесть в офисе вечером и сводить три источника. К ночи вы устаёте и решаете «потом». Так месяц превращается в загадку.",
+    headline: "Касса отдельно. Склад отдельно. Оплаты отдельно. BirLiy собирает всё в одном экране, и расхождения исчезают.",
+    body: "Кассир пробивает чек на одном устройстве. Остатки ведутся в тетради. Оплаты считаются отдельно. Чтобы понять, сколько вы заработали сегодня, нужно вечером сесть и свести три источника. К ночи вы устаёте и решаете «потом». Так месяц превращается в загадку.",
   },
 
   howItWorks: {
@@ -207,36 +212,36 @@ const ru = {
 
   capabilities: {
     eyebrow: "03 / Что внутри",
-    headline: "Шесть инструментов вместо шести приложений",
+    headline: "Всё для магазина в шести модулях",
     cards: [
       {
         title: "Многоканальная оплата",
-        body: "4 способа: наличные, терминал, QR, в долг. Калькулятор сдачи.",
+        body: "Наличные, карта, QR, в долг — один учёт, не четыре тетрадки.",
         metric: "Одна страница оплаты — четыре кнопки",
       },
       {
         title: "Касса дня",
-        body: "Смена в реальном времени: ожидаемая сумма, разбивка по способам, журнал движений.",
+        body: "Видите смену в реальном времени — без ночных споров о выручке.",
         metric: "Сколько денег в кассе прямо сейчас",
       },
       {
         title: "Каталог + склад",
-        body: "9 000+ товаров в базе. Штрих-коды, ИКПУ, импорт из Excel, приём по сканеру.",
+        body: "9 000+ товаров в базе, импорт из Excel. Заканчивается товар — система подскажет.",
         metric: "Не заводить вручную",
       },
       {
         title: "Отчёты с дельтой",
-        body: "Показатели с изменением к прошлому периоду, почасовой график, топ-товары, по кассирам.",
+        body: "Выручка за день, неделю, месяц и насколько выросла или упала — тренд виден сразу.",
         metric: "День, неделя, месяц — за один взгляд",
       },
       {
         title: "Оборачиваемость",
-        body: "Быстрые / медленные / мёртвые товары за 7/30/90 дней.",
+        body: "Какой товар продаётся, а какой месяцами лежит мёртвым грузом — освобождайте деньги.",
         metric: "Что заказать, что списать",
       },
       {
         title: "Telegram уведомления",
-        body: "Бот шлёт каждую продажу в Telegram. Команды /today, /last 10.",
+        body: "Итоги смены приходят вам в Telegram — не отвлекаясь от работы.",
         metric: "Бизнес в кармане, без захода в приложение",
       },
     ],
@@ -282,29 +287,32 @@ const ru = {
 
   freemium: {
     eyebrow: "07 / Цена",
-    headline: "Бесплатно 6 месяцев. Без условий.",
-    body: "BirLiy сейчас в этапе раннего доступа. Первая когорта пилотных клиентов получает полный функционал бесплатно — на 6 месяцев. Никаких ограничений по числу чеков, товаров или операций. Платные тарифы появятся после периода раннего доступа — когда мы будем уверены, что продукт точно решает вашу задачу.",
+    headline: "49 000 сум/мес. Первые 6 месяцев.",
+    body: "Стартовая цена для первой когорты: 49 000 сум в месяц первые 6 месяцев, дальше — 149 000 сум в месяц. Полный функционал без урезаний, без оборудования, подключаем за один день. Цена известна заранее: без скрытых платежей и списаний без вашего согласия.",
+    priceAmount: "49 000",
+    priceUnit: "сум в месяц",
+    priceNote: "первые 6 месяцев · дальше 149 000",
     bullets: [
       {
-        title: "6 месяцев",
-        caption: "Без оплаты, без скрытых условий",
+        title: "49 000 сум/мес",
+        caption: "Первые 6 месяцев — стартовая цена для первой когорты",
       },
       {
         title: "Полный функционал",
-        caption: "Касса, склад, QR-оплата, отчёты, Telegram-бот — без урезанных «free» режимов",
+        caption: "Касса, склад, QR-оплата, отчёты, Telegram-бот — без урезанных режимов",
       },
       {
-        title: "Без обязательств",
-        caption: "Не подойдёт — уходите. Подойдёт — обсуждаем тариф вместе после периода",
+        title: "Потом 149 000 сум/мес",
+        caption: "Прозрачная цена после 6 месяцев. Без скрытых платежей и списаний без вашего согласия.",
       },
     ],
     cta: "Получить ранний доступ",
   },
 
   earlyAccess: {
-    eyebrow: "09 / Ранний доступ",
+    eyebrow: "08 / Ранний доступ",
     headline: "Мы запускаемся с первой когортой пилотов",
-    body: "BirLiy сейчас работает в первых пилотных магазинах Ташкента. Подключение занимает один день: установка приложения, импорт каталога, первое обучение кассира — мы делаем всё это с вами. 6 месяцев без оплаты. Если вы хотите быть в первой когорте — оставьте заявку.",
+    body: "BirLiy открывает ранний доступ для первых магазинов Ташкента. Подключение занимает один день: установка приложения, импорт каталога, первое обучение кассира — мы делаем всё это с вами. Стартовая цена для первой когорты — 49 000 сум/мес первые 6 месяцев. Если вы хотите быть в первой когорте — оставьте заявку.",
     promises: [
       {
         title: "Подключаем за один день",
@@ -315,8 +323,8 @@ const ru = {
         caption: "Загружаем ваши товары из Excel или вместе вносим первые 100 SKU",
       },
       {
-        title: "6 месяцев без оплаты",
-        caption: "Чтобы вы успели проверить, подходит ли BirLiy вашему бизнесу — без давления",
+        title: "49 000 сум/мес на старте",
+        caption: "Низкая стартовая цена на первые 6 месяцев — спокойно проверить BirLiy в деле",
       },
     ],
   },
@@ -356,22 +364,49 @@ const ru = {
       },
     ],
     phone: "+998 97 421 24 54",
-    copyright: "© 2026 BirLiy. Продукт Ipak Yuli Bank.",
+    copyright: "© 2026 BirLiy.",
     tagline: "Ваш бизнес. В одном месте.",
   },
 
   heroV2: {
     secondaryCta: "Посмотреть как работает",
-    trustLine: "Продукт Ipak Yuli Bank · Ранний доступ 2026",
+    trustLine: "Данные под защитой · Доступ по PIN и журнал всех действий",
+  },
+
+  payMethods: ["Наличные", "Терминал", "QR", "В долг"],
+
+  heroChips: ["Старт 49 000 сум/мес", "Подключаем за 1 день", "Старт без оборудования"],
+
+  support: {
+    label: "Поддержка",
+    handle: "@birliy_support_bot",
+    href: "https://t.me/birliy_support_bot",
+  },
+
+  telegramChannel: {
+    eyebrow: "Telegram-канал",
+    headline: "Будьте на связи с BirLiy",
+    body: "Новости продукта, советы по торговле и учёту, истории первых магазинов. Коротко и без спама — прямо в Telegram.",
+    handle: "@bir_liy",
+    href: "https://t.me/bir_liy",
+    cta: "Открыть канал",
+    follow: "Подписаться",
+    points: [
+      "Обновления продукта и новые возможности",
+      "Практичные советы для розницы",
+      "Истории магазинов на BirLiy",
+    ],
   },
 };
 
 const uz: typeof ru = {
   nav: ["Imkoniyatlar", "Jihozlar", "FAQ"],
   cta: "Ariza qoldirish",
+  ctaShort: "Ariza",
+  stickyNote: "Start 49 000 so'm/oy",
   title: "Sizning biznesingiz. Bitta joyda.",
   subtitle:
-    "BirLiy kassa, ombor va to'lovlarni bitta tinch sirtga yig'adi. Varaqlar va o'tishlarsiz — bitta ish muhiti smartfon yoki planshetda.",
+    "Kassa, ombor va to'lovlar — telefondagi bitta ilovada. Kechqurun raqamlar o'z-o'zidan to'g'ri keladi: qancha sotgansiz, nima qolgan, pul qayerda. Alohida dasturlar va tungi hisob-kitoblarsiz.",
   telegram: "Telegram orqali yozish",
   demo: "Demoni ko'rish",
   trust: "Uy yonidagi do'konlar, minimarketlar, kafelar, dorixonalar va xizmat nuqtalari.",
@@ -388,7 +423,7 @@ const uz: typeof ru = {
     ["Daftar o'rniga hisob", "Tovarlar daftarga yoziladi, qoldiqlar yo'qoladi, qayta hisoblash soatlab davom etadi."],
     ["Pul kassadan chetda", "Aniq hisobsiz kunlik daromadni bilish qiyin."],
     ["Mijoz qaytib ketadi", "Terminal yo'q, QR yo'q — xaridor qo'shni do'konga ketadi."],
-    ["Tushunish qiyin", "Murakkab dasturlar o'rganish, sozlash va kompyuter talab qiladi."],
+    ["Tushunish qiyin", "Murakkab dasturlar o'rganishni, sozlashni va kompyuterni talab qiladi."],
   ],
 
   segmentsTitle: "BirLiy kim uchun",
@@ -439,29 +474,21 @@ const uz: typeof ru = {
   offlineBadge: "Zaif internetda ishlash",
   offlineSteps: ["Sotuv lokal saqlandi", "Internet tiklandi", "Ma'lumotlar sinxronlandi"],
 
-  equipmentTitle: "Biznesingizga mos ikki format",
+  equipmentTitle: "Telefondan boshlang. Jihoz — xohishingizga ko'ra",
   equipFullTitle: "Oziq-ovqat do'koni",
-  equipFullDesc: "Planshet, shtrix-kod skaneri va termoprinter. Omborni to'liq nazorat va tez xaridor oqimi.",
+  equipFullDesc: "Planshet, shtrix-kod skaneri va termoprinter. To'liq ombor nazorati va tez xaridor oqimi.",
   equipFullItems: ["Planshet", "Shtrix-kod skaneri", "Termoprinter"],
   equipLiteTitle: "Kiyim do'koni va boshqalar",
   equipLiteDesc: "Android yoki iOS ilovasi — kerakli hamma narsa. Oddiy hisob, QR-to'lov va Telegram chek to'g'ridan-to'g'ri telefondan.",
   equipLiteItems: ["Android-ilova", "iOS-ilova", "Qo'shimcha jihozlarsiz"],
 
-  roadmapTitle: "Keyin nima",
-  roadmap: [
-    ["Hozir", "Kassa, ombor, QR-to'lov, elektron chek, hisobotlar, Telegram-bot."],
-    ["Q3 2026", "Sodiqlik dasturi, mijozlarga aksiyalar va chegirmalar, kengaytirilgan Telegram-marketing."],
-    ["Q4 2026", "Ilova ichida Ipak Yuli bank xizmatlariga ulanish."],
-    ["2027", "Yetkazib beruvchilardan B2B-marketplace + limitlar, faktoring, BNPL."],
-  ],
-
   formTitle: "Ariza qoldiring",
-  formIntro: "BirLiy formatingizga qanday mos kelishini aytib beramiz. Qo'ng'iroq va bezovta qilishlarsiz.",
+  formIntro: "Bir daqiqada to'ldiring — havola yuboramiz va Telegramda savollarga javob beramiz. Bir kunda ulaymiz.",
   success: "Ariza qabul qilindi. BirLiy jamoasi siz bilan bog'lanadi.",
   formName: "Ism",
   formPhone: "Telefon",
   formBusiness: "Biznes turi",
-  formBusinessName: "Biznes nomi",
+  formBusinessName: "Do'kon rasmiy nomi",
   formNeedsEquipment: "Jihoz kerak (kassa, skaner)",
   formBusinessTypeOther: "Biznes turini aniqlang",
   formSubmitError: "Yuborib bo'lmadi. Yana urinib ko'ring yoki bizga Telegramda yozing.",
@@ -480,17 +507,28 @@ const uz: typeof ru = {
   formComment: "Izoh",
   optional: "Tafsilotlarni aniqlash (ixtiyoriy)",
   submit: "Ariza yuborish",
+  formSecurity: "PIN orqali kirish, rollar va to'liq harakatlar jurnali — ma'lumotlar himoyalangan.",
+  formDocsTitle: "Ariza uchun hujjatlar",
+  formDocsNote: "3 ta foto biriktiring: patent, direktor/egasi pasporti va do'kon vitrinasi. Himoyalangan kanal orqali yuboriladi — faqat BirLiy jamoasi ko'radi.",
+  formPatent: "Patent fotosi",
+  formPassport: "Direktor/egasi pasporti fotosi",
+  formShop: "Do'kon fotosi",
+  formFilePick: "Foto tanlash",
+  formFileTooBig: "Fayl juda katta — maksimum 10 MB.",
+  formFileWrongType: "Foto kerak: JPG, PNG yoki WEBP.",
+  formFilesRequired: "Uchala fotoni biriktiring: patent, pasport va do'kon.",
 
   faqTitle: "Savol va javoblar",
   faq: [
+    ["Men texnologiyani tushunmayman. Eplay olamanmi?", "Ha. BirLiy do'kon egalari uchun, IT-mutaxassislar uchun emas. Tovarni skaner qildingiz → to'lovni tanladingiz → chek ketdi. Kassir 30 daqiqada o'rganadi, birinchi kuni shaxsan yordam beramiz."],
+    ["BirLiy qancha turadi?", "Birinchi 6 oy: oyiga 49 000 so'm, keyin oyiga 149 000 so'm. To'liq funksionallik, yashirin to'lovlarsiz. Roziligingizsiz hech narsa yechib olinmaydi: narxni oldindan bilasiz."],
     ["Kompyuter sotib olish kerakmi?", "Yo'q. Smartfon yoki planshet yetarli."],
     ["Skaner ulash mumkinmi?", "Ha. Har qanday 2D Bluetooth-skaner mos keladi."],
-    ["QR-to'lov qanday ishlaydi?", "Xaridor ekrandagi QR-kodni skanerlaydi — pul hisobga bir zumda tushadi."],
+    ["QR-to'lov qanday ishlaydi?", "Xaridor ekrandagi QR-kodni skanerlaydi va pul hisobga bir zumda tushadi."],
     ["Sotuvdan keyin omborga nima bo'ladi?", "Tovar qoldig'i har bir sotuvdan keyin avtomatik yangilanadi."],
     ["Ilova internetsiz ishlaydi?", "Ha. Sotuvlar saqlanadi va aloqa tiklanganda sinxronlanadi."],
-    ["Tovarlarni import qilish mumkinmi?", "Ha, Excel orqali. Bundan tashqari mahsulotda 9 000+ keng tarqalgan SKU bazasi mavjud — ko'p tovarlar darhol topiladi."],
+    ["Tovarlarni import qilish mumkinmi?", "Ha, Excel orqali. Bundan tashqari ilovada 9 000+ keng tarqalgan SKU bazasi mavjud: ko'p tovarlar darhol topiladi."],
     ["Nechta kassir yaratish mumkin?", "Erta kirish davrida cheklov yo'q. Rollar: Egasi / Kassir / Superadmin. Har bir kassir PIN bilan kiradi."],
-    ["Xavfsizlik qanday?", "Ma'lumotlar Ipak Yuli Bank infratuzilmasida saqlanadi. Kirish — PIN orqali, rollar ajratilgan. Barcha harakatlar to'liq voqealar jurnaliga tushadi."],
     ["Bir necha nuqtada ishlash mumkinmi?", "Ha. Bir nechta nuqtaga ega bizneslar uchun yig'ma hisobotlar va kassirlarni nuqtalararo nazorat qilish mavjud."],
   ],
 
@@ -520,11 +558,11 @@ const uz: typeof ru = {
   heroLast: "Oxirgi sotuv",
   heroLastTime: "bir daqiqa oldin",
   heroLive: "hozir",
-  heroOfferNote: "Birinchi 6 oy — bepul, kartasiz",
+  heroOfferNote: "Birinchi 6 oy — 49 000 so'm/oy, keyin 149 000",
 
   productCaption: "BirLiy — tinch ish sirti. Bitta ekran hamma narsa uchun.",
   footerTagline: "Sizning biznesingiz. Bitta joyda.",
-  footerSmall: "© 2026 BirLiy. Ipak Yuli Bank mahsuloti.",
+  footerSmall: "© 2026 BirLiy.",
 
   demoTitle: "BirLiy qanday ishlaydi",
   demoSteps: [
@@ -540,15 +578,15 @@ const uz: typeof ru = {
   // ── v2 keys (unused by current UI; consumed by v2 section components) ──
 
   trustStrip: {
-    bank: "Ipak Yuli Bank mahsuloti",
+    bank: "O'zbekiston uchun yaratilgan",
     catalogSize: "9 000+ tovar bazada",
     pilot: "Erta kirish 2026",
   },
 
   pain: {
     eyebrow: "01 / Tanish?",
-    headline: "Kassa alohida. Ombor alohida. Bank alohida. Siz — hech qaerda birga.",
-    body: "Kassir bir qurilmada chek uradi. Qoldiqlar daftarda olib boriladi. To'lovlar bank terminaliga tushadi. Bugun qancha topganingizni bilish uchun — kechqurun ofisga o'tirib, uchta manbani solishtirish kerak. Kechga borib charchasiz va «keyinroq» deb qo'yasiz. Shunday qilib, bir oy sir bo'lib qoladi.",
+    headline: "Kassa alohida. Ombor alohida. To'lovlar alohida. BirLiy hammasini bitta ekranga yig'adi, va farqlar yo'qoladi.",
+    body: "Kassir bir qurilmada chek uradi. Qoldiqlar daftarda olib boriladi. To'lovlar alohida hisoblanadi. Bugun qancha topganingizni bilish uchun kechqurun ofisga o'tirib, uchta manbani solishtirish kerak. Kechga borib charchasiz va «keyinroq» deb qo'yasiz. Shunday qilib, bir oy sir bo'lib qoladi.",
   },
 
   howItWorks: {
@@ -567,36 +605,36 @@ const uz: typeof ru = {
 
   capabilities: {
     eyebrow: "03 / Ichida nima bor",
-    headline: "Olti dastur o'rniga olti asbob",
+    headline: "Do'kon uchun kerakli hamma narsa olti modulda",
     cards: [
       {
         title: "Ko'p kanalli to'lov",
-        body: "4 usul: naqd, terminal, QR, qarzga. Qaytim kalkulyatori.",
+        body: "Naqd, karta, QR, nasiya — bitta hisob, to'rtta daftar emas.",
         metric: "Bir sahifada to'lov — to'rt tugma",
       },
       {
         title: "Kun kassasi",
-        body: "Smenani real vaqtda kuzatish: kutilgan summa, usullar bo'yicha taqsimlash, harakatlar jurnali.",
+        body: "Smenani real vaqtda ko'rasiz — tushum bo'yicha tungi bahslarsiz.",
         metric: "Hozir kassada qancha pul bor",
       },
       {
         title: "Katalog + ombor",
-        body: "Bazada 9 000+ tovar. Shtrix-kodlar, IKPU, Exceldan import, skaner orqali qabul.",
+        body: "Bazada 9 000+ tovar, Exceldan import. Tovar tugayapti — tizim eslatadi.",
         metric: "Qo'lda kiritmaslik",
       },
       {
         title: "Delta bilan hisobotlar",
-        body: "O'tgan davr bilan solishtirma KPI, soatlik grafik, top-tovarlar, kassirlar bo'yicha.",
+        body: "Kunlik, haftalik, oylik tushum va u qancha o'sgani yoki tushgani — trend darhol ko'rinadi.",
         metric: "Kun, hafta, oy — bir qarashda",
       },
       {
         title: "Aylanish",
-        body: "7/30/90 kun uchun tez / sekin / o'lik tovarlar.",
+        body: "Qaysi tovar sotiladi, qaysi biri oylab o'lik yuk bo'lib yotadi — pulni bo'shating.",
         metric: "Nimani buyurtma qilish, nimani hisobdan chiqarish",
       },
       {
         title: "Telegram xabarnomalar",
-        body: "Bot har bir sotuvni Telegramga yuboradi. /today, /last 10 buyruqlari.",
+        body: "Smena yakunlari Telegramga keladi — ishdan chalg'imasdan.",
         metric: "Ilovaga kirmasdan biznes qo'lda",
       },
     ],
@@ -605,7 +643,7 @@ const uz: typeof ru = {
   owner: {
     eyebrow: "04 / Egasi uchun",
     headline: "Siz hamma narsani ko'rasiz. Telefondan. Istalgan vaqtda.",
-    body: "Kassa do'konda ishlaydi. Siz — istalgan joyda. Bugungi hisobot, omboridagi qoldiqlar, kassirlardan qaysi biri qachon smenaga kirgan, oxirgi 10 ta sotuv — barchasi qo'lingizda, qo'ng'iroq va jo'natmalarsiz.",
+    body: "Kassa do'konda ishlaydi. Siz — istalgan joyda. Bugungi hisobot, ombordagi qoldiqlar, kassirlardan qaysi biri qachon smenaga kirgan, oxirgi 10 ta sotuv — barchasi qo'lingizda, qo'ng'iroq va jo'natmalarsiz.",
     bullets: [
       "Delta ±% bilan real tushum",
       "Smenalar va kassirlar jurnali",
@@ -642,29 +680,32 @@ const uz: typeof ru = {
 
   freemium: {
     eyebrow: "07 / Narx",
-    headline: "6 oy bepul. Shartlarsiz.",
-    body: "BirLiy hozir erta kirish bosqichida. Birinchi pilot mijozlar kogortalari to'liq funksionallikni bepul oladi — 6 oy davomida. Cheklar, tovarlar yoki operatsiyalar soni bo'yicha cheklov yo'q. Pullik tariflar erta kirish davridan keyin paydo bo'ladi — mahsulot sizning muammoingizni aniq hal qilishiga ishonch hosil qilganimizda.",
+    headline: "49 000 so'm/oy. Birinchi 6 oy.",
+    body: "Birinchi kogorta uchun start narxi: oyiga 49 000 so'm birinchi 6 oy, keyin — oyiga 149 000 so'm. To'liq funksionallik, jihozsiz, bir kunda ulaymiz. Narx oldindan ma'lum: yashirin to'lovlar yo'q, roziligingizsiz hech narsa yechib olinmaydi.",
+    priceAmount: "49 000",
+    priceUnit: "so'm/oy",
+    priceNote: "birinchi 6 oy · keyin 149 000",
     bullets: [
       {
-        title: "6 oy",
-        caption: "To'lovsiz, yashirin shartlarsiz",
+        title: "49 000 so'm/oy",
+        caption: "Birinchi 6 oy — birinchi kogorta uchun start narxi",
       },
       {
         title: "To'liq funksionallik",
-        caption: "Kassa, ombor, QR-to'lov, hisobotlar, Telegram-bot — qisqartirilgan «free» rejimlarsiz",
+        caption: "Kassa, ombor, QR-to'lov, hisobotlar, Telegram-bot — qisqartirilmagan",
       },
       {
-        title: "Majburiyatlarsiz",
-        caption: "Mos kelmasa — ketasiz. Mos kelsa — davrdan keyin birga tarif muhokama qilamiz",
+        title: "Keyin 149 000 so'm/oy",
+        caption: "6 oydan keyin shaffof narx. Yashirin to'lovlar yo'q, roziligingizsiz hech narsa yechilmaydi.",
       },
     ],
     cta: "Erta kirishga ariza berish",
   },
 
   earlyAccess: {
-    eyebrow: "09 / Erta kirish",
+    eyebrow: "08 / Erta kirish",
     headline: "Biz birinchi pilot kogorta bilan ishga tushmoqdamiz",
-    body: "BirLiy hozir Toshkentning birinchi pilot do'konlarida ishlayapti. Ulanish bir kun davom etadi: ilovani o'rnatish, katalogni import qilish, kassirni birinchi o'qitish — bularni biz siz bilan birgalikda qilamiz. 6 oy to'lovsiz. Birinchi kohortada bo'lishni istasangiz — ariza qoldiring.",
+    body: "BirLiy Toshkentning birinchi do'konlari uchun erta kirishni ochmoqda. Ulanish bir kun davom etadi: ilovani o'rnatish, katalogni import qilish, kassirni birinchi o'qitish — bularni biz siz bilan birgalikda qilamiz. Birinchi kogorta uchun start narxi — oyiga 49 000 so'm birinchi 6 oy. Birinchi kogortada bo'lishni istasangiz — ariza qoldiring.",
     promises: [
       {
         title: "Bir kunda ulaymiz",
@@ -675,8 +716,8 @@ const uz: typeof ru = {
         caption: "Tovarlaringizni Exceldan yuklaymiz yoki birgalikda birinchi 100 SKU kiritamiz",
       },
       {
-        title: "6 oy to'lovsiz",
-        caption: "BirLiy biznesingizga mos kelishini bosimisiz tekshirib ko'rishingiz uchun",
+        title: "Startda 49 000 so'm/oy",
+        caption: "Birinchi 6 oyga past start narxi — BirLiy'ni bemalol sinab ko'rasiz",
       },
     ],
   },
@@ -716,13 +757,38 @@ const uz: typeof ru = {
       },
     ],
     phone: "+998 97 421 24 54",
-    copyright: "© 2026 BirLiy. Ipak Yuli Bank mahsuloti.",
+    copyright: "© 2026 BirLiy.",
     tagline: "Sizning biznesingiz. Bitta joyda.",
   },
 
   heroV2: {
     secondaryCta: "Qanday ishlashini ko'rish",
-    trustLine: "Ipak Yuli Bank mahsuloti · Erta kirish 2026",
+    trustLine: "Ma'lumotlar himoyalangan · PIN orqali kirish va barcha amallar jurnali",
+  },
+
+  payMethods: ["Naqd", "Terminal", "QR", "Qarzga"],
+
+  heroChips: ["Start 49 000 so'm/oy", "1 kunda ulaymiz", "Jihozsiz start"],
+
+  support: {
+    label: "Qo'llab-quvvatlash",
+    handle: "@birliy_support_bot",
+    href: "https://t.me/birliy_support_bot",
+  },
+
+  telegramChannel: {
+    eyebrow: "Telegram-kanal",
+    headline: "BirLiy bilan aloqada bo'ling",
+    body: "Mahsulot yangiliklari, savdo va hisob bo'yicha maslahatlar, birinchi do'konlar tajribasi. Qisqa va spamsiz — to'g'ridan-to'g'ri Telegramda.",
+    handle: "@bir_liy",
+    href: "https://t.me/bir_liy",
+    cta: "Kanalni ochish",
+    follow: "Obuna bo'lish",
+    points: [
+      "Mahsulot yangilanishlari va yangi imkoniyatlar",
+      "Chakana savdo uchun amaliy maslahatlar",
+      "BirLiy'dagi do'konlar tajribasi",
+    ],
   },
 };
 

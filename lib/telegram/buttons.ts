@@ -17,13 +17,15 @@ const BUTTON_ORDER: ReadonlyArray<{ status: LeadStatus; label: string }> = [
 ];
 
 export function buildLeadKeyboard(leadId: number, current: LeadStatus): InlineKeyboardMarkup {
+  // One button per row (a column) so the full label is always readable in the
+  // Telegram group — a single 4-button row truncates to "В ра…/Выиг…/Прои…".
   return {
-    inline_keyboard: [
-      BUTTON_ORDER.map(({ status, label }) => ({
+    inline_keyboard: BUTTON_ORDER.map(({ status, label }) => [
+      {
         text: status === current ? `· ${label} ·` : label,
         callback_data: `lead:${leadId}:${status}`,
-      })),
-    ],
+      },
+    ]),
   };
 }
 

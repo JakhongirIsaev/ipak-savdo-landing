@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { formatLeadMessage } from "./format";
+import { formatLeadMessage, formatLeadPhotoCaption } from "./format";
 import type { Lead } from "@/lib/db/schema";
 
 const baseLead: Lead = {
@@ -24,6 +24,13 @@ const baseLead: Lead = {
   lastStatusChangeAt: null,
   lastChangedBy: null,
   telegramMessageId: null,
+  city: null,
+  patentFileId: null,
+  passportFileId: null,
+  shopPhotoFileId: null,
+  patentStoragePath: null,
+  passportStoragePath: null,
+  shopStoragePath: null,
 };
 
 describe("formatLeadMessage", () => {
@@ -100,5 +107,31 @@ describe("formatLeadMessage", () => {
     const msg = formatLeadMessage(lead, "https://example.com");
     const firstLine = msg.split("\n")[0];
     expect(firstLine).toBe("🆕 <b>NEW</b>");
+  });
+});
+
+describe("formatLeadPhotoCaption", () => {
+  it("includes id, business name, owner and contact", () => {
+    const cap = formatLeadPhotoCaption(baseLead);
+    expect(cap).toContain("Заявка #42");
+    expect(cap).toContain("BillzCafe");
+    expect(cap).toContain("Иван Иванов");
+    expect(cap).toContain("+998 90 123 45 67");
+  });
+
+  it("includes city when present and omits it when null", () => {
+    expect(formatLeadPhotoCaption({ ...baseLead, city: "Самарканд" })).toContain("Самарканд");
+    expect(formatLeadPhotoCaption({ ...baseLead, city: null })).not.toContain("Город");
+  });
+
+  it("escapes HTML in user-supplied fields", () => {
+    const cap = formatLeadPhotoCaption({ ...baseLead, ownerName: "<b>x</b>" });
+    expect(cap).toContain("&lt;b&gt;");
+  });
+
+  it("is a caption, not the full card (no status line or admin link)", () => {
+    const cap = formatLeadPhotoCaption(baseLead);
+    expect(cap).not.toContain("NEW");
+    expect(cap).not.toContain("/admin/leads");
   });
 });

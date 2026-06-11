@@ -1,17 +1,18 @@
 import { type LandingDict } from "@/lib/landing/i18n";
+import { Reveal } from "@/components/landing/Reveal";
 
 export function VoiceInsert({ t }: { t: LandingDict }) {
   return (
-    <section className="border-t border-mist bg-mist/40 py-32 lg:py-40">
+    <section className="border-t border-mist bg-ink-900 py-28 lg:py-36">
       <div className="section-shell">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-tightish text-ink-900 sm:text-[40px]">
+        <Reveal as="div" className="mx-auto max-w-3xl text-center">
+          <h2 className="font-display text-3xl font-bold leading-[1.12] tracking-tightish text-white sm:text-[44px]">
             {t.voiceTitle}
           </h2>
-          <p className="mt-8 max-w-[62ch] text-[22px] font-light leading-[1.55] text-ink-700">
+          <p className="mx-auto mt-7 max-w-[62ch] text-[19px] font-light leading-[1.6] text-white/70 sm:text-[22px]">
             {t.voiceBody}
           </p>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

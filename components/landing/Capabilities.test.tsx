@@ -12,14 +12,15 @@ describe("Capabilities", () => {
       expect(html).toContain(card.title);
       expect(html).toContain(card.metric);
     }
-    const liCount = (html.match(/<li[^>]*class="max-w-sm"/g) ?? []).length;
-    expect(liCount).toBe(6);
+    // One green icon-chip per card.
+    const cardCount = (html.match(/rounded-2xl bg-green-50/g) ?? []).length;
+    expect(cardCount).toBe(6);
   });
 
   it("renders 6 cards in UZ", () => {
     const html = renderToString(<Capabilities t={dicts.uz} />);
     // Apostrophes in UZ text are HTML-encoded as &#x27; in SSR output — check eyebrow instead
     expect(html).toContain(dicts.uz.capabilities.eyebrow);
-    expect(html.match(/<li[^>]*class="max-w-sm"/g)?.length).toBe(6);
+    expect(html.match(/rounded-2xl bg-green-50/g)?.length).toBe(6);
   });
 });

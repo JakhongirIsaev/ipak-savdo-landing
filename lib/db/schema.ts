@@ -33,6 +33,13 @@ export const leads = pgTable(
     lastStatusChangeAt: timestamp("last_status_change_at", { withTimezone: true }),
     lastChangedBy: text("last_changed_by"),
     telegramMessageId: text("telegram_message_id"),
+    city: text("city"),
+    patentFileId: text("patent_file_id"),
+    passportFileId: text("passport_file_id"),
+    shopPhotoFileId: text("shop_photo_file_id"),
+    patentStoragePath: text("patent_storage_path"),
+    passportStoragePath: text("passport_storage_path"),
+    shopStoragePath: text("shop_storage_path"),
   },
   (t) => ({
     createdAtIdx: index("leads_created_at_idx").on(t.createdAt),
@@ -61,3 +68,65 @@ export const leadEvents = pgTable(
 
 export type LeadEvent = typeof leadEvents.$inferSelect;
 export type NewLeadEvent = typeof leadEvents.$inferInsert;
+
+export const botSessionSteps = ["name", "phone", "type", "city", "patent", "passport", "shop"] as const;
+export type BotSessionStep = (typeof botSessionSteps)[number];
+
+export const botSessions = pgTable("bot_sessions", {
+  telegramUserId: text("telegram_user_id").primaryKey(),
+  chatId: text("chat_id").notNull(),
+  step: text("step", { enum: botSessionSteps }).notNull(),
+  name: text("name"),
+  phone: text("phone"),
+  businessType: text("business_type", { enum: businessTypes }),
+  city: text("city"),
+  patentFileId: text("patent_file_id"),
+  passportFileId: text("passport_file_id"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type BotSession = typeof botSessions.$inferSelect;
+export type NewBotSession = typeof botSessions.$inferInsert;
+
+export const supportSessionSteps = ["lang", "name", "phone", "question"] as const;
+export type SupportSessionStep = (typeof supportSessionSteps)[number];
+
+export const supportSessions = pgTable("support_sessions", {
+  telegramUserId: text("telegram_user_id").primaryKey(),
+  chatId: text("chat_id").notNull(),
+  step: text("step", { enum: supportSessionSteps }).notNull(),
+  language: text("language", { enum: languages }).notNull().default("ru"),
+  name: text("name"),
+  phone: text("phone"),
+  question: text("question"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type SupportSession = typeof supportSessions.$inferSelect;
+export type NewSupportSession = typeof supportSessions.$inferInsert;
+
+// First-party, cookie-based visitor counter. One row per page view fired by the
+// site beacon (components/VisitorBeacon.tsx → /api/hit). Owned data, no Google
+// dependency — powers the "Посещаемость сайта" stats in the admin.
+export const pageViews = pgTable(
+  "page_views",
+  {
+    id: serial("id").primaryKey(),
+    path: text("path").notNull(),
+    visitorId: text("visitor_id").notNull(),
+    sessionId: text("session_id").notNull(),
+    isNewVisitor: boolean("is_new_visitor").notNull().default(false),
+    locale: text("locale"),
+    device: text("device"),
+    referrer: text("referrer"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    createdAtIdx: index("page_views_created_at_idx").on(t.createdAt),
+    visitorIdx: index("page_views_visitor_idx").on(t.visitorId),
+    pathIdx: index("page_views_path_idx").on(t.path),
+  }),
+);
+
+export type PageView = typeof pageViews.$inferSelect;
+export type NewPageView = typeof pageViews.$inferInsert;

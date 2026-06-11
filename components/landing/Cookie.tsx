@@ -41,7 +41,7 @@ export function Cookie({ t }: { t: LandingDict }) {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-30 rounded-2xl border border-mist bg-white p-4 shadow-[0_8px_32px_rgba(11,24,38,0.08)] md:bottom-6 md:right-auto md:left-6 md:max-w-md">
+    <div className="fixed bottom-20 left-4 right-4 z-30 rounded-2xl border border-mist bg-white p-4 shadow-[0_8px_32px_rgba(11,24,38,0.08)] md:bottom-6 md:right-auto md:left-6 md:max-w-md">
       <p className="text-sm leading-relaxed text-ink-700">{t.cookie}</p>
       <div className="mt-4 flex gap-2">
         <button

@@ -15,7 +15,7 @@ All font choices, colors, spacing, motion, status semantics, and aesthetic direc
 - `tailwind.config.ts` — palette + fonts + motion easing
 - `app/globals.css` — CSS variables + utilities
 - `app/layout.tsx` — next/font loading
-- `components/LandingPage.tsx` — landing canonical implementation (single-file)
+- `components/concept/ConceptLanding.tsx` — **the live landing** (rendered by `app/page.tsx` = uz and `app/ru/page.tsx` = ru), plus its `components/concept/*` children and the `faq` subset of `lib/landing/i18n.ts`. `components/LandingPage.tsx` and `components/landing/*` are legacy/dead — do not edit them expecting live changes.
 - `lib/admin/status-meta.ts` — status emoji/label/color mapping (single source)
 - `lib/admin/svg-chart.tsx` — chart color palette
 
@@ -24,7 +24,7 @@ Do not deviate from DESIGN.md without explicit user approval. If a new requireme
 ### Anti-drift rules
 
 - **Never** add new color tokens to `tailwind.config.ts` without updating DESIGN.md in the same change.
-- **Never** import from `components/Hero.tsx`, `components/Header.tsx`, `components/Footer.tsx`, or other top-level `components/*.tsx` files except `LandingPage.tsx` and `LeadForm.tsx`. The rest is orphaned legacy code (see DESIGN.md → Known Issues) and references undefined Tailwind tokens.
+- **Never** import from the legacy/dead tree: top-level `components/*.tsx` (including `LandingPage.tsx`, `LeadForm.tsx`) and `components/landing/*`. The live landing is `components/concept/ConceptLanding.tsx` + `components/concept/*`; edit there. The legacy tree references undefined Tailwind tokens (see DESIGN.md → Known Issues).
 - **Never** hardcode hex values in className. Use Tailwind tokens (`bg-green-500`, `text-ink-700`, `border-mist`, etc.). Exception: `lib/admin/svg-chart.tsx` is allowed hex for SVG attributes.
 - **Never** add chart libraries (Recharts, Chart.js). Use hand-rolled SVG following the pattern in `lib/admin/svg-chart.tsx`.
 
@@ -35,6 +35,7 @@ Do not deviate from DESIGN.md without explicit user approval. If a new requireme
 - DB access lazy-loaded via `getDb()` to keep pure functions unit-testable without DB.
 - Tests live next to source as `*.test.ts` / `*.test.tsx`. Run with `pnpm test`.
 - Migrations: `pnpm db:generate` → review SQL → `pnpm db:migrate`. Never edit applied migrations.
+- **Copy QA before any deploy:** run `pnpm lint:copy` (textlint + `prh.yml`) — must exit 0. It catches em-dashes/long dashes, visible `UZS` (instead of сум/so'm), dash entities, and dev/placeholder strings (`concept_preview`, `lorem ipsum`, `TODO`) on RU+UZ live copy. For the full pre-deploy gate (copy + RU/UZ parity + bank guard + visual/forms), run the `/landing-qa` skill.
 
 ## Don't
 

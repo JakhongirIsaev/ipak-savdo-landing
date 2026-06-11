@@ -1,0 +1,14 @@
+# Keep the Railway upload lean — build happens remotely, these never belong in it.
+node_modules/
+.next/
+.qa/
+.research/
+.codex/
+.gstack/
+marketing/
+docs/
+e2e/
+*.log
+SESSION-*.md
+.env
+.env.*

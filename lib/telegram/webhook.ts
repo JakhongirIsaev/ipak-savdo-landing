@@ -1,6 +1,7 @@
 import type { Lead, LeadStatus } from "@/lib/db/schema";
 import { parseCallbackData, buildLeadKeyboard, type InlineKeyboardMarkup } from "./buttons";
 import { formatLeadMessage } from "./format";
+import { handleAnketaMessage, type AnketaDeps } from "./anketa";
 
 export interface WebhookDeps {
   findLead: (id: number) => Promise<Lead | null>;
@@ -10,6 +11,7 @@ export interface WebhookDeps {
   answerCb: (args: { callbackQueryId: string; text?: string; showAlert?: boolean }) => Promise<void>;
   chatId: string;
   siteUrl: string;
+  anketa: AnketaDeps;
 }
 
 interface TelegramFrom {
@@ -27,9 +29,10 @@ interface CallbackQuery {
 
 interface MessageUpdate {
   message_id: number;
-  chat: { id: number };
+  chat: { id: number; type?: string };
   text?: string;
   from?: TelegramFrom;
+  photo?: { file_id: string; file_size?: number }[];
 }
 
 export interface TelegramUpdate {
@@ -49,6 +52,23 @@ export async function handleTelegramUpdate(
 ): Promise<void> {
   if (update.callback_query) {
     await handleCallback(update.callback_query, deps);
+    return;
+  }
+
+  if (update.message) {
+    const msg = update.message;
+    const isPrivate = msg.chat.type === "private" || msg.chat.id > 0;
+    if (isPrivate) {
+      await handleAnketaMessage(
+        {
+          from: msg.from ? { id: msg.from.id } : undefined,
+          chat: { id: msg.chat.id, type: msg.chat.type },
+          text: msg.text,
+          photo: msg.photo,
+        },
+        deps.anketa,
+      );
+    }
     return;
   }
   return;

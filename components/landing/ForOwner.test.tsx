@@ -1,25 +1,18 @@
 import { describe, it, expect } from "vitest";
 import { renderToString } from "react-dom/server";
 import { ForOwner } from "./ForOwner";
+import { dicts } from "@/lib/landing/i18n";
 
 describe("ForOwner", () => {
-  it("renders eyebrow, headline, body, bullets, and screenshot", () => {
-    const html = renderToString(
-      <ForOwner
-        id="owner"
-        t={{
-          eyebrow: "04 / Для собственника",
-          headline: "Вы видите всё. С телефона. В любой момент.",
-          body: "Касса работает в магазине.",
-          bullets: ["Bullet 1", "Bullet 2", "Bullet 3"],
-        }}
-      />,
-    );
+  it("renders eyebrow, headline, bullets and a real photo (no drawn mock)", () => {
+    const t = dicts.ru;
+    const html = renderToString(<ForOwner id="owner" t={t.owner} />);
     expect(html).toContain('id="owner"');
     expect(html).toContain("Вы видите всё");
-    expect(html).toContain("Bullet 1");
-    expect(html).toContain("Bullet 2");
-    expect(html).toContain("Bullet 3");
-    expect(html).toContain('alt="Отчёты BirLiy"');
+    for (const bullet of t.owner.bullets) {
+      expect(html).toContain(bullet);
+    }
+    expect(html).toContain("/photos/owners-team.jpg");
+    expect(html).not.toContain('alt="Отчёты BirLiy"');
   });
 });

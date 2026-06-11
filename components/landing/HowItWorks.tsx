@@ -1,65 +1,49 @@
-import { ArrowRight } from "lucide-react";
+import { type LandingDict } from "@/lib/landing/i18n";
+import { SectionHead, PrimaryCTA, PhotoFrame } from "@/components/landing/ui";
+import { Reveal } from "@/components/landing/Reveal";
 
-interface Step { num: string; label: string; caption: string }
-interface HowItWorksT {
-  eyebrow: string;
-  headline: string;
-  intro: string;
-  steps: readonly Step[];
+interface HowItWorksProps {
+  id: string;
+  t: LandingDict["howItWorks"];
+  ctaLabel: string;
 }
-interface HowItWorksProps { id: string; t: HowItWorksT; ctaLabel: string }
-
-interface StepImage { src: string; w: number; h: number }
-const STEP_IMAGES: readonly StepImage[] = [
-  { src: "/product/16-kassa-empty.png", w: 1037, h: 597 },
-  { src: "/product/17-kassa-item-added.png", w: 1037, h: 597 },
-  { src: "/product/18-payment-screen.png", w: 1037, h: 597 },
-  { src: "/product/19-payment-cash.png", w: 1037, h: 597 },
-  { src: "/product/20-payment-success.png", w: 1037, h: 597 },
-  { src: "/product/06-telegram-receipt-mockup.svg", w: 360, h: 540 },
-];
 
 export function HowItWorks({ id, t, ctaLabel }: HowItWorksProps) {
   return (
     <section id={id} className="border-t border-mist py-24 lg:py-32">
       <div className="section-shell">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">{t.eyebrow}</p>
-          <h2 className="mt-5 max-w-[20ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
-            {t.headline}
-          </h2>
-          <p className="mt-6 max-w-[60ch] text-[17px] leading-[1.55] text-ink-700">{t.intro}</p>
+        <SectionHead eyebrow={t.eyebrow} title={t.headline} intro={t.intro} maxTitle="20ch" />
+
+        <div className="mt-14 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <Reveal as="div">
+            <PhotoFrame
+              src="/photos/pay-counter.jpg"
+              alt="Оплата по телефону на кассе BirLiy"
+              imgClassName="aspect-[4/3]"
+              blockSide="bl"
+            />
+          </Reveal>
+
+          <ol className="space-y-6">
+            {t.steps.map((step, i) => (
+              <Reveal as="li" key={step.num} delay={i * 80} className="flex gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-50 font-display text-sm font-bold tabular-nums text-green-800">
+                  {step.num}
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold tracking-tightish text-ink-900">
+                    {step.label}
+                  </h3>
+                  <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{step.caption}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
         </div>
 
-        <ol className="mt-16 grid gap-8 border-t border-mist pt-16 md:grid-cols-2 lg:grid-cols-3">
-          {t.steps.map((step, i) => (
-            <li key={step.num} className="step">
-              <div className="overflow-hidden rounded-2xl border border-mist bg-mist">
-                <img
-                  src={STEP_IMAGES[i].src}
-                  width={STEP_IMAGES[i].w}
-                  height={STEP_IMAGES[i].h}
-                  alt={step.label}
-                  className="block h-auto w-full"
-                  loading="lazy"
-                />
-              </div>
-              <div className="mt-5">
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">{step.num}</span>
-                <h3 className="mt-2 font-display text-xl font-semibold tracking-tightish text-ink-900">{step.label}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-700">{step.caption}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-
-        <a
-          href="#lead"
-          className="mt-12 inline-flex items-center gap-2 rounded-full bg-green-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-800"
-        >
+        <PrimaryCTA href="#lead" className="mt-14">
           {ctaLabel}
-          <ArrowRight size={16} strokeWidth={1.75} />
-        </a>
+        </PrimaryCTA>
       </div>
     </section>
   );

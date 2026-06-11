@@ -7,7 +7,7 @@ export const leadInputSchema = z
     business_type: z.enum(businessTypes),
     business_type_other: z.string().trim().min(1).max(50).optional().nullable(),
     owner_name: z.string().trim().min(2).max(50),
-    owner_contact: z.string().trim().min(5).max(100),
+    owner_contact: z.string().trim().min(5).max(100).regex(/^[+()0-9\s-]+$/, "owner_contact must be a phone number"),
     needs_equipment: z.boolean(),
     comment: z.string().trim().max(500).optional().nullable(),
     source: z.string().trim().max(50).optional(),

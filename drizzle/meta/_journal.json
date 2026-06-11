@@ -15,6 +15,48 @@
       "when": 1779814816967,
       "tag": "0001_odd_agent_brand",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780382754851,
+      "tag": "0002_eminent_aqueduct",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780386870441,
+      "tag": "0003_fearless_mojo",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1780395436412,
+      "tag": "0004_natural_snowbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1780666404097,
+      "tag": "0005_damp_chat",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1780905068247,
+      "tag": "0006_overrated_riptide",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1781010758603,
+      "tag": "0007_crazy_blue_blade",
+      "breakpoints": true
     }
   ]
 }

@@ -25,11 +25,48 @@ export interface LeadFormDict {
   formComment: string;
   optional: string;
   submit: string;
+  formSecurity: string;
+  formDocsTitle: string;
+  formDocsNote: string;
+  formPatent: string;
+  formPassport: string;
+  formShop: string;
+  formFilePick: string;
+  formFileTooBig: string;
+  formFileWrongType: string;
+  formFilesRequired: string;
   success: string;
   formSubmitError: string;
   formRateLimited: string;
   formValidationError: string;
   businessTypes: readonly string[];
+}
+
+const MAX_DOC_BYTES = 10 * 1024 * 1024;
+const ALLOWED_DOC_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const DOC_FIELDS = ["patent", "passport", "shop"] as const;
+
+function DocInput({ name, label, pickLabel }: { name: string; label: string; pickLabel: string }) {
+  const [fileName, setFileName] = useState("");
+  return (
+    <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-mist bg-white px-4 py-3">
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="text-sm font-semibold text-ink-900">{label}</span>
+        {fileName && <span className="truncate text-xs text-ink-500">{fileName}</span>}
+      </span>
+      <span className="shrink-0 rounded-full bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-800">
+        {pickLabel}
+      </span>
+      <input
+        type="file"
+        name={name}
+        accept="image/jpeg,image/png,image/webp"
+        required
+        onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
+        className="sr-only"
+      />
+    </label>
+  );
 }
 
 export interface LeadFormProps {
@@ -67,29 +104,34 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
 
     const form = e.currentTarget;
     const fd = new FormData(form);
+    if (locale) fd.set("language", locale);
+    if (attribution?.source) fd.set("source", attribution.source);
+    if (attribution?.utm_source) fd.set("utm_source", attribution.utm_source);
+    if (attribution?.utm_medium) fd.set("utm_medium", attribution.utm_medium);
+    if (attribution?.utm_campaign) fd.set("utm_campaign", attribution.utm_campaign);
 
-    const body = {
-      business_name: String(fd.get("business_name") ?? "").trim(),
-      business_type: String(fd.get("business_type") ?? ""),
-      business_type_other: fd.get("business_type") === "other" ? String(fd.get("business_type_other") ?? "").trim() : null,
-      owner_name: String(fd.get("owner_name") ?? "").trim(),
-      owner_contact: String(fd.get("owner_contact") ?? "").trim(),
-      needs_equipment: fd.get("needs_equipment") === "on",
-      comment: String(fd.get("comment") ?? "").trim() || null,
-      language: locale,
-      source: attribution?.source,
-      utm_source: attribution?.utm_source,
-      utm_medium: attribution?.utm_medium,
-      utm_campaign: attribution?.utm_campaign,
-      _hp: String(fd.get("_hp") ?? ""),
-    };
+    for (const field of DOC_FIELDS) {
+      const f = fd.get(field);
+      if (!(f instanceof File) || f.size === 0) {
+        setErrorMsg(t.formFilesRequired);
+        setState("error");
+        return;
+      }
+      if (!ALLOWED_DOC_TYPES.includes(f.type)) {
+        setErrorMsg(t.formFileWrongType);
+        setState("error");
+        return;
+      }
+      if (f.size > MAX_DOC_BYTES) {
+        setErrorMsg(t.formFileTooBig);
+        setState("error");
+        return;
+      }
+    }
 
     try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      // No content-type header: the browser sets multipart/form-data with the boundary.
+      const res = await fetch("/api/lead", { method: "POST", body: fd });
       const json = await res.json().catch(() => ({}));
       if (res.status === 429) {
         setErrorMsg(t.formRateLimited);
@@ -97,7 +139,11 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         return;
       }
       if (res.status === 400) {
-        setErrorMsg(t.formValidationError);
+        if (json?.error === "file") {
+          setErrorMsg(json.reason === "size" ? t.formFileTooBig : json.reason === "type" ? t.formFileWrongType : t.formFilesRequired);
+        } else {
+          setErrorMsg(t.formValidationError);
+        }
         setState("error");
         return;
       }
@@ -105,6 +151,9 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         setErrorMsg(t.formSubmitError);
         setState("error");
         return;
+      }
+      if (typeof window !== "undefined" && typeof (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag === "function") {
+        (window as unknown as { gtag: (...a: unknown[]) => void }).gtag("event", "generate_lead");
       }
       setState("sent");
     } catch {
@@ -127,12 +176,21 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         className="absolute -left-[9999px] h-0 w-0 opacity-0"
       />
 
-      <input name="business_name" placeholder={t.formBusinessName} className={inputClass} />
-      <input required name="owner_name" placeholder={t.formName} className={inputClass} />
-      <input required name="owner_contact" type="tel" placeholder={t.formPhone} className={inputClass} />
+      <input required name="owner_name" aria-label={t.formName} placeholder={t.formName} className={inputClass} />
+      <input
+        required
+        name="owner_contact"
+        type="tel"
+        inputMode="tel"
+        autoComplete="tel"
+        aria-label={t.formPhone}
+        placeholder={t.formPhone}
+        className={inputClass}
+      />
       <select
         required
         name="business_type"
+        aria-label={t.formBusiness}
         value={businessType}
         onChange={(e) => setBusinessType(e.target.value as BusinessTypeValue | "")}
         className={cn(inputClass, SELECT_CHEVRON_BG)}
@@ -145,13 +203,24 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         ))}
       </select>
       {businessType === "other" && (
-        <input required name="business_type_other" placeholder={t.formBusinessTypeOther} className={inputClass} />
+        <input required name="business_type_other" aria-label={t.formBusinessTypeOther} placeholder={t.formBusinessTypeOther} className={inputClass} />
       )}
+      <input required name="business_name" aria-label={t.formBusinessName} placeholder={t.formBusinessName} className={inputClass} />
 
-      <label className="flex items-center gap-3 text-sm font-semibold text-ink-700">
+      <label className="flex min-h-11 items-center gap-3 text-sm font-semibold text-ink-700">
         <input type="checkbox" name="needs_equipment" className="h-5 w-5 rounded border-mist text-green-500" />
         {t.formNeedsEquipment}
       </label>
+
+      <div className="grid gap-3 rounded-xl border border-mist bg-paper/60 p-4">
+        <div>
+          <p className="text-sm font-bold text-ink-900">{t.formDocsTitle}</p>
+          <p className="mt-1 text-xs leading-snug text-ink-700">{t.formDocsNote}</p>
+        </div>
+        <DocInput name="patent" label={t.formPatent} pickLabel={t.formFilePick} />
+        <DocInput name="passport" label={t.formPassport} pickLabel={t.formFilePick} />
+        <DocInput name="shop" label={t.formShop} pickLabel={t.formFilePick} />
+      </div>
 
       <button
         type="button"
@@ -162,7 +231,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         {t.optional}
       </button>
       {extra && (
-        <textarea name="comment" placeholder={t.formComment} rows={3} className={cn(inputClass, "resize-none")} maxLength={500} />
+        <textarea name="comment" aria-label={t.formComment} placeholder={t.formComment} rows={3} className={cn(inputClass, "resize-none")} maxLength={500} />
       )}
 
       {state === "error" && (
@@ -174,11 +243,13 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
       <button
         type="submit"
         disabled={state === "submitting"}
+        aria-busy={state === "submitting"}
         className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-4 font-semibold text-white transition-colors duration-200 ease-birliy hover:bg-green-800 disabled:opacity-60"
       >
         <Send size={18} />
         {state === "submitting" ? "..." : t.submit}
       </button>
+      <p className="text-center text-xs text-ink-700">{t.formSecurity}</p>
     </form>
   );
 }

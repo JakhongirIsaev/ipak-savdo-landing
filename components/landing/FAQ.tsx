@@ -4,22 +4,17 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type LandingDict } from "@/lib/landing/i18n";
+import { SectionHead } from "@/components/landing/ui";
+import { Reveal } from "@/components/landing/Reveal";
 
 export function FAQ({ t }: { t: LandingDict }) {
   const [open, setOpen] = useState(0);
   return (
     <section id="faq" className="border-t border-mist py-24 lg:py-32">
       <div className="section-shell">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
-            10 / {t.faqTitle}
-          </p>
-          <h2 className="mt-5 max-w-[16ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tightish text-ink-900 sm:text-5xl">
-            {t.faqTitle}
-          </h2>
-        </div>
+        <SectionHead eyebrow={`09 / ${t.faqTitle}`} title={t.faqTitle} maxTitle="16ch" />
 
-        <div className="mt-16 border-t border-mist">
+        <Reveal as="div" className="mt-14 border-t border-mist">
           {t.faq.map(([q, a], i) => {
             const isOpen = open === i;
             return (
@@ -27,6 +22,8 @@ export function FAQ({ t }: { t: LandingDict }) {
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${i}`}
                   className="flex w-full items-start justify-between gap-6 py-6 text-left"
                 >
                   <span className="font-display text-lg font-semibold leading-snug tracking-tightish text-ink-900 sm:text-xl">
@@ -41,15 +38,15 @@ export function FAQ({ t }: { t: LandingDict }) {
                     )}
                   />
                 </button>
-                {isOpen && (
+                <div id={`faq-panel-${i}`} role="region" hidden={!isOpen}>
                   <p className="max-w-2xl pb-6 pr-10 text-[17px] leading-[1.55] text-ink-700">
                     {a}
                   </p>
-                )}
+                </div>
               </div>
             );
           })}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

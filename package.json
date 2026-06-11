@@ -7,14 +7,18 @@
     "build": "next build",
     "start": "tsx scripts/migrate.ts && next start",
     "lint": "next lint",
+    "lint:copy": "textlint \"components/concept/**/*.{ts,tsx}\" app/page.tsx app/ru/page.tsx",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx scripts/migrate.ts"
+    "db:migrate": "tsx scripts/migrate.ts",
+    "set-webhook": "tsx scripts/set-webhook.ts",
+    "set-support-webhook": "tsx scripts/set-support-webhook.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.106.2",
     "clsx": "^2.0.0",
     "drizzle-orm": "^0.45.2",
     "framer-motion": "^11.0.0",
@@ -28,6 +32,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "@textlint/textlint-plugin-text": "^15.7.1",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
@@ -39,6 +44,8 @@
     "playwright": "^1.60.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
+    "textlint": "^15.7.1",
+    "textlint-rule-prh": "^6.1.0",
     "tsx": "^4.22.3",
     "typescript": "^5.3.0",
     "vitest": "^4.1.7"

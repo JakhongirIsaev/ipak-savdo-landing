@@ -1,0 +1,48 @@
+# BirLiy copy-hygiene rules for textlint-rule-prh.
+# Language-agnostic regex (works on Russian Cyrillic AND Uzbek Latin).
+# These are the defects the manager keeps catching. `pnpm lint:copy` runs them.
+# Scope is set in package.json to the LIVE visible-copy files only
+# (components/concept/** + app/page.tsx + app/ru/page.tsx). JsonLd.tsx is NOT
+# linted: its priceCurrency: "UZS" is correct invisible structured data.
+version: 1
+rules:
+  # ── Dash family: no em-dash / en-dash / horizontal bar / minus sign in copy.
+  - expected: "use a hyphen '-', comma, or period (no long dash)"
+    patterns:
+      - /—/   # U+2014 em-dash
+      - /–/   # U+2013 en-dash
+      - /―/   # U+2015 horizontal bar
+    prh: "BirLiy copy must contain ZERO long dashes"
+    # U+2212 minus sign is intentionally NOT here: it has legit uses (decrement
+    # buttons aria-label="−", negative numbers) and isn't the em/en-dash defect.
+
+  # ── HTML dash entities (in case a dash sneaks in as an entity).
+  - expected: "remove the dash entity"
+    patterns:
+      - /&mdash;/
+      - /&ndash;/
+      - /&#8212;/
+      - /&#8211;/
+      - /&#x2014;/
+      - /&#x2013;/
+    prh: "no dash entities in visible copy"
+
+  # NOTE: ellipsis ("..." => "…") is intentionally NOT checked here. In .tsx source
+  # "..." is the JS spread operator ({...props}, [...arr]), so a text-level scan can't
+  # tell it apart from a typographic ellipsis. /landing-qa checks ellipsis on the
+  # rendered HTML instead, where no spread operator exists.
+
+  # ── Currency: visible text is сум (RU) / so'm (UZ), never the code UZS.
+  - expected: "сум (RU) or so'm (UZ)"
+    pattern: /UZS/
+    prh: "visible currency must be сум / so'm, never the ISO code UZS"
+
+  # ── Dev / placeholder / leak strings that must never ship in visible copy.
+  - expected: "remove the placeholder / dev string"
+    patterns:
+      - /concept_preview/
+      - /[Ll]orem [Ii]psum/
+      - /\bTODO\b/
+      - /\bFIXME\b/
+      - /\bXXX\b/
+    prh: "no placeholder or dev markers in shipped copy"

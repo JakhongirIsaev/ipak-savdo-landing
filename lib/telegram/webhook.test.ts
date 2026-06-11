@@ -23,6 +23,13 @@ const baseLead = {
   lastStatusChangeAt: null,
   lastChangedBy: null,
   telegramMessageId: "555",
+  city: null,
+  patentFileId: null,
+  passportFileId: null,
+  shopPhotoFileId: null,
+  patentStoragePath: null,
+  passportStoragePath: null,
+  shopStoragePath: null,
 };
 
 function makeDeps(overrides: Partial<WebhookDeps> = {}): WebhookDeps & {
@@ -30,14 +37,16 @@ function makeDeps(overrides: Partial<WebhookDeps> = {}): WebhookDeps & {
   updates: any[];
   edits: any[];
   answers: any[];
+  anketaMessages: any[];
 } {
   const events: any[] = [];
   const updates: any[] = [];
   const edits: any[] = [];
   const answers: any[] = [];
+  const anketaMessages: any[] = [];
 
   return {
-    events, updates, edits, answers,
+    events, updates, edits, answers, anketaMessages,
     findLead: vi.fn(async (id: number) => (id === 42 ? { ...baseLead } : null)),
     updateLeadStatus: vi.fn(async (id, newStatus, actor) => {
       updates.push({ id, newStatus, actor });
@@ -47,6 +56,14 @@ function makeDeps(overrides: Partial<WebhookDeps> = {}): WebhookDeps & {
     answerCb: vi.fn(async (args) => { answers.push(args); }),
     chatId: "-100123",
     siteUrl: "https://example.com",
+    anketa: {
+      getSession: vi.fn(async () => null),
+      saveSession: vi.fn(async () => {}),
+      clearSession: vi.fn(async () => {}),
+      createLead: vi.fn(async () => 1),
+      notifyLead: vi.fn(async () => {}),
+      sendMessage: vi.fn(async (chatId: string, text: string) => { anketaMessages.push({ chatId, text }); }),
+    },
     ...overrides,
   };
 }
@@ -154,18 +171,36 @@ describe("handleTelegramUpdate", () => {
     expect(deps.edits).toHaveLength(0);
   });
 
-  it("responds to /start text message with a friendly note (no DB writes)", async () => {
+  it("routes a private-chat /start to the anketa (no lead status writes)", async () => {
     const deps = makeDeps();
     await handleTelegramUpdate({
       update_id: 8,
       message: {
         message_id: 1,
-        chat: { id: 12345 },
+        chat: { id: 12345, type: "private" },
         text: "/start",
         from: { id: 1, username: "x" },
       },
     }, deps);
     expect(deps.updateLeadStatus).not.toHaveBeenCalled();
     expect(deps.events).toHaveLength(0);
+    expect(deps.anketa.saveSession).toHaveBeenCalled();
+    expect(deps.anketaMessages).toHaveLength(1);
+    expect(deps.anketaMessages[0].text).toContain("BirLiy");
+  });
+
+  it("does not route group-chat messages to the anketa", async () => {
+    const deps = makeDeps();
+    await handleTelegramUpdate({
+      update_id: 9,
+      message: {
+        message_id: 1,
+        chat: { id: -100123, type: "supergroup" },
+        text: "/start",
+        from: { id: 1, username: "x" },
+      },
+    }, deps);
+    expect(deps.anketa.saveSession).not.toHaveBeenCalled();
+    expect(deps.anketaMessages).toHaveLength(0);
   });
 });

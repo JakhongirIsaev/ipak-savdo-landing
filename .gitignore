@@ -51,7 +51,14 @@ qa-*.png
 
 # Local dev test logs
 dev-server-test.log
+dev-server-verify.log
 .dev-e2e.log
+
+# Local QA run captures (screenshots, videos, ~100MB)
+.qa/
+
+# Local agent/skill caches
+.codex/
 
 # Playwright
 /test-results/

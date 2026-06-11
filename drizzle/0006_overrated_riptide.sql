@@ -1,0 +1,1 @@
+ALTER TABLE "support_sessions" ADD COLUMN "language" text DEFAULT 'ru' NOT NULL;
