@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     alternateLocale: "uz_UZ",
     url: "https://birliy.uz/ru",
     siteName: "BirLiy",
-    images: [{ url: "/photos/owner-tablet.jpg", width: 1200, height: 1500, alt: "BirLiy касса для магазина" }],
+    images: [{ url: "/photos/owner-tablet.jpg", width: 1120, height: 840, alt: "BirLiy касса для магазина" }],
   },
   twitter: {
     card: "summary_large_image",

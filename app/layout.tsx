@@ -18,19 +18,24 @@ const manrope = Manrope({
   display: "swap",
 });
 
+// Mono face is used by the self-printing receipt only, below the fold:
+// keep it off the critical path so it never competes with the hero image.
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
+  preload: false,
 });
 
-// Handwriting face for the paper-ledger comparison block only.
+// Handwriting face for the paper-ledger comparison block only, below the
+// fold as well.
 const caveat = Caveat({
   subsets: ["latin", "latin-ext", "cyrillic"],
   weight: ["400", "600"],
   variable: "--font-hand",
   display: "swap",
+  preload: false,
 });
 
 // Default (fallback) metadata — each locale page (app/page.tsx = uz, app/ru/page.tsx = ru)

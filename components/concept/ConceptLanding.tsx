@@ -11,6 +11,7 @@ import { EcosystemStrip } from "./EcosystemStrip";
 import { LiveShiftBadge } from "./LiveShiftBadge";
 import { PaperVsBirliy } from "./PaperVsBirliy";
 import { PriceReceipt } from "./PriceReceipt";
+import { useCoarsePointer } from "./useCoarsePointer";
 import { dicts } from "@/lib/landing/i18n";
 import {
   ArrowRight,
@@ -206,7 +207,7 @@ const copy = {
     footer: {
       tagline: "Ваш бизнес. В одном месте.",
       cols: [
-        { title: "Продукт", links: [["Демо", "#reveal"], ["Модули", "#modules"], ["Для собственника", "#owner"], ["FAQ", "#faq"]] },
+        { title: "Продукт", links: [["Демо", "#reveal"], ["Модули", "#modules"], ["Для собственника", "#owner"], ["FAQ", "#faq"], ["Блог", "/ru/blog"]] },
         { title: "Для кого", links: [["Магазин у дома", "#segments"], ["Минимаркет", "#segments"], ["Кафе", "#segments"], ["Аптека", "#segments"], ["Сервис", "#segments"]] },
         { title: "Подключение", links: [["Ранний доступ", "#early-access"], ["Цена", "#lead"], ["Заявка", "#lead"]] },
       ],
@@ -383,7 +384,7 @@ const copy = {
     footer: {
       tagline: "Sizning biznesingiz. Bitta joyda.",
       cols: [
-        { title: "Mahsulot", links: [["Demo", "#reveal"], ["Modullar", "#modules"], ["Egasi uchun", "#owner"], ["FAQ", "#faq"]] },
+        { title: "Mahsulot", links: [["Demo", "#reveal"], ["Modullar", "#modules"], ["Egasi uchun", "#owner"], ["FAQ", "#faq"], ["Blog", "/blog"]] },
         { title: "Kimlar uchun", links: [["Uy yonidagi do'kon", "#segments"], ["Minimarket", "#segments"], ["Kafe", "#segments"], ["Dorixona", "#segments"], ["Xizmat", "#segments"]] },
         { title: "Ulanish", links: [["Erta kirish", "#early-access"], ["Narx", "#lead"], ["Ariza", "#lead"]] },
       ],
@@ -416,9 +417,11 @@ function fade(delay = 0, reduce = false) {
 
 function reveal(delay = 0, reduce = false) {
   if (reduce) {
+    // `animate` (not whileInView) so elements already mounted with the
+    // animated variant snap visible the moment `reduce` flips on hydration.
     return {
       initial: false,
-      whileInView: { opacity: 1, y: 0 },
+      animate: { opacity: 1, y: 0 },
       transition: { duration: 0 },
     };
   }
@@ -473,7 +476,7 @@ function HeroTitle({
             <motion.span
               key={word}
               className="absolute left-0 text-green-300"
-              initial={{ opacity: 0, y: 60 }}
+              initial={wordIndex === 0 ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
               transition={{ type: "spring", stiffness: 60, damping: 14 }}
               animate={
                 index === wordIndex
@@ -501,7 +504,9 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const [leadOpen, setLeadOpen] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
   const openLead = () => setLeadOpen(true);
-  const reduce = useReducedMotion() ?? false;
+  const prefersReduce = useReducedMotion() ?? false;
+  const coarse = useCoarsePointer();
+  const reduce = prefersReduce || coarse;
   const t = copy[locale];
 
   // Where the language switch navigates, plus an accessible name that contains
@@ -545,7 +550,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           <a href="#top" className="inline-flex min-h-11 items-center gap-2.5" aria-label="BirLiy">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/birliy-symbol.png" alt="" width={337} height={427} className="h-7 w-auto" />
+            <img src="/birliy-symbol.svg" alt="" width={84} height={96} className="h-7 w-auto" />
             <span className="text-2xl font-extrabold tracking-tight text-white">BirLiy</span>
           </a>
 
@@ -612,17 +617,19 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
 
         <div id="top" className="relative z-10 mx-auto grid max-w-7xl gap-12 px-4 pb-10 pt-8 sm:px-6 md:pb-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8 lg:pb-20 lg:pt-14">
           <div>
-            <motion.p {...fade(0, reduce)} className="text-sm font-semibold uppercase tracking-normal text-green-300">
+            {/* Hero renders statically: it is the LCP element and must be visible
+                in SSR HTML, not gated behind JS hydration (PageSpeed mobile). */}
+            <motion.p {...fade(0, true)} className="text-sm font-semibold uppercase tracking-normal text-green-300">
               {t.meta.eyebrow}
             </motion.p>
-            <motion.h1 {...fade(0.12, reduce)} className="mt-4 max-w-[16ch] text-5xl font-extrabold leading-[1.05] tracking-normal text-white sm:text-6xl lg:text-7xl">
+            <motion.h1 {...fade(0.12, true)} className="mt-4 max-w-[16ch] text-5xl font-extrabold leading-[1.05] tracking-normal text-white sm:text-6xl lg:text-7xl">
               <HeroTitle lead={t.meta.titleLead} words={t.meta.titleWords} tail={t.meta.titleTail} reduce={reduce} />
             </motion.h1>
-            <motion.p {...fade(0.2, reduce)} className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
+            <motion.p {...fade(0.2, true)} className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
               {t.meta.subtitle}
             </motion.p>
 
-            <motion.div {...fade(0.26, reduce)} className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <motion.div {...fade(0.26, true)} className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
                 onClick={openLead}
@@ -639,7 +646,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               </a>
             </motion.div>
 
-            <motion.div {...fade(0.34, reduce)} className="mt-9 grid gap-3 sm:grid-cols-2">
+            <motion.div {...fade(0.34, true)} className="mt-9 grid gap-3 sm:grid-cols-2">
               {t.stats.map((stat) => (
                 <div key={stat.label} className="rounded-lg border border-white/12 bg-white/8 p-4 backdrop-blur">
                   <p className="text-xs font-semibold uppercase tracking-normal text-white/48">{stat.label}</p>
@@ -652,7 +659,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </motion.div>
           </div>
 
-          <motion.div {...fade(0.28, reduce)} className="relative mx-auto w-full max-w-[560px]">
+          <motion.div {...fade(0.28, true)} className="relative mx-auto w-full max-w-[560px]">
             <div className="overflow-hidden rounded-2xl border border-white/12 shadow-[0_44px_100px_-44px_rgba(0,0,0,0.9)]">
               <Image
                 src="/photos/owner-tablet.jpg"
@@ -660,8 +667,9 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 width={1120}
                 height={840}
                 priority
+                quality={60}
                 sizes="(min-width: 1024px) 560px, 100vw"
-                className="h-auto w-full"
+                className="h-auto max-h-[300px] w-full object-cover object-top sm:max-h-none"
               />
             </div>
             <LiveShiftBadge

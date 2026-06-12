@@ -42,20 +42,20 @@ export function LiveShiftBadge({
   const suffix = locale === "ru" ? "сум" : "so'm";
 
   return (
-    <div className="absolute -right-3 -top-4 w-[190px] rounded-xl border border-white/14 bg-[#0b1826]/92 p-3.5 shadow-[0_24px_50px_-30px_rgba(0,0,0,0.9)] backdrop-blur">
+    <div className="absolute right-2 top-2 w-[160px] rounded-xl border border-white/14 bg-[#0b1826]/92 p-2.5 shadow-[0_24px_50px_-30px_rgba(0,0,0,0.9)] backdrop-blur sm:-right-3 sm:-top-4 sm:w-[190px] sm:p-3.5">
       <div className="flex items-center gap-2">
         <span className="relative flex h-2 w-2">
           {!reduce && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500/70" />}
           <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
         </span>
-        <span className="text-[11px] font-semibold uppercase tracking-normal text-white/55">{status}</span>
+        <span className="text-[10px] font-semibold uppercase tracking-normal text-white/55 sm:text-[11px]">{status}</span>
       </div>
-      <p className="mt-2 text-[11px] font-semibold text-white/55">{label}</p>
+      <p className="mt-1.5 text-[10px] font-semibold text-white/55 sm:mt-2 sm:text-[11px]">{label}</p>
       <p className="mt-0.5 flex items-baseline gap-1">
-        <span className="text-xl font-extrabold tabular-nums text-white">{format(n)}</span>
-        <span className="text-xs font-semibold text-white/55">{suffix}</span>
+        <span className="text-base font-extrabold tabular-nums text-white sm:text-xl">{format(n)}</span>
+        <span className="text-[10px] font-semibold text-white/55 sm:text-xs">{suffix}</span>
       </p>
-      <p className="mt-1 text-xs font-semibold text-green-300">{delta}</p>
+      <p className="mt-0.5 text-[10px] font-semibold text-green-300 sm:mt-1 sm:text-xs">{delta}</p>
     </div>
   );
 }

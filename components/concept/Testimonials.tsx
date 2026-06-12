@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useCoarsePointer } from "./useCoarsePointer";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -37,7 +38,9 @@ const AVATAR_TINTS = ["bg-green-50 text-green-700", "bg-[#eef2ee] text-ink-700",
 
 export function Testimonials({ locale }: { locale: "ru" | "uz" }): JSX.Element {
   const t = DATA[locale];
-  const reduce = useReducedMotion() ?? false;
+  const prefersReduce = useReducedMotion() ?? false;
+  const coarse = useCoarsePointer();
+  const reduce = prefersReduce || coarse;
 
   return (
     <section id="testimonials" className="border-t border-[#d9e2db] bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
@@ -54,10 +57,14 @@ export function Testimonials({ locale }: { locale: "ru" | "uz" }): JSX.Element {
           {t.cards.map((card, index) => (
             <motion.figure
               key={card.name}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, ease: EASE, delay: index * 0.06 }}
+              {...(reduce
+                ? { initial: false as const, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
+                : {
+                    initial: { opacity: 0, y: 24 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true, margin: "-60px" },
+                    transition: { duration: 0.55, ease: EASE, delay: index * 0.06 },
+                  })}
               className="flex h-full flex-col rounded-lg border border-[#d9e2db] bg-white p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)]"
             >
               <blockquote className="flex-1 text-[15px] font-medium leading-7 text-ink-700">“{card.quote}”</blockquote>

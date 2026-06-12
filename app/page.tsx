@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     alternateLocale: "ru_RU",
     url: "https://birliy.uz/",
     siteName: "BirLiy",
-    images: [{ url: "/photos/owner-tablet.jpg", width: 1200, height: 1500, alt: "BirLiy do'kon uchun kassa dasturi" }],
+    images: [{ url: "/photos/owner-tablet.jpg", width: 1120, height: 840, alt: "BirLiy do'kon uchun kassa dasturi" }],
   },
   twitter: {
     card: "summary_large_image",
