@@ -7,8 +7,19 @@ export const post: BlogPost = {
     uz: {
       title: "Daftar hisobi: do'konga aslida qancha turadi",
       description:
-        "Daftar hisobi qanday jimgina yo'qotishlarga olib keladi: yozilmagan savdo, qarz daftari, do'konda kamomad. Sabablar va oson yechim.",
-      keywords: ["daftar hisobi", "do'kon hisobi", "qarz daftari", "do'konda kamomad", "savdo hisobini yuritish"],
+        "Daftar hisobi qanday jimgina yo'qotishlarga olib keladi: yozilmagan savdo, qarz daftari, do'konda kamomad. Sabablari, hisob-kitobi va oson yechimi bir joyda.",
+      keywords: [
+        "daftar hisobi",
+        "do'kon hisobi",
+        "qarz daftari",
+        "do'konda kamomad",
+        "savdo hisobini yuritish",
+        "daftar o'rniga dastur",
+        "savdo daftari",
+        "qarzlarni yozish",
+        "kassada pul yetishmaydi",
+        "do'kon yo'qotishlari",
+      ],
       intro: [
         "Ko'p do'konchilar hisobni daftarda yuritadi. Bu tushunarli: daftar arzon, hech kim o'rgatishi shart emas, qo'lda turadi. Yillar davomida shunday ishlanadi.",
         "Lekin daftar bilan bog'liq muammo shundaki, u baqirmaydi. Xatolik bo'lganda hech qanday signal kelmaydi. Pul sekin va sokin yo'qoladi, siz esa buni oy oxirida yoki umuman sezmaysiz.",
@@ -86,13 +97,13 @@ export const post: BlogPost = {
       ],
       cta: {
         text: "Do'koningiz daftar bilan qancha yo'qotayotganini bilib oling. BirLiy'da hisob o'zi yuriladi.",
-        button: "Telegram orqali yozing: +998 97 421 24 54",
+        button: "Ariza qoldirish",
       },
     },
     ru: {
       title: "Учёт товаров в тетради: сколько на деле теряет магазин",
       description:
-        "Как учёт в тетради тихо приводит к потерям: забытые продажи, долги покупателей, недостача в магазине. Разбираем причины и простое решение.",
+        "Как учёт в тетради тихо приводит к потерям: забытые продажи, долги покупателей, недостача в магазине. Разбираем причины и простое решение без сложных таблиц.",
       keywords: [
         "учёт товаров в тетради",
         "учёт в магазине",
@@ -100,6 +111,12 @@ export const post: BlogPost = {
         "долги покупателей учёт",
         "как вести учёт в магазине",
         "потери в магазине",
+        "тетрадь учёта продаж",
+        "журнал продаж",
+        "учёт долгов в магазине",
+        "касса не сходится",
+        "ревизия в магазине",
+        "контроль кассира",
       ],
       intro: [
         "Многие владельцы магазинов ведут учёт в тетради. Это понятно: тетрадь дешёвая, никого не надо учить, она всегда под рукой. Так работают годами.",
@@ -178,14 +195,23 @@ export const post: BlogPost = {
       ],
       cta: {
         text: "Узнайте, сколько ваш магазин теряет на тетради. В BirLiy учёт ведётся сам.",
-        button: "Напишите в Telegram: +998 97 421 24 54",
+        button: "Оставить заявку",
       },
     },
     en: {
       title: "Shop bookkeeping notebook: what it really costs",
       description:
         "How a shop bookkeeping notebook quietly causes losses: missed sales, lost debt records, retail shrinkage in a small store. Causes and a simple fix.",
-      keywords: ["shop bookkeeping notebook", "small shop inventory tracking", "retail shrinkage small store"],
+      keywords: [
+        "shop bookkeeping notebook",
+        "small shop inventory tracking",
+        "retail shrinkage small store",
+        "shop record keeping",
+        "customer debt tracking",
+        "cash register does not match",
+        "manual sales records",
+        "small shop losses",
+      ],
       intro: [
         "Many shop owners keep their records in a notebook. It makes sense: a notebook is cheap, nobody needs training, and it is always within reach. People work this way for years.",
         "The problem with a notebook is that it stays silent. When a mistake happens, there is no signal. Money leaves slowly and quietly, and you only notice at the end of the month, or not at all.",
@@ -263,7 +289,7 @@ export const post: BlogPost = {
       ],
       cta: {
         text: "Find out how much your shop loses on a notebook. With BirLiy, the records keep themselves.",
-        button: "Message us on Telegram: +998 97 421 24 54",
+        button: "Leave a request",
       },
     },
   },

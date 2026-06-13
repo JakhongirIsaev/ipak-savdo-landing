@@ -3,7 +3,7 @@ import { POSTS } from "@/lib/blog";
 import { blogIndexPath, blogPostPath } from "@/lib/blog/i18n";
 
 const SITE = "https://birliy.uz";
-const landingLanguages = { uz: SITE, ru: `${SITE}/ru` };
+const landingLanguages = { uz: SITE, ru: `${SITE}/ru`, "x-default": SITE };
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Stamped at build time: every deploy bumps the landing dates, which nudges
@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       uz: `${SITE}${blogIndexPath("uz")}`,
       ru: `${SITE}${blogIndexPath("ru")}`,
       en: `${SITE}${blogIndexPath("en")}`,
+      "x-default": `${SITE}${blogIndexPath("uz")}`,
     };
     entries.push({
       url: `${SITE}${blogIndexPath(locale)}`,
@@ -35,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       uz: `${SITE}${blogPostPath("uz", post.slug)}`,
       ru: `${SITE}${blogPostPath("ru", post.slug)}`,
       en: `${SITE}${blogPostPath("en", post.slug)}`,
+      "x-default": `${SITE}${blogPostPath("uz", post.slug)}`,
     };
     for (const locale of locales) {
       entries.push({

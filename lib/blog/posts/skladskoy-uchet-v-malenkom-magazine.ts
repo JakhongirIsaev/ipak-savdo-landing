@@ -8,7 +8,18 @@ export const post: BlogPost = {
       title: "Do'konda ombor hisobi: yangi boshlovchilar uchun qo'llanma",
       description:
         "Kichik do'konda ombor hisobi qanday yuritiladi: qoldiq hisobi, tovar ro'yxati, qayta buyurtma signallari va telefonda barkod skaneri. Amaliy qo'llanma.",
-      keywords: ["ombor hisobi", "do'konda ombor hisobi", "qoldiq hisobi", "tovar hisobi dasturi", "inventarizatsiya"],
+      keywords: [
+        "ombor hisobi",
+        "do'konda ombor hisobi",
+        "qoldiq hisobi",
+        "tovar hisobi dasturi",
+        "inventarizatsiya",
+        "tovar qoldig'i",
+        "ombor dasturi",
+        "mol hisobi",
+        "shtrix kod bilan hisob",
+        "tovar buyurtma qilish",
+      ],
       intro: [
         "Kichik do'kon egasi uchun ombor hisobi murakkab gap emas. Bu shunchaki bitta savolga aniq javob: ayni damda do'konda nima bor, nima yaxshi sotilyapti va nimani qayta buyurtma qilish kerak. 50 kvadrat metrli do'konda ham, kattaroq joyda ham mantiq bir xil.",
         "Ko'p egalar hisobni daftarda yoki yodda yuritadi. Bu kichik bo'lganda ishlaydi. Ammo tovar soni o'sganda qoldiq hisobi chalkashadi: bestseller tugab qoladi, sekin sotiladigan mol esa pulni muzlatadi. Natijada siz qancha mol borligini bilmaysiz va inventarizatsiya har safar bir necha soat vaqtingizni oladi.",
@@ -104,6 +115,12 @@ export const post: BlogPost = {
         "программа складского учёта",
         "инвентаризация в магазине",
         "остатки товара",
+        "учёт товара в магазине",
+        "контроль остатков",
+        "дозаказ товара",
+        "учёт по штрихкоду",
+        "ревизия товара",
+        "программа учёта товаров",
       ],
       intro: [
         "Складской учёт для владельца небольшого магазина: это не про сложные таблицы. Это про один понятный ответ: что у вас сейчас есть на полках, что хорошо продаётся и что пора дозаказать. В магазине на 50 квадратных метров и в точке побольше логика одна и та же.",
@@ -193,7 +210,18 @@ export const post: BlogPost = {
       title: "Inventory management for a small shop: a beginner guide",
       description:
         "How to run inventory management in a small shop: stock tracking, product list, reorder signals and phone-camera barcode scanning. A step-by-step guide.",
-      keywords: ["inventory management small shop", "stock tracking app", "inventory software Uzbekistan", "inventory tracking", "reorder signals"],
+      keywords: [
+        "inventory management small shop",
+        "stock tracking app",
+        "inventory software Uzbekistan",
+        "inventory tracking",
+        "reorder signals",
+        "how to track inventory",
+        "small retail stock control",
+        "barcode inventory app",
+        "stock count guide",
+        "product reorder point",
+      ],
       intro: [
         "Inventory management for a small shop owner is not about complicated spreadsheets. It is about one clear answer: what you have on the shelves right now, what sells well, and what you need to reorder. In a 50 square meter shop and in a bigger one, the logic is the same.",
         "Many owners keep records in a notebook or in their head. While you have few items, that works. But once the number of products grows, stock tracking gets messy: your bestseller runs out, while slow stock sits and freezes your money. You end up not knowing your real stock, and a stock count takes several hours every time.",

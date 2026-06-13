@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { BlogLocale, BlogPost } from "@/lib/blog/types";
-import { readingTimeMin } from "@/lib/blog";
+import { POSTS, readingTimeMin } from "@/lib/blog";
 import { BLOG_UI, blogIndexPath, blogPostPath, landingPath } from "@/lib/blog/i18n";
 import { BlogHeader, BlogFooter, HtmlLang } from "./BlogChrome";
 
@@ -18,12 +18,14 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
   const ui = BLOG_UI[locale];
   const c = post.locales[locale];
   const minutes = readingTimeMin(post, locale);
+  const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "BlogPosting",
+        "@id": `${SITE}${blogPostPath(locale, post.slug)}#article`,
         headline: c.title,
         description: c.description,
         keywords: c.keywords.join(", "),
@@ -31,8 +33,9 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
         dateModified: post.date,
         inLanguage: ui.htmlLang,
         mainEntityOfPage: `${SITE}${blogPostPath(locale, post.slug)}`,
-        author: { "@type": "Organization", name: "BirLiy", url: SITE },
-        publisher: { "@type": "Organization", name: "BirLiy", url: SITE },
+        image: `${SITE}/photos/owner-tablet.jpg`,
+        author: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
+        publisher: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
       },
       {
         "@type": "FAQPage",
@@ -133,6 +136,27 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
               {c.cta.button}
             </a>
           </div>
+
+          {related.length > 0 && (
+            <section className="mt-14 border-t border-mist pt-8">
+              <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{ui.relatedTitle}</h2>
+              <div className="mt-5 space-y-3">
+                {related.map((r) => {
+                  const rc = r.locales[locale];
+                  return (
+                    <Link
+                      key={r.slug}
+                      href={blogPostPath(locale, r.slug)}
+                      className="block rounded-xl border border-mist bg-white p-4 transition-colors duration-200 hover:border-green-700"
+                    >
+                      <span className="font-display text-base font-semibold text-ink-900">{rc.title}</span>
+                      <span className="mt-1 block text-sm leading-6 text-ink-700">{rc.description}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
         </article>
       </main>
       <BlogFooter locale={locale} />
@@ -142,11 +166,38 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
 
 export function BlogIndex({ posts, locale }: { posts: BlogPost[]; locale: BlogLocale }) {
   const ui = BLOG_UI[locale];
+
+  const indexJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${SITE}${blogIndexPath(locale)}#blog`,
+        name: ui.blogTitle,
+        description: ui.blogDescription,
+        url: `${SITE}${blogIndexPath(locale)}`,
+        inLanguage: ui.htmlLang,
+        isPartOf: { "@id": `${SITE}/#website` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: ui.breadcrumbHome, item: `${SITE}${landingPath(locale)}` },
+          { "@type": "ListItem", position: 2, name: ui.breadcrumbBlog, item: `${SITE}${blogIndexPath(locale)}` },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-paper">
       <HtmlLang lang={ui.htmlLang} />
       <BlogHeader locale={locale} switchPaths={switchPathsFor()} />
       <main className="mx-auto max-w-3xl px-5 py-10">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(indexJsonLd).replace(/</g, "\\u003c") }}
+        />
         <h1 className="font-display text-3xl font-bold tracking-tightish text-ink-900 sm:text-4xl">{ui.blogTitle}</h1>
         <p className="mt-3 text-base leading-7 text-ink-700">{ui.blogDescription}</p>
 

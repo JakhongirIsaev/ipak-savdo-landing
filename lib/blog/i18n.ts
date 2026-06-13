@@ -10,6 +10,7 @@ export const BLOG_UI: Record<
     breadcrumbBlog: string;
     readingTime: (min: number) => string;
     faqTitle: string;
+    relatedTitle: string;
     allPosts: string;
     backToSite: string;
     published: string;
@@ -26,6 +27,7 @@ export const BLOG_UI: Record<
     breadcrumbBlog: "Blog",
     readingTime: (min) => `${min} daqiqa o'qiladi`,
     faqTitle: "Ko'p so'raladigan savollar",
+    relatedTitle: "Tegishli maqolalar",
     allPosts: "Barcha maqolalar",
     backToSite: "birliy.uz saytiga qaytish",
     published: "Chop etilgan",
@@ -41,6 +43,7 @@ export const BLOG_UI: Record<
     breadcrumbBlog: "Блог",
     readingTime: (min) => `${min} мин чтения`,
     faqTitle: "Частые вопросы",
+    relatedTitle: "Похожие статьи",
     allPosts: "Все статьи",
     backToSite: "Вернуться на birliy.uz",
     published: "Опубликовано",
@@ -56,6 +59,7 @@ export const BLOG_UI: Record<
     breadcrumbBlog: "Blog",
     readingTime: (min) => `${min} min read`,
     faqTitle: "Frequently asked questions",
+    relatedTitle: "Related articles",
     allPosts: "All articles",
     backToSite: "Back to birliy.uz",
     published: "Published",

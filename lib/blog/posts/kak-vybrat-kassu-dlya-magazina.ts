@@ -8,7 +8,21 @@ export const post: BlogPost = {
       title: "Do'kon uchun kassa dasturini qanday tanlash kerak (2026)",
       description:
         "Toshkentda kichik do'kon uchun kassa dasturini tanlash bo'yicha amaliy qo'llanma: savdo, ombor hisobi, to'lov, hisobotlar va xatolardan saqlanish.",
-      keywords: ["do'kon uchun kassa", "kassa dasturi", "savdo dasturi", "do'kon dasturi", "ombor hisobi dasturi", "POS tizimi"],
+      keywords: [
+        "do'kon uchun kassa",
+        "kassa dasturi",
+        "savdo dasturi",
+        "do'kon dasturi",
+        "ombor hisobi dasturi",
+        "POS tizimi",
+        "kassa tanlash",
+        "onlayn kassa",
+        "telefon uchun kassa",
+        "kassa ilovasi",
+        "savdo nuqtasi dasturi",
+        "kichik biznes uchun dastur",
+        "kassa narxi",
+      ],
       intro: [
         "Kichik do'kon ochganingizda daftar yetarli bo'lib tuyuladi. Sotuv yozildi, qoldiq boshda saqlanadi, hammasi joyida. Lekin tovar ko'paygach, sotuvchi qo'shilgach va kun oxirida kassa hisobi to'g'ri kelmay qola boshlagach, daftar ish bermay qo'yadi.",
         "Shu paytda do'kon egasi kassa dasturini qidira boshlaydi. Tanlov ko'p, va'dalar baland, narxlar esa har xil. Qaysi biri haqiqatan kerakli, qaysi biri ortiqcha xarajat: buni oldindan bilish qiyin.",
@@ -82,13 +96,13 @@ export const post: BlogPost = {
       ],
       cta: {
         text: "Do'koningiz uchun kassani tanlayapsizmi? BirLiy narxi ochiq, bir kunda ishga tushadi va tovarni yuklashga yordam beramiz.",
-        button: "Telegram orqali yozing: +998 97 421 24 54",
+        button: "Ariza qoldirish",
       },
     },
     ru: {
       title: "Как выбрать кассу для магазина в Узбекистане (2026)",
       description:
-        "Практический гид по выбору кассовой программы для небольшого магазина: продажи, учёт товаров, оплата, отчёты, офлайн и защита от обмана.",
+        "Практический гид по выбору кассовой программы для небольшого магазина: продажи, учёт товаров, QR-оплата, отчёты, работа офлайн и защита от обмана кассира.",
       keywords: [
         "касса для магазина",
         "кассовая программа",
@@ -97,6 +111,13 @@ export const post: BlogPost = {
         "автоматизация магазина",
         "учёт товаров",
         "касса в телефоне",
+        "как выбрать кассу",
+        "онлайн касса для магазина",
+        "мобильная касса",
+        "кассовое приложение",
+        "касса для минимаркета",
+        "программа для торговли",
+        "сколько стоит касса",
       ],
       intro: [
         "Когда магазин только открылся, тетради хватает. Записал продажу, остаток держишь в голове, всё под контролем. Но как только товара становится больше, появляется второй продавец, а в конце дня касса перестаёт сходиться, тетрадь начинает подводить.",
@@ -171,14 +192,25 @@ export const post: BlogPost = {
       ],
       cta: {
         text: "Выбираете кассу для магазина? У BirLiy цена открыта, запуск за один день и помощь с загрузкой товаров.",
-        button: "Напишите в Telegram: +998 97 421 24 54",
+        button: "Оставить заявку",
       },
     },
     en: {
       title: "How to Choose a POS System in Uzbekistan (2026 Guide)",
       description:
         "A practical buyer guide to choosing a POS app for a small shop: sales, inventory, payments, reports, offline mode and protection from cashier fraud.",
-      keywords: ["POS system Uzbekistan", "POS app for small shop", "retail software Uzbekistan", "inventory app Tashkent", "kassa program"],
+      keywords: [
+        "POS system Uzbekistan",
+        "POS app for small shop",
+        "retail software Uzbekistan",
+        "inventory app Tashkent",
+        "kassa program",
+        "how to choose a POS system",
+        "cash register app",
+        "point of sale Uzbekistan",
+        "offline POS app",
+        "POS system price",
+      ],
       intro: [
         "When a shop first opens, a notebook is enough. You write down a sale, keep the stock count in your head, and everything feels under control. But once you have more products, a second cashier, and a till that stops matching at the end of the day, the notebook starts to fail you.",
         "That is when an owner begins looking for a POS app. There are many options, even more promises, and prices are all over the place. Which one you actually need, and which is just an extra expense, is hard to tell in advance.",
@@ -252,7 +284,7 @@ export const post: BlogPost = {
       ],
       cta: {
         text: "Choosing a POS system for your shop? BirLiy has an open price, goes live in one day, and helps you load your products.",
-        button: "Message us on Telegram: +998 97 421 24 54",
+        button: "Leave a request",
       },
     },
   },

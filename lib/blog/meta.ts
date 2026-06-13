@@ -4,6 +4,39 @@ import { BLOG_UI, blogIndexPath, blogPostPath } from "./i18n";
 
 const SITE = "https://birliy.uz";
 
+// Shared social-share card for blog pages. Reuses the on-brand landing image
+// until a dedicated 1200x630 blog card is produced.
+const BLOG_OG_IMAGE = "/photos/owner-tablet.jpg";
+
+const INDEX_KEYWORDS: Record<BlogLocale, string[]> = {
+  uz: [
+    "do'kon yuritish",
+    "kassa dasturi maqolalar",
+    "ombor hisobi qo'llanma",
+    "savdo hisobi maslahatlar",
+    "kichik biznes blog",
+    "do'kon uchun maslahatlar",
+    "BirLiy blog",
+  ],
+  ru: [
+    "блог о малом бизнесе",
+    "советы для магазина",
+    "как вести магазин",
+    "кассовая программа статьи",
+    "складской учёт гид",
+    "малый бизнес Узбекистан",
+    "блог BirLiy",
+  ],
+  en: [
+    "small business blog Uzbekistan",
+    "shop management advice",
+    "POS system articles",
+    "inventory management guide",
+    "retail tips Uzbekistan",
+    "BirLiy blog",
+  ],
+};
+
 function alternatesFor(paths: Record<BlogLocale, string>) {
   return {
     uz: `${SITE}${paths.uz}`,
@@ -24,6 +57,7 @@ export function blogIndexMetadata(locale: BlogLocale): Metadata {
   return {
     title: ui.blogTitle,
     description: ui.blogDescription,
+    keywords: INDEX_KEYWORDS[locale],
     alternates: { canonical: url, languages },
     openGraph: {
       title: ui.blogTitle,
@@ -32,6 +66,13 @@ export function blogIndexMetadata(locale: BlogLocale): Metadata {
       url,
       siteName: "BirLiy",
       locale: ui.ogLocale,
+      images: [{ url: BLOG_OG_IMAGE, width: 1120, height: 840, alt: ui.blogTitle }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ui.blogTitle,
+      description: ui.blogDescription,
+      images: [BLOG_OG_IMAGE],
     },
   };
 }
@@ -58,7 +99,13 @@ export function blogPostMetadata(post: BlogPost, locale: BlogLocale): Metadata {
       url,
       siteName: "BirLiy",
       locale: ui.ogLocale,
+      images: [{ url: BLOG_OG_IMAGE, width: 1120, height: 840, alt: c.title }],
     },
-    twitter: { card: "summary", title: c.title, description: c.description },
+    twitter: {
+      card: "summary_large_image",
+      title: c.title,
+      description: c.description,
+      images: [BLOG_OG_IMAGE],
+    },
   };
 }
