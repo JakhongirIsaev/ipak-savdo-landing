@@ -66,6 +66,7 @@ const copy = {
       { label: "Сценарий", href: "#flow" },
       { label: "Владелец", href: "#owner" },
       { label: "Модули", href: "#modules" },
+      { label: "Блог", href: "/ru/blog" },
       { label: "Заявка", href: "#lead" },
     ],
     stats: [
@@ -243,6 +244,7 @@ const copy = {
       { label: "Jarayon", href: "#flow" },
       { label: "Egasi", href: "#owner" },
       { label: "Modullar", href: "#modules" },
+      { label: "Blog", href: "/blog" },
       { label: "Ariza", href: "#lead" },
     ],
     stats: [
