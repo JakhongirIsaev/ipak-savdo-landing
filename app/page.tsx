@@ -53,7 +53,11 @@ export const metadata: Metadata = {
     "Toshkent kassa dasturi",
     "BirLiy",
   ],
-  alternates: { canonical: "https://birliy.uz/", languages: LANGUAGES },
+  alternates: {
+    canonical: "https://birliy.uz/",
+    languages: LANGUAGES,
+    types: { "application/rss+xml": "https://birliy.uz/feed.xml" },
+  },
   openGraph: {
     title: "BirLiy: minimarket uchun telefondagi POS",
     description:

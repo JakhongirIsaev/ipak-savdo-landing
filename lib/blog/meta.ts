@@ -58,7 +58,11 @@ export function blogIndexMetadata(locale: BlogLocale): Metadata {
     title: ui.blogTitle,
     description: ui.blogDescription,
     keywords: INDEX_KEYWORDS[locale],
-    alternates: { canonical: url, languages },
+    alternates: {
+      canonical: url,
+      languages,
+      types: { "application/rss+xml": `${SITE}/feed.xml` },
+    },
     openGraph: {
       title: ui.blogTitle,
       description: ui.blogDescription,
@@ -90,7 +94,11 @@ export function blogPostMetadata(post: BlogPost, locale: BlogLocale): Metadata {
     title: c.title,
     description: c.description,
     keywords: c.keywords,
-    alternates: { canonical: url, languages },
+    alternates: {
+      canonical: url,
+      languages,
+      types: { "application/rss+xml": `${SITE}/feed.xml` },
+    },
     openGraph: {
       title: c.title,
       description: c.description,

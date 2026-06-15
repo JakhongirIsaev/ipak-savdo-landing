@@ -52,7 +52,11 @@ export const metadata: Metadata = {
     "касса Ташкент",
     "BirLiy",
   ],
-  alternates: { canonical: "https://birliy.uz/ru", languages: LANGUAGES },
+  alternates: {
+    canonical: "https://birliy.uz/ru",
+    languages: LANGUAGES,
+    types: { "application/rss+xml": "https://birliy.uz/feed.xml" },
+  },
   openGraph: {
     title: "BirLiy: POS в телефоне для минимаркета",
     description: "Касса, склад, QR-оплата и отчёты для магазина у дома и минимаркета в одном приложении.",

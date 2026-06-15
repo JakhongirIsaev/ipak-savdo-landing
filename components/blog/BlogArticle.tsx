@@ -35,7 +35,13 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
         mainEntityOfPage: `${SITE}${blogPostPath(locale, post.slug)}`,
         image: `${SITE}/photos/owner-tablet.jpg`,
         author: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
-        publisher: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
+        publisher: {
+          "@type": "Organization",
+          "@id": `${SITE}/#organization`,
+          name: "BirLiy",
+          url: SITE,
+          logo: { "@type": "ImageObject", url: `${SITE}/birliy-wordmark.png` },
+        },
         citation: c.sources?.map((source) => source.url),
       },
       {

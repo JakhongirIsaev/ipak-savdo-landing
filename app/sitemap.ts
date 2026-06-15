@@ -1,20 +1,34 @@
 import type { MetadataRoute } from "next";
 import { POSTS } from "@/lib/blog";
+import type { BlogPost } from "@/lib/blog/types";
 import { blogIndexPath, blogPostPath } from "@/lib/blog/i18n";
 
 const SITE = "https://birliy.uz";
 const landingLanguages = { uz: SITE, ru: `${SITE}/ru`, "x-default": SITE };
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  // Stamped at build time: every deploy bumps the landing dates, which nudges
-  // crawlers to refresh the cached snippet and thumbnail.
-  const deployedAt = new Date();
-  const entries: MetadataRoute.Sitemap = [
-    { url: SITE, lastModified: deployedAt, changeFrequency: "weekly", priority: 1, alternates: { languages: landingLanguages } },
-    { url: `${SITE}/ru`, lastModified: deployedAt, changeFrequency: "weekly", priority: 0.9, alternates: { languages: landingLanguages } },
-  ];
+// Last meaningful change to the landing copy. Bump this ONLY when the landing
+// content actually changes, not on every deploy, so crawlers are never told a
+// page changed when it did not (a fresh `new Date()` here would do exactly that).
+const LANDING_MODIFIED = "2026-06-15";
 
+// Each article reports its genuine last-modified date (publish date if never edited).
+function postModified(post: Pick<BlogPost, "date" | "modified">): string {
+  return post.modified ?? post.date;
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ["uz", "ru", "en"] as const;
+
+  // The blog index freshness tracks the newest genuine article change.
+  const latestBlogDate = POSTS.reduce(
+    (max, post) => (postModified(post) > max ? postModified(post) : max),
+    "0000-00-00",
+  );
+
+  const entries: MetadataRoute.Sitemap = [
+    { url: SITE, lastModified: LANDING_MODIFIED, changeFrequency: "weekly", priority: 1, alternates: { languages: landingLanguages } },
+    { url: `${SITE}/ru`, lastModified: LANDING_MODIFIED, changeFrequency: "weekly", priority: 0.9, alternates: { languages: landingLanguages } },
+  ];
 
   for (const locale of locales) {
     const languages = {
@@ -25,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
     entries.push({
       url: `${SITE}${blogIndexPath(locale)}`,
+      lastModified: latestBlogDate,
       changeFrequency: "weekly",
       priority: 0.7,
       alternates: { languages },
@@ -41,7 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const locale of locales) {
       entries.push({
         url: `${SITE}${blogPostPath(locale, post.slug)}`,
-        lastModified: post.date,
+        lastModified: postModified(post),
         changeFrequency: "monthly",
         priority: 0.6,
         alternates: { languages },

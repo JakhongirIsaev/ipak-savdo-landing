@@ -45,6 +45,9 @@ export const metadata: Metadata = {
   title: "BirLiy: do'kon uchun kassa, ombor va QR to'lov dasturi",
   description:
     "BirLiy: kassa, ombor hisobi, QR to'lov va hisobotlar bitta ilovada.",
+  alternates: {
+    types: { "application/rss+xml": "https://birliy.uz/feed.xml" },
+  },
 };
 
 export const viewport: Viewport = {
