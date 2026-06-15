@@ -152,8 +152,6 @@ async function handleMultipart(req: Request, ip: string | null): Promise<Respons
   const docs: { kind: LeadDocKind; label: string; file: File }[] = [];
   for (const d of DOC_FIELDS) {
     const entry = form.get(d.field);
-    // Documents are optional; skip empty slots, fully validate the ones provided.
-    if (!(entry instanceof File) || entry.size === 0) continue;
     const result = validateLeadFile(entry);
     if (!result.ok) {
       return Response.json({ ok: false, error: "file", reason: result.reason, field: d.field }, { status: 400 });

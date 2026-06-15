@@ -14,6 +14,11 @@ export interface BlogFaqItem {
   a: string;
 }
 
+export interface BlogSource {
+  label: string;
+  url: string;
+}
+
 export interface BlogLocaleContent {
   title: string;
   description: string;
@@ -21,11 +26,13 @@ export interface BlogLocaleContent {
   intro: string[];
   sections: BlogSection[];
   faq: BlogFaqItem[];
+  sources?: BlogSource[];
   cta: { text: string; button: string };
 }
 
 export interface BlogPost {
   slug: string;
   date: string; // YYYY-MM-DD, used in JSON-LD datePublished
+  modified?: string;
   locales: Record<BlogLocale, BlogLocaleContent>;
 }

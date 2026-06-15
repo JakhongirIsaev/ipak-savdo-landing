@@ -96,6 +96,7 @@ export function blogPostMetadata(post: BlogPost, locale: BlogLocale): Metadata {
       description: c.description,
       type: "article",
       publishedTime: post.date,
+      modifiedTime: post.modified ?? post.date,
       url,
       siteName: "BirLiy",
       locale: ui.ogLocale,

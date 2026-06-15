@@ -9,9 +9,9 @@ const LANGUAGES = {
 };
 
 export const metadata: Metadata = {
-  title: "BirLiy: касса, склад и QR-оплата для магазина",
+  title: "BirLiy: POS в телефоне для магазина и минимаркета",
   description:
-    "BirLiy: касса, склад, QR-оплата и отчёты в одном приложении на телефоне. Для магазинов, минимаркетов, кафе и аптек в Узбекистане. Старт 49 000 сум/мес первые 6 месяцев.",
+    "POS в телефоне для магазинов у дома и минимаркетов Узбекистана: касса, склад, QR-оплата и отчёты. Первые 6 месяцев 49 000 сум/мес.",
   keywords: [
     "касса для магазина",
     "POS система",
@@ -54,8 +54,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://birliy.uz/ru", languages: LANGUAGES },
   openGraph: {
-    title: "BirLiy: касса, склад и оплаты в одном приложении",
-    description: "Всё для магазина на телефоне: касса, склад, QR-оплата, отчёты. Старт 49 000 сум/мес первые 6 месяцев.",
+    title: "BirLiy: POS в телефоне для минимаркета",
+    description: "Касса, склад, QR-оплата и отчёты для магазина у дома и минимаркета в одном приложении.",
     type: "website",
     locale: "ru_RU",
     alternateLocale: "uz_UZ",
@@ -65,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BirLiy: касса для магазина",
-    description: "Касса, склад, QR-оплата, отчёты в одном приложении. Старт 49 000 сум/мес первые 6 месяцев.",
+    title: "BirLiy: POS в телефоне для минимаркета",
+    description: "Касса, склад, QR-оплата и отчёты в одном приложении.",
     images: ["/photos/owner-tablet.jpg"],
   },
 };

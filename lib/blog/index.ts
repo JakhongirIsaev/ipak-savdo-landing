@@ -2,9 +2,10 @@ import type { BlogLocale, BlogPost } from "./types";
 import { post as choosePos } from "./posts/kak-vybrat-kassu-dlya-magazina";
 import { post as notebookLosses } from "./posts/uchet-v-tetradi-skolko-teryaet-magazin";
 import { post as inventoryGuide } from "./posts/skladskoy-uchet-v-malenkom-magazine";
+import { post as minimarketPosGuide } from "./posts/pos-tizimi-uzbekistan-minimarket";
 
 // Newest first: this order drives the blog index pages.
-export const POSTS: BlogPost[] = [choosePos, notebookLosses, inventoryGuide];
+export const POSTS: BlogPost[] = [minimarketPosGuide, choosePos, notebookLosses, inventoryGuide];
 
 export function getPost(slug: string): BlogPost | undefined {
   return POSTS.find((p) => p.slug === slug);

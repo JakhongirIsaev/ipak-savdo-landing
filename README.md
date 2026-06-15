@@ -1,6 +1,6 @@
 # BirLiy Landing
 
-Lead-generation landing page for **BirLiy** — POS/cashbox for SMBs in Uzbekistan, part of the Ipak Yuli Bank ecosystem. (Repo folder and Railway service kept the legacy `ipak-savdo-landing` name to avoid breaking deploy URLs.)
+Lead-generation landing page for **BirLiy** — a phone-first POS/cashbox for neighborhood shops and minimarkets in Uzbekistan. (Repo folder and Railway service keep the legacy `ipak-savdo-landing` name to avoid breaking deploy URLs.)
 
 ## Architecture
 

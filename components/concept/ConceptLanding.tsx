@@ -13,6 +13,7 @@ import { PaperVsBirliy } from "./PaperVsBirliy";
 import { PriceReceipt } from "./PriceReceipt";
 import { useCoarsePointer } from "./useCoarsePointer";
 import { dicts } from "@/lib/landing/i18n";
+import { trackSiteEvent } from "@/lib/track/client";
 import {
   ArrowRight,
   BarChart3,
@@ -54,7 +55,7 @@ const copy = {
       titleWords: ["кассу", "остатки", "выручку", "долги", "отчёты"],
       titleTail: "в одном экране.",
       subtitle:
-        "BirLiy объединяет кассу, склад и деньги в одном месте. Кассир продаёт, вы управляете. Без путаницы и без вечернего пересчёта наличных.",
+        "Касса и склад для магазинов у дома и минимаркетов. BirLiy работает на телефоне: кассир продаёт, вы видите выручку, остатки и смену.",
       primaryCta: "Оставить заявку",
       secondaryCta: "Смотреть продукт",
       telegram: "Telegram",
@@ -90,8 +91,8 @@ const copy = {
       body: "Раньше товары записывали в тетрадь, остатки держали в голове, а выручку сводили поздно вечером. Что-то забыли, что-то потеряли, а к утру уже не вспомнить. BirLiy убирает эту головную боль: касса, склад и деньги в одном телефоне. И вы не остаётесь с этим один на один. Мы подключаем за день, заносим первые товары вместе с вами и учим кассира за полчаса. Не нужно быть «технарём», нужно просто продавать.",
     },
     segments2: {
-      eyebrow: "Для кого",
-      title: "Магазинам у дома. Минимаркетам. Кафе. Аптекам.",
+      eyebrow: "Главные клиенты",
+      title: "Сначала для магазинов у дома и минимаркетов.",
       photoAlt: "QR-оплата в магазине на BirLiy",
       cards: [
         { title: "Магазин у дома", body: "Продукты, бытовая химия, ежедневные товары. 1 кассир, до 200 чеков в день.", icon: Store },
@@ -115,7 +116,7 @@ const copy = {
     early: {
       eyebrow: "Ранний доступ",
       headline: "Запускаемся с первой группой. Подключим за один день, вместе с вами.",
-      scarcity: "Первая группа пилотов: места ограничены. Оставьте заявку.",
+      scarcity: "Оставьте заявку: проверим данные магазина и согласуем подключение.",
       photoAlt: "Владельцы магазина смотрят отчёты на планшете",
       cta: "Оставить заявку",
       promises: [
@@ -198,12 +199,12 @@ const copy = {
       ],
     },
     price: {
-      eyebrow: "Пилот: мест ограничено",
+      eyebrow: "Пилотная цена",
       amount: "49 000",
       suffix: "сум / месяц",
-      body: "Первые 6 месяцев: 49 000 сум/мес. Дальше прозрачно: 149 000 сум в месяц. Мест ограничено, берите, пока есть возможность.",
+      body: "Первые 6 месяцев: 49 000 сум/мес. Дальше прозрачно: 149 000 сум в месяц. Полный функционал и помощь с запуском.",
       bullets: ["Касса, склад, QR-оплата и отчёты", "Без обязательной покупки оборудования в первый день", "Помощь с первым запуском"],
-      cta: "Занять место в пилоте",
+      cta: "Подать заявку",
     },
     footer: {
       tagline: "Ваш бизнес. В одном месте.",
@@ -232,7 +233,7 @@ const copy = {
       titleWords: ["kassani", "qoldiqlarni", "tushumni", "qarzlarni", "hisobotlarni"],
       titleTail: "bitta ekranda ko'rsatadi.",
       subtitle:
-        "BirLiy kassa, ombor va pulni bitta joyda birlashtiradi. Kassir sotadi, siz boshqarasiz. Chalkashliksiz va kechqurun naqd pulni qayta sanamasdan.",
+        "Uy yonidagi do'kon va minimarketlar uchun kassa va ombor. BirLiy telefonda ishlaydi: kassir sotadi, siz tushum, qoldiq va smenani ko'rasiz.",
       primaryCta: "Ariza qoldirish",
       secondaryCta: "Mahsulotni ko'rish",
       telegram: "Telegram",
@@ -268,8 +269,8 @@ const copy = {
       body: "Ilgari tovarlarni daftarga yozardingiz, qoldiqni xayolda sanardingiz, tushumni esa kechqurun zo'rg'a yig'ardingiz. Biror narsa esdan chiqadi, biror narsa yo'qoladi, ertalabga borib eslay olmaysiz. BirLiy bu bosh og'rig'ini olib tashlaydi: kassa, ombor va pul bitta telefonda. Va siz bu ishda yolg'iz qolmaysiz. Bir kunda ulaymiz, birinchi tovarlarni siz bilan birga kiritamiz va kassirni yarim soatda o'rgatamiz. «Texnik» bo'lish shart emas, shunchaki sotsangiz bo'ldi.",
     },
     segments2: {
-      eyebrow: "Kimlar uchun",
-      title: "Uy yonidagi do'konlar. Minimarketlar. Kafelar. Dorixonalar.",
+      eyebrow: "Asosiy mijozlar",
+      title: "Avvalo uy yonidagi do'kon va minimarketlar uchun.",
       photoAlt: "BirLiy do'konida QR-to'lov",
       cards: [
         { title: "Uy yonidagi do'kon", body: "Oziq-ovqat, maishiy kimyo, kundalik tovarlar. 1 kassir, kuniga 200 tagacha chek.", icon: Store },
@@ -293,7 +294,7 @@ const copy = {
     early: {
       eyebrow: "Erta kirish",
       headline: "Birinchi guruh bilan ishga tushmoqdamiz. Bir kunda ulaymiz, siz bilan birga.",
-      scarcity: "Birinchi pilot guruh: joylar cheklangan. Ariza qoldiring.",
+      scarcity: "Ariza qoldiring: do'kon ma'lumotlarini tekshirib, ulanishni kelishamiz.",
       photoAlt: "Do'kon egalari planshetda hisobotlarni ko'rmoqda",
       cta: "Ariza qoldirish",
       promises: [
@@ -376,12 +377,12 @@ const copy = {
       ],
     },
     price: {
-      eyebrow: "Pilot: joylar cheklangan",
+      eyebrow: "Pilot narx",
       amount: "49 000",
       suffix: "so'm / oy",
-      body: "Birinchi 6 oy: oyiga 49 000 so'm. Keyin shaffof: oyiga 149 000 so'm. Joylar cheklangan, imkoniyat borida oling.",
+      body: "Birinchi 6 oy: oyiga 49 000 so'm. Keyin shaffof: oyiga 149 000 so'm. To'liq funksiyalar va ishga tushirishda yordam.",
       bullets: ["Kassa, ombor, QR-to'lov va hisobotlar", "Birinchi kuni majburiy uskuna xaridi yo'q", "Birinchi startda yordam"],
-      cta: "Pilotda joy olish",
+      cta: "Ariza topshirish",
     },
     footer: {
       tagline: "Sizning biznesingiz. Bitta joyda.",
@@ -505,7 +506,10 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const [faqOpen, setFaqOpen] = useState<number>(0);
   const [leadOpen, setLeadOpen] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
-  const openLead = () => setLeadOpen(true);
+  const openLead = (placement: string) => {
+    trackSiteEvent("cta_click", { placement });
+    setLeadOpen(true);
+  };
   const prefersReduce = useReducedMotion() ?? false;
   const coarse = useCoarsePointer();
   const reduce = prefersReduce || coarse;
@@ -579,7 +583,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </a>
             <button
               type="button"
-              onClick={openLead}
+              onClick={() => openLead("header")}
               className="hidden min-h-11 items-center gap-2 rounded-lg bg-green-700 px-4 py-2 text-sm font-extrabold text-white transition-colors duration-200 ease-birliy hover:bg-green-800 sm:inline-flex"
             >
               {t.meta.primaryCta}
@@ -610,7 +614,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                   {item.label}
                 </a>
               ))}
-              <button type="button" onClick={() => { setMenuOpen(false); openLead(); }} className="mt-2 inline-flex min-h-11 items-center justify-center rounded-lg bg-green-700 px-4 font-extrabold text-white">
+              <button type="button" onClick={() => { setMenuOpen(false); openLead("mobile_menu"); }} className="mt-2 inline-flex min-h-11 items-center justify-center rounded-lg bg-green-700 px-4 font-extrabold text-white">
                 {t.meta.primaryCta}
               </button>
             </div>
@@ -634,7 +638,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             <motion.div {...fade(0.26, true)} className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
-                onClick={openLead}
+                onClick={() => openLead("hero")}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-3 font-extrabold text-white shadow-[0_18px_42px_-22px_rgba(3,183,61,0.88)] transition duration-200 ease-birliy hover:bg-green-800 active:scale-[0.97] motion-reduce:active:scale-100"
               >
                 {t.meta.primaryCta}
@@ -642,6 +646,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               </button>
               <a
                 href="#reveal"
+                onClick={() => trackSiteEvent("product_demo_click", { placement: "hero" })}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/22 bg-white/8 px-5 py-3 font-extrabold text-white backdrop-blur transition-colors duration-200 ease-birliy hover:bg-white/12"
               >
                 {t.meta.secondaryCta}
@@ -943,7 +948,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </div>
             <button
               type="button"
-              onClick={openLead}
+              onClick={() => openLead("early_access")}
               className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-700 px-6 font-extrabold text-white shadow-[0_18px_42px_-22px_rgba(3,183,61,0.88)] transition duration-200 ease-birliy hover:bg-green-800 active:scale-[0.97] motion-reduce:active:scale-100"
             >
               {t.early.cta}
@@ -1017,7 +1022,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
       </section>
 
       <section id="lead" className="bg-white py-16 sm:py-20 lg:py-24">
-        <LeadSection locale={locale} onOpenForm={openLead} />
+        <LeadSection locale={locale} onOpenForm={() => openLead("lead_section")} />
       </section>
 
       <footer className="border-t border-[#d9e2db] bg-[#f7faf8] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
@@ -1098,7 +1103,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           >
             {t.meta.otherLang}
           </a>
-          <button type="button" onClick={openLead} className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg bg-green-700 px-4 font-extrabold text-white">
+          <button type="button" onClick={() => openLead("mobile_sticky")} className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg bg-green-700 px-4 font-extrabold text-white">
             {t.meta.primaryCta}
             <ArrowRight size={17} />
           </button>

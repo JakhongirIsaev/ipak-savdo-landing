@@ -57,6 +57,13 @@
       "when": 1781010758603,
       "tag": "0007_crazy_blue_blade",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1781501840878,
+      "tag": "0008_motionless_warpath",
+      "breakpoints": true
     }
   ]
 }

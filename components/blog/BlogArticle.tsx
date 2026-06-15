@@ -30,12 +30,13 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
         description: c.description,
         keywords: c.keywords.join(", "),
         datePublished: post.date,
-        dateModified: post.date,
+        dateModified: post.modified ?? post.date,
         inLanguage: ui.htmlLang,
         mainEntityOfPage: `${SITE}${blogPostPath(locale, post.slug)}`,
         image: `${SITE}/photos/owner-tablet.jpg`,
         author: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
         publisher: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
+        citation: c.sources?.map((source) => source.url),
       },
       {
         "@type": "FAQPage",
@@ -114,6 +115,30 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
               )}
             </section>
           ))}
+
+          <aside className="mt-10 rounded-xl border border-green-200 bg-green-50 p-5">
+            <h2 className="font-display text-lg font-semibold text-green-900">{ui.aboutTitle}</h2>
+            <p className="mt-2 text-base leading-7 text-green-900">{ui.aboutBody}</p>
+            <a href={landingPath(locale)} className="mt-3 inline-block text-sm font-semibold text-green-800 underline">
+              birliy.uz
+            </a>
+          </aside>
+
+          {c.sources && c.sources.length > 0 && (
+            <section className="mt-10">
+              <h2 className="font-display text-2xl font-semibold tracking-tightish text-ink-900">{ui.sourcesTitle}</h2>
+              <ol className="mt-4 space-y-2 text-sm leading-6 text-ink-700">
+                {c.sources.map((source, i) => (
+                  <li key={source.url}>
+                    {i + 1}.{" "}
+                    <a href={source.url} rel="nofollow noopener" className="font-semibold text-green-800 underline">
+                      {source.label}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
 
           <section className="mt-12">
             <h2 className="font-display text-2xl font-semibold tracking-tightish text-ink-900">{ui.faqTitle}</h2>

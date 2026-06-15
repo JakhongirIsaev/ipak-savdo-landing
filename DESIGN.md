@@ -7,7 +7,7 @@
 
 - **What this is:** BirLiy — единая рабочая поверхность для малого бизнеса в Узбекистане. Касса, склад, QR-оплата, чеки, отчёты в одном приложении на смартфоне/планшете.
 - **Who it's for:** Магазины у дома, минимаркеты, кафе, аптеки, сервисные точки. Владельцы и кассиры без технического бэкграунда.
-- **Space/industry:** Fintech / SMB SaaS / POS. Экосистема Ipak Yuli Bank.
+- **Space/industry:** Fintech / SMB SaaS / POS для Узбекистана.
 - **Project type:** Marketing landing (RU/UZ) + lead admin (RU). Single Next.js 14 app.
 - **Brand book reference:** BirLiy Brand Book V 1.0 (PDF в `C:\Users\User\Downloads\Telegram Desktop\BirLiy — Brand Book.pdf`).
 

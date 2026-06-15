@@ -2,7 +2,7 @@
 
 ## Project context
 
-- BirLiy: SMB workspace (POS/касса/склад/QR-оплата) для Узбекистана, экосистема Ipak Yuli Bank.
+- BirLiy: SMB workspace (POS/касса/склад/QR-оплата) для Узбекистана.
 - Stack: Next.js 14 App Router, TypeScript strict, Tailwind 3, Drizzle ORM + Neon Postgres, Telegram Bot API, framer-motion, lucide-react.
 - Landing: RU/UZ. Admin: RU only.
 - Hosting: Railway (prod). Local dev на `.env.local` с Neon-connection.

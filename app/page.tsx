@@ -9,9 +9,9 @@ const LANGUAGES = {
 };
 
 export const metadata: Metadata = {
-  title: "BirLiy: kassa, ombor va QR to'lov | 49 000 so'mdan",
+  title: "BirLiy: minimarket uchun telefondagi POS va ombor",
   description:
-    "BirLiy: kassa, ombor hisobi, QR to'lov va hisobotlar bitta ilovada, telefonda. Do'kon, minimarket, kafe va dorixonalar uchun. Birinchi 6 oy: oyiga 49 000 so'mdan.",
+    "Uy yonidagi do'kon va minimarketlar uchun telefondagi POS: kassa, ombor hisobi, QR to'lov va hisobotlar. Birinchi 6 oy oyiga 49 000 so'm.",
   keywords: [
     "kassa dasturi",
     "savdo dasturi",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://birliy.uz/", languages: LANGUAGES },
   openGraph: {
-    title: "BirLiy: do'kon uchun kassa, ombor va QR to'lov dasturi",
+    title: "BirLiy: minimarket uchun telefondagi POS",
     description:
-      "Kassa, ombor, QR to'lov va hisobotlar bitta ilovada, telefonda. Do'kon, minimarket, kafe va dorixonalar uchun. Oyiga 49 000 so'mdan.",
+      "Uy yonidagi do'kon va minimarket uchun kassa, ombor, QR to'lov va hisobotlar bitta telefon ilovasida.",
     type: "website",
     locale: "uz_UZ",
     alternateLocale: "ru_RU",
@@ -67,8 +67,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BirLiy: do'kon uchun kassa dasturi",
-    description: "Kassa, ombor, QR to'lov, hisobotlar bitta ilovada. Oyiga 49 000 so'mdan.",
+    title: "BirLiy: minimarket uchun telefondagi POS",
+    description: "Kassa, ombor, QR to'lov va hisobotlar bitta telefon ilovasida.",
     images: ["/photos/owner-tablet.jpg"],
   },
 };

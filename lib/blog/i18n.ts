@@ -11,6 +11,9 @@ export const BLOG_UI: Record<
     readingTime: (min: number) => string;
     faqTitle: string;
     relatedTitle: string;
+    sourcesTitle: string;
+    aboutTitle: string;
+    aboutBody: string;
     allPosts: string;
     backToSite: string;
     published: string;
@@ -28,6 +31,10 @@ export const BLOG_UI: Record<
     readingTime: (min) => `${min} daqiqa o'qiladi`,
     faqTitle: "Ko'p so'raladigan savollar",
     relatedTitle: "Tegishli maqolalar",
+    sourcesTitle: "Manbalar",
+    aboutTitle: "BirLiy haqida qisqacha",
+    aboutBody:
+      "BirLiy: O'zbekistondagi uy yonidagi do'kon va minimarketlar uchun telefonda ishlaydigan POS dasturi. Kassa, ombor, QR to'lov va egasi hisobotlari bitta ilovada.",
     allPosts: "Barcha maqolalar",
     backToSite: "birliy.uz saytiga qaytish",
     published: "Chop etilgan",
@@ -44,6 +51,10 @@ export const BLOG_UI: Record<
     readingTime: (min) => `${min} мин чтения`,
     faqTitle: "Частые вопросы",
     relatedTitle: "Похожие статьи",
+    sourcesTitle: "Источники",
+    aboutTitle: "Коротко о BirLiy",
+    aboutBody:
+      "BirLiy: POS-система в телефоне для магазинов у дома и минимаркетов Узбекистана. Касса, склад, QR-оплата и отчёты владельца находятся в одном приложении.",
     allPosts: "Все статьи",
     backToSite: "Вернуться на birliy.uz",
     published: "Опубликовано",
@@ -60,6 +71,10 @@ export const BLOG_UI: Record<
     readingTime: (min) => `${min} min read`,
     faqTitle: "Frequently asked questions",
     relatedTitle: "Related articles",
+    sourcesTitle: "Sources",
+    aboutTitle: "BirLiy at a glance",
+    aboutBody:
+      "BirLiy is a phone-first POS app for neighborhood shops and minimarkets in Uzbekistan. It combines checkout, inventory, QR payments and owner reports in one app.",
     allPosts: "All articles",
     backToSite: "Back to birliy.uz",
     published: "Published",

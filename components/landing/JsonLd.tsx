@@ -8,8 +8,8 @@ const SITE = "https://birliy.uz";
 // These carry the broader search-intent vocabulary (ERP / biznes dasturi / POS /
 // ombor boshqaruvi) that the visible landing copy intentionally does not use.
 const APP_DESCRIPTION: Record<Locale, string> = {
-  uz: "BirLiy: kichik va o'rta biznes uchun savdoni avtomatlashtirish dasturi, kassa, ombor boshqaruvi va tovar qoldig'i hisobi, QR to'lov, moliya hamda hisobotlar bitta ilovada. Do'kon, minimarket, kafe va dorixonalar uchun soddalashtirilgan ERP / biznes dasturi va POS (savdo nuqtasi) yechimi.",
-  ru: "BirLiy: программа автоматизации торговли для малого и среднего бизнеса, касса, управление складом и учёт остатков, QR-оплата, финансы и отчёты в одном приложении. Простая ERP / бизнес-программа и POS-система (торговая точка) для магазинов, минимаркетов, кафе и аптек.",
+  uz: "BirLiy: O'zbekistondagi uy yonidagi do'kon va minimarketlar uchun telefonda ishlaydigan POS dasturi. Kassa, ombor boshqaruvi, tovar qoldig'i, QR to'lov, moliya va hisobotlar bitta ilovada.",
+  ru: "BirLiy: POS-система в телефоне для магазинов у дома и минимаркетов Узбекистана. Касса, управление складом, учёт остатков, QR-оплата, финансы и отчёты в одном приложении.",
 };
 
 const APP_KEYWORDS: Record<Locale, string> = {

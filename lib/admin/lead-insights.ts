@@ -101,6 +101,86 @@ export async function getVisitStats(): Promise<VisitStats | null> {
   }
 }
 
+// ─── Marketing funnel before a lead reaches the database ────────────────────
+
+export interface MarketingFunnel {
+  sessions30: number;
+  ctaClicks: number;
+  formViews: number;
+  formStarts: number;
+  formSubmits: number;
+  formErrors: number;
+  ctaPlacements: { label: string; sessions: number }[];
+  errorReasons: { label: string; sessions: number }[];
+}
+
+export async function getMarketingFunnel(): Promise<MarketingFunnel | null> {
+  const { db } = getDb();
+  try {
+    const totals = unwrap<{
+      sessions: number;
+      cta: number;
+      views: number;
+      starts: number;
+      submits: number;
+      errors: number;
+    }>(
+      await db.execute(sql`
+        SELECT
+          count(DISTINCT session_id)::int AS sessions,
+          count(DISTINCT session_id) FILTER (WHERE event = 'cta_click')::int AS cta,
+          count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_view')::int AS views,
+          count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_start')::int AS starts,
+          count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_submit')::int AS submits,
+          count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_error')::int AS errors
+        FROM site_events
+        WHERE created_at >= now() - interval '30 days'
+      `),
+    )[0];
+
+    const visits = unwrap<{ sessions: number }>(
+      await db.execute(sql`
+        SELECT count(DISTINCT session_id)::int AS sessions
+        FROM page_views
+        WHERE created_at >= now() - interval '30 days' AND path NOT LIKE '/admin%'
+      `),
+    )[0];
+
+    const placements = unwrap<{ placement: string | null; sessions: number }>(
+      await db.execute(sql`
+        SELECT COALESCE(NULLIF(placement, ''), 'unknown') AS placement,
+               count(DISTINCT session_id)::int AS sessions
+        FROM site_events
+        WHERE created_at >= now() - interval '30 days' AND event = 'cta_click'
+        GROUP BY 1 ORDER BY sessions DESC
+      `),
+    );
+
+    const errors = unwrap<{ reason: string | null; sessions: number }>(
+      await db.execute(sql`
+        SELECT COALESCE(NULLIF(reason, ''), 'unknown') AS reason,
+               count(DISTINCT session_id)::int AS sessions
+        FROM site_events
+        WHERE created_at >= now() - interval '30 days' AND event = 'lead_form_error'
+        GROUP BY 1 ORDER BY sessions DESC
+      `),
+    );
+
+    return {
+      sessions30: num(visits?.sessions),
+      ctaClicks: num(totals?.cta),
+      formViews: num(totals?.views),
+      formStarts: num(totals?.starts),
+      formSubmits: num(totals?.submits),
+      formErrors: num(totals?.errors),
+      ctaPlacements: placements.map((row) => ({ label: String(row.placement), sessions: num(row.sessions) })),
+      errorReasons: errors.map((row) => ({ label: String(row.reason), sessions: num(row.sessions) })),
+    };
+  } catch {
+    return null;
+  }
+}
+
 // ─── Stage-to-stage funnel (lead_events history) ─────────────────────────────
 
 export interface StageConversion {
@@ -163,12 +243,21 @@ export async function getStageConversion(): Promise<StageConversion | null> {
       `),
     )[0];
 
+    // Attribute each CURRENTLY-lost lead to its most recent lost-transition stage,
+    // counted once. Keeps this per-stage breakdown summing to the headline `lost`
+    // total (leads.status='lost'); without the leads join + DISTINCT ON, a
+    // reopened-then-lost-again lead would inflate the breakdown past the current count.
     const lostBy = unwrap<{ from_status: string | null; count: number }>(
       await db.execute(sql`
-        SELECT COALESCE(e.from_status, 'new') AS from_status, count(DISTINCT e.lead_id)::int AS count
-        FROM lead_events e
-        WHERE e.to_status = 'lost'
-        GROUP BY 1 ORDER BY count DESC
+        WITH last_lost AS (
+          SELECT DISTINCT ON (e.lead_id) COALESCE(e.from_status, 'new') AS from_status
+          FROM lead_events e
+          JOIN leads l ON l.id = e.lead_id AND l.status = 'lost'
+          WHERE e.to_status = 'lost'
+          ORDER BY e.lead_id, e.created_at DESC
+        )
+        SELECT from_status, count(*)::int AS count
+        FROM last_lost GROUP BY 1 ORDER BY count DESC
       `),
     );
 

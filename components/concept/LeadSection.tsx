@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, ChevronRight, ShieldCheck, X } from "lucide-react";
 import type { Locale } from "./demoData";
 import { useAttribution } from "@/lib/use-attribution";
+import { trackSiteEvent } from "@/lib/track/client";
 
 const BUSINESS_VALUES = ["shop", "cafe", "restaurant", "market", "beauty", "service", "other"] as const;
 type FormState = "idle" | "submitting" | "sent" | "error";
@@ -16,19 +17,19 @@ const COMMENT_MAX = 500; // must match lib/validators/lead.ts comment.max(500)
 const STR = {
   ru: {
     eyebrow: "05 / Заявка",
-    title: "Первые магазины по пилотной цене. Мест немного.",
-    body: "Заполните короткую форму: контакт, тип магазина, что нужно. Мы свяжемся и запустим вместе.",
+    title: "Пилотная цена для магазинов у дома и минимаркетов.",
+    body: "Заполните контакты и приложите три обязательных фото: патент, паспорт владельца и магазин. Мы проверим заявку и свяжемся с вами.",
     openCta: "Оставить заявку",
     modalTitle: "Заявка в пилот",
     close: "Закрыть",
     pricing: {
       badge: "Пилотная программа",
-      title: "Успейте по стартовой цене",
+      title: "Начните с телефона по пилотной цене",
       price: "49 000",
       unit: "сум / месяц",
       note: "первые 6 месяцев · далее",
       old: "149 000",
-      cta: "Хочу в пилот",
+      cta: "Подать заявку",
       groups: [
         { title: "Что входит", items: ["Касса и чеки", "Склад и остатки", "QR и 4 способа оплаты", "Отчёты владельца", "Роли и PIN-доступ"] },
         { title: "Без рисков", items: ["Без покупки оборудования сразу", "Запуск за 1 рабочий день", "Помогаем с первым запуском", "Старт с телефона"] },
@@ -49,8 +50,8 @@ const STR = {
     equipLabel: "Оборудование",
     equipQr: "Сканер штрих-кодов",
     equipTablet: "Планшет",
-    docsTitle: "Документы (по желанию)",
-    docsNote: "Если есть под рукой: патент, паспорт владельца и фото магазина. Если нет, соберём позже, при подключении. Передаются по защищённому каналу.",
+    docsTitle: "Документы (обязательно)",
+    docsNote: "Для рассмотрения заявки загрузите фото патента, паспорта владельца и магазина. Файлы передаются по защищённому каналу.",
     docPatent: "Фото патента",
     docPassport: "Фото паспорта директора/владельца",
     docShop: "Фото магазина",
@@ -77,19 +78,19 @@ const STR = {
   },
   uz: {
     eyebrow: "05 / Ariza",
-    title: "Birinchi do'konlar pilot narxida. O'rin kam.",
-    body: "Qisqa formani to'ldiring: aloqa, do'kon turi, nimaga ehtiyoj bor. Biz bog'lanamiz va birga ishga tushiramiz.",
+    title: "Uy yonidagi do'kon va minimarketlar uchun pilot narx.",
+    body: "Kontaktlarni to'ldiring va uchta majburiy fotoni biriktiring: patent, egasi pasporti va do'kon. Arizani tekshirib, siz bilan bog'lanamiz.",
     openCta: "Ariza qoldirish",
     modalTitle: "Pilotga ariza",
     close: "Yopish",
     pricing: {
       badge: "Pilot dasturi",
-      title: "Boshlang'ich narxga ulguring",
+      title: "Telefondan pilot narxda boshlang",
       price: "49 000",
       unit: "so'm / oy",
       note: "birinchi 6 oy · keyin",
       old: "149 000",
-      cta: "Pilotga yozilmoqchiman",
+      cta: "Ariza topshirish",
       groups: [
         { title: "Nimalar kiradi", items: ["Kassa va cheklar", "Ombor va qoldiqlar", "QR va 4 to'lov usuli", "Egasi hisobotlari", "Rollar va PIN"] },
         { title: "Xavfsiz boshlash", items: ["Uskunani darhol sotib olishsiz", "1 ish kunida ishga tushirish", "Birinchi startda yordam", "Telefondan start"] },
@@ -110,8 +111,8 @@ const STR = {
     equipLabel: "Jihozlar",
     equipQr: "Shtrix-kod skaner",
     equipTablet: "Planshet",
-    docsTitle: "Hujjatlar (ixtiyoriy)",
-    docsNote: "Agar tayyor bo'lsa: patent, egasi pasporti va do'kon fotosi. Bo'lmasa, keyin ulaganda yig'amiz. Himoyalangan kanal orqali yuboriladi.",
+    docsTitle: "Hujjatlar (majburiy)",
+    docsNote: "Arizani ko'rib chiqish uchun patent, egasi pasporti va do'kon fotosini yuklang. Fayllar himoyalangan kanal orqali yuboriladi.",
     docPatent: "Patent fotosi",
     docPassport: "Direktor/egasi pasporti fotosi",
     docShop: "Do'kon fotosi",
@@ -162,6 +163,10 @@ function DocInput({ name, label, pickLabel }: { name: string; label: string; pic
         {fileName && <span className="truncate text-xs font-bold text-ink-500">{fileName}</span>}
       </span>
       <span className="shrink-0 rounded-full bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-800">{pickLabel}</span>
+      {/* No native `required`: this input is sr-only (clipped, 0-size), and Chrome
+          cannot anchor a validation bubble to it, so native validation would silently
+          block submit. The JS guard in submitLead enforces all three documents with a
+          visible message; the server rejects missing docs with 400 as the hard gate. */}
       <input
         type="file"
         name={name}
@@ -198,6 +203,14 @@ function LeadForm({ locale }: { locale: Locale }) {
   const [businessType, setBusinessType] = useState<string>("");
   const [qrScanner, setQrScanner] = useState(false);
   const [tablet, setTablet] = useState(false);
+  const startedRef = useRef(false);
+  const invalidTrackedRef = useRef(false);
+
+  const markStarted = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    trackSiteEvent("lead_form_start");
+  };
 
   const submitLead = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -227,16 +240,22 @@ function LeadForm({ locale }: { locale: Locale }) {
 
     for (const field of DOC_FIELDS) {
       const f = fd.get(field);
-      // Documents are optional now; validate only the ones actually attached.
-      if (!(f instanceof File) || f.size === 0) continue;
+      if (!(f instanceof File) || f.size === 0) {
+        setErrorMsg(t.filesRequired);
+        setFormState("error");
+        trackSiteEvent("lead_form_error", { reason: "missing_documents" });
+        return;
+      }
       if (!ALLOWED_DOC_TYPES.includes(f.type)) {
         setErrorMsg(t.fileWrongType);
         setFormState("error");
+        trackSiteEvent("lead_form_error", { reason: "document_type" });
         return;
       }
       if (f.size > MAX_DOC_BYTES) {
         setErrorMsg(t.fileTooBig);
         setFormState("error");
+        trackSiteEvent("lead_form_error", { reason: "document_size" });
         return;
       }
     }
@@ -247,6 +266,7 @@ function LeadForm({ locale }: { locale: Locale }) {
       const json = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; reason?: string };
       if (response.ok && json?.ok) {
         setFormState("sent");
+        trackSiteEvent("lead_form_submit");
         return;
       }
       // Surface the real reason instead of a generic "try again" dead-end.
@@ -257,9 +277,11 @@ function LeadForm({ locale }: { locale: Locale }) {
       } else if (json?.error === "validation") msg = t.validation;
       setErrorMsg(msg);
       setFormState("error");
+      trackSiteEvent("lead_form_error", { reason: json?.error || `http_${response.status}` });
     } catch {
       setErrorMsg(t.error);
       setFormState("error");
+      trackSiteEvent("lead_form_error", { reason: "network" });
     }
   };
 
@@ -279,7 +301,16 @@ function LeadForm({ locale }: { locale: Locale }) {
   }
 
   return (
-    <form onSubmit={submitLead} className="grid gap-6">
+    <form
+      onSubmit={submitLead}
+      onChangeCapture={markStarted}
+      onInvalidCapture={() => {
+        if (invalidTrackedRef.current) return;
+        invalidTrackedRef.current = true;
+        trackSiteEvent("lead_form_error", { reason: "browser_validation" });
+      }}
+      className="grid gap-6"
+    >
       <input type="text" name="_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
 
       <SectionRow title={t.contactsTitle} desc={t.contactsDesc}>
@@ -345,6 +376,10 @@ export function LeadModal({ open, onClose, locale = "ru" }: { open: boolean; onC
       document.body.style.overflow = prevOverflow;
     };
   }, [open, onClose]);
+
+  useEffect(() => {
+    if (open) trackSiteEvent("lead_form_view");
+  }, [open]);
 
   if (!open) return null;
 

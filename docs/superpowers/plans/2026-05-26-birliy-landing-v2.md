@@ -736,7 +736,7 @@ export function EarlyAccess({ t }: { t: EarlyAccessT }) {
 
 **Changes:**
 - Secondary CTA «Написать в Telegram» → «Посмотреть как работает» (href `#how-it-works`).
-- Trust line «Магазины у дома, минимаркеты...» → «Продукт Ipak Yuli Bank · Open pilot 2026».
+- Trust line «Магазины у дома, минимаркеты...» → «Сделано для бизнеса Узбекистана · Open pilot 2026».
 - HeroStatCard values: keep current 3 450 000 / 87 000 / 42, OR update to match `/reports` (21 000 / 7 000 / 3). **Decision: keep current (3.45M sum) — more aspirational, looks more product-ready.** Real `/reports` showed test data (1 кассир, 3 чека) which would weaken the hero.
 
 **Steps:**
@@ -853,7 +853,7 @@ export function Footer({ t, locale, switchLocale }: { t: FooterV2T; locale: Loca
 - [ ] **Step 1:** Add 4th phase to RU and UZ:
   - «Сейчас» — Касса, склад, QR, отчёты, Telegram-бот
   - «Q3 2026» — Лояльность, акции, Telegram-marketing
-  - «Q4 2026» — Банковские сервисы Ipak Yuli внутри
+  - «Q4 2026» — дополнительные финансовые сервисы внутри
   - «2027» — B2B-маркетплейс + BNPL/факторинг
 
 - [ ] **Step 2:** Update Roadmap component grid `md:grid-cols-3` → `md:grid-cols-4`.

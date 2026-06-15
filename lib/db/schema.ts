@@ -1,4 +1,5 @@
 import { pgTable, serial, text, boolean, timestamp, index, integer } from "drizzle-orm/pg-core";
+import { siteEventNames } from "@/lib/track/event-types";
 
 export const businessTypes = ["shop", "cafe", "restaurant", "market", "beauty", "service", "other"] as const;
 export type BusinessType = (typeof businessTypes)[number];
@@ -130,3 +131,31 @@ export const pageViews = pgTable(
 
 export type PageView = typeof pageViews.$inferSelect;
 export type NewPageView = typeof pageViews.$inferInsert;
+
+export const siteEvents = pgTable(
+  "site_events",
+  {
+    id: serial("id").primaryKey(),
+    event: text("event", { enum: siteEventNames }).notNull(),
+    path: text("path").notNull(),
+    visitorId: text("visitor_id").notNull(),
+    sessionId: text("session_id").notNull(),
+    locale: text("locale"),
+    device: text("device"),
+    placement: text("placement"),
+    reason: text("reason"),
+    source: text("source"),
+    utmSource: text("utm_source"),
+    utmMedium: text("utm_medium"),
+    utmCampaign: text("utm_campaign"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    createdAtIdx: index("site_events_created_at_idx").on(t.createdAt),
+    eventIdx: index("site_events_event_idx").on(t.event),
+    sessionIdx: index("site_events_session_idx").on(t.sessionId),
+  }),
+);
+
+export type SiteEvent = typeof siteEvents.$inferSelect;
+export type NewSiteEvent = typeof siteEvents.$inferInsert;

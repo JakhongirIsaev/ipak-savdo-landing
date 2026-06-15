@@ -193,12 +193,12 @@ describe("POST /api/lead", () => {
     });
   });
 
-  it("multipart: succeeds with no documents (documents are optional)", async () => {
+  it("multipart: rejects a submission without the three required documents", async () => {
     const res = await POST(makeMultipart("5.5.5.2", { withFiles: false }));
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(400);
     const json = await res.json();
-    expect(json.ok).toBe(true);
-    expect((dbMod as any).__getInserted()).toHaveLength(1);
+    expect(json).toMatchObject({ ok: false, error: "file", reason: "missing", field: "patent" });
+    expect((dbMod as any).__getInserted()).toHaveLength(0);
   });
 
   it("multipart: rejects a non-image masquerading as image/jpeg (magic-byte sniff)", async () => {

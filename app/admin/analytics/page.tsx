@@ -21,6 +21,7 @@ import { getTelegramSubscribers, TELEGRAM_CHANNEL } from "@/lib/admin/social";
 import { getLeadCounts, getFunnel } from "@/lib/admin/kpi";
 import {
   getVisitStats,
+  getMarketingFunnel,
   getStageConversion,
   getLeadSegments,
   computeUnitEconomics,
@@ -99,12 +100,13 @@ const pct = (part: number, whole: number): string =>
   whole === 0 ? "—" : `${Math.round((part / whole) * 100)}%`;
 
 export default async function AdminAnalyticsPage() {
-  const [stats, subscribers, counts, funnel, visits, stages, segments, gsc] = await Promise.all([
+  const [stats, subscribers, counts, funnel, visits, marketing, stages, segments, gsc] = await Promise.all([
     getGaStats(30),
     getTelegramSubscribers(),
     getLeadCounts(),
     getFunnel(),
     getVisitStats(),
+    getMarketingFunnel(),
     getStageConversion(),
     getLeadSegments(),
     getGscStats(),
@@ -225,6 +227,64 @@ export default async function AdminAnalyticsPage() {
             <p className="text-xs text-ink-500">
               Считает наш собственный скрипт на сайте (без Google). Включён 10 июня 2026, данные накапливаются.
               Часть визитов может быть ботами.
+            </p>
+          </div>
+        )}
+      </section>
+
+      <section className="mb-12">
+        <SectionTitle icon={MousePointerClick} title="Воронка сайта — свой счётчик" />
+        {marketing === null ? (
+          <div className="rounded-xl border border-dashed border-mist bg-white p-8 text-center text-sm text-ink-500">
+            События воронки пока не ответили. После миграции данные начнут накапливаться автоматически.
+          </div>
+        ) : (
+          <div className="space-y-5">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              <StatCard icon={Users} label="Сессии" value={fmt(marketing.sessions30)} hint="весь сайт, 30 дней" />
+              <StatCard
+                icon={MousePointerClick}
+                label="Нажали CTA"
+                value={fmt(marketing.ctaClicks)}
+                hint={pct(marketing.ctaClicks, marketing.sessions30) + " сессий"}
+              />
+              <StatCard
+                icon={Eye}
+                label="Открыли форму"
+                value={fmt(marketing.formViews)}
+                hint={pct(marketing.formViews, marketing.ctaClicks) + " после CTA"}
+              />
+              <StatCard
+                icon={Activity}
+                label="Начали форму"
+                value={fmt(marketing.formStarts)}
+                hint={pct(marketing.formStarts, marketing.formViews) + " открывших"}
+              />
+              <StatCard
+                icon={Send}
+                label="Отправили"
+                value={fmt(marketing.formSubmits)}
+                hint={pct(marketing.formSubmits, marketing.formStarts) + " начавших"}
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <ListCard
+                title="Какие CTA приводят к форме"
+                rows={marketing.ctaPlacements.map((row) => ({
+                  label: row.label,
+                  value: fmt(row.sessions),
+                }))}
+              />
+              <ListCard
+                title={`Ошибки формы: ${fmt(marketing.formErrors)} сессий`}
+                rows={marketing.errorReasons.map((row) => ({
+                  label: row.label,
+                  value: fmt(row.sessions),
+                }))}
+              />
+            </div>
+            <p className="text-xs text-ink-500">
+              Этапы считаются по уникальным сессиям: CTA → открытие формы → первое изменение поля → успешная отправка.
             </p>
           </div>
         )}

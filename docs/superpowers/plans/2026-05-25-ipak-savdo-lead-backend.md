@@ -2174,7 +2174,7 @@ cat README.md
 ```markdown
 # Ipak Savdo Landing
 
-Lead-generation landing page for **Ipak Savdo** — POS/cashbox for SMBs in Uzbekistan, part of the Ipak Yuli Bank ecosystem.
+Lead-generation landing page for **Ipak Savdo** — the legacy working name for a POS/cashbox project for SMBs in Uzbekistan.
 
 ## Architecture
 
