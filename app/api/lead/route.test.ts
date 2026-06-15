@@ -66,6 +66,7 @@ vi.mock("@/lib/db", () => {
 
 vi.mock("@/lib/telegram/notify", () => ({
   notifyNewLead: vi.fn().mockResolvedValue({ messageId: "555" }),
+  notifyDocsUndelivered: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock("@/lib/supabase/storage", () => ({
@@ -109,52 +110,21 @@ describe("POST /api/lead", () => {
     vi.mocked(notifyNewLead).mockClear();
   });
 
-  it("creates a lead and returns 200", async () => {
-    const res = await POST(makeReq(validBody, "1.1.1.1"));
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(json.ok).toBe(true);
-    expect(typeof json.id).toBe("number");
-    expect((dbMod as any).__getInserted()).toHaveLength(1);
-    expect(notifyNewLead).toHaveBeenCalledOnce();
-    expect((dbMod as any).__getEvents()).toHaveLength(1);
-    expect((dbMod as any).__getEvents()[0]).toMatchObject({
-      fromStatus: null,
-      toStatus: "new",
-      actor: "system",
-    });
-    expect((dbMod as any).__getUpdates()).toHaveLength(1);
-    expect((dbMod as any).__getUpdates()[0]).toMatchObject({ telegramMessageId: "555" });
-  });
-
-  it("returns 400 on validation failure", async () => {
-    const res = await POST(makeReq({ ...validBody, business_type: "spaceship" }, "2.2.2.2"));
-    expect(res.status).toBe(400);
-    const json = await res.json();
-    expect(json.ok).toBe(false);
-    expect(json.error).toBe("validation");
-  });
-
-  it("silently returns 200 without writing when honeypot is filled", async () => {
-    const res = await POST(makeReq({ ...validBody, _hp: "bot-trap" }, "3.3.3.3"));
-    expect(res.status).toBe(200);
-    expect((dbMod as any).__getInserted()).toHaveLength(0);
-    expect((dbMod as any).__getEvents()).toHaveLength(0);
-    expect((dbMod as any).__getUpdates()).toHaveLength(0);
-    expect(notifyNewLead).not.toHaveBeenCalled();
-  });
-
   // Real JPEG magic bytes (FF D8 FF) so the server's magic-byte sniff accepts it.
   const imgFile = (name: string) =>
     new File([new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])], name, { type: "image/jpeg" });
 
-  const makeMultipart = (ip: string, opts: { withFiles?: boolean } = {}) => {
+  const makeMultipart = (
+    ip: string,
+    opts: { withFiles?: boolean; hp?: string; businessType?: string } = {},
+  ) => {
     const fd = new FormData();
-    fd.set("business_type", "cafe");
+    fd.set("business_type", opts.businessType ?? "cafe");
     fd.set("owner_name", "Ivan");
     fd.set("owner_contact", "+998901234567");
     fd.set("needs_equipment", "on");
     fd.set("language", "ru");
+    if (opts.hp !== undefined) fd.set("_hp", opts.hp);
     if (opts.withFiles ?? true) {
       fd.set("patent", imgFile("patent.jpg"));
       fd.set("passport", imgFile("passport.jpg"));
@@ -166,6 +136,28 @@ describe("POST /api/lead", () => {
       body: fd,
     });
   };
+
+  // ── Security: the public path is multipart-only; JSON cannot create a lead ──
+  it("rejects a non-multipart JSON submission with 415 and creates no lead", async () => {
+    const res = await POST(makeReq(validBody, "1.1.1.1"));
+    expect(res.status).toBe(415);
+    const json = await res.json();
+    expect(json.ok).toBe(false);
+    expect((dbMod as any).__getInserted()).toHaveLength(0);
+    expect((dbMod as any).__getEvents()).toHaveLength(0);
+    expect(notifyNewLead).not.toHaveBeenCalled();
+  });
+
+  it("rejects a text/plain submission with 415 (no document-free bypass)", async () => {
+    const req = new Request("http://example.com/api/lead", {
+      method: "POST",
+      headers: { "content-type": "text/plain", "x-forwarded-for": "1.1.1.2" },
+      body: JSON.stringify(validBody),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(415);
+    expect((dbMod as any).__getInserted()).toHaveLength(0);
+  });
 
   it("multipart: creates a lead, backs up to storage, sends album, stores file_ids + paths", async () => {
     process.env.TELEGRAM_BOT_TOKEN = "tok";
@@ -201,6 +193,23 @@ describe("POST /api/lead", () => {
     expect((dbMod as any).__getInserted()).toHaveLength(0);
   });
 
+  it("multipart: returns 400 on field validation failure", async () => {
+    const res = await POST(makeMultipart("2.2.2.2", { businessType: "spaceship" }));
+    expect(res.status).toBe(400);
+    const json = await res.json();
+    expect(json.ok).toBe(false);
+    expect(json.error).toBe("validation");
+    expect((dbMod as any).__getInserted()).toHaveLength(0);
+  });
+
+  it("multipart: silently returns 200 without writing when honeypot is filled", async () => {
+    const res = await POST(makeMultipart("3.3.3.3", { hp: "bot-trap" }));
+    expect(res.status).toBe(200);
+    expect((dbMod as any).__getInserted()).toHaveLength(0);
+    expect((dbMod as any).__getEvents()).toHaveLength(0);
+    expect(notifyNewLead).not.toHaveBeenCalled();
+  });
+
   it("multipart: rejects a non-image masquerading as image/jpeg (magic-byte sniff)", async () => {
     const fd = new FormData();
     fd.set("business_type", "cafe");
@@ -221,13 +230,12 @@ describe("POST /api/lead", () => {
 
   it("returns 429 after exceeding rate limit", async () => {
     // The shared module-level limiter is 5 per 10 min, per IP.
-    // We use a fresh IP so this test isn't affected by prior tests above.
     const ip = "4.4.4.4";
     for (let i = 0; i < 5; i++) {
-      const res = await POST(makeReq(validBody, ip));
+      const res = await POST(makeMultipart(ip));
       expect(res.status).toBe(200);
     }
-    const res = await POST(makeReq(validBody, ip));
+    const res = await POST(makeMultipart(ip));
     expect(res.status).toBe(429);
   });
 });

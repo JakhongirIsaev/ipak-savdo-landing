@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { PosDemo } from "./PosDemo";
 import { AdminDemo } from "./AdminDemo";
@@ -505,7 +505,8 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const [demoRole, setDemoRole] = useState<"cashier" | "owner">("cashier");
   const [faqOpen, setFaqOpen] = useState<number>(0);
   const [leadOpen, setLeadOpen] = useState(false);
-  const [showSticky, setShowSticky] = useState(false);
+  const [heroGone, setHeroGone] = useState(false);
+  const [nearBottom, setNearBottom] = useState(false);
   const openLead = (placement: string) => {
     trackSiteEvent("cta_click", { placement });
     setLeadOpen(true);
@@ -525,15 +526,51 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
     document.documentElement.lang = locale;
   }, [locale]);
 
-  // Reveal the mobile sticky bar only after the hero (which has its own CTA)
-  // scrolls away, so two identical green CTAs are never on screen together.
+  // Mobile sticky CTA visibility. Show it only once the hero (which has its own
+  // CTA) has scrolled away, and hide it again as soon as the lead section or the
+  // footer enters view, so the bar never overlaps the lead CTA, footer links or
+  // language controls. Hidden entirely while the lead modal is open.
   useEffect(() => {
     const hero = document.getElementById("top");
-    if (!hero) return;
-    const io = new IntersectionObserver(([entry]) => setShowSticky(!entry.isIntersecting), { rootMargin: "-40% 0px" });
-    io.observe(hero);
-    return () => io.disconnect();
+    const tail = [document.getElementById("lead"), document.querySelector("footer")].filter(
+      (el): el is HTMLElement => el !== null,
+    );
+    const observers: IntersectionObserver[] = [];
+
+    if (hero) {
+      const io = new IntersectionObserver(([entry]) => setHeroGone(!entry.isIntersecting), {
+        rootMargin: "-40% 0px",
+      });
+      io.observe(hero);
+      observers.push(io);
+    }
+
+    if (tail.length > 0) {
+      const visible = new Set<Element>();
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        }
+        setNearBottom(visible.size > 0);
+      });
+      tail.forEach((el) => io.observe(el));
+      observers.push(io);
+    }
+
+    return () => observers.forEach((io) => io.disconnect());
   }, []);
+
+  const showSticky = heroGone && !nearBottom && !leadOpen;
+
+  // react-dom 18.x does not serialize the `inert` attribute, so toggle the DOM
+  // property imperatively. This makes the hidden sticky bar fully non-interactive
+  // (descendants are not focusable or clickable) while the slide transition runs.
+  const stickyRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = stickyRef.current;
+    if (el) el.inert = !showSticky;
+  }, [showSticky]);
 
   return (
     <main className="min-h-screen bg-[#f4f6f1] text-ink-900 antialiased">
@@ -1094,7 +1131,12 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </footer>
 
-      <div className={`fixed inset-x-0 bottom-0 z-30 border-t border-[#d9e2db] bg-white/94 px-4 py-3 shadow-[0_-18px_50px_-34px_rgba(11,24,38,0.6)] backdrop-blur transition-transform duration-300 ease-birliy motion-reduce:transition-none sm:hidden ${showSticky ? "translate-y-0" : "translate-y-full"}`}>
+      <div
+        ref={stickyRef}
+        data-testid="mobile-sticky"
+        aria-hidden={!showSticky}
+        className={`fixed inset-x-0 bottom-0 z-30 border-t border-[#d9e2db] bg-white/94 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-18px_50px_-34px_rgba(11,24,38,0.6)] backdrop-blur transition-transform duration-300 ease-birliy motion-reduce:transition-none sm:hidden ${showSticky ? "translate-y-0" : "translate-y-full"}`}
+      >
         <div className="mx-auto flex max-w-md items-center gap-2">
           <a
             href={otherHref}

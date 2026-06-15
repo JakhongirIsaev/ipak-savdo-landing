@@ -67,12 +67,12 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
 
-        <nav className="mb-6 text-sm text-ink-500" aria-label="breadcrumb">
-          <Link href={landingPath(locale)} className="hover:text-ink-900">
+        <nav className="mb-4 flex flex-wrap items-center gap-x-1 text-sm text-ink-500" aria-label="breadcrumb">
+          <Link href={landingPath(locale)} className="inline-flex min-h-11 items-center hover:text-ink-900">
             {ui.breadcrumbHome}
           </Link>
-          {" / "}
-          <Link href={blogIndexPath(locale)} className="hover:text-ink-900">
+          <span aria-hidden>/</span>
+          <Link href={blogIndexPath(locale)} className="inline-flex min-h-11 items-center hover:text-ink-900">
             {ui.breadcrumbBlog}
           </Link>
         </nav>

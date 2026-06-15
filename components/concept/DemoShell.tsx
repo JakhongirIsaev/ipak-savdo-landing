@@ -66,23 +66,34 @@ export function DemoShell({
           </div>
         </div>
 
-        {/* Mobile nav (sidebar is hidden < md) */}
-        <div className="flex shrink-0 gap-1 overflow-x-auto border-b border-[#e5ebe6] px-2 py-2 md:hidden">
-          {nav.map((item) => {
-            const isActive = item.id === active;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => onNavigate(item.id)}
-                className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                  isActive ? "bg-green-700 text-white" : "bg-[#f1f4f1] text-ink-700"
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
+        {/* Mobile nav (sidebar is hidden < md). Scrolls horizontally with a
+            right edge-fade hinting there is more; 44px touch targets. */}
+        <div className="relative shrink-0 border-b border-[#e5ebe6] md:hidden">
+          <div
+            data-testid="demo-mobile-nav"
+            className="flex gap-1.5 overflow-x-auto px-2 py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {nav.map((item) => {
+              const isActive = item.id === active;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => onNavigate(item.id)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`inline-flex min-h-11 shrink-0 items-center rounded-lg px-3.5 text-sm font-semibold transition ${
+                    isActive ? "bg-green-700 text-white" : "bg-[#f1f4f1] text-ink-700"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white to-transparent"
+          />
         </div>
 
         <div className="min-h-0 flex-1">{children}</div>

@@ -1,152 +1,99 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 // ──────────────────────────────────────────────────────────────
-// BirLiy landing — smoke suite.
-// Locale is URL-driven for SEO:
-//   /     → Uzbek (primary)
-//   /ru   → Russian
-// The RU/UZ pill navigates between the two URLs.
-// Selectors are anchored to section IDs and unique RU/UZ phrases
-// from lib/landing/i18n.ts.
+// BirLiy landing — desktop smoke suite for the LIVE landing
+// (components/concept/ConceptLanding.tsx). Locale is URL-driven:
+//   /    → Uzbek (primary)
+//   /ru  → Russian
+// Selectors are anchored to live section IDs, the header nav links,
+// the footer RU/UZ pills and the current hero copy.
 // ──────────────────────────────────────────────────────────────
 
-const RU_TITLE = "Ваш бизнес. В одном месте.";
-const UZ_TITLE = "Sizning biznesingiz. Bitta joyda.";
-
-const SECTIONS_WITH_ID = [
-  "how-it-works",
-  "capabilities",
-  "owner",
-  "segments",
-  "equipment",
-  "freemium",
-  "lead",
-  "faq",
-];
-
-const SECTIONS_BY_HEADING_RU = [
-  { kind: "text" as const, value: "Сделано для Узбекистана" },
-  { kind: "heading" as const, value: /Касса отдельно/i },
-  { kind: "heading" as const, value: /Меньше частей\./i },
-  { kind: "heading" as const, value: /Почему BirLiy/i },
-  { kind: "heading" as const, value: /Мы запускаемся с первой когортой/i },
-];
-
-async function dismissCookieIfPresent(page: Page) {
-  const banner = page.getByText(/Мы используем cookies|cookie/i, { exact: false }).first();
-  if (await banner.isVisible().catch(() => false)) {
-    const accept = page.getByRole("button", { name: /Принять|Qabul/i }).first();
-    if (await accept.isVisible().catch(() => false)) await accept.click();
-  }
-}
+// Live section IDs rendered by ConceptLanding (a representative set).
+const LIVE_SECTION_IDS = ["reveal", "flow", "owner", "modules", "faq", "lead"];
 
 test("/ loads in Uzbek (primary)", async ({ page }) => {
   const response = await page.goto("/");
   expect(response?.status()).toBe(200);
-  await expect(page.getByRole("heading", { name: UZ_TITLE })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("lang", "uz");
+  const h1 = page.getByRole("heading", { level: 1 });
+  await expect(h1).toBeVisible();
+  // Hero: "BirLiy ... bitta ekranda ko'rsatadi."
+  await expect(h1).toContainText("bitta ekranda");
 });
 
 test("/ru loads in Russian", async ({ page }) => {
   const response = await page.goto("/ru");
   expect(response?.status()).toBe(200);
-  await expect(page.getByRole("heading", { name: RU_TITLE })).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+  const h1 = page.getByRole("heading", { level: 1 });
+  await expect(h1).toBeVisible();
+  // Hero: "BirLiy показывает ... в одном экране."
+  await expect(h1).toContainText("BirLiy показывает");
 });
 
-test("renders all primary sections (RU)", async ({ page }) => {
+test("renders all live sections (RU)", async ({ page }) => {
   await page.goto("/ru");
-  await dismissCookieIfPresent(page);
-
-  for (const id of SECTIONS_WITH_ID) {
+  for (const id of LIVE_SECTION_IDS) {
     const section = page.locator(`#${id}`);
     await section.scrollIntoViewIfNeeded();
     await expect(section).toBeVisible();
   }
-
-  for (const s of SECTIONS_BY_HEADING_RU) {
-    const locator =
-      s.kind === "heading"
-        ? page.getByRole("heading", { name: s.value })
-        : page.getByText(s.value, { exact: false }).first();
-    await locator.scrollIntoViewIfNeeded();
-    await expect(locator).toBeVisible();
-  }
 });
 
-test("language pill navigates /ru → / (RU → UZ)", async ({ page }) => {
+test("header nav links scroll to their sections (RU)", async ({ page }) => {
   await page.goto("/ru");
-  await dismissCookieIfPresent(page);
-  await expect(page.getByRole("heading", { name: RU_TITLE })).toBeVisible();
-
-  await page.getByRole("button", { name: "UZ" }).first().click();
-
-  await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole("heading", { name: UZ_TITLE })).toBeVisible();
-});
-
-test("language pill navigates / → /ru (UZ → RU)", async ({ page }) => {
-  await page.goto("/");
-  await dismissCookieIfPresent(page);
-  await expect(page.getByRole("heading", { name: UZ_TITLE })).toBeVisible();
-
-  await page.getByRole("button", { name: "RU" }).first().click();
-
-  await expect(page).toHaveURL(/\/ru$/);
-  await expect(page.getByRole("heading", { name: RU_TITLE })).toBeVisible();
-});
-
-test("nav links scroll to sections (RU)", async ({ page }) => {
-  await page.goto("/ru");
-  await dismissCookieIfPresent(page);
-
+  const header = page.locator("header");
   for (const [label, id] of [
-    ["Возможности", "capabilities"],
-    ["Оборудование", "equipment"],
-    ["FAQ", "faq"],
+    ["Сценарий", "flow"],
+    ["Владелец", "owner"],
+    ["Модули", "modules"],
   ] as const) {
-    const navBtn = page.getByRole("button", { name: label, exact: true }).first();
-    await navBtn.click();
-    const section = page.locator(`#${id}`);
-    await expect(section).toBeInViewport({ timeout: 5_000 });
+    await header.getByRole("link", { name: label, exact: true }).click();
+    await expect(page.locator(`#${id}`)).toBeInViewport({ timeout: 5_000 });
   }
 });
 
-test("lead form rejects empty submit (RU)", async ({ page }) => {
+test("footer language pill navigates /ru → / (RU → UZ)", async ({ page }) => {
   await page.goto("/ru");
-  await dismissCookieIfPresent(page);
-
-  await page.route("**/api/lead", (route) =>
-    route.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }),
-  );
-
-  await page.locator("#lead").scrollIntoViewIfNeeded();
-  const form = page.locator("#lead form");
-  await expect(form).toBeVisible();
-
-  await form.getByRole("button", { name: "Отправить заявку" }).click();
-
-  const firstRequired = form.locator('input[name="owner_name"]');
-  const isInvalid = await firstRequired.evaluate(
-    (el) => (el as HTMLInputElement).validity.valueMissing,
-  );
-  expect(isInvalid).toBe(true);
+  const footer = page.locator("footer");
+  await footer.scrollIntoViewIfNeeded();
+  await footer.getByRole("link", { name: "UZ", exact: true }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "uz");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("bitta ekranda");
 });
 
-test("cookie banner can be dismissed (RU)", async ({ page }) => {
-  await page.goto("/ru");
-  await page.evaluate(() => window.scrollTo(0, 400));
-
-  const banner = page.getByText("Мы используем cookies", { exact: false });
-  await expect(banner).toBeVisible();
-
-  await page.getByRole("button", { name: "Принять" }).click();
-  await expect(banner).toBeHidden();
+test("footer language pill navigates / → /ru (UZ → RU)", async ({ page }) => {
+  await page.goto("/");
+  const footer = page.locator("footer");
+  await footer.scrollIntoViewIfNeeded();
+  await footer.getByRole("link", { name: "RU", exact: true }).click();
+  await expect(page).toHaveURL(/\/ru$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("BirLiy показывает");
 });
 
-test("footer is visible at bottom (RU)", async ({ page }) => {
+test("lead modal opens from the header CTA and blocks an empty submit (RU)", async ({ page }) => {
   await page.goto("/ru");
-  await dismissCookieIfPresent(page);
 
+  // Header CTA (desktop-visible) opens the lead modal.
+  await page.locator("header").getByRole("button", { name: "Оставить заявку" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+
+  // Submitting with the required contact fields empty must not pass native validation.
+  await dialog.locator('button[type="submit"]').click();
+  const ownerName = dialog.locator('input[name="owner_name"]');
+  const valueMissing = await ownerName.evaluate((el) => (el as HTMLInputElement).validity.valueMissing);
+  expect(valueMissing).toBe(true);
+
+  // Modal closes via its visible close button.
+  await dialog.getByRole("button", { name: "Закрыть" }).click();
+  await expect(dialog).toBeHidden();
+});
+
+test("footer is visible at the bottom with the copyright line (RU)", async ({ page }) => {
+  await page.goto("/ru");
   const footer = page.locator("footer");
   await footer.scrollIntoViewIfNeeded();
   await expect(footer).toBeVisible();

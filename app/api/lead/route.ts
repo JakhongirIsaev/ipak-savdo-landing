@@ -50,51 +50,17 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ ok: false, error: "rate_limit" }, { status: 429 });
   }
 
+  // Lead intake is multipart-only. The public form (and the legacy form) always
+  // submit the three mandatory documents as multipart/form-data; rejecting any
+  // other content type closes the path where a plain JSON POST could create a
+  // document-free lead. No production caller needs JSON intake. If an internal
+  // JSON caller is ever required, gate it behind explicit auth rather than
+  // reopening this public path.
   const contentType = req.headers.get("content-type") ?? "";
-  if (contentType.includes("multipart/form-data")) {
-    return handleMultipart(req, ip);
+  if (!contentType.includes("multipart/form-data")) {
+    return Response.json({ ok: false, error: "unsupported_media_type" }, { status: 415 });
   }
-  return handleJson(req, ip);
-}
-
-// ─── JSON path (no files) — unchanged behavior, used by tests / direct callers ───
-async function handleJson(req: Request, ip: string | null): Promise<Response> {
-  let raw: unknown;
-  try {
-    raw = await req.json();
-  } catch {
-    return Response.json({ ok: false, error: "invalid_json" }, { status: 400 });
-  }
-
-  if (
-    typeof raw === "object" && raw !== null && "_hp" in raw &&
-    typeof (raw as { _hp: unknown })._hp === "string" && (raw as { _hp: string })._hp.length > 0
-  ) {
-    return Response.json({ ok: true, id: 0 });
-  }
-
-  const parsed = leadInputSchema.safeParse(raw);
-  if (!parsed.success) {
-    return Response.json(
-      { ok: false, error: "validation", details: parsed.error.flatten() },
-      { status: 400 },
-    );
-  }
-
-  try {
-    const lead = await insertLead(baseValues(parsed.data, req, ip));
-    const { messageId } = await notifyNewLead(lead);
-    if (messageId) {
-      await db.update(leads).set({ telegramMessageId: messageId }).where(eq(leads.id, lead.id));
-    }
-    return Response.json({ ok: true, id: lead.id });
-  } catch (err) {
-    console.error("Lead insert failed", err, {
-      business_type: parsed.data.business_type,
-      language: parsed.data.language,
-    });
-    return Response.json({ ok: false, error: "server" }, { status: 500 });
-  }
+  return handleMultipart(req, ip);
 }
 
 // ─── Multipart path (with patent / passport / shop documents) ───
