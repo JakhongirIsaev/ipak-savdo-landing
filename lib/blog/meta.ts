@@ -90,6 +90,11 @@ export function blogPostMetadata(post: BlogPost, locale: BlogLocale): Metadata {
     en: blogPostPath("en", post.slug),
   });
   const url = `${SITE}${blogPostPath(locale, post.slug)}`;
+  // Use the article's own 16:9 image as the social card when present; otherwise
+  // fall back to the shared blog image.
+  const ogImage = post.image
+    ? { url: post.image.wide, width: 1200, height: 675 }
+    : { url: BLOG_OG_IMAGE, width: 1120, height: 840 };
   return {
     title: c.title,
     description: c.description,
@@ -108,13 +113,13 @@ export function blogPostMetadata(post: BlogPost, locale: BlogLocale): Metadata {
       url,
       siteName: "BirLiy",
       locale: ui.ogLocale,
-      images: [{ url: BLOG_OG_IMAGE, width: 1120, height: 840, alt: c.title }],
+      images: [{ ...ogImage, alt: c.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: c.title,
       description: c.description,
-      images: [BLOG_OG_IMAGE],
+      images: [ogImage.url],
     },
   };
 }

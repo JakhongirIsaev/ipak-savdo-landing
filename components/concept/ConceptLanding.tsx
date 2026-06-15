@@ -116,7 +116,7 @@ const copy = {
     early: {
       eyebrow: "Ранний доступ",
       headline: "Запускаемся с первой группой. Подключим за один день, вместе с вами.",
-      scarcity: "Оставьте заявку: проверим данные магазина и согласуем подключение.",
+      applicationNote: "Оставьте заявку: проверим данные магазина и согласуем подключение.",
       photoAlt: "Владельцы магазина смотрят отчёты на планшете",
       cta: "Оставить заявку",
       promises: [
@@ -294,7 +294,7 @@ const copy = {
     early: {
       eyebrow: "Erta kirish",
       headline: "Birinchi guruh bilan ishga tushmoqdamiz. Bir kunda ulaymiz, siz bilan birga.",
-      scarcity: "Ariza qoldiring: do'kon ma'lumotlarini tekshirib, ulanishni kelishamiz.",
+      applicationNote: "Ariza qoldiring: do'kon ma'lumotlarini tekshirib, ulanishni kelishamiz.",
       photoAlt: "Do'kon egalari planshetda hisobotlarni ko'rmoqda",
       cta: "Ariza qoldirish",
       promises: [
@@ -991,7 +991,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               {t.early.cta}
               <ArrowRight size={18} />
             </button>
-            <p className="mt-3 text-sm font-semibold text-green-700">{t.early.scarcity}</p>
+            <p className="mt-3 text-sm font-semibold text-green-700">{t.early.applicationNote}</p>
           </motion.div>
           <motion.div {...reveal(0.08, reduce)}>
             <div className="overflow-hidden rounded-2xl border border-[#d9e2db] shadow-[0_30px_70px_-46px_rgba(11,24,38,0.55)]">

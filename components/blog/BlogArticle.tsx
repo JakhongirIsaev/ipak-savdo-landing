@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { BlogLocale, BlogPost } from "@/lib/blog/types";
 import { POSTS, readingTimeMin } from "@/lib/blog";
 import { BLOG_UI, blogIndexPath, blogPostPath, landingPath } from "@/lib/blog/i18n";
+import { articleJsonLd } from "@/lib/blog/article-jsonld";
 import { BlogHeader, BlogFooter, HtmlLang } from "./BlogChrome";
 
 const SITE = "https://birliy.uz";
@@ -20,48 +21,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
   const minutes = readingTimeMin(post, locale);
   const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `${SITE}${blogPostPath(locale, post.slug)}#article`,
-        headline: c.title,
-        description: c.description,
-        keywords: c.keywords.join(", "),
-        datePublished: post.date,
-        dateModified: post.modified ?? post.date,
-        inLanguage: ui.htmlLang,
-        mainEntityOfPage: `${SITE}${blogPostPath(locale, post.slug)}`,
-        image: `${SITE}/photos/owner-tablet.jpg`,
-        author: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
-        publisher: {
-          "@type": "Organization",
-          "@id": `${SITE}/#organization`,
-          name: "BirLiy",
-          url: SITE,
-          logo: { "@type": "ImageObject", url: `${SITE}/birliy-wordmark.png` },
-        },
-        citation: c.sources?.map((source) => source.url),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: c.faq.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: ui.breadcrumbHome, item: `${SITE}${landingPath(locale)}` },
-          { "@type": "ListItem", position: 2, name: ui.breadcrumbBlog, item: `${SITE}${blogIndexPath(locale)}` },
-          { "@type": "ListItem", position: 3, name: c.title },
-        ],
-      },
-    ],
-  };
+  const jsonLd = articleJsonLd(post, locale);
 
   return (
     <div className="min-h-screen bg-paper">
