@@ -591,10 +591,9 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         />
 
         <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <a href="#top" className="inline-flex min-h-11 items-center gap-2.5" aria-label="BirLiy">
+          <a href="#top" className="inline-flex min-h-11 items-center" aria-label="BirLiy">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/birliy-symbol.svg" alt="" width={84} height={96} className="h-7 w-auto" />
-            <span className="text-2xl font-extrabold tracking-tight text-white">BirLiy</span>
+            <img src="/birliy-wordmark-white.png" alt="BirLiy" width={1072} height={360} className="h-8 w-auto" />
           </a>
 
           <nav className="hidden items-center gap-1 rounded-lg border border-white/14 bg-white/8 p-1 backdrop-blur md:flex">
