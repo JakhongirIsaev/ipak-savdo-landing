@@ -12,11 +12,9 @@ import {
   Timer,
   Megaphone,
   Activity,
-  Search,
   type LucideIcon,
 } from "lucide-react";
 import { gaConfigured, getGaStats } from "@/lib/admin/ga";
-import { gscConfigured, getGscStats } from "@/lib/admin/gsc";
 import { getTelegramSubscribers, TELEGRAM_CHANNEL } from "@/lib/admin/social";
 import { getLeadCounts, getFunnel } from "@/lib/admin/kpi";
 import {
@@ -31,6 +29,9 @@ import {
   REVENUE_6M,
 } from "@/lib/admin/lead-insights";
 import { businessTypeLabel, languageLabel, sourceLabel, pluralRu } from "@/lib/admin/format";
+import SearchGrowthSection from "./_components/SearchGrowthSection";
+import YandexMetrikaSection from "./_components/YandexMetrikaSection";
+import KeywordRankSection from "./_components/KeywordRankSection";
 
 export const dynamic = "force-dynamic";
 
@@ -99,8 +100,15 @@ function fmtDur(sec: number | null): string {
 const pct = (part: number, whole: number): string =>
   whole === 0 ? "—" : `${Math.round((part / whole) * 100)}%`;
 
-export default async function AdminAnalyticsPage() {
-  const [stats, subscribers, counts, funnel, visits, marketing, stages, segments, gsc] = await Promise.all([
+export default async function AdminAnalyticsPage({
+  searchParams,
+}: {
+  searchParams?: { gscRange?: string };
+}) {
+  const gscRange = [7, 28, 90].includes(Number(searchParams?.gscRange))
+    ? Number(searchParams?.gscRange)
+    : 28;
+  const [stats, subscribers, counts, funnel, visits, marketing, stages, segments] = await Promise.all([
     getGaStats(30),
     getTelegramSubscribers(),
     getLeadCounts(),
@@ -109,10 +117,8 @@ export default async function AdminAnalyticsPage() {
     getMarketingFunnel(),
     getStageConversion(),
     getLeadSegments(),
-    getGscStats(),
   ]);
   const gaOn = gaConfigured();
-  const gscOn = gscConfigured();
 
   const wonLeads = funnel.find((f) => f.status === "won")?.count ?? 0;
   const pipelineActive = funnel
@@ -493,157 +499,10 @@ export default async function AdminAnalyticsPage() {
         </div>
       </section>
 
-      {/* Google Search Console */}
-      <section className="mb-12">
-        <SectionTitle icon={Search} title="Google Поиск" />
-
-        {!gscOn ? (
-          <div className="rounded-xl border border-dashed border-mist bg-white p-8">
-            <div className="text-base font-semibold text-ink-900">Search Console не подключён</div>
-            <p className="mt-1.5 text-sm text-ink-500">
-              Чтобы видеть запросы, позиции и клики из Google, выполни три шага:
-            </p>
-            <ol className="mt-3 space-y-2 text-sm text-ink-700">
-              <li>
-                <span className="font-medium">1.</span> На{" "}
-                <span className="font-mono text-xs">search.google.com/search-console</span> добавь ресурс{" "}
-                <span className="font-mono text-xs">https://birliy.uz</span> (тип «Префикс в URL», подтверждение
-                через Google Analytics).
-              </li>
-              <li>
-                <span className="font-medium">2.</span> В «Настройки · Пользователи и разрешения · Добавить
-                пользователя» добавь{" "}
-                <span className="font-mono text-xs">birliy-analytics@my-project-birliy.iam.gserviceaccount.com</span>{" "}
-                с правами «Ограниченный».
-              </li>
-              <li>
-                <span className="font-medium">3.</span> Подожди пару дней, данные появятся здесь.
-              </li>
-            </ol>
-          </div>
-        ) : gsc === null ? (
-          <div className="rounded-xl border border-dashed border-mist bg-white p-8 text-center">
-            <div className="text-base font-semibold text-ink-900">Не удалось получить данные Search Console</div>
-            <p className="mx-auto mt-1.5 max-w-md text-sm text-ink-500">
-              Ключ есть, но Search Console не ответил. Проверь, что сервис-аккаунту дан доступ к ресурсу и указан
-              верный адрес сайта (GSC_SITE_URL).
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-5">
-            <p className="text-xs text-ink-500">
-              28 дней, данные Google с задержкой ~2 дня · {gsc.range.start} по {gsc.range.end}
-            </p>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <StatCard
-                icon={MousePointerClick}
-                label="Клики"
-                value={gsc.totals === null ? "—" : fmt(gsc.totals.clicks)}
-                hint="из поиска Google"
-              />
-              <StatCard
-                icon={Eye}
-                label="Показы"
-                value={gsc.totals === null ? "—" : fmt(gsc.totals.impressions)}
-                hint="сколько раз сайт появился в поиске"
-              />
-              <StatCard
-                icon={TrendingUp}
-                label="CTR"
-                value={
-                  gsc.totals === null
-                    ? "—"
-                    : `${(gsc.totals.ctr * 100).toLocaleString("ru-RU", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`
-                }
-                hint="кликов от показов"
-              />
-              <StatCard
-                icon={Search}
-                label="Ср. позиция"
-                value={
-                  gsc.totals === null
-                    ? "—"
-                    : gsc.totals.position.toLocaleString("ru-RU", { minimumFractionDigits: 1, maximumFractionDigits: 1 })
-                }
-                hint="средняя позиция в выдаче"
-              />
-            </div>
-
-            {gsc.queries.length === 0 && gsc.pages.length === 0 ? (
-              <div className="rounded-xl border border-mist bg-white p-6 text-sm text-ink-500">
-                Данных пока нет: Google начнёт показывать запросы через пару дней после подключения ресурса.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                {/* Top queries table */}
-                <div className="rounded-xl border border-mist bg-white p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)]">
-                  <div className="mb-3 text-sm font-semibold text-ink-900">Запросы</div>
-                  {gsc.queries.length === 0 ? (
-                    <div className="py-4 text-sm text-ink-500">Пока нет данных</div>
-                  ) : (
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b border-mist">
-                          <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-ink-500">
-                            Запрос
-                          </th>
-                          <th className="pb-2 text-right text-xs font-semibold uppercase tracking-wider text-ink-500">
-                            Клики
-                          </th>
-                          <th className="pb-2 text-right text-xs font-semibold uppercase tracking-wider text-ink-500">
-                            Показы
-                          </th>
-                          <th className="pb-2 text-right text-xs font-semibold uppercase tracking-wider text-ink-500">
-                            CTR
-                          </th>
-                          <th className="pb-2 text-right text-xs font-semibold uppercase tracking-wider text-ink-500">
-                            Позиция
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {gsc.queries.map((q, i) => (
-                          <tr key={i} className="border-b border-mist last:border-0">
-                            <td className="py-2 pr-3 text-ink-700">{q.key}</td>
-                            <td className="py-2 text-right tabular-nums text-ink-900">{fmt(q.clicks)}</td>
-                            <td className="py-2 text-right tabular-nums text-ink-900">{fmt(q.impressions)}</td>
-                            <td className="py-2 text-right tabular-nums text-ink-500">
-                              {(q.ctr * 100).toLocaleString("ru-RU", {
-                                minimumFractionDigits: 1,
-                                maximumFractionDigits: 1,
-                              })}
-                              %
-                            </td>
-                            <td className="py-2 text-right tabular-nums text-ink-500">
-                              {q.position.toLocaleString("ru-RU", {
-                                minimumFractionDigits: 1,
-                                maximumFractionDigits: 1,
-                              })}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-
-                {/* Top pages list */}
-                <ListCard
-                  title="Страницы"
-                  rows={gsc.pages.map((p) => ({
-                    label: (
-                      <span className="font-mono text-xs">{p.key}</span>
-                    ),
-                    value: `${fmt(p.clicks)} кл. · ${fmt(p.impressions)} пок.`,
-                  }))}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </section>
-
+      {/* ─── Phase 2 growth dashboard ─── */}
+      <SearchGrowthSection rangeDays={gscRange} />
+      <YandexMetrikaSection />
+      <KeywordRankSection />
     </>
   );
 }

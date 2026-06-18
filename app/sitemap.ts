@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
-import { POSTS } from "@/lib/blog";
+import { POSTS, BLOG_CATEGORIES, postsByCategory } from "@/lib/blog";
 import type { BlogPost } from "@/lib/blog/types";
-import { blogIndexPath, blogPostPath } from "@/lib/blog/i18n";
+import type { BlogCategory } from "@/lib/blog/types";
+import { blogIndexPath, blogPostPath, blogCategoryPath } from "@/lib/blog/i18n";
 
 const SITE = "https://birliy.uz";
 const landingLanguages = { uz: SITE, ru: `${SITE}/ru`, "x-default": SITE };
@@ -59,6 +60,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: postModified(post),
         changeFrequency: "monthly",
         priority: 0.6,
+        alternates: { languages },
+      });
+    }
+  }
+
+  for (const category of BLOG_CATEGORIES) {
+    // Only list categories that have posts. An empty category renders a thin
+    // noindex page (lib/blog/meta.ts), so it must not appear in the sitemap.
+    if (postsByCategory(category as BlogCategory).length === 0) continue;
+    const languages = {
+      uz: `${SITE}${blogCategoryPath("uz", category as BlogCategory)}`,
+      ru: `${SITE}${blogCategoryPath("ru", category as BlogCategory)}`,
+      en: `${SITE}${blogCategoryPath("en", category as BlogCategory)}`,
+      "x-default": `${SITE}${blogCategoryPath("uz", category as BlogCategory)}`,
+    };
+    for (const locale of locales) {
+      entries.push({
+        url: `${SITE}${blogCategoryPath(locale, category as BlogCategory)}`,
+        lastModified: latestBlogDate,
+        changeFrequency: "weekly",
+        priority: 0.65,
         alternates: { languages },
       });
     }

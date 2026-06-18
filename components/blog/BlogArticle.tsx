@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { BlogLocale, BlogPost } from "@/lib/blog/types";
-import { POSTS, readingTimeMin } from "@/lib/blog";
-import { BLOG_UI, blogIndexPath, blogPostPath, landingPath } from "@/lib/blog/i18n";
+import { POSTS, BLOG_CATEGORIES, postCategory, postsByCategory, readingTimeMin } from "@/lib/blog";
+import type { BlogCategory } from "@/lib/blog";
+import { BLOG_UI, blogIndexPath, blogPostPath, landingPath, CATEGORY_LABEL, blogCategoryPath } from "@/lib/blog/i18n";
 import { articleJsonLd } from "@/lib/blog/article-jsonld";
 import { BlogHeader, BlogFooter, HtmlLang } from "./BlogChrome";
 
@@ -155,6 +156,110 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
   );
 }
 
+export function BlogCategoryIndex({ category, locale }: { category: BlogCategory; locale: BlogLocale }) {
+  const ui = BLOG_UI[locale];
+  const posts = postsByCategory(category);
+  const label = CATEGORY_LABEL[category][locale];
+  const title = ui.categoryTitle(label);
+  const description = ui.categoryDescription(label);
+
+  const categoryJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${SITE}${blogCategoryPath(locale, category)}#collection`,
+        name: title,
+        description,
+        url: `${SITE}${blogCategoryPath(locale, category)}`,
+        inLanguage: ui.htmlLang,
+        isPartOf: { "@id": `${SITE}/#website` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: ui.breadcrumbHome, item: `${SITE}${landingPath(locale)}` },
+          { "@type": "ListItem", position: 2, name: ui.breadcrumbBlog, item: `${SITE}${blogIndexPath(locale)}` },
+          { "@type": "ListItem", position: 3, name: label, item: `${SITE}${blogCategoryPath(locale, category)}` },
+        ],
+      },
+    ],
+  };
+
+  const switchPaths: Record<BlogLocale, string> = {
+    uz: blogCategoryPath("uz", category),
+    ru: blogCategoryPath("ru", category),
+    en: blogCategoryPath("en", category),
+  };
+
+  return (
+    <div className="min-h-screen bg-paper">
+      <HtmlLang lang={ui.htmlLang} />
+      <BlogHeader locale={locale} switchPaths={switchPaths} />
+      <main className="mx-auto max-w-3xl px-5 py-10">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd).replace(/</g, "\\u003c") }}
+        />
+
+        {/* Category tab strip */}
+        <nav className="mb-8 flex flex-wrap gap-2" aria-label="blog categories">
+          <Link
+            href={blogIndexPath(locale)}
+            className="inline-block rounded-full border border-mist bg-white px-4 py-1.5 text-sm font-medium text-ink-700 transition-colors duration-200 hover:border-green-700 hover:text-green-800"
+          >
+            {ui.allPosts}
+          </Link>
+          {BLOG_CATEGORIES.map((cat) => {
+            const isActive = cat === category;
+            return (
+              <Link
+                key={cat}
+                href={blogCategoryPath(locale, cat)}
+                className={
+                  isActive
+                    ? "inline-block rounded-full bg-green-700 px-4 py-1.5 text-sm font-medium text-white"
+                    : "inline-block rounded-full border border-mist bg-white px-4 py-1.5 text-sm font-medium text-ink-700 transition-colors duration-200 hover:border-green-700 hover:text-green-800"
+                }
+                aria-current={isActive ? "page" : undefined}
+              >
+                {CATEGORY_LABEL[cat][locale]}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <h1 className="font-display text-3xl font-bold tracking-tightish text-ink-900 sm:text-4xl">{title}</h1>
+        <p className="mt-3 text-base leading-7 text-ink-700">{description}</p>
+
+        {posts.length === 0 ? (
+          <p className="mt-10 text-base text-ink-500">{ui.categoryEmpty}</p>
+        ) : (
+          <div className="mt-10 space-y-5">
+            {posts.map((post) => {
+              const c = post.locales[locale];
+              return (
+                <Link
+                  key={post.slug}
+                  href={blogPostPath(locale, post.slug)}
+                  className="block rounded-2xl border border-mist bg-white p-6 transition-colors duration-200 hover:border-green-700"
+                >
+                  <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{c.title}</h2>
+                  <p className="mt-2 text-sm leading-6 text-ink-700">{c.description}</p>
+                  <p className="mt-3 text-xs text-ink-500">
+                    {post.date} · {ui.readingTime(readingTimeMin(post, locale))}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </main>
+      <BlogFooter locale={locale} />
+    </div>
+  );
+}
+
 export function BlogIndex({ posts, locale }: { posts: BlogPost[]; locale: BlogLocale }) {
   const ui = BLOG_UI[locale];
 
@@ -195,12 +300,19 @@ export function BlogIndex({ posts, locale }: { posts: BlogPost[]; locale: BlogLo
         <div className="mt-10 space-y-5">
           {posts.map((post) => {
             const c = post.locales[locale];
+            const cat = postCategory(post);
+            const catLabel = CATEGORY_LABEL[cat][locale];
             return (
               <Link
                 key={post.slug}
                 href={blogPostPath(locale, post.slug)}
                 className="block rounded-2xl border border-mist bg-white p-6 transition-colors duration-200 hover:border-green-700"
               >
+                <div className="mb-2">
+                  <span className="inline-block rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                    {catLabel}
+                  </span>
+                </div>
                 <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{c.title}</h2>
                 <p className="mt-2 text-sm leading-6 text-ink-700">{c.description}</p>
                 <p className="mt-3 text-xs text-ink-500">

@@ -64,6 +64,13 @@
       "when": 1781501840878,
       "tag": "0008_motionless_warpath",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1781776800216,
+      "tag": "0009_minor_zaran",
+      "breakpoints": true
     }
   ]
 }

@@ -5,6 +5,7 @@ const LEX_CASH = "https://lex.uz/docs/4603340";
 
 export const post: BlogPost = {
   slug: "pos-tizimi-uzbekistan-minimarket",
+  category: "product",
   date: "2026-06-15",
   modified: "2026-06-15",
   locales: {

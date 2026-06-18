@@ -1,4 +1,4 @@
-import { POSTS } from "@/lib/blog";
+import { POSTS, postCategory } from "@/lib/blog";
 import { blogPostPath } from "@/lib/blog/i18n";
 import type { BlogLocale } from "@/lib/blog/types";
 
@@ -34,6 +34,7 @@ export function GET(): Response {
         `      <description>${esc(c.description)}</description>`,
         `      <pubDate>${rfc822(post.modified ?? post.date)}</pubDate>`,
         `      <dc:language>${locale}</dc:language>`,
+        `      <category>${esc(postCategory(post))}</category>`,
         "    </item>",
       ].join("\n");
     }),

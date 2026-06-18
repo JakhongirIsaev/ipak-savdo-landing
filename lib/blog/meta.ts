@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import type { BlogLocale, BlogPost } from "./types";
-import { BLOG_UI, blogIndexPath, blogPostPath } from "./i18n";
+import type { BlogLocale, BlogPost, BlogCategory } from "./types";
+import { BLOG_UI, blogIndexPath, blogPostPath, blogCategoryPath, CATEGORY_LABEL } from "./i18n";
+import { postsByCategory } from "./index";
 
 const SITE = "https://birliy.uz";
 
@@ -76,6 +77,48 @@ export function blogIndexMetadata(locale: BlogLocale): Metadata {
       card: "summary_large_image",
       title: ui.blogTitle,
       description: ui.blogDescription,
+      images: [BLOG_OG_IMAGE],
+    },
+  };
+}
+
+export function blogCategoryMetadata(locale: BlogLocale, category: BlogCategory): Metadata {
+  const ui = BLOG_UI[locale];
+  const label = CATEGORY_LABEL[category][locale];
+  const title = ui.categoryTitle(label);
+  const description = ui.categoryDescription(label);
+  const languages = alternatesFor({
+    uz: blogCategoryPath("uz", category),
+    ru: blogCategoryPath("ru", category),
+    en: blogCategoryPath("en", category),
+  });
+  const url = `${SITE}${blogCategoryPath(locale, category)}`;
+  // An empty category (no posts yet) is a thin page: mark it noindex so Google
+  // does not index a contentless page. Keep `follow` so links stay crawlable.
+  const robots =
+    postsByCategory(category).length === 0 ? { index: false, follow: true } : undefined;
+  return {
+    title,
+    description,
+    robots,
+    alternates: {
+      canonical: url,
+      languages,
+      types: { "application/rss+xml": `${SITE}/feed.xml` },
+    },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url,
+      siteName: "BirLiy",
+      locale: ui.ogLocale,
+      images: [{ url: BLOG_OG_IMAGE, width: 1120, height: 840, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
       images: [BLOG_OG_IMAGE],
     },
   };

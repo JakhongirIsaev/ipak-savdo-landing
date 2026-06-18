@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import sitemap from "./sitemap";
-import { POSTS } from "@/lib/blog";
+import { POSTS, BLOG_CATEGORIES, postsByCategory } from "@/lib/blog";
 
 const SITE = "https://birliy.uz";
 const LOCALE_PREFIX = ["", "/ru", "/en"] as const;
@@ -71,6 +71,34 @@ describe("sitemap", () => {
     for (const e of entries) {
       expect(e.url).not.toContain("/admin");
       expect(e.url).not.toContain("/api");
+    }
+  });
+
+  it("includes ONLY non-empty category indexes (one per locale); excludes empty ones", () => {
+    for (const category of BLOG_CATEGORIES) {
+      const expected = postsByCategory(category).length > 0 ? 1 : 0;
+      for (const prefix of LOCALE_PREFIX) {
+        const url = `${SITE}${prefix}/blog/category/${category}`;
+        expect(entries.filter((e) => e.url === url), url).toHaveLength(expected);
+      }
+    }
+  });
+
+  it("keeps product (has posts) in the sitemap and excludes ai-tech/football (empty)", () => {
+    for (const prefix of LOCALE_PREFIX) {
+      expect(byUrl.has(`${SITE}${prefix}/blog/category/product`), `${prefix} product`).toBe(true);
+      expect(byUrl.has(`${SITE}${prefix}/blog/category/ai-tech`), `${prefix} ai-tech`).toBe(false);
+      expect(byUrl.has(`${SITE}${prefix}/blog/category/football`), `${prefix} football`).toBe(false);
+    }
+  });
+
+  it("carries uz/ru/en + x-default hreflang on every (non-empty) category index", () => {
+    const nonEmpty = BLOG_CATEGORIES.filter((c) => postsByCategory(c).length > 0);
+    const categoryEntries = entries.filter((e) => e.url.includes("/blog/category/"));
+    expect(categoryEntries.length).toBe(nonEmpty.length * 3);
+    for (const e of categoryEntries) {
+      const langs = e.alternates?.languages ?? {};
+      expect(Object.keys(langs).sort(), e.url).toEqual(["en", "ru", "uz", "x-default"]);
     }
   });
 });

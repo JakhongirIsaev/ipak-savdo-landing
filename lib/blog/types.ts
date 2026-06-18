@@ -3,6 +3,8 @@
 
 export type BlogLocale = "uz" | "ru" | "en";
 
+export type BlogCategory = "product" | "ai-tech" | "football";
+
 export interface BlogSection {
   h2: string;
   paragraphs: string[];
@@ -45,5 +47,6 @@ export interface BlogPost {
   date: string; // YYYY-MM-DD, used in JSON-LD datePublished
   modified?: string;
   image?: BlogImageSet;
+  category?: BlogCategory;
   locales: Record<BlogLocale, BlogLocaleContent>;
 }

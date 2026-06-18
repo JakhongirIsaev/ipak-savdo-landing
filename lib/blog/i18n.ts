@@ -1,4 +1,4 @@
-import type { BlogLocale } from "./types";
+import type { BlogLocale, BlogCategory } from "./types";
 
 // Chrome strings for the blog UI per locale.
 export const BLOG_UI: Record<
@@ -20,6 +20,9 @@ export const BLOG_UI: Record<
     otherLanguages: string;
     htmlLang: string;
     ogLocale: string;
+    categoryTitle: (label: string) => string;
+    categoryDescription: (label: string) => string;
+    categoryEmpty: string;
   }
 > = {
   uz: {
@@ -41,6 +44,9 @@ export const BLOG_UI: Record<
     otherLanguages: "Boshqa tillarda",
     htmlLang: "uz",
     ogLocale: "uz_UZ",
+    categoryTitle: (label) => `${label} bo'yicha maqolalar`,
+    categoryDescription: (label) => `BirLiy blogining "${label}" bo'limidagi barcha maqolalar.`,
+    categoryEmpty: "Bu turkumda hozircha maqolalar yo'q.",
   },
   ru: {
     blogTitle: "Блог BirLiy: советы по управлению магазином",
@@ -61,6 +67,9 @@ export const BLOG_UI: Record<
     otherLanguages: "На других языках",
     htmlLang: "ru",
     ogLocale: "ru_RU",
+    categoryTitle: (label) => `Статьи: ${label}`,
+    categoryDescription: (label) => `Все статьи блога BirLiy в разделе «${label}».`,
+    categoryEmpty: "В этой категории пока нет статей.",
   },
   en: {
     blogTitle: "BirLiy blog: practical advice for shop owners",
@@ -81,6 +90,9 @@ export const BLOG_UI: Record<
     otherLanguages: "In other languages",
     htmlLang: "en",
     ogLocale: "en_US",
+    categoryTitle: (label) => `Articles: ${label}`,
+    categoryDescription: (label) => `All BirLiy blog articles in the "${label}" category.`,
+    categoryEmpty: "No articles in this category yet.",
   },
 };
 
@@ -102,4 +114,14 @@ export function blogPostPath(locale: BlogLocale, slug: string): string {
 export function landingPath(locale: BlogLocale): string {
   // There is no English landing yet: EN blog pages link to the Russian one.
   return locale === "uz" ? "/" : "/ru";
+}
+
+export const CATEGORY_LABEL: Record<BlogCategory, Record<BlogLocale, string>> = {
+  product: { uz: "Mahsulot", ru: "Продукт", en: "Product" },
+  "ai-tech": { uz: "AI va texnologiya", ru: "AI и технологии", en: "AI & Technology" },
+  football: { uz: "Futbol", ru: "Футбол", en: "Football" },
+};
+
+export function blogCategoryPath(locale: BlogLocale, category: BlogCategory): string {
+  return `${LOCALE_PREFIX[locale]}/blog/category/${category}`;
 }

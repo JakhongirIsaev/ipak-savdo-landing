@@ -4,13 +4,15 @@ import crypto from "node:crypto";
 // No SDK dependency. Runs server-side only (uses node:crypto + secrets).
 //
 // Required env:
-//   GA_CREDENTIALS_JSON — same service-account JSON used for GA4
-//                         (birliy-analytics@my-project-birliy.iam.gserviceaccount.com)
-//   GSC_SITE_URL        — optional, defaults to "https://birliy.uz/"
+//   GA_CREDENTIALS_JSON                   — service-account JSON used for GA4 (primary)
+//   GOOGLE_SEARCH_CONSOLE_CREDENTIALS_JSON — alternative creds env (takes precedence if set)
+//   GSC_SITE_URL                          — optional, defaults to "https://birliy.uz/"
+//   GOOGLE_SEARCH_CONSOLE_SITE_URL        — alternative site-url env (takes precedence if set)
 
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const SCOPE = "https://www.googleapis.com/auth/webmasters.readonly";
-const SITE_URL = process.env.GSC_SITE_URL ?? "https://birliy.uz/";
+const SITE_URL =
+  process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL ?? process.env.GSC_SITE_URL ?? "https://birliy.uz/";
 
 interface ServiceAccount {
   client_email: string;
@@ -18,7 +20,8 @@ interface ServiceAccount {
 }
 
 function getCreds(): ServiceAccount | null {
-  const raw = process.env.GA_CREDENTIALS_JSON;
+  const raw =
+    process.env.GOOGLE_SEARCH_CONSOLE_CREDENTIALS_JSON ?? process.env.GA_CREDENTIALS_JSON;
   if (!raw) return null;
   try {
     const j = JSON.parse(raw) as { client_email?: string; private_key?: string };
@@ -32,6 +35,19 @@ function getCreds(): ServiceAccount | null {
 
 export function gscConfigured(): boolean {
   return Boolean(getCreds());
+}
+
+// The service-account email DERIVED from the configured credentials (never
+// hardcoded). Returns null when no creds are set. Lets the admin empty state
+// show which account to grant access to the Search Console property.
+export function gscServiceAccountEmail(): string | null {
+  return getCreds()?.client_email ?? null;
+}
+
+// The configured Search Console property id (e.g. "sc-domain:birliy.uz" or a
+// URL-prefix), for display in the admin empty/error states.
+export function gscSiteUrl(): string {
+  return SITE_URL;
 }
 
 function base64url(input: Buffer | string): string {
@@ -124,6 +140,97 @@ function stripOrigin(key: string): string {
     return key;
   }
 }
+
+// ─── Search Growth ────────────────────────────────────────────────────────────
+
+export interface SearchGrowthDay {
+  date: string;
+  clicks: number;
+  impressions: number;
+  ctr: number;
+  position: number;
+}
+
+export interface SearchGrowth {
+  range: { start: string; end: string; days: number };
+  daily: SearchGrowthDay[];
+  totals: { clicks: number; impressions: number; ctr: number; position: number } | null;
+  queries: GscRow[];
+  pages: GscRow[];
+}
+
+/** Returns daily GSC metrics for a rolling window (7 / 28 / 90 days). */
+export async function getSearchGrowth(rangeDays: number): Promise<SearchGrowth | null> {
+  const sa = getCreds();
+  if (!sa) return null;
+
+  try {
+    const token = await getAccessToken(sa);
+
+    // End date = today - 2 (GSC data lags ~2 days), start = end - (rangeDays - 1).
+    const endD = new Date();
+    endD.setDate(endD.getDate() - 2);
+    const startD = new Date(endD);
+    startD.setDate(startD.getDate() - (rangeDays - 1));
+    const fmtDate = (d: Date): string => d.toISOString().slice(0, 10);
+    const startDate = fmtDate(startD);
+    const endDate = fmtDate(endD);
+    const base = { startDate, endDate };
+
+    const [dailyRes, totalsRes, queriesRes, pagesRes] = await Promise.all([
+      queryGsc(token, {
+        ...base,
+        dimensions: ["date"],
+        rowLimit: 100,
+        orderBy: [{ fieldName: "date", sortOrder: "ASCENDING" }],
+      }),
+      queryGsc(token, { ...base, rowLimit: 1 }),
+      queryGsc(token, { ...base, dimensions: ["query"], rowLimit: 10 }),
+      queryGsc(token, { ...base, dimensions: ["page"], rowLimit: 5 }),
+    ]);
+
+    const daily: SearchGrowthDay[] = (dailyRes.rows ?? []).map((r) => ({
+      date: r.keys?.[0] ?? "",
+      clicks: r.clicks,
+      impressions: r.impressions,
+      ctr: r.ctr,
+      position: r.position,
+    }));
+
+    const totalsRow = totalsRes.rows?.[0] ?? null;
+
+    return {
+      range: { start: startDate, end: endDate, days: rangeDays },
+      daily,
+      totals: totalsRow
+        ? {
+            clicks: totalsRow.clicks,
+            impressions: totalsRow.impressions,
+            ctr: totalsRow.ctr,
+            position: totalsRow.position,
+          }
+        : null,
+      queries: (queriesRes.rows ?? []).map((r) => ({
+        key: r.keys?.[0] ?? "",
+        clicks: r.clicks,
+        impressions: r.impressions,
+        ctr: r.ctr,
+        position: r.position,
+      })),
+      pages: (pagesRes.rows ?? []).map((r) => ({
+        key: stripOrigin(r.keys?.[0] ?? ""),
+        clicks: r.clicks,
+        impressions: r.impressions,
+        ctr: r.ctr,
+        position: r.position,
+      })),
+    };
+  } catch {
+    return null;
+  }
+}
+
+// ─── Original getGscStats (unchanged) ────────────────────────────────────────
 
 export async function getGscStats(): Promise<GscStats | null> {
   const sa = getCreds();

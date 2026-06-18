@@ -2,6 +2,7 @@ import type { BlogPost } from "../types";
 
 export const post: BlogPost = {
   slug: "kak-vybrat-kassu-dlya-magazina",
+  category: "product",
   date: "2026-06-11",
   locales: {
     uz: {

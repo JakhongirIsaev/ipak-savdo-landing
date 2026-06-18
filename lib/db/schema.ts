@@ -164,3 +164,33 @@ export const siteEvents = pgTable(
 
 export type SiteEvent = typeof siteEvents.$inferSelect;
 export type NewSiteEvent = typeof siteEvents.$inferInsert;
+
+// Keyword rank snapshots from SerpApi (admin "Keyword Rank Tracker"). One row per
+// (keyword, locale) per manual refresh; the admin reads the two latest snapshots
+// per keyword to show current position + change. Additive only — no existing
+// table is touched. `position` is nullable (null = not found in the scanned page).
+// `competitors` is a JSON string array of top competitor hostnames.
+export const serpEngines = ["google", "yandex"] as const;
+export type SerpEngine = (typeof serpEngines)[number];
+
+export const keywordRanks = pgTable(
+  "keyword_ranks",
+  {
+    id: serial("id").primaryKey(),
+    keyword: text("keyword").notNull(),
+    locale: text("locale", { enum: languages }).notNull(),
+    engine: text("engine", { enum: serpEngines }).notNull().default("google"),
+    location: text("location"),
+    position: integer("position"),
+    urlFound: text("url_found"),
+    competitors: text("competitors"),
+    checkedAt: timestamp("checked_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    keywordLocaleIdx: index("keyword_ranks_keyword_locale_idx").on(t.keyword, t.locale),
+    checkedAtIdx: index("keyword_ranks_checked_at_idx").on(t.checkedAt),
+  }),
+);
+
+export type KeywordRank = typeof keywordRanks.$inferSelect;
+export type NewKeywordRank = typeof keywordRanks.$inferInsert;
