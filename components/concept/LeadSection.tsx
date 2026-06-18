@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, ChevronRight, ShieldCheck, X } from "lucide-react";
 import type { Locale } from "./demoData";
 import { useAttribution } from "@/lib/use-attribution";
-import { trackSiteEvent } from "@/lib/track/client";
+import { trackSiteEvent, trackLeadSubmitAttempt, trackLeadSuccess } from "@/lib/track/client";
 
 // Public dropdown positions BirLiy for shops, minimarkets, pharmacies and market
 // points; it intentionally omits cafe/restaurant/salon (marketing positioning).
@@ -221,6 +221,9 @@ function LeadForm({ locale }: { locale: Locale }) {
     event.preventDefault();
     setErrorMsg("");
     setFormState("submitting");
+    // Submit attempt: the form passed native validation and we are about to
+    // validate documents + call the API. NOT a conversion yet.
+    trackLeadSubmitAttempt();
 
     const fd = new FormData(event.currentTarget);
     fd.set("language", locale);
@@ -271,7 +274,9 @@ function LeadForm({ locale }: { locale: Locale }) {
       const json = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; reason?: string };
       if (response.ok && json?.ok) {
         setFormState("sent");
-        trackSiteEvent("lead_form_submit");
+        // Server confirmed the lead was saved: emit success + the GA
+        // `generate_lead` conversion (the only place it fires).
+        trackLeadSuccess();
         return;
       }
       // Surface the real reason instead of a generic "try again" dead-end.

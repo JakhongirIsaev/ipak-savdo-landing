@@ -5,6 +5,7 @@ export const siteEventNames = [
   "lead_form_start",
   "lead_form_error",
   "lead_form_submit",
+  "lead_form_success",
 ] as const;
 
 export type SiteEventName = (typeof siteEventNames)[number];

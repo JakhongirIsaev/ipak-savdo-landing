@@ -263,8 +263,8 @@ export default async function AdminAnalyticsPage() {
               <StatCard
                 icon={Send}
                 label="Отправили"
-                value={fmt(marketing.formSubmits)}
-                hint={pct(marketing.formSubmits, marketing.formStarts) + " начавших"}
+                value={fmt(marketing.formSuccess)}
+                hint={pct(marketing.formSuccess, marketing.formStarts) + " начавших"}
               />
             </div>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

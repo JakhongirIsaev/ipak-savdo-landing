@@ -108,7 +108,8 @@ export interface MarketingFunnel {
   ctaClicks: number;
   formViews: number;
   formStarts: number;
-  formSubmits: number;
+  formSubmits: number; // submit attempts (lead_form_submit)
+  formSuccess: number; // server-confirmed leads (lead_form_success)
   formErrors: number;
   ctaPlacements: { label: string; sessions: number }[];
   errorReasons: { label: string; sessions: number }[];
@@ -123,6 +124,7 @@ export async function getMarketingFunnel(): Promise<MarketingFunnel | null> {
       views: number;
       starts: number;
       submits: number;
+      success: number;
       errors: number;
     }>(
       await db.execute(sql`
@@ -132,6 +134,7 @@ export async function getMarketingFunnel(): Promise<MarketingFunnel | null> {
           count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_view')::int AS views,
           count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_start')::int AS starts,
           count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_submit')::int AS submits,
+          count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_success')::int AS success,
           count(DISTINCT session_id) FILTER (WHERE event = 'lead_form_error')::int AS errors
         FROM site_events
         WHERE created_at >= now() - interval '30 days'
@@ -172,6 +175,7 @@ export async function getMarketingFunnel(): Promise<MarketingFunnel | null> {
       formViews: num(totals?.views),
       formStarts: num(totals?.starts),
       formSubmits: num(totals?.submits),
+      formSuccess: num(totals?.success),
       formErrors: num(totals?.errors),
       ctaPlacements: placements.map((row) => ({ label: String(row.placement), sessions: num(row.sessions) })),
       errorReasons: errors.map((row) => ({ label: String(row.reason), sessions: num(row.sessions) })),
