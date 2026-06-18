@@ -21,7 +21,6 @@ import {
   Check,
   ChevronDown,
   Clock3,
-  Coffee,
   Languages,
   Menu,
   PackageCheck,
@@ -76,7 +75,7 @@ const copy = {
       { label: "База товаров", value: "9 000+", suffix: "SKU" },
       { label: "Способы оплаты", value: "4", suffix: "в одном чеке" },
     ],
-    segments: ["Магазин у дома", "Минимаркет", "Кафе", "Аптека", "Сервисная точка"],
+    segments: ["Магазин у дома", "Минимаркет", "Аптека", "Сервисная точка"],
     scroll: {
       eyebrow: "Живое демо",
       title: "Попробуйте обе роли прямо здесь",
@@ -97,7 +96,6 @@ const copy = {
       cards: [
         { title: "Магазин у дома", body: "Продукты, бытовая химия, ежедневные товары. 1 кассир, до 200 чеков в день.", icon: Store },
         { title: "Минимаркет", body: "Сотни позиций, несколько кассиров, контроль остатков и смен.", icon: ShoppingCart },
-        { title: "Кафе и точка питания", body: "Быстрый чек, оплата по QR, чек в Telegram. Без печатной техники.", icon: Coffee },
         { title: "Аптека", body: "Точный учёт по наименованиям, контроль сроков годности.", icon: Pill },
         { title: "Сервисная точка", body: "Ремонт, химчистка, ателье. Приём оплаты и журнал заказов.", icon: Wrench },
       ],
@@ -210,7 +208,7 @@ const copy = {
       tagline: "Ваш бизнес. В одном месте.",
       cols: [
         { title: "Продукт", links: [["Демо", "#reveal"], ["Модули", "#modules"], ["Для собственника", "#owner"], ["FAQ", "#faq"], ["Блог", "/ru/blog"]] },
-        { title: "Для кого", links: [["Магазин у дома", "#segments"], ["Минимаркет", "#segments"], ["Кафе", "#segments"], ["Аптека", "#segments"], ["Сервис", "#segments"]] },
+        { title: "Для кого", links: [["Магазин у дома", "#segments"], ["Минимаркет", "#segments"], ["Аптека", "#segments"], ["Сервис", "#segments"]] },
         { title: "Подключение", links: [["Ранний доступ", "#early-access"], ["Цена", "#lead"], ["Заявка", "#lead"]] },
       ],
       contactTitle: "Контакт",
@@ -254,7 +252,7 @@ const copy = {
       { label: "Tovar bazasi", value: "9 000+", suffix: "SKU" },
       { label: "To'lov usullari", value: "4", suffix: "bitta chekda" },
     ],
-    segments: ["Uy yonidagi do'kon", "Minimarket", "Kafe", "Dorixona", "Servis nuqtasi"],
+    segments: ["Uy yonidagi do'kon", "Minimarket", "Dorixona", "Servis nuqtasi"],
     scroll: {
       eyebrow: "Jonli demo",
       title: "Ikkala rolni shu yerda sinab ko'ring",
@@ -275,7 +273,6 @@ const copy = {
       cards: [
         { title: "Uy yonidagi do'kon", body: "Oziq-ovqat, maishiy kimyo, kundalik tovarlar. 1 kassir, kuniga 200 tagacha chek.", icon: Store },
         { title: "Minimarket", body: "Yuzlab pozitsiya, bir necha kassir, qoldiq va smenalar nazorati.", icon: ShoppingCart },
-        { title: "Kafe va ovqatlanish nuqtasi", body: "Tez chek, QR orqali to'lov, Telegramda chek. Chop etish texnikasisiz.", icon: Coffee },
         { title: "Dorixona", body: "Nomlar bo'yicha aniq hisob, yaroqlilik muddatlari nazorati.", icon: Pill },
         { title: "Xizmat nuqtasi", body: "Ta'mirlash, kimyoviy tozalash, tikuvchilik. To'lov va buyurtmalar jurnali.", icon: Wrench },
       ],
@@ -388,7 +385,7 @@ const copy = {
       tagline: "Sizning biznesingiz. Bitta joyda.",
       cols: [
         { title: "Mahsulot", links: [["Demo", "#reveal"], ["Modullar", "#modules"], ["Egasi uchun", "#owner"], ["FAQ", "#faq"], ["Blog", "/blog"]] },
-        { title: "Kimlar uchun", links: [["Uy yonidagi do'kon", "#segments"], ["Minimarket", "#segments"], ["Kafe", "#segments"], ["Dorixona", "#segments"], ["Xizmat", "#segments"]] },
+        { title: "Kimlar uchun", links: [["Uy yonidagi do'kon", "#segments"], ["Minimarket", "#segments"], ["Dorixona", "#segments"], ["Xizmat", "#segments"]] },
         { title: "Ulanish", links: [["Erta kirish", "#early-access"], ["Narx", "#lead"], ["Ariza", "#lead"]] },
       ],
       contactTitle: "Kontakt",
@@ -503,6 +500,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const locale = initialLocale;
   const [menuOpen, setMenuOpen] = useState(false);
   const [demoRole, setDemoRole] = useState<"cashier" | "owner">("cashier");
+  const [setupTab, setSetupTab] = useState<"phone" | "setup">("phone");
   const [faqOpen, setFaqOpen] = useState<number>(0);
   const [leadOpen, setLeadOpen] = useState(false);
   const [heroGone, setHeroGone] = useState(false);
@@ -588,6 +586,21 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.10] [background-image:linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px)] [background-size:36px_36px]"
+        />
+        {/* Drifting aurora glows use a hyphen '-', comma, or period (no long dash) decorative, sit below the z-10 content. */}
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, 36, 0], y: [0, -28, 0], opacity: [0.45, 0.72, 0.45] }}
+          transition={reduce ? undefined : { duration: 16, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -top-32 right-[-8%] h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,rgba(3,183,61,0.30),transparent_62%)] blur-3xl"
+        />
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, -28, 0], y: [0, 24, 0], opacity: [0.28, 0.5, 0.28] }}
+          transition={reduce ? undefined : { duration: 21, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute bottom-[-14%] left-[-6%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(16,160,118,0.22),transparent_64%)] blur-3xl"
         />
 
         <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
@@ -702,17 +715,22 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </motion.div>
           </div>
 
-          <motion.div {...fade(0.28, true)} className="relative mx-auto w-full max-w-[560px]">
-            <div className="overflow-hidden rounded-2xl border border-white/12 shadow-[0_44px_100px_-44px_rgba(0,0,0,0.9)]">
+          <motion.div {...fade(0.28, true)} className="relative mx-auto w-full max-w-[520px]">
+            {/* Green halo behind the editorial portrait. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-5 -z-10 rounded-[2rem] bg-[radial-gradient(58%_52%_at_50%_38%,rgba(3,183,61,0.42),transparent_70%)] blur-2xl"
+            />
+            <div className="overflow-hidden rounded-[1.6rem] border border-white/12 shadow-[0_44px_100px_-44px_rgba(0,0,0,0.9)]">
               <Image
                 src="/photos/owner-tablet.jpg"
                 alt={locale === "ru" ? "Владелец магазина работает с BirLiy на планшете" : "Do'kon egasi BirLiy bilan planshetda ishlamoqda"}
                 width={1120}
                 height={840}
                 priority
-                quality={60}
-                sizes="(min-width: 1024px) 560px, 100vw"
-                className="h-auto max-h-[300px] w-full object-cover object-top sm:max-h-none"
+                quality={65}
+                sizes="(min-width: 1024px) 520px, 100vw"
+                className="aspect-[4/5] w-full object-cover object-top"
               />
             </div>
             <LiveShiftBadge
@@ -722,22 +740,51 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               delta={t.command.delta}
               status={t.command.status}
             />
-            <div className="absolute -bottom-4 -left-3 flex items-center gap-2 rounded-xl border border-white/14 bg-[#0b1826]/92 px-4 py-3 shadow-[0_24px_50px_-30px_rgba(0,0,0,0.9)] backdrop-blur">
+            <motion.div
+              initial={false}
+              animate={reduce ? undefined : { y: [0, -7, 0] }}
+              transition={reduce ? undefined : { duration: 5, ease: "easeInOut", repeat: Infinity }}
+              className="absolute -bottom-4 -left-3 flex items-center gap-2 rounded-xl border border-white/14 bg-[#0b1826]/92 px-4 py-3 shadow-[0_24px_50px_-30px_rgba(0,0,0,0.9)] backdrop-blur"
+            >
               <span className="h-2 w-2 rounded-full bg-green-500" />
               <p className="text-sm font-semibold text-white">{t.meta.heroPhotoBadge}</p>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       <EcosystemStrip locale={locale} />
 
-      <section id="pain" className="bg-white py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div {...reveal(0, reduce)} className="max-w-4xl">
+      <section id="pain" className="relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+        {/* decorative brand-green aurora use a hyphen '-', comma, or period (no long dash) LCP-safe, never gates text */}
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { opacity: [0.5, 0.85, 0.5], scale: [1, 1.06, 1] }}
+          transition={reduce ? undefined : { duration: 9, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -top-24 -left-32 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(3,183,61,0.16),transparent_65%)] blur-2xl"
+        />
+        <div aria-hidden className="pointer-events-none absolute top-1/3 -right-24 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(3,183,61,0.10),transparent_70%)] blur-3xl" />
+        <span
+          aria-hidden
+          className="select-none pointer-events-none absolute -top-10 right-2 hidden text-[14rem] font-black leading-none text-green-700/[0.06] sm:block sm:text-[18rem]"
+        >
+          ?
+        </span>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div {...reveal(0, reduce)} className="relative max-w-4xl">
+            <motion.span
+              aria-hidden
+              initial={reduce ? false : { scaleY: 0 }}
+              whileInView={reduce ? undefined : { scaleY: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={reduce ? undefined : { duration: 0.7, ease: EASE, delay: 0.15 }}
+              style={{ transformOrigin: "top" }}
+              className="absolute -left-4 top-1 hidden h-[calc(100%-0.5rem)] w-1.5 rounded-full bg-gradient-to-b from-green-500 to-green-700 sm:block"
+            />
             <SectionLabel>{t.pain.eyebrow}</SectionLabel>
-            <h2 className="text-3xl font-extrabold leading-[1.12] tracking-normal text-ink-900 sm:text-4xl lg:text-[2.75rem]">{t.pain.headline}</h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-700">{t.pain.body}</p>
+            <h2 className="text-3xl font-extrabold leading-[1.12] tracking-normal text-ink-900 drop-shadow-[0_1px_0_rgba(8,19,28,0.04)] sm:text-4xl lg:text-[2.75rem]">{t.pain.headline}</h2>
+            <motion.p {...reveal(0.18, reduce)} className="mt-6 max-w-2xl text-lg leading-8 text-ink-700">{t.pain.body}</motion.p>
           </motion.div>
           <motion.div {...reveal(0.1, reduce)} className="mx-auto mt-12 max-w-3xl">
             <PaperVsBirliy locale={locale} />
@@ -745,11 +792,33 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
-      <section id="reveal" className="overflow-hidden bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="reveal" className="relative overflow-hidden bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
+        {/* Decorative ambient stage use a hyphen '-', comma, or period (no long dash) sits below content, gated on reduce like the hero auroras. */}
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, 30, 0], y: [0, -22, 0], opacity: [0.35, 0.6, 0.35] }}
+          transition={reduce ? undefined : { duration: 18, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -top-24 right-[-6%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(3,183,61,0.22),transparent_62%)] blur-3xl"
+        />
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, -26, 0], y: [0, 20, 0], opacity: [0.22, 0.45, 0.22] }}
+          transition={reduce ? undefined : { duration: 23, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -bottom-20 left-[-8%] h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(16,160,118,0.16),transparent_64%)] blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:radial-gradient(rgba(11,24,38,0.06)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(70%_60%_at_50%_30%,#000,transparent)]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div {...reveal(0, reduce)} className="mx-auto max-w-3xl text-center">
             <p className="mb-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-normal text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-500" />
+              <span className="relative inline-flex h-2 w-2">
+                <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-green-500 opacity-75 motion-reduce:hidden" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+              </span>
               {t.scroll.eyebrow}
             </p>
             <h2 className="text-4xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-5xl">{t.scroll.title}</h2>
@@ -777,20 +846,62 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </div>
           </motion.div>
 
-          <motion.div {...reveal(0.1, reduce)} className="mx-auto mt-6 max-w-5xl">
-            <div className="rounded-[28px] border-4 border-[#1b2733] bg-[#0b1826] p-2 shadow-[0_40px_90px_-50px_rgba(11,24,38,0.85)] md:p-3">
+          <motion.div {...reveal(0.1, reduce)} className="relative mx-auto mt-6 max-w-5xl">
+            {/* Breathing green halo use a hyphen '-', comma, or period (no long dash) the demo reads as powered-on. */}
+            <motion.div
+              aria-hidden
+              initial={false}
+              animate={reduce ? undefined : { opacity: [0.4, 0.75, 0.4], scale: [1, 1.04, 1] }}
+              transition={reduce ? undefined : { duration: 6, ease: "easeInOut", repeat: Infinity }}
+              className="pointer-events-none absolute -inset-6 -z-10 rounded-[36px] bg-[radial-gradient(60%_55%_at_50%_45%,rgba(3,183,61,0.30),transparent_70%)] blur-2xl"
+            />
+            <div className="rounded-[28px] border-4 border-[#1b2733] bg-[#0b1826] p-2 shadow-[0_40px_90px_-50px_rgba(11,24,38,0.85)] transition-transform duration-300 ease-birliy hover:-translate-y-1.5 hover:shadow-[0_55px_110px_-50px_rgba(11,24,38,0.9)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-3">
               {demoRole === "cashier" ? <PosDemo locale={locale} /> : <AdminDemo locale={locale} />}
             </div>
-            <p className="mt-4 text-center text-sm font-bold text-ink-500">{t.scroll.hint}</p>
+            <div className="mt-5 flex justify-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#cfe6d4] bg-green-50 px-4 py-2 text-sm font-bold text-green-800">
+                <motion.span
+                  aria-hidden
+                  initial={false}
+                  animate={reduce ? undefined : { y: [0, -3, 0] }}
+                  transition={reduce ? undefined : { duration: 1.6, ease: "easeInOut", repeat: Infinity }}
+                  className="inline-flex"
+                >
+                  <ScanLine size={16} strokeWidth={2.25} className="text-green-700" />
+                </motion.span>
+                {t.scroll.hint}
+              </span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="segments" className="border-y border-[#d9e2db] bg-white py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="segments" className="relative overflow-hidden border-y border-[#d9e2db] bg-white py-16 sm:py-20 lg:py-24">
+        {/* Decorative backdrop use a hyphen '-', comma, or period (no long dash) green corner glows + faint brand grid, below content. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_12%_-10%,rgba(3,183,61,0.10),transparent_60%)]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(48%_44%_at_100%_108%,rgba(3,183,61,0.07),transparent_62%)]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(11,24,38,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(11,24,38,0.5)_1px,transparent_1px)] [background-size:34px_34px]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div {...reveal(0, reduce)} className="max-w-3xl">
             <SectionLabel>{t.segments2.eyebrow}</SectionLabel>
             <h2 className="text-3xl font-extrabold leading-tight tracking-normal sm:text-4xl lg:text-5xl">{t.segments2.title}</h2>
+            <motion.div
+              aria-hidden
+              initial={reduce ? false : { scaleX: 0 }}
+              whileInView={reduce ? undefined : { scaleX: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
+              className="mt-5 h-px w-40 origin-left bg-[linear-gradient(90deg,#03b73d,transparent)]"
+            />
           </motion.div>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {t.segments2.cards.map((card, index) => {
@@ -798,14 +909,31 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               return (
                 <motion.article
                   key={card.title}
-                  {...reveal(index * 0.04, reduce)}
-                  className="rounded-lg border border-[#d9e2db] bg-[#fbfcfb] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-transform duration-200 ease-birliy hover:-translate-y-0.5"
+                  {...reveal(0.08 + index * 0.07, reduce)}
+                  className="group relative overflow-hidden rounded-xl border border-[#d9e2db] bg-white p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-all duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.02] hover:border-green-600/60 hover:shadow-[0_28px_60px_-32px_rgba(3,183,61,0.45)] motion-reduce:transform-none motion-reduce:transition-none"
                 >
-                  <div className="mb-4 grid h-11 w-11 place-items-center rounded-lg bg-green-50 text-green-700">
-                    <Icon size={22} strokeWidth={1.75} />
+                  {/* Top accent bar grows to full width on hover. */}
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-0 h-1 w-8 rounded-full bg-[linear-gradient(90deg,#03b73d,#10a076)] transition-[width] duration-300 ease-birliy group-hover:w-full motion-reduce:transition-none"
+                  />
+                  {/* Oversized watermark index. */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute right-4 top-2 select-none text-5xl font-extrabold leading-none text-green-700/10"
+                  >
+                    {index + 1}
+                  </span>
+                  <div className="relative mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[linear-gradient(135deg,#03b73d,#0b8f4e)] text-white shadow-[0_10px_24px_-12px_rgba(3,183,61,0.7)] transition-transform duration-300 ease-birliy group-hover:scale-110 group-hover:-rotate-3 motion-reduce:transform-none motion-reduce:transition-none">
+                    <Icon size={22} strokeWidth={2} />
                   </div>
-                  <h3 className="text-lg font-extrabold tracking-normal">{card.title}</h3>
-                  <p className="mt-2 leading-7 text-ink-500">{card.body}</p>
+                  <h3 className="relative text-lg font-extrabold tracking-normal">{card.title}</h3>
+                  <p className="relative mt-2 leading-7 text-ink-500">{card.body}</p>
+                  <ArrowRight
+                    aria-hidden
+                    size={18}
+                    className="relative mt-4 translate-x-0 text-green-700 opacity-60 transition-all duration-300 ease-birliy group-hover:translate-x-1 group-hover:opacity-100 motion-reduce:transform-none motion-reduce:transition-none"
+                  />
                 </motion.article>
               );
             })}
@@ -845,16 +973,58 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
-      <section id="owner" className="bg-[#0b1826] py-16 text-white sm:py-20 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
+      <section id="owner" className="relative overflow-hidden bg-[#0b1826] py-16 text-white sm:py-20 lg:py-24">
+        {/* Top-right green wash + faint blueprint grid use a hyphen '-', comma, or period (no long dash) echoes the hero's living-dark vocabulary. Decorative, below z-10 content. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_-10%,rgba(3,183,61,0.18),transparent_55%)]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:40px_40px]"
+        />
+        {/* Drifting aurora glows. */}
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, 34, 0], y: [0, -26, 0], opacity: [0.4, 0.65, 0.4] }}
+          transition={reduce ? undefined : { duration: 17, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -top-28 right-[-6%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(3,183,61,0.26),transparent_64%)] blur-3xl"
+        />
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, -24, 0], y: [0, 22, 0], opacity: [0.24, 0.46, 0.24] }}
+          transition={reduce ? undefined : { duration: 22, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute bottom-[-16%] left-[-6%] h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(16,160,118,0.2),transparent_66%)] blur-3xl"
+        />
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
           <motion.div {...reveal(0, reduce)}>
-            <SectionLabel dark>{t.owner.eyebrow}</SectionLabel>
+            <div className="flex flex-wrap items-center gap-3">
+              <SectionLabel dark>{t.owner.eyebrow}</SectionLabel>
+              <span className="inline-flex items-center gap-2 rounded-full bg-green-500/12 px-3 py-1 text-xs font-bold uppercase tracking-normal text-green-300 ring-1 ring-green-400/20">
+                <motion.span
+                  aria-hidden
+                  initial={false}
+                  animate={reduce ? undefined : { opacity: [1, 0.35, 1], scale: [1, 0.82, 1] }}
+                  transition={reduce ? undefined : { duration: 1.8, ease: "easeInOut", repeat: Infinity }}
+                  className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_10px_2px_rgba(3,183,61,0.7)]"
+                />
+                {t.command.status}
+              </span>
+            </div>
             <h2 className="max-w-[17ch] text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.owner.title}</h2>
             <p className="mt-5 max-w-xl text-lg leading-8 text-white/72">{t.owner.body}</p>
             <div className="mt-8 grid gap-3">
               {t.owner.bullets.map((item, index) => (
-                <motion.div key={item} {...reveal(index * 0.05, reduce)} className="flex items-start gap-3 rounded-lg border border-white/12 bg-white/[0.07] p-4">
-                  <Check size={20} className="mt-0.5 shrink-0 text-green-300" />
+                <motion.div
+                  key={item}
+                  {...reveal(index * 0.08, reduce)}
+                  className="group flex items-start gap-3 rounded-lg border border-white/12 bg-white/[0.07] p-4 transition duration-200 ease-birliy hover:-translate-y-0.5 hover:border-green-400/40 hover:bg-white/[0.1]"
+                >
+                  <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md bg-green-500/15 text-green-300 ring-1 ring-green-400/25 transition-colors duration-200 ease-birliy group-hover:bg-green-500/25 group-hover:text-green-200">
+                    <Check size={16} strokeWidth={2.5} />
+                  </span>
                   <p className="font-semibold leading-7 text-white/86">{item}</p>
                 </motion.div>
               ))}
@@ -862,27 +1032,66 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           </motion.div>
 
           <motion.div {...reveal(0.08, reduce)} className="grid gap-3 sm:grid-cols-3">
-            {t.owner.metrics.map((metric) => (
-              <article key={metric.label} className="rounded-lg border border-white/12 bg-white/[0.07] p-5">
-                <p className="text-sm font-semibold text-white/52">{metric.label}</p>
-                <p className="mt-2 text-4xl font-extrabold tracking-normal text-white">{metric.value}</p>
+            {t.owner.metrics.map((metric, index) => (
+              <motion.article
+                key={metric.label}
+                {...reveal(0.12 + index * 0.08, reduce)}
+                className="group relative overflow-hidden rounded-lg border border-white/12 bg-gradient-to-b from-white/[0.09] to-white/[0.03] p-5 transition duration-200 ease-birliy hover:-translate-y-1 hover:border-green-400/40 before:absolute before:inset-x-5 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-green-400/70 before:to-transparent"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white/52">{metric.label}</p>
+                  <motion.span
+                    aria-hidden
+                    initial={false}
+                    animate={reduce ? undefined : { opacity: [1, 0.3, 1], scale: [1, 0.7, 1] }}
+                    transition={reduce ? undefined : { duration: 2, ease: "easeInOut", repeat: Infinity, delay: index * 0.4 }}
+                    className="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_2px_rgba(3,183,61,0.6)]"
+                  />
+                </div>
+                <p className="mt-2 bg-gradient-to-b from-white to-green-200 bg-clip-text text-4xl font-extrabold tracking-normal text-transparent">
+                  <CountUp value={metric.value} />
+                </p>
                 <p className="mt-2 text-sm font-semibold text-green-300">{metric.detail}</p>
-              </article>
+              </motion.article>
             ))}
           </motion.div>
         </div>
       </section>
 
-      <section id="owner-control" className="bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
+      <section id="owner-control" className="relative overflow-hidden bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
+        {/* Decorative drifting BirLiy-green aurora use a hyphen '-', comma, or period (no long dash) sits below the z-10 content, never gates text/LCP. */}
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, 30, 0], y: [0, -22, 0], opacity: [0.5, 0.8, 0.5] }}
+          transition={reduce ? undefined : { duration: 17, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -top-24 -left-10 h-[440px] w-[440px] rounded-full bg-[radial-gradient(circle,rgba(3,183,61,0.16),transparent_62%)] blur-3xl"
+        />
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={reduce ? undefined : { x: [0, -24, 0], y: [0, 20, 0], opacity: [0.34, 0.58, 0.34] }}
+          transition={reduce ? undefined : { duration: 22, ease: "easeInOut", repeat: Infinity }}
+          className="pointer-events-none absolute -bottom-24 right-[-6%] h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(16,160,118,0.12),transparent_64%)] blur-3xl"
+        />
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
           <motion.div {...reveal(0, reduce)}>
             <SectionLabel>{t.ownerControl.eyebrow}</SectionLabel>
             <h2 className="max-w-[14ch] text-3xl font-extrabold leading-tight tracking-normal sm:text-4xl lg:text-5xl">{t.ownerControl.headline}</h2>
             <p className="mt-5 max-w-xl text-lg leading-8 text-ink-700">{t.ownerControl.body}</p>
-            <div className="mt-8 grid gap-3">
+            <div className="mt-8 grid gap-3 pl-5 relative before:absolute before:left-0 before:top-1 before:bottom-1 before:w-1 before:rounded-full before:bg-gradient-to-b before:from-green-500 before:via-green-600 before:to-transparent">
               {t.ownerControl.bullets.map((item, index) => (
-                <motion.div key={item} {...reveal(index * 0.05, reduce)} className="flex items-start gap-3 rounded-lg border border-[#d9e2db] bg-white p-4 shadow-[0_1px_2px_rgba(11,24,38,0.04)]">
-                  <Check size={20} className="mt-0.5 shrink-0 text-green-700" />
+                <motion.div
+                  key={item}
+                  {...reveal(index * 0.07, reduce)}
+                  whileHover={reduce ? undefined : { y: -3, scale: 1.01 }}
+                  transition={{ duration: 0.2, ease: EASE }}
+                  className="group relative flex items-start gap-3 overflow-hidden rounded-lg border border-[#d9e2db] bg-white p-4 pl-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-shadow duration-300 ease-birliy hover:border-green-600/40 hover:shadow-[0_18px_40px_-26px_rgba(3,183,61,0.5)]"
+                >
+                  <span aria-hidden className="absolute left-0 top-0 h-full w-1 origin-top scale-y-0 rounded-l-lg bg-green-600 transition-transform duration-300 ease-birliy group-hover:scale-y-100" />
+                  <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-green-50 text-green-700 transition-colors duration-300 ease-birliy group-hover:bg-green-100">
+                    <Check size={16} strokeWidth={2.5} />
+                  </span>
                   <p className="font-semibold leading-7 text-ink-900">{item}</p>
                 </motion.div>
               ))}
@@ -899,20 +1108,138 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-4 -right-3 hidden items-center gap-2 rounded-xl border border-[#d9e2db] bg-white px-4 py-3 shadow-[0_24px_50px_-30px_rgba(11,24,38,0.4)] sm:flex">
-              <span className="h-2 w-2 rounded-full bg-green-500" />
+            <div className="absolute -bottom-4 -right-3 hidden items-center gap-2 rounded-xl border border-[#d9e2db] bg-white px-4 py-3 shadow-[0_24px_50px_-30px_rgba(3,183,61,0.35)] sm:flex">
+              <span className="relative grid h-2.5 w-2.5 place-items-center">
+                <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+                {!reduce && (
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full bg-green-500/50"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.6, 0, 0.6] }}
+                    transition={{ duration: 2, ease: "easeOut", repeat: Infinity }}
+                  />
+                )}
+              </span>
               <p className="text-sm font-semibold text-ink-900">{locale === "ru" ? "Вижу всё с телефона" : "Hammasini telefondan ko'raman"}</p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="modules" className="bg-white py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="modules" className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+        {/* Branded top accent rail + soft aurora wash use a hyphen '-', comma, or period (no long dash) decorative, behind content. */}
+        <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(3,183,61,0.55),transparent)]" />
+        <motion.span
+          aria-hidden
+          {...fade(0, reduce)}
+          className="pointer-events-none absolute -top-24 right-[-6%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(3,183,61,0.16),transparent_62%)] blur-3xl"
+        />
+        <motion.span
+          aria-hidden
+          {...fade(0.08, reduce)}
+          className="pointer-events-none absolute bottom-[-12%] left-[-8%] h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(16,160,118,0.12),transparent_64%)] blur-3xl"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div {...reveal(0, reduce)} className="max-w-2xl">
             <SectionLabel>{t.modules.eyebrow}</SectionLabel>
             <h2 className="text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.modules.title}</h2>
+            <motion.span
+              aria-hidden
+              initial={reduce ? false : { scaleX: 0 }}
+              whileInView={reduce ? undefined : { scaleX: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.12 }}
+              className="mt-5 block h-1 w-16 origin-left rounded-full bg-[linear-gradient(90deg,#03b73d,#10a076)]"
+            />
           </motion.div>
+
+          {/* Product switcher: phone vs full setup. Static images + plain explanation; only the active image renders. */}
+          <div className="mt-10">
+            <div className="flex justify-center">
+              <div className="inline-flex rounded-full border border-[#d9e2db] bg-white p-1 shadow-[0_1px_2px_rgba(11,24,38,0.04)]">
+                {([
+                  { id: "phone", label: locale === "ru" ? "Телефон" : "Telefon" },
+                  { id: "setup", label: locale === "ru" ? "Полный комплект" : "To'liq jihoz" },
+                ] as const).map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setSetupTab(tab.id)}
+                    aria-pressed={setupTab === tab.id}
+                    className={`min-h-10 rounded-full px-5 py-2 text-sm font-extrabold transition-colors duration-200 ease-birliy ${
+                      setupTab === tab.id
+                        ? "bg-green-700 text-white shadow-[0_8px_20px_-10px_rgba(3,183,61,0.9)]"
+                        : "text-ink-500 hover:text-ink-900"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+              <motion.div {...reveal(0.05, reduce)} className="relative mx-auto w-full max-w-[420px]">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -inset-5 -z-10 rounded-[2rem] bg-[radial-gradient(60%_55%_at_50%_45%,rgba(3,183,61,0.26),transparent_70%)] blur-2xl"
+                />
+                <div className="relative aspect-square overflow-hidden rounded-[1.6rem] border border-[#d9e2db] bg-[#0b1826] shadow-[0_40px_90px_-44px_rgba(3,183,61,0.45)]">
+                  <Image
+                    src={setupTab === "phone" ? "/photos/phone-s26-app.jpg" : "/photos/full-setup.jpg"}
+                    alt={
+                      setupTab === "phone"
+                        ? locale === "ru"
+                          ? "Приложение BirLiy на телефоне"
+                          : "BirLiy ilovasi telefonda"
+                        : locale === "ru"
+                          ? "Планшет на подставке, сканер и принтер чеков"
+                          : "Stenddagi planshet, skaner va chek printeri"
+                    }
+                    width={1024}
+                    height={1024}
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 420px, 100vw"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div {...reveal(0.12, reduce)} className="max-w-md">
+                <h3 className="text-2xl font-extrabold tracking-normal text-ink-900 sm:text-3xl">
+                  {setupTab === "phone"
+                    ? locale === "ru" ? "Только телефон" : "Faqat telefon"
+                    : locale === "ru" ? "Полный комплект" : "To'liq jihoz"}
+                </h3>
+                <p className="mt-4 text-lg leading-8 text-ink-700">
+                  {setupTab === "phone"
+                    ? locale === "ru"
+                      ? "Для тех, кто выбирает работать с телефона. BirLiy работает прямо на вашем телефоне: продаёте без отдельного оборудования, а чек уходит покупателю в Telegram."
+                      : "Telefondan ishlashni tanlaganlar uchun. BirLiy to'g'ridan to'g'ri telefoningizda ishlaydi: alohida jihozsiz sotasiz, chek xaridorga Telegramda boradi."
+                    : locale === "ru"
+                      ? "Если хотите, BirLiy привезёт и установит оборудование: планшет на подставке, сканер штрих-кодов и принтер чеков. Удобно для магазина побольше."
+                      : "Agar xohlasangiz, BirLiy jihozni yetkazib beradi va o'rnatadi: stenddagi planshet, shtrix-kod skaneri va chek printeri. Kattaroq do'kon uchun qulay."}
+                </p>
+                <ul className="mt-6 grid gap-3">
+                  {(setupTab === "phone"
+                    ? locale === "ru"
+                      ? ["Хватит одного телефона", "Подключаем за 1 день", "Чек уходит в Telegram"]
+                      : ["Bitta telefon yetarli", "1 kunda ulaymiz", "Chek Telegramda ketadi"]
+                    : locale === "ru"
+                      ? ["Планшет и подставка", "Ручной сканер штрих-кодов", "Принтер чеков"]
+                      : ["Planshet va stend", "Qo'lda shtrix-kod skaneri", "Chek printeri"]
+                  ).map((line) => (
+                    <li key={line} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-green-50 text-green-700">
+                        <Check size={15} strokeWidth={2.5} />
+                      </span>
+                      <span className="font-semibold leading-7 text-ink-900">{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
+          </div>
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {t.modules.items.map((item, index) => {
               const Icon = item.icon;
@@ -920,10 +1247,12 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 <motion.article
                   key={item.title}
                   {...reveal(index * 0.04, reduce)}
-                  className="rounded-lg border border-[#d9e2db] bg-[#fbfcfb] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-transform duration-200 ease-birliy hover:-translate-y-0.5"
+                  className="group relative overflow-hidden rounded-xl border border-[#d9e2db] bg-[#fbfcfb] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.015] hover:border-green-600/60 hover:bg-white hover:shadow-[0_28px_60px_-30px_rgba(3,183,61,0.45)] hover:ring-1 hover:ring-green-600/30 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100"
                 >
-                  <div className="mb-5 grid h-11 w-11 place-items-center rounded-lg bg-green-50 text-green-700">
-                    <Icon size={22} strokeWidth={1.75} />
+                  {/* Top hairline lights up on hover use a hyphen '-', comma, or period (no long dash) branded accent, decorative. */}
+                  <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(3,183,61,0.5),transparent)] opacity-0 transition-opacity duration-300 ease-birliy group-hover:opacity-100" />
+                  <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-[linear-gradient(135deg,#03b73d,#10a076)] text-white shadow-[0_10px_24px_-12px_rgba(3,183,61,0.7)] ring-1 ring-green-600/20 transition-transform duration-300 ease-birliy group-hover:scale-110 group-hover:-rotate-3 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0">
+                    <Icon size={24} strokeWidth={2} />
                   </div>
                   <h3 className="text-xl font-extrabold tracking-normal">{item.title}</h3>
                   <p className="mt-3 leading-7 text-ink-500">{item.text}</p>
@@ -938,23 +1267,49 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
-      <section id="rollout" className="border-y border-[#d9e2db] bg-[#e9eff0] py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
-          <motion.div {...reveal(0, reduce)}>
+      <section id="rollout" className="relative overflow-hidden border-y border-[#d9e2db] bg-[#e9eff0] py-16 sm:py-20 lg:py-24">
+        {/* decorative aurora wash + accent hairline (LCP-safe, behind content) */}
+        <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-0 h-px bg-[linear-gradient(90deg,transparent,rgba(3,183,61,0.5),transparent)]" />
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-0 bg-[radial-gradient(60%_70%_at_18%_30%,rgba(3,183,61,0.14),transparent_60%)]"
+          initial={reduce ? false : { opacity: 0.55, scale: 1 }}
+          animate={reduce ? undefined : { opacity: [0.55, 0.9, 0.55], scale: [1, 1.04, 1] }}
+          transition={reduce ? undefined : { duration: 9, ease: "easeInOut", repeat: Infinity }}
+        />
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
+          <motion.div {...reveal(0, reduce)} className="relative">
+            <span aria-hidden className="pointer-events-none absolute -left-6 -top-6 -z-0 hidden h-40 w-40 rounded-full bg-[radial-gradient(120%_120%_at_0%_0%,rgba(3,183,61,0.18),transparent_55%)] blur-2xl lg:block" />
             <SectionLabel>{t.rollout.eyebrow}</SectionLabel>
-            <h2 className="max-w-[17ch] text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.rollout.title}</h2>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-ink-700">{t.rollout.body}</p>
+            <h2 className="relative max-w-[17ch] text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.rollout.title}</h2>
+            <p className="relative mt-5 max-w-xl text-lg leading-8 text-ink-700">{t.rollout.body}</p>
           </motion.div>
-          <div className="grid gap-3">
+          <div className="relative grid gap-3">
+            {/* animated vertical stepper track that fills as you scroll */}
+            <motion.span
+              aria-hidden
+              className="pointer-events-none absolute left-[26px] top-8 bottom-8 -z-0 w-[2px] origin-top rounded-full bg-[linear-gradient(to_bottom,#03b73d,rgba(3,183,61,0.15))]"
+              initial={reduce ? false : { scaleY: 0 }}
+              whileInView={reduce ? undefined : { scaleY: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={reduce ? undefined : { duration: 0.9, ease: EASE }}
+            />
             {t.rollout.steps.map((item, index) => (
               <motion.article
                 key={item}
                 {...reveal(index * 0.05, reduce)}
-                className="grid grid-cols-[52px_1fr] items-center gap-4 rounded-lg border border-[#cfdad4] bg-white p-4 shadow-[0_1px_2px_rgba(11,24,38,0.04)]"
+                whileHover={reduce ? undefined : { x: 4 }}
+                className="group relative z-10 grid grid-cols-[52px_1fr] items-center gap-4 rounded-xl border border-[#cfdad4] bg-[linear-gradient(180deg,#ffffff,#fbfdfb)] p-4 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-[border-color,box-shadow,transform] duration-200 ease-birliy hover:border-green-700/40 hover:shadow-[0_20px_50px_-30px_rgba(11,24,38,0.45)] motion-reduce:transform-none"
               >
-                <div className="grid h-13 min-h-[52px] w-13 min-w-[52px] place-items-center rounded-lg bg-ink-900 font-extrabold text-white">
+                <motion.div
+                  initial={reduce ? false : { scale: 0.85, boxShadow: "0 0 0 0 rgba(3,183,61,0)" }}
+                  whileInView={reduce ? undefined : { scale: 1, boxShadow: "0 10px 30px -12px rgba(3,183,61,0.7)" }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={reduce ? undefined : { duration: 0.45, ease: EASE, delay: index * 0.05 + 0.1 }}
+                  className="grid h-13 min-h-[52px] w-13 min-w-[52px] place-items-center rounded-xl bg-green-700 font-extrabold text-white ring-1 ring-green-700/25 transition-transform duration-200 ease-birliy group-hover:scale-[1.08] motion-reduce:group-hover:scale-100"
+                >
                   {String(index + 1).padStart(2, "0")}
-                </div>
+                </motion.div>
                 <p className="text-lg font-extrabold leading-7 tracking-normal">{item}</p>
               </motion.article>
             ))}
@@ -962,24 +1317,64 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
-      <section id="early-access" className="border-t border-[#d9e2db] bg-white py-16 sm:py-20 lg:py-24">
+      <section
+        id="early-access"
+        className="relative isolate overflow-hidden bg-white py-16 before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[linear-gradient(90deg,#03b73d_0%,#facc15_60%,#03b73d_100%)] before:content-[''] sm:py-20 lg:py-24"
+      >
+        {/* decorative aurora backdrop (LCP-safe, aria-hidden, behind content) */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -left-24 top-10 -z-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(3,183,61,0.16),transparent_70%)] blur-2xl"
+          animate={reduce ? undefined : { x: [0, 18, 0], y: [0, -14, 0] }}
+          transition={reduce ? undefined : { duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div aria-hidden className="pointer-events-none absolute right-6 top-6 -z-10 hidden h-24 w-24 rounded-full border border-green-500/25 lg:block" />
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8">
           <motion.div {...reveal(0, reduce)}>
             <SectionLabel>{t.early.eyebrow}</SectionLabel>
             <h2 className="max-w-[20ch] text-3xl font-extrabold leading-tight tracking-normal sm:text-4xl">{t.early.headline}</h2>
             <div className="mt-7 grid gap-3">
               {t.early.promises.map((promise, index) => (
-                <motion.article
-                  key={promise.title}
-                  {...reveal(index * 0.05, reduce)}
-                  className="grid grid-cols-[44px_1fr] items-start gap-4 rounded-lg border border-[#d9e2db] bg-[#fbfcfb] p-4 shadow-[0_1px_2px_rgba(11,24,38,0.04)]"
-                >
-                  <div className="grid h-11 min-h-[44px] w-11 place-items-center rounded-lg bg-green-700 font-extrabold text-white">{String(index + 1).padStart(2, "0")}</div>
-                  <div>
-                    <h3 className="text-base font-extrabold tracking-normal">{promise.title}</h3>
-                    <p className="mt-1 leading-7 text-ink-500">{promise.caption}</p>
-                  </div>
-                </motion.article>
+                (() => {
+                  const isPrice = index === t.early.promises.length - 1;
+                  return (
+                    <motion.article
+                      key={promise.title}
+                      {...reveal(index * 0.12, reduce)}
+                      className={`group relative grid grid-cols-[44px_1fr] items-start gap-4 rounded-lg p-4 transition-transform duration-200 ease-birliy hover:-translate-y-1 hover:shadow-[0_24px_48px_-28px_rgba(11,24,38,0.35)] ${
+                        isPrice
+                          ? "bg-[linear-gradient(135deg,#fffdf5,#fbfcfb)] ring-2 ring-yellow-400/70 shadow-[0_18px_46px_-26px_rgba(250,204,21,0.65)]"
+                          : "border border-[#d9e2db] bg-[#fbfcfb] shadow-[0_1px_2px_rgba(11,24,38,0.04)]"
+                      }`}
+                    >
+                      {isPrice && (
+                        <motion.div
+                          aria-hidden
+                          className="pointer-events-none absolute -inset-3 -z-10 rounded-2xl bg-[radial-gradient(circle_at_30%_30%,rgba(250,204,21,0.30),transparent_70%)] blur-xl"
+                          animate={reduce ? undefined : { opacity: [0.45, 0.85, 0.45] }}
+                          transition={reduce ? undefined : { duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      )}
+                      <motion.div
+                        initial={{ scale: reduce || !isPrice ? 1 : 0.8 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.45, ease: EASE, delay: isPrice ? 0.3 : 0 }}
+                        className={`grid h-11 min-h-[44px] w-11 place-items-center rounded-lg font-extrabold ${
+                          isPrice
+                            ? "bg-yellow-400 text-ink-900 shadow-[0_8px_20px_-8px_rgba(250,204,21,0.9)]"
+                            : "bg-green-700 text-white"
+                        }`}
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </motion.div>
+                      <div>
+                        <h3 className="text-base font-extrabold tracking-normal">{promise.title}</h3>
+                        <p className="mt-1 leading-7 text-ink-500">{promise.caption}</p>
+                      </div>
+                    </motion.article>
+                  );
+                })()
               ))}
             </div>
             <button
@@ -992,8 +1387,9 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </button>
             <p className="mt-3 text-sm font-semibold text-green-700">{t.early.applicationNote}</p>
           </motion.div>
-          <motion.div {...reveal(0.08, reduce)}>
-            <div className="overflow-hidden rounded-2xl border border-[#d9e2db] shadow-[0_30px_70px_-46px_rgba(11,24,38,0.55)]">
+          <motion.div {...reveal(0.08, reduce)} className="relative">
+            <div aria-hidden className="pointer-events-none absolute -right-4 -top-4 -z-10 hidden h-28 w-28 rounded-2xl bg-[radial-gradient(circle,rgba(3,183,61,0.18)_1.5px,transparent_1.6px)] [background-size:14px_14px] lg:block" />
+            <div className="overflow-hidden rounded-2xl ring-1 ring-green-500/15 shadow-[0_30px_70px_-40px_rgba(3,183,61,0.45)] transition-transform duration-300 ease-birliy hover:scale-[1.015]">
               <Image
                 src="/photos/owners-team.jpg"
                 alt={t.early.photoAlt}
@@ -1007,14 +1403,23 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
-      <section id="faq" className="bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <section id="faq" className="relative overflow-hidden bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
+        {/* decorative aurora glow use a hyphen '-', comma, or period (no long dash) LCP-safe, no text gated behind it */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-0 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(3,183,61,0.10),transparent_70%)]"
+        />
+        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <motion.div {...reveal(0, reduce)} className="text-center">
             <p className="mb-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-normal text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-500" />
+              <span className="relative inline-flex h-2 w-2">
+                <span aria-hidden className="absolute inset-0 rounded-full bg-green-500/60 animate-ping motion-reduce:hidden" />
+                <span className="relative h-2 w-2 rounded-full bg-green-500" />
+              </span>
               {t.faq.eyebrow}
             </p>
             <h2 className="text-3xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-4xl">{t.faq.title}</h2>
+            <span aria-hidden className="mx-auto mt-5 block h-px w-16 bg-gradient-to-r from-transparent via-green-600/50 to-transparent" />
           </motion.div>
           <div className="mt-10 grid gap-3">
             {dicts[locale].faq.map(([question, answer], index) => {
@@ -1022,8 +1427,8 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               return (
                 <motion.div
                   key={question}
-                  {...reveal(index * 0.04, reduce)}
-                  className="overflow-hidden rounded-lg border border-[#d9e2db] bg-white"
+                  {...reveal(index * 0.06, reduce)}
+                  className={`group relative overflow-hidden rounded-lg border bg-white transition-all duration-200 ease-birliy hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-30px_rgba(11,24,38,0.45)] motion-reduce:hover:translate-y-0 ${open ? "border-green-600/40 bg-[#f4faf5] ring-1 ring-green-600/30 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-green-600" : "border-[#d9e2db] hover:border-green-600/40"}`}
                 >
                   <button
                     type="button"
@@ -1032,9 +1437,19 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                     className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left"
                   >
                     <span className="text-base font-extrabold text-ink-900">{question}</span>
-                    <ChevronDown size={20} className={`shrink-0 text-green-700 transition-transform duration-200 ease-birliy ${open ? "rotate-180" : ""}`} />
+                    <span
+                      aria-hidden
+                      className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ease-birliy group-hover:scale-110 motion-reduce:group-hover:scale-100 ${open ? "border-green-700 bg-green-700 text-white" : "border-[#d9e2db] text-green-700 group-hover:border-green-600/50"}`}
+                    >
+                      <ChevronDown size={18} className={`transition-transform duration-200 ease-birliy ${open ? "rotate-180" : ""}`} />
+                    </span>
                   </button>
-                  {open && <p className="px-5 pb-5 leading-7 text-ink-700">{answer}</p>}
+                  {/* smooth height open/close via grid-rows use a hyphen '-', comma, or period (no long dash) text stays in DOM (LCP/a11y-safe) */}
+                  <div className={`grid transition-[grid-template-rows] duration-300 ease-birliy motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                    <div className="overflow-hidden">
+                      <p className="px-5 pb-5 leading-7 text-ink-700">{answer}</p>
+                    </div>
+                  </div>
                 </motion.div>
               );
             })}

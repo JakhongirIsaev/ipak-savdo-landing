@@ -13,10 +13,10 @@ const ru = {
   stickyNote: "Старт 49 000 сум/мес",
   title: "Ваш бизнес. В одном месте.",
   subtitle:
-    "Касса, склад и оплаты — в одном приложении на телефоне. Вечером цифры сходятся сами: видно, сколько продали, что осталось, где деньги. Без отдельных программ и ночных подсчётов.",
+    "Касса, склад и оплаты — в одном приложении на телефоне. Вечером цифры сходятся сами: видно, сколько продали, что осталось, где деньги. Без отдельных программ и ночных подсчётов. Программа для магазина: начать можно без отдельного оборудования, работает на телефоне.",
   telegram: "Написать в Telegram",
   demo: "Смотреть демо",
-  trust: "Магазины у дома, минимаркеты, кафе, аптеки, сервисные точки.",
+  trust: "Магазины у дома, минимаркеты, продуктовые магазины, аптеки, сервисные точки.",
   badges: [
     "QR-оплата в момент продажи",
     "Остатки обновляются автоматически",
@@ -34,10 +34,11 @@ const ru = {
   ],
 
   segmentsTitle: "Для кого BirLiy",
+  segmentsSubtitle: "Касса в телефоне для продуктового магазина, минимаркета и магазина у дома.",
   segments: [
     ["Магазины у дома", "Продукты, бытовая химия, повседневные товары."],
     ["Минимаркеты", "Сотни позиций, несколько кассиров, контроль остатков."],
-    ["Кафе и точки питания", "Быстрый заказ, оплата по QR, чек в Telegram."],
+    ["Продуктовые магазины", "Сотни товаров, вес и штучный учёт, оплата по QR."],
     ["Аптеки", "Точный учёт по наименованиям, контроль сроков."],
     ["Сервисные точки", "Ремонт, химчистка, ателье — приём оплаты и учёт заказов."],
   ],
@@ -59,6 +60,8 @@ const ru = {
     ["Программа лояльности", "Бонусы, скидки и акции для постоянных покупателей."],
     ["Отчёты", "Выручка за день, средний чек, топ-товары, работа кассиров."],
   ],
+  nasiyaCaption: "Долговая тетрадь теперь в телефоне: сразу видно, кто и сколько должен.",
+  stockCaption: "Всегда знайте, что осталось в магазине: учёт остатков обновляется сам после каждой продажи.",
 
   workflowTitle: "Как проходит продажа",
   workflowSteps: ["Сканирование", "Корзина", "QR-оплата", "Подтверждение", "Чек", "Склад обновлён"],
@@ -76,6 +79,7 @@ const ru = {
   ],
 
   offlineTitle: "Интернет пропал? Касса работает",
+  offlineSubline: "Даже если интернет пропал, касса продолжает работать.",
   offlineText:
     "Кассир продолжает пробивать товары. Когда связь восстановится, всё синхронизируется автоматически.",
   offlineBadge: "Работа при слабом интернете",
@@ -137,6 +141,14 @@ const ru = {
     ["Можно ли импортировать товары?", "Да, из Excel. Также в продукте уже доступна база 9 000+ распространённых SKU: многие товары находятся сразу."],
     ["Сколько кассиров можно завести?", "На периоде раннего доступа без ограничений. Роли: Владелец / Кассир / Суперадмин. Каждый кассир заходит по PIN."],
     ["Можно ли работать на нескольких точках?", "Да. Сводные отчёты и кросс-точечный контроль кассиров доступны для бизнесов с несколькими точками."],
+    ["Для каких магазинов подходит BirLiy?", "Для магазинов у дома, минимаркетов, продуктовых магазинов и дуканов, а также аптек и сервисных точек. Это простая касса на телефоне для небольшого магазина, а не тяжёлая корпоративная программа."],
+    ["Чем BirLiy лучше тетради, Excel или 1С?", "Тетрадь и Excel приходится вести вручную, и долги легко теряются. 1С сложна и дорога для маленького магазина. BirLiy работает на телефоне, понятен без обучения и собирает кассу, склад, долги и отчёты в одном месте."],
+    ["Можно ли вести долги покупателей (насия)?", "Да. Долги покупателей видно в приложении вместо бумажной тетради: кто сколько должен и когда обещал оплатить. Насия всегда под рукой, прямо на телефоне."],
+    ["Нужен ли терминал для приёма оплаты?", "Нет. Покупатель сканирует QR-код на экране телефона, и оплата приходит сразу. Наличные, карта, QR или в долг учитываются в одном месте."],
+    ["Какая программа нужна для магазина продуктов?", "Подойдёт простая программа для магазина, которая работает прямо на телефоне. В BirLiy касса, складской учёт, долговая тетрадь и QR-оплата собраны в одном приложении. Компьютер и отдельное оборудование не нужны: скачали, добавили товары и сразу продаёте."],
+    ["Можно ли работать без кассового аппарата?", "BirLiy работает на телефоне, поэтому начать можно без отдельного оборудования. Покупатель сканирует QR-код на экране, и оплата приходит сразу. Если хотите более удобный формат, можно подключить планшет, сканер или принтер, а мы поможем с настройкой."],
+    ["Чем заменить долговую тетрадь в магазине?", "Долговую тетрадь заменяет насия в BirLiy: кто сколько должен и когда обещал вернуть, видно прямо в телефоне. Бумажные записи больше не теряются, а долги покупателей идут вместе с продажами и остатками в одном приложении."],
+    ["Как вести складской учёт остатков без Excel?", "Учёт остатков в магазине ведётся сам, без таблиц Excel и ручного пересчёта. После каждой продажи остаток уменьшается автоматически, поэтому вы всегда видите, что осталось на полке. Когда товар заканчивается, программа подскажет, что пора дозаказать."],
   ],
 
   voiceTitle: "Меньше частей. Больше ясности.",
@@ -260,7 +272,7 @@ const ru = {
 
   segmentsV2: {
     eyebrow: "05 / Для какого бизнеса",
-    headline: "Магазинам у дома. Минимаркетам. Кафе. Аптекам.",
+    headline: "Магазинам у дома. Минимаркетам. Продуктовым. Аптекам.",
     cards: [
       {
         title: "Магазин у дома",
@@ -271,8 +283,8 @@ const ru = {
         body: "Сотни позиций, несколько кассиров, контроль остатков и кассиров.",
       },
       {
-        title: "Кафе и точка питания",
-        body: "Быстрый чек, оплата по QR, чек в Telegram. Без печатной техники.",
+        title: "Продуктовый магазин",
+        body: "Сотни наименований, штучный и весовой учёт, оплата по QR, чек в Telegram.",
       },
       {
         title: "Аптека",
@@ -345,7 +357,7 @@ const ru = {
         links: [
           { label: "Магазины у дома", href: "#segments" },
           { label: "Минимаркеты", href: "#segments" },
-          { label: "Кафе", href: "#segments" },
+          { label: "Продуктовые", href: "#segments" },
           { label: "Аптеки", href: "#segments" },
           { label: "Сервис", href: "#segments" },
         ],
@@ -406,10 +418,10 @@ const uz: typeof ru = {
   stickyNote: "Start 49 000 so'm/oy",
   title: "Sizning biznesingiz. Bitta joyda.",
   subtitle:
-    "Kassa, ombor va to'lovlar — telefondagi bitta ilovada. Kechqurun raqamlar o'z-o'zidan to'g'ri keladi: qancha sotgansiz, nima qolgan, pul qayerda. Alohida dasturlar va tungi hisob-kitoblarsiz.",
+    "Kassa, ombor va to'lovlar — telefondagi bitta ilovada. Kechqurun raqamlar o'z-o'zidan to'g'ri keladi: qancha sotgansiz, nima qolgan, pul qayerda. Alohida dasturlar va tungi hisob-kitoblarsiz. Magazin uchun dastur: boshlash uchun alohida uskuna shart emas, telefonda ishlaydi.",
   telegram: "Telegram orqali yozish",
   demo: "Demoni ko'rish",
-  trust: "Uy yonidagi do'konlar, minimarketlar, kafelar, dorixonalar va xizmat nuqtalari.",
+  trust: "Uy yonidagi do'konlar, minimarketlar, oziq-ovqat do'konlari, dorixonalar va xizmat nuqtalari.",
   badges: [
     "Sotuv paytida QR-to'lov",
     "Qoldiqlar avtomatik yangilanadi",
@@ -427,10 +439,11 @@ const uz: typeof ru = {
   ],
 
   segmentsTitle: "BirLiy kim uchun",
+  segmentsSubtitle: "Oziq-ovqat do'koni, minimarket va uy yonidagi do'kon uchun telefondagi kassa.",
   segments: [
     ["Uy yonidagi do'konlar", "Oziq-ovqat, maishiy kimyo, kundalik tovarlar."],
     ["Minimarketlar", "Yuzlab tovar, bir necha kassir, qoldiq nazorati."],
-    ["Kafelar va ovqatlanish", "Tez buyurtma, QR orqali to'lov, Telegram chek."],
+    ["Oziq-ovqat do'konlari", "Yuzlab tovar, vaznli va donali hisob, QR orqali to'lov."],
     ["Dorixonalar", "Nomlar bo'yicha aniq hisob, muddat nazorati."],
     ["Xizmat nuqtalari", "Ta'mirlash, kimyoviy tozalash, tikuvchilik — to'lov va buyurtma hisobi."],
   ],
@@ -452,6 +465,8 @@ const uz: typeof ru = {
     ["Sodiqlik dasturi", "Doimiy xaridorlar uchun bonuslar, chegirmalar va aksiyalar."],
     ["Hisobotlar", "Kunlik tushum, o'rtacha chek, top-tovarlar, kassirlar ishi."],
   ],
+  nasiyaCaption: "Qarz daftarini yoping: nasiya endi telefonda, kim qancha qarzligini darhol ko'rasiz.",
+  stockCaption: "Do'konda nima qolganini har doim biling: tovar qoldig'i har sotuvdan keyin o'zi yangilanadi.",
 
   workflowTitle: "Sotuv qanday o'tadi",
   workflowSteps: ["Skanerlash", "Savat", "QR-to'lov", "Tasdiqlash", "Chek", "Ombor yangilandi"],
@@ -469,6 +484,7 @@ const uz: typeof ru = {
   ],
 
   offlineTitle: "Internet uzildi? Kassa ishlaydi",
+  offlineSubline: "Internet uzilsa ham kassa ishlashda davom etadi.",
   offlineText:
     "Kassir tovarlarni sotishda davom etadi. Aloqa tiklanganda hammasi avtomatik sinxronlanadi.",
   offlineBadge: "Zaif internetda ishlash",
@@ -530,6 +546,14 @@ const uz: typeof ru = {
     ["Tovarlarni import qilish mumkinmi?", "Ha, Excel orqali. Bundan tashqari ilovada 9 000+ keng tarqalgan SKU bazasi mavjud: ko'p tovarlar darhol topiladi."],
     ["Nechta kassir yaratish mumkin?", "Erta kirish davrida cheklov yo'q. Rollar: Egasi / Kassir / Superadmin. Har bir kassir PIN bilan kiradi."],
     ["Bir necha nuqtada ishlash mumkinmi?", "Ha. Bir nechta nuqtaga ega bizneslar uchun yig'ma hisobotlar va kassirlarni nuqtalararo nazorat qilish mavjud."],
+    ["BirLiy qaysi do'konlar uchun mos?", "Uy yonidagi do'konlar, minimarketlar, oziq-ovqat do'konlari va dukanlar, shuningdek dorixonalar va xizmat nuqtalari uchun. Bu kichik do'kon uchun telefondagi oddiy kassa, og'ir korporativ dastur emas."],
+    ["BirLiy daftar, Excel yoki 1C dan nimasi bilan yaxshi?", "Daftar va Excelni qo'lda yuritish kerak, qarzlar oson yo'qoladi. 1C kichik do'kon uchun murakkab va qimmat. BirLiy telefonda ishlaydi, o'rganishsiz tushunarli va kassa, ombor, nasiya hamda hisobotlarni bitta joyga yig'adi."],
+    ["Xaridorlar nasiyasini (qarzini) yuritish mumkinmi?", "Ha. Xaridorlar qarzi qog'oz daftar o'rniga ilovada ko'rinadi: kim qancha qarz va qachon to'lashni va'da qilgan. Nasiya har doim telefoningizda qo'l ostida."],
+    ["To'lov qabul qilish uchun terminal kerakmi?", "Yo'q. Xaridor telefon ekranidagi QR-kodni skanerlaydi va to'lov darhol tushadi. Naqd, karta, QR yoki nasiya bitta joyda hisobga olinadi."],
+    ["Magazin uchun qanday dastur kerak: telefonda ishlaydimi?", "Ha. BirLiy magazin uchun dastur bo'lib, oddiy telefon yoki planshetda ishlaydi. Kassa, ombor hisobi, qarz daftari va QR to'lov bitta ilovada. Kompyuter va alohida uskuna shart emas: ilovani yuklab, tovarlarni qo'shib, darhol sotuvni boshlaysiz."],
+    ["Kassa apparati olmasdan ishlash mumkinmi?", "BirLiy telefonda ishlaydi, shuning uchun boshlash uchun alohida uskuna sotib olish shart emas. Xaridor ekrandagi QR-kodni skanerlaydi va to'lov darhol tushadi. Xohlasangiz planshet, skaner yoki printer ulashingiz mumkin, sozlashda yordam beramiz."],
+    ["Qarz daftarini telefonda yuritsa bo'ladimi?", "Ha. Qog'oz qarz daftarini yopib, nasiyani telefonga ko'chirasiz: kim, qancha va qachon to'lashni va'da qilgani ko'rinib turadi. Qarz daftari alohida ilovaga kerak emas, u sotuv va ombor bilan birga BirLiy ichida ishlaydi."],
+    ["Omborda nima qolganini qanday bilaman?", "Do'konda nima qolganini istalgan vaqtda telefondan ko'rasiz. Tovar qoldig'i har bir sotuvdan keyin avtomatik kamayadi, shuning uchun qo'lda sanab o'tirmaysiz. Tovar tugayotganini tizim oldindan eslatadi, vaqti-vaqti bilan tovar sanash ham oson bo'ladi."],
   ],
 
   voiceTitle: "Kamroq qism. Ko'proq aniqlik.",
@@ -653,7 +677,7 @@ const uz: typeof ru = {
 
   segmentsV2: {
     eyebrow: "05 / Qanday biznes uchun",
-    headline: "Uy yonidagi do'konlar. Minimarketlar. Kafelar. Dorixonalar.",
+    headline: "Uy yonidagi do'konlar. Minimarketlar. Oziq-ovqat do'konlari. Dorixonalar.",
     cards: [
       {
         title: "Uy yonidagi do'kon",
@@ -664,8 +688,8 @@ const uz: typeof ru = {
         body: "Yuzlab pozitsiya, bir necha kassir, qoldiqlar va kassirlarni nazorat.",
       },
       {
-        title: "Kafe va ovqatlanish nuqtasi",
-        body: "Tez chek, QR orqali to'lov, Telegramda chek. Chop etish texnikasisiz.",
+        title: "Oziq-ovqat do'koni",
+        body: "Yuzlab nom, donali va vaznli hisob, QR orqali to'lov, Telegramda chek.",
       },
       {
         title: "Dorixona",
@@ -738,7 +762,7 @@ const uz: typeof ru = {
         links: [
           { label: "Uy yonidagi do'konlar", href: "#segments" },
           { label: "Minimarketlar", href: "#segments" },
-          { label: "Kafelar", href: "#segments" },
+          { label: "Oziq-ovqat", href: "#segments" },
           { label: "Dorixonalar", href: "#segments" },
           { label: "Xizmat", href: "#segments" },
         ],

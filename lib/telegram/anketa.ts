@@ -64,10 +64,12 @@ const TYPE_KEYBOARD: string[][] = [
 
 function mapBusinessType(text: string): BusinessType {
   const t = text.trim().toLowerCase();
+  if (t.includes("минимаркет")) return "minimarket";
   if (t.includes("магазин")) return "shop";
   if (t.includes("кафе")) return "cafe";
   if (t.includes("ресторан")) return "restaurant";
-  if (t.includes("минимаркет") || t.includes("рынок")) return "market";
+  if (t.includes("аптека")) return "pharmacy";
+  if (t.includes("рынок")) return "market";
   if (t.includes("салон") || t.includes("красот")) return "beauty";
   if (t.includes("сервис")) return "service";
   return "other";

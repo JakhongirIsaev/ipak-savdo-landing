@@ -1,7 +1,12 @@
 import { pgTable, serial, text, boolean, timestamp, index, integer } from "drizzle-orm/pg-core";
 import { siteEventNames } from "@/lib/track/event-types";
 
-export const businessTypes = ["shop", "cafe", "restaurant", "market", "beauty", "service", "other"] as const;
+// "minimarket" and "pharmacy" are public-facing form options; the older
+// "cafe"/"restaurant"/"beauty" values stay for backward compatibility with
+// existing leads, the Telegram intake, and admin filters. business_type is a
+// plain text column (drizzle `enum` is a TS-only hint), so adding values needs
+// no DB migration.
+export const businessTypes = ["shop", "minimarket", "cafe", "restaurant", "market", "beauty", "service", "pharmacy", "other"] as const;
 export type BusinessType = (typeof businessTypes)[number];
 
 export const languages = ["ru", "uz"] as const;

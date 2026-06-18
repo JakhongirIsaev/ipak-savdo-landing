@@ -23,11 +23,13 @@ export function sourceLabel(source: string | null | undefined): string {
 
 const TYPE_LABELS: Record<BusinessType, string> = {
   shop: "Магазин",
+  minimarket: "Минимаркет",
   cafe: "Кафе",
   restaurant: "Ресторан",
-  market: "Минимаркет",
+  market: "Рынок / точка",
   beauty: "Салон красоты",
   service: "Услуги",
+  pharmacy: "Аптека",
   other: "Другое",
 };
 

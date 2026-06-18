@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Sora, Manrope, JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@/components/Analytics";
+import { YandexMetrika } from "@/components/YandexMetrika";
 import { VisitorBeacon } from "@/components/VisitorBeacon";
 
 const sora = Sora({
@@ -48,6 +49,13 @@ export const metadata: Metadata = {
   alternates: {
     types: { "application/rss+xml": "https://birliy.uz/feed.xml" },
   },
+  // Search-engine ownership verification. Set these env vars to the tokens
+  // Yandex Webmaster / Google Search Console give you; until then nothing is
+  // rendered. Inherited by every page (locale pages don't override verification).
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || "hsbWtLtcG8YCe2unHP93eBGdi8x0tc5Rdq2DXrMPytk",
+    yandex: process.env.YANDEX_VERIFICATION || "9edd4bcada30a5c7",
+  },
 };
 
 export const viewport: Viewport = {
@@ -77,6 +85,7 @@ export default function RootLayout({
         />
         {children}
         <Analytics />
+        <YandexMetrika />
         <VisitorBeacon />
       </body>
     </html>

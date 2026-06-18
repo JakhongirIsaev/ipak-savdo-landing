@@ -17,7 +17,7 @@ const DATA = {
     note: "Иллюстративные примеры. Реальные отзывы пилотных магазинов появятся здесь.",
     cards: [
       { initials: "Д", name: "Дилшод", where: "минимаркет, Чиланзар", quote: "Вечером больше не пересчитываю кассу вручную. Итоги дня уже в телефоне." },
-      { initials: "Г", name: "Гулнора", where: "кафе, Себзор", quote: "Кассир освоил за полчаса. QR-чек уходит покупателю сам, очередь идёт быстрее." },
+      { initials: "Г", name: "Гулнора", where: "продуктовый магазин, Себзор", quote: "Кассир освоил за полчаса. QR-чек уходит покупателю сам, очередь идёт быстрее." },
       { initials: "Ш", name: "Шерзод", where: "аптека, Юнусабад", quote: "Вижу остатки и выручку, даже когда не на точке. Звонить кассиру больше не нужно." },
     ],
   },
@@ -27,7 +27,7 @@ const DATA = {
     note: "Namunaviy misollar. Pilot do'konlarning haqiqiy fikrlari shu yerda bo'ladi.",
     cards: [
       { initials: "D", name: "Dilshod", where: "minimarket, Chilonzor", quote: "Endi kechqurun kassani qo'lda sanamayman. Kun yakuni telefonimda." },
-      { initials: "G", name: "Gulnora", where: "kafe, Sebzor", quote: "Kassir yarim soatda o'rgandi. QR-chek xaridorga o'zi ketadi, navbat tezroq." },
+      { initials: "G", name: "Gulnora", where: "oziq-ovqat do'koni, Sebzor", quote: "Kassir yarim soatda o'rgandi. QR-chek xaridorga o'zi ketadi, navbat tezroq." },
       { initials: "Sh", name: "Sherzod", where: "dorixona, Yunusobod", quote: "Nuqtada bo'lmasam ham qoldiq va tushumni ko'raman. Kassirga qo'ng'iroq shart emas." },
     ],
   },

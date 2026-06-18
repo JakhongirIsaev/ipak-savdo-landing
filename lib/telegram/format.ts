@@ -4,11 +4,13 @@ import { STATUS_META } from "@/lib/admin/status-meta";
 
 const businessTypeLabelsRu: Record<BusinessType, string> = {
   shop: "магазин",
+  minimarket: "минимаркет",
   cafe: "кафе",
   restaurant: "ресторан",
   market: "рынок / точка",
   beauty: "салон красоты",
   service: "сервис",
+  pharmacy: "аптека",
   other: "другое",
 };
 

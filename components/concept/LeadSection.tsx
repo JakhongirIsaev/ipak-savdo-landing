@@ -6,7 +6,12 @@ import type { Locale } from "./demoData";
 import { useAttribution } from "@/lib/use-attribution";
 import { trackSiteEvent } from "@/lib/track/client";
 
-const BUSINESS_VALUES = ["shop", "cafe", "restaurant", "market", "beauty", "service", "other"] as const;
+// Public dropdown positions BirLiy for shops, minimarkets, pharmacies and market
+// points; it intentionally omits cafe/restaurant/salon (marketing positioning).
+// The backend enum in lib/db/schema.ts still accepts those legacy values for
+// compatibility with existing leads and the Telegram intake. This array is the
+// form-offered subset, indexed in parallel with t.businessTypes.
+const BUSINESS_VALUES = ["shop", "minimarket", "pharmacy", "market", "service", "other"] as const;
 type FormState = "idle" | "submitting" | "sent" | "error";
 
 const MAX_DOC_BYTES = 10 * 1024 * 1024;
@@ -42,7 +47,7 @@ const STR = {
     bizTitle: "Бизнес",
     bizDesc: "Пара слов о точке",
     business: "Тип бизнеса",
-    businessTypes: ["Магазин", "Кафе", "Ресторан", "Рынок / точка", "Салон красоты", "Сервис", "Другое"],
+    businessTypes: ["Магазин", "Минимаркет", "Аптека", "Рынок / точка", "Сервис", "Другое"],
     businessName: "Название магазина",
     other: "Уточните тип бизнеса",
     equipTitle: "Оборудование",
@@ -103,7 +108,7 @@ const STR = {
     bizTitle: "Biznes",
     bizDesc: "Nuqta haqida ikki og'iz",
     business: "Biznes turi",
-    businessTypes: ["Do'kon", "Kafe", "Restoran", "Bozor / nuqta", "Go'zallik saloni", "Servis", "Boshqa"],
+    businessTypes: ["Do'kon", "Minimarket", "Dorixona", "Bozor / nuqta", "Servis", "Boshqa"],
     businessName: "Do'kon nomi",
     other: "Biznes turini aniqlang",
     equipTitle: "Jihozlar",
