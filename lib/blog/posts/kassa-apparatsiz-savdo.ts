@@ -100,7 +100,7 @@ export const post: BlogPost = {
     ru: {
       title: "Торговля без кассового аппарата: хватит телефона",
       description:
-        "Нужен ли кассовый аппарат? Нет. Касса, склад и долги в одном приложении на телефоне. Аппарат от 2 млн сум, BirLiy — 49 000 сум в месяц.",
+        "Нужен ли кассовый аппарат? Нет. Касса, склад и долги в одном приложении на телефоне. Аппарат от 2 млн сум, BirLiy 49 000 сум в месяц.",
       keywords: [
         "торговля без кассового аппарата",
         "нужен ли кассовый аппарат",
@@ -132,7 +132,7 @@ export const post: BlogPost = {
         {
           h2: "Склад и долги: всё в одном приложении",
           paragraphs: [
-            "Магазин — это не только касса, но и склад. BirLiy после каждой продажи автоматически уменьшает остаток, поэтому пересчитывать товар вручную не нужно.",
+            "В магазине не только касса, но и склад. BirLiy после каждой продажи автоматически уменьшает остаток, поэтому пересчитывать товар вручную не нужно.",
             "Товары, отданные в долг, не теряются. На каждого клиента ведётся отдельный счёт долгов: кто взял, сколько и когда вернул.",
           ],
           list: [
@@ -187,7 +187,7 @@ export const post: BlogPost = {
     en: {
       title: "Selling without a cash register: your phone is enough",
       description:
-        "Do you need a cash register machine? No. Cash register, stock, and debts in one phone app. A machine costs 2 million som, BirLiy is 49,000 som per month.",
+        "Do you need a cash register machine? No. Cash register, stock, and debts in one phone app. A machine costs 2 million som, BirLiy is 49 000 som per month.",
       keywords: [
         "selling without cash register",
         "cash register machine cost Uzbekistan",
@@ -206,7 +206,7 @@ export const post: BlogPost = {
           h2: "Why a cash register machine seems necessary",
           paragraphs: [
             "Many owners grew up with the idea: if you have a shop, you need a machine at the counter. In practice, what a shop needs is to record sales, track stock, and know today's earnings. A phone does all of that now.",
-            "A basic cash register machine starts at roughly 2 million som. Add a POS terminal and the cost climbs further. BirLiy costs 49,000 som per month for the first six months. The difference is clear.",
+            "A basic cash register machine starts at roughly 2 million som. Add a POS terminal and the cost climbs further. BirLiy costs 49 000 som per month for the first six months. The difference is clear.",
           ],
         },
         {
@@ -251,7 +251,7 @@ export const post: BlogPost = {
         },
         {
           q: "How much does a cash register cost in Uzbekistan?",
-          a: "A basic cash register machine starts at roughly 2 million som. Add a POS terminal and costs are higher. BirLiy costs 49,000 som per month for the first six months, then 149,000 som per month.",
+          a: "A basic cash register machine starts at roughly 2 million som. Add a POS terminal and costs are higher. BirLiy costs 49 000 som per month for the first six months, then 149 000 som per month.",
         },
         {
           q: "Is there a cash register app for Android?",
