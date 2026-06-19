@@ -1,8 +1,8 @@
 # BirLiy copy-hygiene rules for textlint-rule-prh.
 # Language-agnostic regex (works on Russian Cyrillic AND Uzbek Latin).
 # These are the defects the manager keeps catching. `pnpm lint:copy` runs them.
-# Scope is set in package.json to the LIVE visible-copy files only
-# (components/concept/** + app/page.tsx + app/ru/page.tsx). JsonLd.tsx is NOT
+# Scope is set in package.json to the LIVE visible-copy files
+# (components/concept/** + lib/blog/posts/** + app/page.tsx + app/ru/page.tsx). JsonLd.tsx is NOT
 # linted: its priceCurrency: "UZS" is correct invisible structured data.
 version: 1
 rules:
