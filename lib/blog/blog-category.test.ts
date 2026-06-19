@@ -20,8 +20,8 @@ describe("postCategory", () => {
 });
 
 describe("postsByCategory", () => {
-  it("returns the 7 product posts (4 original guides + 3 new product articles)", () => {
-    expect(postsByCategory("product")).toHaveLength(7);
+  it("returns the 8 product posts (4 original guides + 4 new product articles)", () => {
+    expect(postsByCategory("product")).toHaveLength(8);
   });
 
   it("returns the 2 ai-tech articles", () => {
