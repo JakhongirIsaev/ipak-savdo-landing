@@ -32,6 +32,14 @@ rules:
   # tell it apart from a typographic ellipsis. /landing-qa checks ellipsis on the
   # rendered HTML instead, where no spread operator exists.
 
+  # ── Comma-thousands: thousands separator must be a space, never a comma.
+  # Applies to all languages (9 000 not 9,000; 49 000 not 49,000).
+  # Lookbehind/ahead exclude CSS color tuples like rgb(96,130,182) or 255,255,255
+  # which are legit comma-separated values, not thousands formatting.
+  - expected: "use a space as thousands separator (49 000 not 49,000)"
+    pattern: /(?<!,)\b\d{1,3},\d{3}\b(?!,)/
+    prh: "thousands separator must be a space, never a comma"
+
   # ── Currency: visible text is сум (RU) / so'm (UZ), never the code UZS.
   - expected: "сум (RU) or so'm (UZ)"
     pattern: /UZS/

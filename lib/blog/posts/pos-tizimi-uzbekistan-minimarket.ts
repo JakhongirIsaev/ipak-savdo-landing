@@ -277,8 +277,8 @@ export const post: BlogPost = {
         {
           h2: "How BirLiy fits a minimarket",
           paragraphs: [
-            "BirLiy runs on a phone or tablet and combines checkout, inventory, QR payments and owner reports. Its catalog contains more than 9,000 common products and also supports Excel import.",
-            "The price is 49,000 som per month for the first six months and 149,000 som per month afterward. The team helps connect the shop in one working day, load the first products and train the cashier.",
+            "BirLiy runs on a phone or tablet and combines checkout, inventory, QR payments and owner reports. Its catalog contains more than 9 000 common products and also supports Excel import.",
+            "The price is 49 000 som per month for the first six months and 149 000 som per month afterward. The team helps connect the shop in one working day, load the first products and train the cashier.",
           ],
         },
       ],

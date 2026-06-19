@@ -212,7 +212,7 @@ export const post: BlogPost = {
         {
           h2: "How a single sale is recorded",
           paragraphs: [
-            "In BirLiy each sale is processed in a few steps. The catalog contains more than 9,000 common products, and you can import your own list from Excel, so you do not have to type everything by hand.",
+            "In BirLiy each sale is processed in a few steps. The catalog contains more than 9 000 common products, and you can import your own list from Excel, so you do not have to type everything by hand.",
             "When a sale is recorded, the system does not just print a receipt, it reduces stock and adds the entry to the daily report. So at the end of the day you do not need to separately count what was sold and what ran out.",
           ],
           list: [
@@ -241,7 +241,7 @@ export const post: BlogPost = {
           h2: "How to start with just a phone",
           paragraphs: [
             "To start, no new hardware is needed, the phone in your hand is enough. If the internet drops, BirLiy works in offline mode, and when the connection returns, the data syncs on its own.",
-            "The price is 49,000 som per month for the first six months and 149,000 som per month afterward. The team helps connect your shop in roughly one working day, load the first products and train the cashier.",
+            "The price is 49 000 som per month for the first six months and 149 000 som per month afterward. The team helps connect your shop in roughly one working day, load the first products and train the cashier.",
           ],
         },
       ],

@@ -207,7 +207,7 @@ export const post: BlogPost = {
           h2: "Stock updates itself after every sale",
           paragraphs: [
             "In BirLiy, when a product is sold, the stock on hand drops automatically. That is, you do not record anything separately, the sale itself updates the stock.",
-            "The catalog contains more than 9,000 common products, and you can import your own list from Excel. So it is easy to start inventory tracking without entering every product by hand.",
+            "The catalog contains more than 9 000 common products, and you can import your own list from Excel. So it is easy to start inventory tracking without entering every product by hand.",
           ],
         },
         {
@@ -242,7 +242,7 @@ export const post: BlogPost = {
           h2: "How to start inventory tracking on a phone",
           paragraphs: [
             "To start, no new hardware is needed, a phone is enough, and if the internet drops, BirLiy works in offline mode. Enter the starting stock once, and after that the sale updates it on its own.",
-            "The price is 49,000 som per month for the first six months and 149,000 som per month afterward. The team helps connect the shop, enter the first products and stock and train the cashier.",
+            "The price is 49 000 som per month for the first six months and 149 000 som per month afterward. The team helps connect the shop, enter the first products and stock and train the cashier.",
           ],
         },
       ],
