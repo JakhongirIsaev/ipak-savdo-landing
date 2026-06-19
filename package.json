@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "tsx scripts/migrate.ts && next start",
     "lint": "next lint",
-    "lint:copy": "textlint \"components/concept/**/*.{ts,tsx}\" app/page.tsx app/ru/page.tsx",
+    "lint:copy": "textlint \"components/concept/**/*.{ts,tsx}\" \"lib/blog/posts/**/*.ts\" app/page.tsx app/ru/page.tsx",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

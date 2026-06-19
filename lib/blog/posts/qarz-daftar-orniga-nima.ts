@@ -242,7 +242,7 @@ export const post: BlogPost = {
           h2: "How to switch from a paper notebook",
           paragraphs: [
             "To switch, no new hardware is needed, a phone is enough, and if the internet drops, BirLiy works in offline mode. Enter the starting debts once, and after that everything runs on the phone.",
-            "The price is 49,000 som per month for the first six months and 149,000 som per month afterward. The team helps connect the shop, enter current debts and the catalog and train the cashier.",
+            "The price is 49 000 som per month for the first six months and 149 000 som per month afterward. The team helps connect the shop, enter current debts and the catalog and train the cashier.",
           ],
         },
       ],
