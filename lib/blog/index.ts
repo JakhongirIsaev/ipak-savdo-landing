@@ -4,6 +4,7 @@ import { post as notebookLosses } from "./posts/uchet-v-tetradi-skolko-teryaet-m
 import { post as inventoryGuide } from "./posts/skladskoy-uchet-v-malenkom-magazine";
 import { post as minimarketPosGuide } from "./posts/pos-tizimi-uzbekistan-minimarket";
 // Product expansion (2026-06-19)
+import { post as kassaApparatsizSavdo } from "./posts/kassa-apparatsiz-savdo";
 import { post as magazinUchunDastur } from "./posts/magazin-uchun-dastur-telefonda-savdo";
 import { post as qarzDaftarOrniga } from "./posts/qarz-daftar-orniga-nima";
 import { post as dokondaNimaQolgan } from "./posts/dokonda-nima-qolganini-telefondan-bilish";
@@ -18,6 +19,7 @@ import { post as futbolUzbekistonKolumbiya } from "./posts/futbol-saboq-uzbekist
 
 // Newest first: this order drives the blog index pages.
 export const POSTS: BlogPost[] = [
+  kassaApparatsizSavdo,
   magazinUchunDastur,
   qarzDaftarOrniga,
   dokondaNimaQolgan,

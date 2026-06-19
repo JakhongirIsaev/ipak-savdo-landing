@@ -238,6 +238,7 @@ const POSTS = [
   { slug: "futbol-saboq-angliya-xorvatiya", motif: "football", seed: 7 },
   { slug: "futbol-saboq-gana-panama", motif: "football", seed: 8 },
   { slug: "futbol-saboq-uzbekiston-kolumbiya", motif: "football", seed: 9 },
+  { slug: "kassa-apparatsiz-savdo", motif: "phone", seed: 14 },
   // Older posts (had no cover -> 404 on the blog index). Covers added 2026-06-19.
   { slug: "pos-tizimi-uzbekistan-minimarket", motif: "phone", seed: 10 },
   { slug: "kak-vybrat-kassu-dlya-magazina", motif: "phone", seed: 11 },
