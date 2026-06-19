@@ -81,15 +81,15 @@ export const post: BlogPost = {
         },
         {
           q: "Qarzni telefonda yuritsa bo'ladimi?",
-          a: "Ha. BirLiy har bir mijozning qarzini alohida yuritadi, qisman to'lovda qoldiq o'zi yangilanadi va egasi umumiy qarzni telefonidan ko'radi.",
+          a: "BirLiy har bir mijozning qarzini alohida yuritadi, qisman to'lovda qoldiq o'zi yangilanadi va egasi umumiy qarzni telefonidan ko'radi.",
         },
         {
           q: "Nasiya hisobi sotuv bilan bog'lanadimi?",
-          a: "Ha. Qarzga berilgan tovar sotuv sifatida yoziladi va ombordagi qoldiqni kamaytiradi, shuning uchun qoldiq to'g'ri qoladi.",
+          a: "Qarzga berilgan tovar sotuv sifatida yoziladi va ombordagi qoldiqni kamaytiradi, shuning uchun qoldiq to'g'ri qoladi.",
         },
         {
           q: "Internet bo'lmasa qarz hisobi ishlaydimi?",
-          a: "Ha. BirLiy oflayn rejimda qarzni yozishda davom etadi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
+          a: "BirLiy oflayn rejimda qarzni yozishda davom etadi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
         },
       ],
       cta: {
@@ -167,15 +167,15 @@ export const post: BlogPost = {
         },
         {
           q: "Можно ли вести долги в телефоне?",
-          a: "Да. BirLiy ведёт долг каждого клиента отдельно, при частичной оплате остаток обновляется сам, а владелец видит общий долг со своего телефона.",
+          a: "BirLiy ведёт долг каждого клиента отдельно, при частичной оплате остаток обновляется сам, а владелец видит общий долг со своего телефона.",
         },
         {
           q: "Связан ли учёт долгов с продажами?",
-          a: "Да. Товар, отданный в долг, записывается как продажа и уменьшает остаток на складе, поэтому остаток остаётся верным.",
+          a: "Товар, отданный в долг, записывается как продажа и уменьшает остаток на складе, поэтому остаток остаётся верным.",
         },
         {
           q: "Работает ли учёт долгов без интернета?",
-          a: "Да. BirLiy продолжает записывать долги в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
+          a: "BirLiy продолжает записывать долги в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
         },
       ],
       cta: {
@@ -253,15 +253,15 @@ export const post: BlogPost = {
         },
         {
           q: "Can you track debts on a phone?",
-          a: "Yes. BirLiy tracks each customer's debt separately, the remaining amount updates on partial payment, and the owner sees the total debt from a phone.",
+          a: "BirLiy tracks each customer's debt separately, the remaining amount updates on partial payment, and the owner sees the total debt from a phone.",
         },
         {
           q: "Is debt tracking linked to sales?",
-          a: "Yes. A product given on credit is recorded as a sale and reduces the stock on hand, so the stock stays correct.",
+          a: "A product given on credit is recorded as a sale and reduces the stock on hand, so the stock stays correct.",
         },
         {
           q: "Does debt tracking work without internet?",
-          a: "Yes. BirLiy keeps recording debts in offline mode, and when the internet returns, the data syncs automatically.",
+          a: "BirLiy keeps recording debts in offline mode, and when the internet returns, the data syncs automatically.",
         },
       ],
       cta: {

@@ -238,6 +238,11 @@ const POSTS = [
   { slug: "futbol-saboq-angliya-xorvatiya", motif: "football", seed: 7 },
   { slug: "futbol-saboq-gana-panama", motif: "football", seed: 8 },
   { slug: "futbol-saboq-uzbekiston-kolumbiya", motif: "football", seed: 9 },
+  // Older posts (had no cover -> 404 on the blog index). Covers added 2026-06-19.
+  { slug: "pos-tizimi-uzbekistan-minimarket", motif: "phone", seed: 10 },
+  { slug: "kak-vybrat-kassu-dlya-magazina", motif: "phone", seed: 11 },
+  { slug: "uchet-v-tetradi-skolko-teryaet-magazin", motif: "debt", seed: 12 },
+  { slug: "skladskoy-uchet-v-malenkom-magazine", motif: "boxes", seed: 13 },
 ];
 
 const RATIOS = [
@@ -274,4 +279,11 @@ for (const post of POSTS) {
     count++;
   }
 }
-console.log(`Generated ${count} cover images into ${OUT}`);
+
+// Shared landscape social/OG card (1200x630, the size og:image/Twitter expect).
+// Replaces the old portrait owner-tablet.jpg fallback whose declared dims were wrong.
+const ogSvg = buildSvg({ slug: "birliy-og", motif: "phone", seed: 0 }, 1200, 630);
+await sharp(Buffer.from(ogSvg)).jpeg({ quality: 88, chromaSubsampling: "4:4:4" }).toFile(join(OUT, "birliy-og.jpg"));
+count++;
+
+console.log(`Generated ${count} images into ${OUT} (incl. birliy-og.jpg 1200x630)`);

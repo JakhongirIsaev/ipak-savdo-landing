@@ -112,8 +112,10 @@ export function blogPostPath(locale: BlogLocale, slug: string): string {
 }
 
 export function landingPath(locale: BlogLocale): string {
-  // There is no English landing yet: EN blog pages link to the Russian one.
-  return locale === "uz" ? "/" : "/ru";
+  // uz -> root, ru -> /ru. There is no English landing yet, so EN blog pages
+  // point at the uz root (the x-default), NOT /ru: an English article's
+  // breadcrumb/home must not resolve to a Russian-language page.
+  return locale === "ru" ? "/ru" : "/";
 }
 
 export const CATEGORY_LABEL: Record<BlogCategory, Record<BlogLocale, string>> = {

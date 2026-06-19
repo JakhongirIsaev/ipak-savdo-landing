@@ -4,6 +4,12 @@ export const post: BlogPost = {
   slug: "kak-vybrat-kassu-dlya-magazina",
   category: "product",
   date: "2026-06-11",
+  modified: "2026-06-19",
+  image: {
+    square: "https://birliy.uz/photos/blog/kak-vybrat-kassu-dlya-magazina-1x1.jpg",
+    landscape: "https://birliy.uz/photos/blog/kak-vybrat-kassu-dlya-magazina-4x3.jpg",
+    wide: "https://birliy.uz/photos/blog/kak-vybrat-kassu-dlya-magazina-16x9.jpg",
+  },
   locales: {
     uz: {
       title: "Do'kon uchun kassa dasturini qanday tanlash kerak (2026)",
@@ -92,7 +98,7 @@ export const post: BlogPost = {
         },
         {
           q: "Kassa dasturi sotuvchi firibgarligidan himoya qiladimi?",
-          a: "Ha, agar dasturda PIN orqali kirish va har bir amalning jurnali bo'lsa. Shunda kassada nima bo'lganini ko'rasiz va kim qaysi amalni qilganini tekshira olasiz.",
+          a: "PIN orqali kirish va har bir amalning jurnali bo'lsa, dastur kassirdan himoya qiladi. Shunda kassada nima bo'lganini ko'rasiz va kim qaysi amalni qilganini tekshira olasiz.",
         },
       ],
       cta: {
@@ -188,7 +194,7 @@ export const post: BlogPost = {
         },
         {
           q: "Защищает ли касса от обмана со стороны продавца?",
-          a: "Да, если в программе есть вход по PIN и журнал каждого действия. Тогда вы видите, что происходило в кассе, и можете проверить, кто и какое действие выполнил.",
+          a: "Программа защищает от обмана кассира, если в ней есть вход по PIN и журнал каждого действия. Тогда вы видите, что происходило в кассе, и можете проверить, кто и какое действие выполнил.",
         },
       ],
       cta: {
@@ -280,7 +286,7 @@ export const post: BlogPost = {
         },
         {
           q: "Can a POS app protect against cashier fraud?",
-          a: "Yes, if it has PIN access and a journal of every action. Then you can see what happened at the till and check who performed each action.",
+          a: "A POS app protects against cashier fraud when it has PIN access and a journal of every action. Then you can see what happened at the till and check who performed each action.",
         },
       ],
       cta: {

@@ -4,6 +4,12 @@ export const post: BlogPost = {
   slug: "skladskoy-uchet-v-malenkom-magazine",
   category: "product",
   date: "2026-06-11",
+  modified: "2026-06-19",
+  image: {
+    square: "https://birliy.uz/photos/blog/skladskoy-uchet-v-malenkom-magazine-1x1.jpg",
+    landscape: "https://birliy.uz/photos/blog/skladskoy-uchet-v-malenkom-magazine-4x3.jpg",
+    wide: "https://birliy.uz/photos/blog/skladskoy-uchet-v-malenkom-magazine-16x9.jpg",
+  },
   locales: {
     uz: {
       title: "Do'konda ombor hisobi: yangi boshlovchilar uchun qo'llanma",
@@ -97,7 +103,7 @@ export const post: BlogPost = {
         },
         {
           q: "Internet bo'lmasa ombor hisobi ishlaydimi?",
-          a: "Ha. Ilova internetsiz ham ishlaydi: sotuv qabul qilinadi, qoldiq yangilanadi. Aloqa qaytganda hamma ma'lumot o'zi sinxronlanadi.",
+          a: "Ilova internetsiz ham ishlaydi: sotuv qabul qilinadi, qoldiq yangilanadi. Aloqa qaytganda hamma ma'lumot o'zi sinxronlanadi.",
         },
       ],
       cta: {
@@ -199,7 +205,7 @@ export const post: BlogPost = {
         },
         {
           q: "Работает ли складской учёт без интернета?",
-          a: "Да. Приложение работает и без интернета: продажа принимается, остаток обновляется. Когда связь вернётся, все данные синхронизируются сами.",
+          a: "Приложение работает и без интернета: продажа принимается, остаток обновляется. Когда связь вернётся, все данные синхронизируются сами.",
         },
       ],
       cta: {
@@ -299,7 +305,7 @@ export const post: BlogPost = {
         },
         {
           q: "Does inventory tracking work without internet?",
-          a: "Yes. The app works offline too: a sale is taken, the stock updates. When the connection returns, all data syncs on its own.",
+          a: "The app works offline too: a sale is taken, the stock updates. When the connection returns, all data syncs on its own.",
         },
       ],
       cta: {

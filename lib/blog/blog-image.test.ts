@@ -36,8 +36,8 @@ describe("BlogPost.image -> BlogPosting JSON-LD", () => {
     expect(blogPosting(withImage, "ru").image).toEqual([IMAGES.square, IMAGES.landscape, IMAGES.wide]);
   });
 
-  it("falls back to the shared image when image is absent", () => {
-    expect(blogPosting(withoutImage, "ru").image).toBe(`${SITE}/photos/owner-tablet.jpg`);
+  it("falls back to the shared landscape image when image is absent", () => {
+    expect(blogPosting(withoutImage, "ru").image).toBe(`${SITE}/photos/blog/birliy-og.jpg`);
   });
 });
 
@@ -52,9 +52,16 @@ describe("BlogPost.image -> Open Graph + Twitter metadata", () => {
     expect((md.twitter as { images?: unknown })?.images).toEqual([IMAGES.wide]);
   });
 
-  it("retains the fallback image (1120x840) when image is absent", () => {
+  it("falls back to a LANDSCAPE 1200x630 social card (not a portrait) when image is absent", () => {
     const md = blogPostMetadata(withoutImage, "ru");
-    expect(md.openGraph?.images).toEqual([{ url: "/photos/owner-tablet.jpg", width: 1120, height: 840, alt: "Title ru" }]);
-    expect((md.twitter as { images?: unknown })?.images).toEqual(["/photos/owner-tablet.jpg"]);
+    expect(md.openGraph?.images).toEqual([{ url: "/photos/blog/birliy-og.jpg", width: 1200, height: 630, alt: "Title ru" }]);
+    expect((md.twitter as { images?: unknown })?.images).toEqual(["/photos/blog/birliy-og.jpg"]);
+  });
+
+  it("declared OG dimensions are landscape (width > height) in both the image and fallback paths", () => {
+    for (const post of [withImage, withoutImage]) {
+      const img = (blogPostMetadata(post, "ru").openGraph?.images as Array<{ width: number; height: number }>)[0];
+      expect(img.width, post.slug).toBeGreaterThan(img.height);
+    }
   });
 });

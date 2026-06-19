@@ -4,6 +4,12 @@ export const post: BlogPost = {
   slug: "uchet-v-tetradi-skolko-teryaet-magazin",
   category: "product",
   date: "2026-06-11",
+  modified: "2026-06-19",
+  image: {
+    square: "https://birliy.uz/photos/blog/uchet-v-tetradi-skolko-teryaet-magazin-1x1.jpg",
+    landscape: "https://birliy.uz/photos/blog/uchet-v-tetradi-skolko-teryaet-magazin-4x3.jpg",
+    wide: "https://birliy.uz/photos/blog/uchet-v-tetradi-skolko-teryaet-magazin-16x9.jpg",
+  },
   locales: {
     uz: {
       title: "Daftar hisobi: do'konga aslida qancha turadi",
@@ -89,7 +95,7 @@ export const post: BlogPost = {
         },
         {
           q: "Qarz daftarini telefonda yuritsa bo'ladimi?",
-          a: "Ha. Ilovada har bir qarz o'z egasi bilan saqlanadi, betlar aralashmaydi. Kim qancha qarzdor ekani har doim aniq ko'rinib turadi.",
+          a: "Ilovada har bir qarz o'z egasi bilan saqlanadi, betlar aralashmaydi. Kim qancha qarzdor ekani har doim aniq ko'rinib turadi.",
         },
         {
           q: "Savdo hisobini yuritishni boshlash qiyinmi?",
@@ -187,7 +193,7 @@ export const post: BlogPost = {
         },
         {
           q: "Можно ли вести долги покупателей в телефоне?",
-          a: "Да. В приложении каждый долг хранится со своим хозяином, страницы не путаются. Кто сколько должен, видно в любой момент, и про долг не забывают.",
+          a: "В приложении каждый долг хранится со своим хозяином, страницы не путаются. Кто сколько должен, видно в любой момент, и про долг не забывают.",
         },
         {
           q: "Сложно ли начать вести учёт в магазине?",
@@ -281,7 +287,7 @@ export const post: BlogPost = {
         },
         {
           q: "Can I track customer debts on a phone?",
-          a: "Yes. In the app each debt is kept with its owner and pages do not get mixed up. Who owes how much is visible at any moment, and debts are not forgotten.",
+          a: "In the app each debt is kept with its owner and pages do not get mixed up. Who owes how much is visible at any moment, and debts are not forgotten.",
         },
         {
           q: "Is it hard to start small shop inventory tracking?",

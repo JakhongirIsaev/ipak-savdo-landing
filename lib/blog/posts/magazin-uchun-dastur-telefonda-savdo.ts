@@ -81,15 +81,15 @@ export const post: BlogPost = {
         },
         {
           q: "Telefonda kassa yuritish mumkinmi?",
-          a: "Ha. BirLiy telefon yoki planshetda kassa vazifasini bajaradi: tovarni tanlaysiz, to'lov turini belgilaysiz, sotuv yoziladi va qoldiq o'zi kamayadi.",
+          a: "BirLiy telefon yoki planshetda kassa vazifasini bajaradi: tovarni tanlaysiz, to'lov turini belgilaysiz, sotuv yoziladi va qoldiq o'zi kamayadi.",
         },
         {
           q: "Egasi tushumni boshqa joydan ko'ra oladimi?",
-          a: "Ha. Egasi do'konda turmasdan ham telefonidan bugungi tushum, kam qolgan tovar va kassir smenasini ko'radi.",
+          a: "Egasi do'konda turmasdan ham telefonidan bugungi tushum, kam qolgan tovar va kassir smenasini ko'radi.",
         },
         {
           q: "Internet bo'lmasa do'kon dasturi ishlaydimi?",
-          a: "Ha. BirLiy oflayn rejimda sotuvni davom ettiradi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
+          a: "BirLiy oflayn rejimda sotuvni davom ettiradi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
         },
       ],
       cta: {
@@ -167,15 +167,15 @@ export const post: BlogPost = {
         },
         {
           q: "Можно ли вести кассу в телефоне?",
-          a: "Да. BirLiy выполняет роль кассы на телефоне или планшете: вы выбираете товар, указываете способ оплаты, продажа записывается, а остаток уменьшается сам.",
+          a: "BirLiy выполняет роль кассы на телефоне или планшете: вы выбираете товар, указываете способ оплаты, продажа записывается, а остаток уменьшается сам.",
         },
         {
           q: "Может ли владелец видеть выручку удалённо?",
-          a: "Да. Владелец видит со своего телефона сегодняшнюю выручку, заканчивающиеся товары и смену кассира, даже не находясь в магазине.",
+          a: "Владелец видит со своего телефона сегодняшнюю выручку, заканчивающиеся товары и смену кассира, даже не находясь в магазине.",
         },
         {
           q: "Работает ли программа для магазина без интернета?",
-          a: "Да. BirLiy продолжает продажи в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
+          a: "BirLiy продолжает продажи в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
         },
       ],
       cta: {
@@ -252,15 +252,15 @@ export const post: BlogPost = {
         },
         {
           q: "Can you run a cash register on a phone?",
-          a: "Yes. BirLiy acts as a cash register on a phone or tablet: you pick a product, set the payment type, the sale is recorded, and stock drops on its own.",
+          a: "BirLiy acts as a cash register on a phone or tablet: you pick a product, set the payment type, the sale is recorded, and stock drops on its own.",
         },
         {
           q: "Can the owner see revenue remotely?",
-          a: "Yes. The owner sees today's revenue, low-stock items and the cashier's shift from a phone, even without being in the shop.",
+          a: "The owner sees today's revenue, low-stock items and the cashier's shift from a phone, even without being in the shop.",
         },
         {
           q: "Does shop software work without internet?",
-          a: "Yes. BirLiy continues sales in offline mode, and when the internet returns, the data syncs automatically.",
+          a: "BirLiy continues sales in offline mode, and when the internet returns, the data syncs automatically.",
         },
       ],
       cta: {

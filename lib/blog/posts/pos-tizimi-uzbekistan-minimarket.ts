@@ -7,7 +7,12 @@ export const post: BlogPost = {
   slug: "pos-tizimi-uzbekistan-minimarket",
   category: "product",
   date: "2026-06-15",
-  modified: "2026-06-15",
+  modified: "2026-06-19",
+  image: {
+    square: "https://birliy.uz/photos/blog/pos-tizimi-uzbekistan-minimarket-1x1.jpg",
+    landscape: "https://birliy.uz/photos/blog/pos-tizimi-uzbekistan-minimarket-4x3.jpg",
+    wide: "https://birliy.uz/photos/blog/pos-tizimi-uzbekistan-minimarket-16x9.jpg",
+  },
   locales: {
     uz: {
       title: "O'zbekistonda minimarket uchun POS tizimi: 2026 qo'llanma",
@@ -88,7 +93,7 @@ export const post: BlogPost = {
         },
         {
           q: "Minimarket kassasi telefonda ishlashi mumkinmi?",
-          a: "Ha. Kichik nuqta telefon yoki planshetdan boshlashi, savdo hajmi oshganda esa skaner va boshqa uskunani qo'shishi mumkin.",
+          a: "Kichik nuqta telefon yoki planshetdan boshlashi, savdo hajmi oshganda esa skaner va boshqa uskunani qo'shishi mumkin.",
         },
         {
           q: "O'zbekistonda POS tanlashda eng muhim narsa nima?",
@@ -187,7 +192,7 @@ export const post: BlogPost = {
         },
         {
           q: "Может ли касса минимаркета работать на телефоне?",
-          a: "Да. Небольшая точка может начать с телефона или планшета, а при росте потока добавить сканер и другое оборудование.",
+          a: "Небольшая точка может начать с телефона или планшета, а при росте потока добавить сканер и другое оборудование.",
         },
         {
           q: "Что важнее всего при выборе POS в Узбекистане?",
@@ -284,7 +289,7 @@ export const post: BlogPost = {
         },
         {
           q: "Can a minimarket checkout run on a phone?",
-          a: "Yes. A small shop can start with a phone or tablet and add a scanner or other hardware as transaction volume grows.",
+          a: "A small shop can start with a phone or tablet and add a scanner or other hardware as transaction volume grows.",
         },
         {
           q: "What matters most when choosing a POS in Uzbekistan?",

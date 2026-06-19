@@ -5,9 +5,10 @@ import { postsByCategory } from "./index";
 
 const SITE = "https://birliy.uz";
 
-// Shared social-share card for blog pages. Reuses the on-brand landing image
-// until a dedicated 1200x630 blog card is produced.
-const BLOG_OG_IMAGE = "/photos/owner-tablet.jpg";
+// Shared landscape social-share card for blog pages. 1200x630 is the size
+// og:image / Twitter summary_large_image expect; the declared dimensions match
+// the real file (the old fallback declared 1120x840 for a 1200x1500 portrait).
+const BLOG_OG = { url: "/photos/blog/birliy-og.jpg", width: 1200, height: 630 };
 
 const INDEX_KEYWORDS: Record<BlogLocale, string[]> = {
   uz: [
@@ -71,13 +72,13 @@ export function blogIndexMetadata(locale: BlogLocale): Metadata {
       url,
       siteName: "BirLiy",
       locale: ui.ogLocale,
-      images: [{ url: BLOG_OG_IMAGE, width: 1120, height: 840, alt: ui.blogTitle }],
+      images: [{ ...BLOG_OG, alt: ui.blogTitle }],
     },
     twitter: {
       card: "summary_large_image",
       title: ui.blogTitle,
       description: ui.blogDescription,
-      images: [BLOG_OG_IMAGE],
+      images: [BLOG_OG.url],
     },
   };
 }
@@ -113,13 +114,13 @@ export function blogCategoryMetadata(locale: BlogLocale, category: BlogCategory)
       url,
       siteName: "BirLiy",
       locale: ui.ogLocale,
-      images: [{ url: BLOG_OG_IMAGE, width: 1120, height: 840, alt: title }],
+      images: [{ ...BLOG_OG, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [BLOG_OG_IMAGE],
+      images: [BLOG_OG.url],
     },
   };
 }
@@ -137,7 +138,7 @@ export function blogPostMetadata(post: BlogPost, locale: BlogLocale): Metadata {
   // fall back to the shared blog image.
   const ogImage = post.image
     ? { url: post.image.wide, width: 1200, height: 675 }
-    : { url: BLOG_OG_IMAGE, width: 1120, height: 840 };
+    : BLOG_OG;
   return {
     title: c.title,
     description: c.description,

@@ -30,6 +30,7 @@ export const post: BlogPost = {
         "do'kon egasi uchun",
       ],
       intro: [
+        "Qisqa javob: O'zbekiston Kolumbiyaga yutqazdi, lekin ilk bor jahon chempionatida o'ynash tarixiy qadam edi. Do'kon egasi uchun saboq: do'konni birinchi marta BirLiyda raqamli yuritish ham shunday qadam, darhol mukammal natija shart emas, tushum, qoldiq va qarz ko'rina boshlashi bilan o'sish boshlanadi.",
         "2026-yil 17-iyun kuni O'zbekiston Kolumbiyaga 1:3 hisobida yutqazdi, ammo bu O'zbekiston uchun tarixiy kun edi: jamoa ilk bor jahon chempionatida maydonga chiqdi va Mexiko shahridagi mashhur Asteka stadionida o'ynadi.",
         "Daniel Munyos 40-daqiqada Kolumbiyani oldinga chiqardi, Abbosbek Fayzullayev esa 60-daqiqada hisobni tengladi. So'ng Luis Dias 65-daqiqada va Yaminton Kampas qo'shimcha vaqtda (90+9) Kolumbiya foydasiga 3:1 ni ta'minladi. Natija mag'lubiyat bo'lsa-da, sahna eng baland edi.",
         "Bu sport tahlili yoki bashorat emas, balki do'kon egasi uchun amaliy saboq. Kattaroq sahnaga birinchi qadam, hatto darhol g'alaba kelmasa ham, eng muhimi.",
@@ -112,6 +113,7 @@ export const post: BlogPost = {
         "для владельца магазина",
       ],
       intro: [
+        "Короткий ответ: Узбекистан проиграл Колумбии, но впервые в истории вышел на чемпионат мира - это и есть главный шаг. Урок для владельца магазина: первый раз перевести магазин на цифровой учёт в BirLiy - такой же шаг, и совершенство с первого дня не обязательно, выручка, остатки и долги начинают быть видны, и рост начинается.",
         "17 июня 2026 года Узбекистан уступил Колумбии 1:3, но это был исторический день: сборная впервые вышла на чемпионат мира и сыграла на знаменитом стадионе Ацтека в Мехико.",
         "Даниэль Муньос на 40-й минуте вывел Колумбию вперёд, а Аббосбек Файзуллаев на 60-й минуте сравнял счёт. Затем Луис Диас на 65-й минуте и Яминтон Кампас в добавленное время (90+9) сделали 3:1 в пользу Колумбии. Результат, поражение, но сцена была самой высокой.",
         "Это не спортивный прогноз и не ставки, а практический урок для владельца магазина. Первый шаг на большую сцену важнее всего, даже если победа не приходит сразу.",
@@ -194,6 +196,7 @@ export const post: BlogPost = {
         "for shop owners",
       ],
       intro: [
+        "Short answer: Uzbekistan lost to Colombia, but making a World Cup debut for the first time in history is the step that matters most. The lesson for a shop owner is the same: digitizing the shop for the first time in BirLiy is that step, perfection on day one is not required, once revenue, stock and debts become visible, growth begins.",
         "On 17 June 2026 Uzbekistan lost 1-3 to Colombia, but it was a historic day: the team appeared at a World Cup for the first time and played at the famous Estadio Azteca in Mexico City.",
         "Daniel Munoz put Colombia ahead in the 40th minute, and Abbosbek Fayzullaev equalized in the 60th minute. Then Luis Diaz in the 65th minute and Jaminton Campaz in stoppage time (90+9) made it 3-1 for Colombia. The result was a defeat, but the stage was the highest.",
         "This is not sports analysis or betting, just a practical lesson for a shop owner. The first step onto a bigger stage matters most, even if the win does not come right away.",

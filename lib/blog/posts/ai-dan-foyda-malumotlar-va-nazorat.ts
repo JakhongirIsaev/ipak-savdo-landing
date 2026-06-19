@@ -26,6 +26,7 @@ export const post: BlogPost = {
         "BirLiy POS",
       ],
       intro: [
+        "Qisqa javob: AI loyihalarining ko'pchiligi past ma'lumot sifati tufayli o'lchanadigan foyda bermaydi. Do'kon egasi uchun birinchi va eng foydali qadam, savdo, qoldiq, qarz va naqd harakatlarini BirLiyda kundalik raqamli yuritishdir: toza va tartibli ma'lumot kelajakdagi har qanday tahlil yoki AI vositasining asosi bo'ladi.",
         "AI haqidagi suhbat o'zgarmoqda. Avval koʻproq imkoniyatlar va shov-shuv haqida gapirilardi, endi esa eʼtibor maʼlumot sifati, nazorat va o'lchanadigan foyda, yaʼni ROI tomon ko'chmoqda.",
         "Bu o'zgarish kichik do'kon uchun ham oddiy saboq beradi: AI sizga foyda berishidan oldin, savdo, qoldiq, qarz va naqd avval raqamli va toza bo'lishi kerak.",
         "Hisobni hali daftarcha bilan yuritadigan do'konda AI ishlatadigan maʼlumot umuman yo'q. BirLiy AI mahsuloti emas, lekin u aynan shu raqamli asosni yaratadi.",
@@ -111,6 +112,7 @@ export const post: BlogPost = {
         "BirLiy POS",
       ],
       intro: [
+        "Короткий ответ: большинство AI-проектов не дают измеримой отдачи из-за низкого качества данных. Для владельца магазина первый и самый полезный шаг - ежедневно фиксировать продажи, остатки, долги и наличные в BirLiy: чистые данные станут основой любого будущего анализа или AI-инструмента.",
         "Разговор об AI меняется. Раньше больше говорили о возможностях и хайпе, теперь же внимание смещается к качеству данных, контролю и измеримой пользе, то есть к ROI.",
         "Эта перемена даёт простой урок и для небольшого магазина: прежде чем AI принесёт вам пользу, продажи, остатки, долги и наличные должны сначала стать цифровыми и чистыми.",
         "В магазине, где учёт всё ещё в бумажной тетради, у AI попросту нет данных для работы. BirLiy не является AI-продуктом, но он создаёт именно эту цифровую основу.",
@@ -196,6 +198,7 @@ export const post: BlogPost = {
         "BirLiy POS",
       ],
       intro: [
+        "Short answer: most AI projects fail to deliver measurable returns because of poor data quality. For a shop owner the first and most useful step is to record daily sales, stock, debts and cash in BirLiy: clean data becomes the foundation for any future analysis or AI tool.",
         "The conversation about AI is changing. There used to be more talk of possibilities and hype; now attention is shifting to data quality, control and measurable value, that is, ROI.",
         "This shift gives a simple lesson to a small shop too: before any AI can help you, your sales, stock, debts and cash must first be digital and clean.",
         "In a shop that still keeps records in a paper notebook, there is simply no data for AI to use. BirLiy is not an AI product, but it builds exactly this digital foundation.",

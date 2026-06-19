@@ -30,6 +30,7 @@ export const post: BlogPost = {
         "do'kon egasi uchun",
       ],
       intro: [
+        "Qisqa javob: Angliya 4 gol urdi, lekin himoyasiz ikki marta gol o'tkazdi. Do'kon egasi uchun saboq: katta sotuv tushumi yaxshi, lekin ombordagi qoldiq oqib ketsa va qarz yozilmasa, foyda kamayadi. BirLiyda sotuv, qoldiq va qarzni birga nazorat qilish barqaror natija beradi.",
         "2026-yil 17-iyun kuni Angliya Xorvatiyani 4:2 hisobida yengdi. Garri Keyn 12-daqiqada penaltidan, so'ng 42-daqiqada yana gol urdi, ammo Xorvatiya javob qaytardi: Martin Baturina 36-daqiqada va Petar Musa qo'shimcha vaqtda (45+5) hisobni birinchi taymda 2:2 ga olib keldi.",
         "Ikkinchi taym boshida Jud Bellingem 47-daqiqada Angliyani yana oldinga chiqardi, Markus Reshford esa 85-daqiqada hisobni 4:2 ga yetkazdi. Kuchli hujum o'zi yetmadi, natijani tartibli o'yin hal qildi.",
         "Bu sport tahlili yoki bashorat emas, balki do'kon egasi uchun amaliy saboq. Yaxshi hujum, ya'ni katta sotuv, faqat yaxshi himoya, ya'ni ombor va qarz nazorati bilan natija beradi.",
@@ -112,6 +113,7 @@ export const post: BlogPost = {
         "для владельца магазина",
       ],
       intro: [
+        "Короткий ответ: Англия забила 4 гола, но без обороны пропустила два. Урок для владельца магазина: высокая выручка это хорошо, но если остатки утекают и долги не записаны, прибыль уменьшается. Контроль продаж, остатков и долгов вместе в BirLiy даёт устойчивый результат.",
         "17 июня 2026 года Англия победила Хорватию 4:2. Гарри Кейн забил с пенальти на 12-й минуте, а затем снова на 42-й, но Хорватия ответила: Мартин Батурина на 36-й минуте и Петар Муса в добавленное время (45+5) сделали счёт 2:2 к перерыву.",
         "В начале второго тайма Джуд Беллингем на 47-й минуте снова вывел Англию вперёд, а Маркус Рашфорд на 85-й минуте довёл счёт до 4:2. Сильной атаки самой по себе не хватило, результат решила организованная игра.",
         "Это не спортивный прогноз и не ставки, а практический урок для владельца магазина. Хорошая атака, то есть крупные продажи, даёт результат только с хорошей обороной, то есть с контролем остатков и долгов.",
@@ -194,6 +196,7 @@ export const post: BlogPost = {
         "for shop owners",
       ],
       intro: [
+        "Short answer: England scored four but still conceded twice without solid defense. For a shop owner the lesson is plain: strong revenue is good, but if stock leaks out and debts go unrecorded, profit shrinks. Tracking sales, stock and debts together in BirLiy is what keeps the result steady.",
         "On 17 June 2026 England beat Croatia 4-2. Harry Kane scored a penalty in the 12th minute and again in the 42nd, but Croatia hit back: Martin Baturina in the 36th minute and Petar Musa in stoppage time (45+5) made it 2-2 at the break.",
         "Early in the second half Jude Bellingham restored the lead in the 47th minute, and Marcus Rashford sealed it 4-2 in the 85th minute. A strong attack alone was not enough, an organized game decided the result.",
         "This is not sports analysis or betting, just a practical lesson for a shop owner. A good attack, meaning big sales, only delivers a result with a good defense, meaning stock and debt control.",

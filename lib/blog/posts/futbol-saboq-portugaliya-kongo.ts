@@ -30,6 +30,7 @@ export const post: BlogPost = {
         "do'kon egasi uchun",
       ],
       intro: [
+        "Qisqa javob: Portugaliyaning kuchli nomiga va tarkibiga qaramay, Kongo 1:1 hisobida durang qildi va g'alaba kelmadi. Do'kon egasi uchun saboq aniq: mashhur joy yoki yuqori sotuv o'z-o'zidan yetarli emas, qoldiq, tushum va qarzni har kuni BirLiyda kuzatib borish asl natijani belgilaydi.",
         "2026-yil 17-iyun kuni Portugaliya va Kongo Demokratik Respublikasi 1:1 hisobida durang o'ynadi. Joao Neves 6-daqiqada boshi bilan Portugaliyani oldinga chiqardi, Yoane Vissa esa birinchi taym qo'shimcha vaqtida (45+5) hisobni tenglashtirib, Kongo uchun jahon chempionatlari tarixidagi birinchi golni kiritdi.",
         "Portugaliya ko'p hujum qildi, to'pni ko'proq nazorat qildi, Ronaldu esa 68 va 73-daqiqalarda ikkita aniq imkoniyatni boy berdi. Mashhur nom va kuchli tarkib bo'lsa ham, g'alaba kelmadi.",
         "Bu sport tahlili yoki bashorat emas, balki do'kon egasi uchun amaliy saboq. Nom va shuhrat o'zi pul keltirmaydi, har kunlik nazorat keltiradi.",
@@ -112,6 +113,7 @@ export const post: BlogPost = {
         "для владельца магазина",
       ],
       intro: [
+        "Короткий ответ: несмотря на громкое имя Португалии, Конго сыграл вничью 1:1. Урок для владельца магазина прямой: известное место или высокие продажи сами по себе не достаточны, ежедневный контроль остатков, выручки и долгов в BirLiy решает результат.",
         "17 июня 2026 года Португалия и ДР Конго сыграли вничью 1:1. Жоау Невеш на 6-й минуте вывел Португалию вперёд ударом головой, а Йоан Висса в добавленное время первого тайма (45+5) сравнял счёт, забив первый в истории гол сборной Конго на чемпионатах мира.",
         "Португалия больше атаковала и владела мячом, а Роналду на 68-й и 73-й минутах не реализовал два явных момента. Несмотря на громкое имя и сильный состав, победа не пришла.",
         "Это не спортивный прогноз и не ставки, а практический урок для владельца магазина. Имя само по себе не приносит денег, их приносит ежедневный контроль.",
@@ -194,6 +196,7 @@ export const post: BlogPost = {
         "for shop owners",
       ],
       intro: [
+        "Short answer: despite Portugal's big name, DR Congo held them to a 1-1 draw. The lesson for a shop owner is direct: a famous location or high sales volume alone is not enough, daily control of stock, revenue and debts in BirLiy is what decides the result.",
         "On 17 June 2026 Portugal and DR Congo drew 1-1. Joao Neves headed Portugal ahead in the 6th minute, and Yoane Wissa equalized in first-half stoppage time (45+5), scoring DR Congo's first-ever World Cup goal.",
         "Portugal attacked more and dominated possession, while Ronaldo missed two clear chances in the 68th and 73rd minutes. Despite a big name and a strong squad, the win never came.",
         "This is not sports analysis or betting, just a practical lesson for a shop owner. A name alone does not bring money, daily control does.",

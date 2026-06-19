@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { BlogLocale, BlogPost } from "@/lib/blog/types";
 import { POSTS, BLOG_CATEGORIES, postCategory, postsByCategory, readingTimeMin } from "@/lib/blog";
 import type { BlogCategory } from "@/lib/blog";
@@ -38,13 +39,12 @@ function PostCard({ post, locale }: { post: BlogPost; locale: BlogLocale }) {
       <div className="flex flex-col sm:flex-row">
         {post.image && (
           <div className="shrink-0 overflow-hidden bg-paper sm:w-52 md:w-56">
-            <img
+            <Image
               src={imgPath(post.image.landscape)}
               alt={c.title}
               width={1200}
               height={900}
-              loading="lazy"
-              decoding="async"
+              sizes="(min-width: 1024px) 224px, (min-width: 640px) 208px, 100vw"
               className="aspect-[4/3] h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
           </div>
@@ -80,7 +80,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
   const jsonLd = articleJsonLd(post, locale);
 
   return (
-    <div className="min-h-screen bg-paper">
+    <div lang={ui.htmlLang} className="min-h-screen bg-paper">
       <HtmlLang lang={ui.htmlLang} />
       <BlogHeader locale={locale} switchPaths={switchPathsFor(post.slug)} />
       <main className="mx-auto max-w-3xl px-5 py-10">
@@ -112,12 +112,13 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
 
           {post.image && (
             <figure className="mt-6 overflow-hidden rounded-2xl border border-mist">
-              <img
+              <Image
                 src={imgPath(post.image.wide)}
                 alt={c.title}
                 width={1200}
                 height={675}
-                decoding="async"
+                priority
+                sizes="(min-width: 768px) 768px, 100vw"
                 className="aspect-[16/9] w-full object-cover"
               />
             </figure>
@@ -256,7 +257,7 @@ export function BlogCategoryIndex({ category, locale }: { category: BlogCategory
   };
 
   return (
-    <div className="min-h-screen bg-paper">
+    <div lang={ui.htmlLang} className="min-h-screen bg-paper">
       <HtmlLang lang={ui.htmlLang} />
       <BlogHeader locale={locale} switchPaths={switchPaths} />
       <main className="mx-auto max-w-3xl px-5 py-10">
@@ -336,7 +337,7 @@ export function BlogIndex({ posts, locale }: { posts: BlogPost[]; locale: BlogLo
   };
 
   return (
-    <div className="min-h-screen bg-paper">
+    <div lang={ui.htmlLang} className="min-h-screen bg-paper">
       <HtmlLang lang={ui.htmlLang} />
       <BlogHeader locale={locale} switchPaths={switchPathsFor()} />
       <main className="mx-auto max-w-3xl px-5 py-10">

@@ -30,6 +30,7 @@ export const post: BlogPost = {
         "do'kon egasi uchun",
       ],
       intro: [
+        "Qisqa javob: Gana 90 daqiqa g'alaba qila olmadi, lekin qo'shimcha vaqtdagi bitta aniq harakat o'yinni hal qildi. Do'kon egasi uchun saboq: kundalik 5 daqiqalik tushum, qoldiq va qarz tekshiruvi, ana o'sha kech gol, oy oxirida katta farq yaratadi va BirLiy bu odatni osonlashtiradi.",
         "2026-yil 17-iyun kuni Gana Panamani 1:0 hisobida yengdi. Kaleb Yirenkyi qo'shimcha vaqtda, 90+5-daqiqada yaqin masofadan gol urib, o'yinni hal qildi, bu turnirdagi eng kech urilgan gol bo'ldi.",
         "O'yinning birinchi yarmi tig'iz o'tdi va kam imkoniyat bo'ldi, ammo Gana sabr bilan o'ynab, eng oxirida g'alabani qo'lga kiritdi. Bitta kichik va aniq harakat butun natijani belgiladi.",
         "Bu sport tahlili yoki bashorat emas, balki do'kon egasi uchun amaliy saboq. Kichik, kech va izchil harakatlar oyning natijasini hal qiladi.",
@@ -112,6 +113,7 @@ export const post: BlogPost = {
         "для владельца магазина",
       ],
       intro: [
+        "Короткий ответ: Гана 90 минут не могла победить, но одно точное действие в добавленное время решило матч. Урок для владельца магазина: ежедневная пятиминутная проверка выручки, остатков и долгов в BirLiy - это тот самый поздний гол, который к концу месяца даёт большую разницу.",
         "17 июня 2026 года Гана победила Панаму 1:0. Калеб Йиренкьи забил в добавленное время, на 90+5-й минуте, с близкого расстояния и решил матч, это стал самый поздний гол турнира.",
         "Первый час игры был плотным, моментов было мало, но Гана играла терпеливо и вырвала победу в самом конце. Одно маленькое и точное действие определило весь результат.",
         "Это не спортивный прогноз и не ставки, а практический урок для владельца магазина. Маленькие, поздние и постоянные действия решают результат месяца.",
@@ -194,6 +196,7 @@ export const post: BlogPost = {
         "for shop owners",
       ],
       intro: [
+        "Short answer: Ghana could not score for 90 minutes, but one precise stoppage-time action decided the match. For a shop owner the lesson is the same: a daily five-minute check of revenue, stock and debts in BirLiy is that late goal, and it makes a big difference by the end of the month.",
         "On 17 June 2026 Ghana beat Panama 1-0. Caleb Yirenkyi scored a tap-in in stoppage time, in the 90+5 minute, and decided the match, the latest goal of the tournament so far.",
         "The first hour was tight with few chances, but Ghana played patiently and won it at the very end. One small and precise action determined the whole result.",
         "This is not sports analysis or betting, just a practical lesson for a shop owner. Small, late and consistent actions decide the result of the month.",

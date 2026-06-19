@@ -26,6 +26,7 @@ export const post: BlogPost = {
         "BirLiy POS",
       ],
       intro: [
+        "Qisqa javob: AI qidiruv odamlar savolga tayyor javob olishini kutadigan yangi raqamli muhit yaratmoqda. Do'kon egasi bugun qilishi kerak bo'lgan birinchi qadam, do'kon ma'lumotini aniq va izchil raqamli holga keltirish: sotuv, qoldiq va qarzni kundalik BirLiyda yuritish onlayn ko'rinishingiz uchun asos bo'ladi.",
         "Odamlar mahsulot va xizmatni qidirish usuli o'zgarmoqda. Avval ko'pchilik qidiruv qutisiga kalit so'z yozardi, endi esa savolni to'g'ridan-to'g'ri AI yordamchiga beradi va tayyor javob oladi.",
         "Bu kichik biznes uchun oddiy savol tug'diradi: odam AIga O'zbekistondagi do'kon kassasi, ombor hisobi yoki qarz nazorati haqida so'raganda, sizning biznesingiz ham javobda ko'rinadimi yoki yo'qmi.",
         "Quyida bu o'zgarish nimadan iborat ekani va uy yonidagi do'kon egasi unga qanday javob berishi mumkinligi haqida amaliy maslahatlar bor. BirLiy AI mahsuloti emas, lekin egasi bu o'zgarishni tushunib, to'g'ri qadam tashlashi muhim.",
@@ -81,7 +82,7 @@ export const post: BlogPost = {
         },
         {
           q: "Kichik do'konga AI davrida onlayn iz kerakmi?",
-          a: "Ha. Onlayn izi bo'lmagan do'konni AI topishi qiyin. Maʼlumotni aniq va izchil tutsangiz, AI so'raganda ham ko'rinish ehtimoli ortadi.",
+          a: "Onlayn izi bo'lmagan do'konni AI topishi qiyin. Maʼlumotni aniq va izchil tutsangiz, AI so'raganda ham ko'rinish ehtimoli ortadi.",
         },
         {
           q: "BirLiy AI mahsulotimi?",
@@ -113,6 +114,7 @@ export const post: BlogPost = {
         "BirLiy POS",
       ],
       intro: [
+        "Короткий ответ: AI-поиск создаёт среду, где люди ждут готового ответа на свой вопрос. Первый шаг для владельца магазина сегодня - привести данные о магазине в чёткий и цифровой вид: ежедневное ведение продаж, остатков и долгов в BirLiy станет основой вашей видимости онлайн.",
         "Способ, которым люди ищут товары и услуги, меняется. Раньше большинство вводило ключевые слова в строку поиска, теперь же вопрос задают прямо AI-ассистенту и получают готовый ответ.",
         "Для малого бизнеса это поднимает простой вопрос: когда человек спрашивает у AI про кассу для магазина, складской учёт или контроль долгов в Узбекистане, виден ли в ответе ваш бизнес или нет.",
         "Ниже разбор того, в чём суть этого сдвига и как на него может ответить владелец магазина у дома. BirLiy не является AI-продуктом, но владельцу важно понять перемену и сделать верный шаг.",
@@ -168,7 +170,7 @@ export const post: BlogPost = {
         },
         {
           q: "Нужен ли небольшому магазину онлайн-след в эпоху AI?",
-          a: "Да. Магазин без онлайн-следа AI трудно найти. Если данные чёткие и согласованные, шанс появиться в ответе AI выше.",
+          a: "Магазин без онлайн-следа AI трудно найти. Если данные чёткие и согласованные, шанс появиться в ответе AI выше.",
         },
         {
           q: "BirLiy это AI-продукт?",
@@ -200,6 +202,7 @@ export const post: BlogPost = {
         "BirLiy POS",
       ],
       intro: [
+        "Short answer: AI search creates an environment where people expect a ready answer to their question. The first step for a shop owner today is to make the shop's data clear and digital: keeping daily sales, stock and debts in BirLiy becomes the foundation of your online visibility.",
         "The way people find products and services is shifting. Most users once typed keywords into a search box; now they ask an AI assistant directly and get a ready answer.",
         "For a small business this raises a simple question: when someone asks an AI about shop checkout, inventory tracking or debt control in Uzbekistan, does your business show up in the answer or not.",
         "Below is what this shift is about and how a neighborhood shop owner can respond to it. BirLiy is not an AI product, but it matters that the owner understands the change and takes the right step.",
@@ -255,7 +258,7 @@ export const post: BlogPost = {
         },
         {
           q: "Does a small shop need an online footprint in the AI era?",
-          a: "Yes. A shop with no online footprint is hard for an AI to find. If your details are clear and consistent, you are more likely to appear in an AI answer.",
+          a: "A shop with no online footprint is hard for an AI to find. If your details are clear and consistent, you are more likely to appear in an AI answer.",
         },
         {
           q: "Is BirLiy an AI product?",

@@ -77,11 +77,11 @@ export const post: BlogPost = {
       faq: [
         {
           q: "Do'konda nima qolganini telefondan bilsa bo'ladimi?",
-          a: "Ha. BirLiyda do'kondagi tovar qoldig'i telefonda ko'rinadi va har bir sotuvdan keyin avtomatik yangilanadi, qo'lda sanab chiqish shart emas.",
+          a: "BirLiyda do'kondagi tovar qoldig'i telefonda ko'rinadi va har bir sotuvdan keyin avtomatik yangilanadi, qo'lda sanab chiqish shart emas.",
         },
         {
           q: "Qoldiq har bir sotuvdan keyin o'zgaradimi?",
-          a: "Ha. Tovar sotilganda ombordagi qoldiq avtomatik kamayadi, shuning uchun joriy qoldiq doimo yangilangan holda turadi.",
+          a: "Tovar sotilganda ombordagi qoldiq avtomatik kamayadi, shuning uchun joriy qoldiq doimo yangilangan holda turadi.",
         },
         {
           q: "Kam qolgan tovarni qanday bilaman?",
@@ -89,7 +89,7 @@ export const post: BlogPost = {
         },
         {
           q: "Internet bo'lmasa ombor hisobi ishlaydimi?",
-          a: "Ha. BirLiy oflayn rejimda sotuv va qoldiqni yuritishda davom etadi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
+          a: "BirLiy oflayn rejimda sotuv va qoldiqni yuritishda davom etadi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
         },
       ],
       cta: {
@@ -163,11 +163,11 @@ export const post: BlogPost = {
       faq: [
         {
           q: "Можно ли узнать, что осталось в магазине, с телефона?",
-          a: "Да. В BirLiy остатки товара в магазине видны на телефоне и обновляются автоматически после каждой продажи, считать вручную не нужно.",
+          a: "В BirLiy остатки товара в магазине видны на телефоне и обновляются автоматически после каждой продажи, считать вручную не нужно.",
         },
         {
           q: "Меняется ли остаток после каждой продажи?",
-          a: "Да. При продаже товара остаток на складе уменьшается автоматически, поэтому текущий остаток всегда обновлён.",
+          a: "При продаже товара остаток на складе уменьшается автоматически, поэтому текущий остаток всегда обновлён.",
         },
         {
           q: "Как узнать о заканчивающемся товаре?",
@@ -175,7 +175,7 @@ export const post: BlogPost = {
         },
         {
           q: "Работает ли учёт остатков без интернета?",
-          a: "Да. BirLiy продолжает вести продажи и остатки в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
+          a: "BirLiy продолжает вести продажи и остатки в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
         },
       ],
       cta: {
@@ -249,11 +249,11 @@ export const post: BlogPost = {
       faq: [
         {
           q: "Can you see what's left in your shop from a phone?",
-          a: "Yes. In BirLiy the shop's stock is visible on the phone and updates automatically after every sale, so you do not need to count by hand.",
+          a: "In BirLiy the shop's stock is visible on the phone and updates automatically after every sale, so you do not need to count by hand.",
         },
         {
           q: "Does stock change after every sale?",
-          a: "Yes. When a product is sold, the stock on hand drops automatically, so the current stock is always up to date.",
+          a: "When a product is sold, the stock on hand drops automatically, so the current stock is always up to date.",
         },
         {
           q: "How do I find out about a low-stock product?",
@@ -261,7 +261,7 @@ export const post: BlogPost = {
         },
         {
           q: "Does inventory tracking work without internet?",
-          a: "Yes. BirLiy keeps running sales and stock in offline mode, and when the internet returns, the data syncs automatically.",
+          a: "BirLiy keeps running sales and stock in offline mode, and when the internet returns, the data syncs automatically.",
         },
       ],
       cta: {

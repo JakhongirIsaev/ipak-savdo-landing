@@ -24,7 +24,7 @@ export function articleJsonLd(post: BlogPost, locale: BlogLocale) {
         mainEntityOfPage: `${SITE}${blogPostPath(locale, post.slug)}`,
         image: post.image
           ? [post.image.square, post.image.landscape, post.image.wide]
-          : `${SITE}/photos/owner-tablet.jpg`,
+          : `${SITE}/photos/blog/birliy-og.jpg`,
         author: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "BirLiy", url: SITE },
         publisher: {
           "@type": "Organization",
