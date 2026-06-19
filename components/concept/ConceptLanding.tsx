@@ -25,6 +25,7 @@ import {
   Menu,
   PackageCheck,
   Pill,
+  Printer,
   QrCode,
   Receipt,
   ScanLine,
@@ -33,6 +34,7 @@ import {
   ShoppingCart,
   Smartphone,
   Store,
+  Tablet,
   Wallet,
   Wrench,
   X,
@@ -1239,6 +1241,48 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 </ul>
               </motion.div>
             </div>
+
+            {/* Full-setup tab only: each optional device on its own labelled card. Phone is enough to start; BirLiy supplies the kit on request. Hyphen/comma only, no long dash. */}
+            {setupTab === "setup" && (
+              <div className="mt-8">
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+                  {(locale === "ru"
+                    ? [
+                        { icon: Tablet, label: "Планшет", sub: "На подставке" },
+                        { icon: ScanLine, label: "Сканер", sub: "Для штрих-кодов" },
+                        { icon: Printer, label: "Принтер чеков", sub: "Для печати чеков" },
+                      ]
+                    : [
+                        { icon: Tablet, label: "Planshet", sub: "Stend bilan" },
+                        { icon: ScanLine, label: "Skaner", sub: "Shtrix-kod uchun" },
+                        { icon: Printer, label: "Chek printeri", sub: "Chek chiqarish uchun" },
+                      ]
+                  ).map((piece, index) => {
+                    const PieceIcon = piece.icon;
+                    return (
+                      <motion.li
+                        key={piece.label}
+                        {...fade(index * 0.05, reduce)}
+                        className="flex items-center gap-3 rounded-2xl border border-[#d9e2db] bg-white p-4 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition duration-300 ease-birliy hover:-translate-y-1 hover:border-green-600/50 hover:shadow-[0_20px_44px_-26px_rgba(3,183,61,0.5)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                      >
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-green-50 text-green-700 ring-1 ring-green-600/15">
+                          <PieceIcon size={20} strokeWidth={2} />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-sm font-extrabold leading-5 text-ink-900">{piece.label}</span>
+                          <span className="block text-xs font-medium leading-4 text-ink-500">{piece.sub}</span>
+                        </span>
+                      </motion.li>
+                    );
+                  })}
+                </ul>
+                <p className="mt-4 text-center text-sm font-medium text-ink-500">
+                  {locale === "ru"
+                    ? "Оборудование по желанию: для старта хватает телефона, а BirLiy привезёт и настроит комплект, если он вам нужен."
+                    : "Jihoz ixtiyoriy: boshlash uchun telefon yetarli, kerak bo'lsa BirLiy to'plamni yetkazib beradi va sozlaydi."}
+                </p>
+              </div>
+            )}
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {t.modules.items.map((item, index) => {

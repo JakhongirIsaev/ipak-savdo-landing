@@ -16,11 +16,66 @@ function switchPathsFor(slug?: string): Record<BlogLocale, string> {
   };
 }
 
+// BlogPost.image holds ABSOLUTE URLs (https://birliy.uz/...) for JSON-LD/OG.
+// For the on-page <img> serve them as same-origin relative paths so they work
+// in local dev and on the standalone server without next/image remote config.
+function imgPath(url: string): string {
+  return url.startsWith(SITE) ? url.slice(SITE.length) : url;
+}
+
+// Shared article card used on the blog index and category pages. Shows a
+// thumbnail when the post has an image, a category badge, date and reading
+// time. Stacks vertically on mobile, image-left on >= sm. No horizontal scroll.
+function PostCard({ post, locale }: { post: BlogPost; locale: BlogLocale }) {
+  const ui = BLOG_UI[locale];
+  const c = post.locales[locale];
+  const catLabel = CATEGORY_LABEL[postCategory(post)][locale];
+  return (
+    <Link
+      href={blogPostPath(locale, post.slug)}
+      className="group block overflow-hidden rounded-2xl border border-mist bg-white transition-colors duration-200 hover:border-green-700"
+    >
+      <div className="flex flex-col sm:flex-row">
+        {post.image && (
+          <div className="shrink-0 overflow-hidden bg-paper sm:w-52 md:w-56">
+            <img
+              src={imgPath(post.image.landscape)}
+              alt={c.title}
+              width={1200}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/3] h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+          </div>
+        )}
+        <div className="min-w-0 flex-1 p-5 sm:p-6">
+          <div className="mb-2">
+            <span className="inline-block rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800">
+              {catLabel}
+            </span>
+          </div>
+          <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900 transition-colors duration-200 group-hover:text-green-800">
+            {c.title}
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-ink-700">{c.description}</p>
+          <p className="mt-3 text-xs text-ink-500">
+            {post.date} · {ui.readingTime(readingTimeMin(post, locale))}
+          </p>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLocale }) {
   const ui = BLOG_UI[locale];
   const c = post.locales[locale];
   const minutes = readingTimeMin(post, locale);
-  const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
+  // Prefer related posts from the same category, then fill from the rest.
+  const sameCat = POSTS.filter((p) => p.slug !== post.slug && postCategory(p) === postCategory(post));
+  const otherCat = POSTS.filter((p) => p.slug !== post.slug && postCategory(p) !== postCategory(post));
+  const related = [...sameCat, ...otherCat].slice(0, 2);
 
   const jsonLd = articleJsonLd(post, locale);
 
@@ -45,10 +100,28 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
         </nav>
 
         <article>
+          <div className="mb-3">
+            <span className="inline-block rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800">
+              {CATEGORY_LABEL[postCategory(post)][locale]}
+            </span>
+          </div>
           <h1 className="font-display text-3xl font-bold tracking-tightish text-ink-900 sm:text-4xl">{c.title}</h1>
           <p className="mt-3 text-sm text-ink-500">
             {ui.published}: {post.date} · {ui.readingTime(minutes)}
           </p>
+
+          {post.image && (
+            <figure className="mt-6 overflow-hidden rounded-2xl border border-mist">
+              <img
+                src={imgPath(post.image.wide)}
+                alt={c.title}
+                width={1200}
+                height={675}
+                decoding="async"
+                className="aspect-[16/9] w-full object-cover"
+              />
+            </figure>
+          )}
 
           <div className="mt-8 space-y-5">
             {c.intro.map((p, i) => (
@@ -132,20 +205,10 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
           {related.length > 0 && (
             <section className="mt-14 border-t border-mist pt-8">
               <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{ui.relatedTitle}</h2>
-              <div className="mt-5 space-y-3">
-                {related.map((r) => {
-                  const rc = r.locales[locale];
-                  return (
-                    <Link
-                      key={r.slug}
-                      href={blogPostPath(locale, r.slug)}
-                      className="block rounded-xl border border-mist bg-white p-4 transition-colors duration-200 hover:border-green-700"
-                    >
-                      <span className="font-display text-base font-semibold text-ink-900">{rc.title}</span>
-                      <span className="mt-1 block text-sm leading-6 text-ink-700">{rc.description}</span>
-                    </Link>
-                  );
-                })}
+              <div className="mt-5 space-y-4">
+                {related.map((r) => (
+                  <PostCard key={r.slug} post={r} locale={locale} />
+                ))}
               </div>
             </section>
           )}
@@ -236,22 +299,9 @@ export function BlogCategoryIndex({ category, locale }: { category: BlogCategory
           <p className="mt-10 text-base text-ink-500">{ui.categoryEmpty}</p>
         ) : (
           <div className="mt-10 space-y-5">
-            {posts.map((post) => {
-              const c = post.locales[locale];
-              return (
-                <Link
-                  key={post.slug}
-                  href={blogPostPath(locale, post.slug)}
-                  className="block rounded-2xl border border-mist bg-white p-6 transition-colors duration-200 hover:border-green-700"
-                >
-                  <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{c.title}</h2>
-                  <p className="mt-2 text-sm leading-6 text-ink-700">{c.description}</p>
-                  <p className="mt-3 text-xs text-ink-500">
-                    {post.date} · {ui.readingTime(readingTimeMin(post, locale))}
-                  </p>
-                </Link>
-              );
-            })}
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} locale={locale} />
+            ))}
           </div>
         )}
       </main>
@@ -298,29 +348,9 @@ export function BlogIndex({ posts, locale }: { posts: BlogPost[]; locale: BlogLo
         <p className="mt-3 text-base leading-7 text-ink-700">{ui.blogDescription}</p>
 
         <div className="mt-10 space-y-5">
-          {posts.map((post) => {
-            const c = post.locales[locale];
-            const cat = postCategory(post);
-            const catLabel = CATEGORY_LABEL[cat][locale];
-            return (
-              <Link
-                key={post.slug}
-                href={blogPostPath(locale, post.slug)}
-                className="block rounded-2xl border border-mist bg-white p-6 transition-colors duration-200 hover:border-green-700"
-              >
-                <div className="mb-2">
-                  <span className="inline-block rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800">
-                    {catLabel}
-                  </span>
-                </div>
-                <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{c.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-ink-700">{c.description}</p>
-                <p className="mt-3 text-xs text-ink-500">
-                  {post.date} · {ui.readingTime(readingTimeMin(post, locale))}
-                </p>
-              </Link>
-            );
-          })}
+          {posts.map((post) => (
+            <PostCard key={post.slug} post={post} locale={locale} />
+          ))}
         </div>
       </main>
       <BlogFooter locale={locale} />

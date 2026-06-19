@@ -20,16 +20,16 @@ describe("postCategory", () => {
 });
 
 describe("postsByCategory", () => {
-  it("returns all 4 existing posts for 'product' (all posts have category: product)", () => {
-    expect(postsByCategory("product")).toHaveLength(4);
+  it("returns the 7 product posts (4 original guides + 3 new product articles)", () => {
+    expect(postsByCategory("product")).toHaveLength(7);
   });
 
-  it("returns 0 posts for 'ai-tech' (no articles assigned yet)", () => {
-    expect(postsByCategory("ai-tech")).toHaveLength(0);
+  it("returns the 2 ai-tech articles", () => {
+    expect(postsByCategory("ai-tech")).toHaveLength(2);
   });
 
-  it("returns 0 posts for 'football' (no articles assigned yet)", () => {
-    expect(postsByCategory("football")).toHaveLength(0);
+  it("returns the 4 football articles", () => {
+    expect(postsByCategory("football")).toHaveLength(4);
   });
 });
 
@@ -98,13 +98,17 @@ describe("blogCategoryMetadata", () => {
 });
 
 describe("blogCategoryMetadata robots (empty-category SEO)", () => {
-  it("marks an EMPTY category (no posts) as noindex in every locale", () => {
-    for (const category of ["ai-tech", "football"] as const) {
-      expect(postsByCategory(category)).toHaveLength(0); // precondition: empty
+  it("marks a category noindex IF AND ONLY IF it has no posts (all 3 now have posts)", () => {
+    for (const category of BLOG_CATEGORIES) {
+      const empty = postsByCategory(category as BlogCategory).length === 0;
       for (const locale of LOCALES) {
-        const meta = blogCategoryMetadata(locale, category);
+        const meta = blogCategoryMetadata(locale, category as BlogCategory);
         const robots = meta.robots as { index?: boolean } | undefined;
-        expect(robots?.index, `${category}/${locale}`).toBe(false);
+        if (empty) {
+          expect(robots?.index, `${category}/${locale}`).toBe(false);
+        } else {
+          expect(robots?.index, `${category}/${locale}`).not.toBe(false);
+        }
       }
     }
   });

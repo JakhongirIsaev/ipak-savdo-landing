@@ -3,9 +3,35 @@ import { post as choosePos } from "./posts/kak-vybrat-kassu-dlya-magazina";
 import { post as notebookLosses } from "./posts/uchet-v-tetradi-skolko-teryaet-magazin";
 import { post as inventoryGuide } from "./posts/skladskoy-uchet-v-malenkom-magazine";
 import { post as minimarketPosGuide } from "./posts/pos-tizimi-uzbekistan-minimarket";
+// Product expansion (2026-06-19)
+import { post as magazinUchunDastur } from "./posts/magazin-uchun-dastur-telefonda-savdo";
+import { post as qarzDaftarOrniga } from "./posts/qarz-daftar-orniga-nima";
+import { post as dokondaNimaQolgan } from "./posts/dokonda-nima-qolganini-telefondan-bilish";
+// AI & technology (2026-06-19)
+import { post as aiQidiruvAgentlar } from "./posts/ai-qidiruv-va-agentlar-kichik-biznes";
+import { post as aiFoydaMalumotlar } from "./posts/ai-dan-foyda-malumotlar-va-nazorat";
+// Football business lessons (2026-06-19)
+import { post as futbolPortugaliyaKongo } from "./posts/futbol-saboq-portugaliya-kongo";
+import { post as futbolAngliyaXorvatiya } from "./posts/futbol-saboq-angliya-xorvatiya";
+import { post as futbolGanaPanama } from "./posts/futbol-saboq-gana-panama";
+import { post as futbolUzbekistonKolumbiya } from "./posts/futbol-saboq-uzbekiston-kolumbiya";
 
 // Newest first: this order drives the blog index pages.
-export const POSTS: BlogPost[] = [minimarketPosGuide, choosePos, notebookLosses, inventoryGuide];
+export const POSTS: BlogPost[] = [
+  magazinUchunDastur,
+  qarzDaftarOrniga,
+  dokondaNimaQolgan,
+  aiQidiruvAgentlar,
+  aiFoydaMalumotlar,
+  futbolPortugaliyaKongo,
+  futbolAngliyaXorvatiya,
+  futbolGanaPanama,
+  futbolUzbekistonKolumbiya,
+  minimarketPosGuide,
+  choosePos,
+  notebookLosses,
+  inventoryGuide,
+];
 
 export const BLOG_CATEGORIES = ["product", "ai-tech", "football"] as const;
 
