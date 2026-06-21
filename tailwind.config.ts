@@ -18,6 +18,13 @@ const config: Config = {
           700: "#027F2E",
           800: "#015521",
         },
+        // BirLiy brand tokens (mobile-first redesign).
+        // Additive: do NOT replace the green scale above. Use bg-brand / text-brand
+        // for the deep brand green and *-brand-bright for the bright accent green.
+        brand: {
+          DEFAULT: "#02691A", // deep brand green
+          bright: "#4CEA4C", // bright accent green
+        },
         // BirLiy ink/paper/mist
         ink: {
           900: "#0B1826",
