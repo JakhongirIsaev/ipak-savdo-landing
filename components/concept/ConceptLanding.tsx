@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { PosDemo } from "./PosDemo";
 import { AdminDemo } from "./AdminDemo";
@@ -13,6 +14,8 @@ import { PaperVsBirliy } from "./PaperVsBirliy";
 import { PriceReceipt } from "./PriceReceipt";
 import { useCoarsePointer } from "./useCoarsePointer";
 import { dicts } from "@/lib/landing/i18n";
+import { POSTS, postCategory } from "@/lib/blog";
+import { blogPostPath, blogIndexPath, CATEGORY_LABEL } from "@/lib/blog/i18n";
 import { trackSiteEvent } from "@/lib/track/client";
 import {
   ArrowRight,
@@ -21,6 +24,7 @@ import {
   Check,
   ChevronDown,
   Clock3,
+  Coffee,
   Languages,
   Menu,
   PackageCheck,
@@ -44,6 +48,21 @@ import {
 type Locale = "ru" | "uz";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
+
+// BlogPost.image holds ABSOLUTE URLs (https://birliy.uz/...). On the landing
+// page serve them same-origin so they resolve to /photos/blog/... locally.
+const BLOG_SITE = "https://birliy.uz";
+function blogImgPath(url: string): string {
+  return url.startsWith(BLOG_SITE) ? url.slice(BLOG_SITE.length) : url;
+}
+
+// Latest 3 posts by date, newest first. The comparator returns 0 on equal
+// dates so Array.prototype.sort stays stable and ties fall back to the curated
+// POSTS order (many posts share one publish date, so a non-zero tie result
+// would pick an engine-dependent, wrong set). Computed once at module load.
+const LATEST_POSTS = [...POSTS]
+  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  .slice(0, 3);
 
 const copy = {
   ru: {
@@ -109,11 +128,13 @@ const copy = {
       eyebrow: "Главные клиенты",
       title: "Сначала для магазинов у дома и минимаркетов.",
       photoAlt: "QR-оплата в магазине на BirLiy",
+      cta: "Подключить мой магазин",
       cards: [
-        { title: "Магазин у дома", body: "Продукты, бытовая химия, ежедневные товары. 1 кассир, до 200 чеков в день.", icon: Store },
-        { title: "Минимаркет", body: "Сотни позиций, несколько кассиров, контроль остатков и смен.", icon: ShoppingCart },
-        { title: "Аптека", body: "Точный учёт по наименованиям, контроль сроков годности.", icon: Pill },
-        { title: "Сервисная точка", body: "Ремонт, химчистка, ателье. Приём оплаты и журнал заказов.", icon: Wrench },
+        { key: "shop", title: "Магазин у дома", body: "Продукты, бытовая химия, ежедневные товары. 1 кассир, до 200 чеков в день.", pain: "Боль: тетрадь не показывает остатки и кто сколько должен.", icon: Store },
+        { key: "minimarket", title: "Минимаркет", body: "Сотни позиций, несколько кассиров, контроль остатков и смен.", pain: "Боль: трудно проверить кассиров и смены без присутствия в зале.", icon: ShoppingCart },
+        { key: "pharmacy", title: "Аптека", body: "Точный учёт по наименованиям, контроль сроков годности.", pain: "Боль: легко потерять срок годности и точный остаток по наименованиям.", icon: Pill },
+        { key: "service", title: "Сервисная точка", body: "Ремонт, химчистка, ателье. Приём оплаты и журнал заказов.", pain: "Боль: заказы и оплаты живут на бумажках и теряются.", icon: Wrench },
+        { key: "cafe", title: "Кафе и точка еды", body: "Быстрые заказы, оплата на месте, контроль выручки за смену.", pain: "Боль: выручка за смену не сходится, а считать вручную долго.", icon: Coffee },
       ],
     },
     ownerControl: {
@@ -138,6 +159,13 @@ const copy = {
         { title: "Помогаем заполнить каталог", caption: "Загружаем товары из Excel или вносим первые 100 SKU вместе." },
         { title: "49 000 сум/мес на старте", caption: "Низкая стартовая цена на первые 6 месяцев: спокойно проверить BirLiy." },
       ],
+    },
+    blog: {
+      eyebrow: "Блог",
+      title: "Полезные статьи для владельцев магазинов",
+      subtitle: "Короткие разборы про кассу, склад, долги и учёт. Без воды.",
+      readMore: "Читать",
+      allPosts: "Все статьи",
     },
     faq: {
       eyebrow: "Вопросы и ответы",
@@ -220,11 +248,12 @@ const copy = {
       title: "От пустого приложения до первого чека за один рабочий день.",
       body:
         "BirLiy запускается как сервис: настройка, каталог, обучение кассира и сверка первого дня вместе с командой.",
+      chip: "Подключение за 1 день",
       steps: [
-        "Создать торговую точку и роли",
-        "Импортировать каталог или добавить первые товары",
-        "Провести первый чек вместе с кассиром",
-        "Проверить выручку, оплату и остатки за день",
+        "Установка и настройка точки",
+        "Импорт товаров из Excel или первые SKU",
+        "Обучение кассира за 30 минут",
+        "Первый чек вместе с командой",
       ],
     },
     price: {
@@ -314,11 +343,13 @@ const copy = {
       eyebrow: "Asosiy mijozlar",
       title: "Avvalo uy yonidagi do'kon va minimarketlar uchun.",
       photoAlt: "BirLiy do'konida QR-to'lov",
+      cta: "Do'konimni ulash",
       cards: [
-        { title: "Uy yonidagi do'kon", body: "Oziq-ovqat, maishiy kimyo, kundalik tovarlar. 1 kassir, kuniga 200 tagacha chek.", icon: Store },
-        { title: "Minimarket", body: "Yuzlab pozitsiya, bir necha kassir, qoldiq va smenalar nazorati.", icon: ShoppingCart },
-        { title: "Dorixona", body: "Nomlar bo'yicha aniq hisob, yaroqlilik muddatlari nazorati.", icon: Pill },
-        { title: "Xizmat nuqtasi", body: "Ta'mirlash, kimyoviy tozalash, tikuvchilik. To'lov va buyurtmalar jurnali.", icon: Wrench },
+        { key: "shop", title: "Uy yonidagi do'kon", body: "Oziq-ovqat, maishiy kimyo, kundalik tovarlar. 1 kassir, kuniga 200 tagacha chek.", pain: "Muammo: daftar qoldiq va kim qancha qarzdorligini ko'rsatmaydi.", icon: Store },
+        { key: "minimarket", title: "Minimarket", body: "Yuzlab pozitsiya, bir necha kassir, qoldiq va smenalar nazorati.", pain: "Muammo: zalda bo'lmasdan kassir va smenalarni tekshirish qiyin.", icon: ShoppingCart },
+        { key: "pharmacy", title: "Dorixona", body: "Nomlar bo'yicha aniq hisob, yaroqlilik muddatlari nazorati.", pain: "Muammo: yaroqlilik muddati va aniq qoldiqni yo'qotish oson.", icon: Pill },
+        { key: "service", title: "Xizmat nuqtasi", body: "Ta'mirlash, kimyoviy tozalash, tikuvchilik. To'lov va buyurtmalar jurnali.", pain: "Muammo: buyurtma va to'lovlar qog'ozda qoladi va yo'qoladi.", icon: Wrench },
+        { key: "cafe", title: "Kafe va ovqat nuqtasi", body: "Tez buyurtmalar, joyida to'lov, smena tushumini nazorat.", pain: "Muammo: smena tushumi to'g'ri kelmaydi, qo'lda hisoblash uzoq.", icon: Coffee },
       ],
     },
     ownerControl: {
@@ -343,6 +374,13 @@ const copy = {
         { title: "Katalogni to'ldirishga yordam", caption: "Tovarlarni Exceldan yuklaymiz yoki birinchi 100 SKU'ni birga kiritamiz." },
         { title: "Startda 49 000 so'm/oy", caption: "Birinchi 6 oyga past start narxi: BirLiy'ni bemalol sinab ko'rasiz." },
       ],
+    },
+    blog: {
+      eyebrow: "Blog",
+      title: "Do'kon egalari uchun foydali maqolalar",
+      subtitle: "Kassa, ombor, qarz va hisob haqida qisqa va aniq.",
+      readMore: "O'qish",
+      allPosts: "Barcha maqolalar",
     },
     faq: {
       eyebrow: "Savol va javoblar",
@@ -425,11 +463,12 @@ const copy = {
       title: "Bo'sh ilovadan birinchi chekgacha bir ish kunida.",
       body:
         "BirLiy servisli start sifatida ishga tushadi: sozlash, katalog, kassirni o'rgatish va birinchi kunni jamoa bilan tekshirish.",
+      chip: "1 kunda ulanish",
       steps: [
-        "Savdo nuqtasi va rollarni yaratish",
-        "Katalogni import qilish yoki ilk tovarlarni qo'shish",
-        "Kassir bilan birinchi chekni o'tkazish",
-        "Kunlik tushum, to'lov va qoldiqni tekshirish",
+        "Nuqtani o'rnatish va sozlash",
+        "Excel'dan tovar import qilish yoki ilk SKU",
+        "Kassirni 30 daqiqada o'rgatish",
+        "Jamoa bilan birinchi chek",
       ],
     },
     price: {
@@ -561,11 +600,30 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const [demoRole, setDemoRole] = useState<"cashier" | "owner">("cashier");
   const [setupTab, setSetupTab] = useState<"phone" | "setup">("phone");
   const [faqOpen, setFaqOpen] = useState<number>(0);
+  // Refs to the FAQ question buttons so Up/Down/Home/End move focus between them
+  // (BR-11 keyboard navigation for the accordion).
+  const faqBtnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const toggleFaq = (index: number) => {
+    const willOpen = faqOpen !== index;
+    setFaqOpen(willOpen ? index : -1);
+    if (willOpen) trackSiteEvent("faq_open", { question_id: index });
+  };
+  const onFaqKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number, total: number) => {
+    let next = -1;
+    if (e.key === "ArrowDown") next = (index + 1) % total;
+    else if (e.key === "ArrowUp") next = (index - 1 + total) % total;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = total - 1;
+    if (next >= 0) {
+      e.preventDefault();
+      faqBtnRefs.current[next]?.focus();
+    }
+  };
   const [leadOpen, setLeadOpen] = useState(false);
   const [heroGone, setHeroGone] = useState(false);
   const [nearBottom, setNearBottom] = useState(false);
-  const openLead = (placement: string) => {
-    trackSiteEvent("cta_click", { placement });
+  const openLead = (placement: string, segment?: string) => {
+    trackSiteEvent("cta_click", segment ? { placement, segment } : { placement });
     setLeadOpen(true);
   };
   const prefersReduce = useReducedMotion() ?? false;
@@ -1025,14 +1083,19 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               className="mt-5 h-px w-40 origin-left bg-[linear-gradient(90deg,#03b73d,transparent)]"
             />
           </motion.div>
+          {/* BR-09: each segment is its own pain + personalized CTA. Tapping a card
+              opens the lead modal and carries the segment key into the tracker, so
+              cta_click tells us which kind of shop is interested. */}
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {t.segments2.cards.map((card, index) => {
               const Icon = card.icon;
               return (
-                <motion.article
+                <motion.button
                   key={card.title}
+                  type="button"
+                  onClick={() => openLead("segment_" + card.key, card.key)}
                   {...reveal(0.08 + index * 0.07, reduce)}
-                  className="group relative overflow-hidden rounded-xl border border-[#d9e2db] bg-white p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-all duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.02] hover:border-green-600/60 hover:shadow-[0_28px_60px_-32px_rgba(3,183,61,0.45)] motion-reduce:transform-none motion-reduce:transition-none"
+                  className="group relative flex flex-col overflow-hidden rounded-xl border border-[#d9e2db] bg-white p-5 text-left shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-all duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.02] hover:border-green-600/60 hover:shadow-[0_28px_60px_-32px_rgba(3,183,61,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600/60 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
                 >
                   {/* Top accent bar grows to full width on hover. */}
                   <span
@@ -1051,12 +1114,12 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                   </div>
                   <h3 className="relative text-lg font-extrabold tracking-normal">{card.title}</h3>
                   <p className="relative mt-2 leading-7 text-ink-500">{card.body}</p>
-                  <ArrowRight
-                    aria-hidden
-                    size={18}
-                    className="relative mt-4 translate-x-0 text-green-700 opacity-60 transition-all duration-300 ease-birliy group-hover:translate-x-1 group-hover:opacity-100 motion-reduce:transform-none motion-reduce:transition-none"
-                  />
-                </motion.article>
+                  <p className="relative mt-3 rounded-lg bg-[#fff7ed] px-3 py-2 text-sm font-semibold leading-6 text-[#9a3412]">{card.pain}</p>
+                  <span className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-extrabold text-green-700 transition-all duration-300 ease-birliy group-hover:gap-2.5">
+                    {t.segments2.cta}
+                    <ArrowRight aria-hidden size={16} className="transition-transform duration-300 ease-birliy group-hover:translate-x-1 motion-reduce:transform-none" />
+                  </span>
+                </motion.button>
               );
             })}
           </div>
@@ -1421,6 +1484,18 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                     </li>
                   ))}
                 </ul>
+                {/* BR-07: start with no equipment cost, and the kit is optional and
+                    can be paid in parts later. Plain language, no hidden cost. */}
+                <p className="mt-6 inline-flex items-start gap-2 rounded-lg bg-green-50 px-3.5 py-2.5 text-sm font-semibold leading-6 text-green-800">
+                  <Wallet size={16} className="mt-0.5 shrink-0" />
+                  {setupTab === "phone"
+                    ? locale === "ru"
+                      ? "Начать можно без покупки оборудования. Оборудование позже и по желанию, можно частями."
+                      : "Uskuna sotib olmasdan ham boshlash mumkin. Jihoz keyin va ixtiyoriy, bo'lib to'lash mumkin."
+                    : locale === "ru"
+                      ? "Оборудование можно взять частями. Цену и состав комплекта согласуем заранее, без скрытых платежей."
+                      : "Jihozni bo'lib to'lash mumkin. To'plam narxi va tarkibini oldindan kelishamiz, yashirin to'lovsiz."}
+                </p>
               </motion.div>
             </div>
 
@@ -1509,6 +1584,10 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             <SectionLabel>{t.rollout.eyebrow}</SectionLabel>
             <h2 className="relative max-w-[17ch] text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.rollout.title}</h2>
             <p className="relative mt-5 max-w-xl text-lg leading-8 text-ink-700">{t.rollout.body}</p>
+            <p className="relative mt-5 inline-flex items-center gap-2 rounded-full bg-green-700 px-4 py-1.5 text-sm font-extrabold text-white shadow-[0_8px_20px_-10px_rgba(3,183,61,0.9)]">
+              <Clock3 size={15} />
+              {t.rollout.chip}
+            </p>
           </motion.div>
           <div className="relative grid gap-3">
             {/* animated vertical stepper track that fills as you scroll */}
@@ -1629,6 +1708,74 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
+      <section id="blog" className="relative overflow-hidden border-y border-[#d9e2db] bg-white py-16 sm:py-20 lg:py-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-0 bg-[radial-gradient(55%_45%_at_50%_0%,rgba(3,183,61,0.08),transparent_70%)]"
+        />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div {...reveal(0, reduce)} className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <SectionLabel>{t.blog.eyebrow}</SectionLabel>
+              <h2 className="text-3xl font-extrabold leading-[1.12] tracking-normal text-ink-900 sm:text-4xl">
+                {t.blog.title}
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-ink-700">{t.blog.subtitle}</p>
+            </div>
+            <a
+              href={blogIndexPath(locale)}
+              onClick={() => trackSiteEvent("blog_click", { cta_location: "blog_index" })}
+              className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg border border-[#d9e2db] bg-white px-5 py-3 font-extrabold text-green-800 transition-colors duration-200 ease-birliy hover:border-green-600/50 hover:bg-green-50"
+            >
+              {t.blog.allPosts}
+              <ArrowRight size={18} />
+            </a>
+          </motion.div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {LATEST_POSTS.map((post, index) => {
+              const c = post.locales[locale];
+              const catLabel = CATEGORY_LABEL[postCategory(post)][locale];
+              return (
+                <motion.a
+                  key={post.slug}
+                  {...reveal(index * 0.08, reduce)}
+                  href={blogPostPath(locale, post.slug)}
+                  onClick={() => trackSiteEvent("blog_click", { article_slug: post.slug, cta_location: "blog_card" })}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-mist bg-white shadow-[0_1px_2px_rgba(11,24,38,0.05)] transition-all duration-200 ease-birliy hover:-translate-y-1 hover:border-green-700 hover:shadow-[0_28px_60px_-38px_rgba(11,24,38,0.55)] motion-reduce:hover:translate-y-0"
+                >
+                  {post.image && (
+                    <div className="overflow-hidden bg-paper">
+                      <Image
+                        src={blogImgPath(post.image.landscape)}
+                        alt={c.title}
+                        width={1200}
+                        height={900}
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                        className="aspect-[16/9] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <span className="mb-3 inline-block w-fit rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-semibold text-green-800">
+                      {catLabel}
+                    </span>
+                    <h3 className="font-display text-xl font-extrabold leading-snug tracking-normal text-ink-900 transition-colors duration-200 group-hover:text-green-800">
+                      {c.title}
+                    </h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-ink-700">{c.description}</p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-extrabold text-green-800">
+                      {t.blog.readMore}
+                      <ArrowRight size={16} className="transition-transform duration-200 ease-birliy group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
+                    </span>
+                  </div>
+                </motion.a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       <section id="faq" className="relative overflow-hidden bg-[#f4f6f1] py-16 sm:py-20 lg:py-24">
         {/* decorative aurora glow use a hyphen '-', comma, or period (no long dash) LCP-safe, no text gated behind it */}
         <div
@@ -1658,9 +1805,13 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 >
                   <button
                     type="button"
-                    onClick={() => setFaqOpen(open ? -1 : index)}
+                    ref={(el) => { faqBtnRefs.current[index] = el; }}
+                    id={`faq-q-${index}`}
+                    onClick={() => toggleFaq(index)}
+                    onKeyDown={(e) => onFaqKeyDown(e, index, dicts[locale].faq.length)}
                     aria-expanded={open}
-                    className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                    aria-controls={`faq-a-${index}`}
+                    className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600/60 focus-visible:ring-inset"
                   >
                     <span className="text-base font-extrabold text-ink-900">{question}</span>
                     <span
@@ -1671,7 +1822,12 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                     </span>
                   </button>
                   {/* smooth height open/close via grid-rows use a hyphen '-', comma, or period (no long dash) text stays in DOM (LCP/a11y-safe) */}
-                  <div className={`grid transition-[grid-template-rows] duration-300 ease-birliy motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                  <div
+                    id={`faq-a-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-q-${index}`}
+                    className={`grid transition-[grid-template-rows] duration-300 ease-birliy motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                  >
                     <div className="overflow-hidden">
                       <p className="px-5 pb-5 leading-7 text-ink-700">{answer}</p>
                     </div>
@@ -1683,17 +1839,28 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </section>
 
-      <section className="bg-[#0b1826] py-12 text-white sm:py-14">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 text-center sm:grid-cols-3 sm:px-6 lg:px-8">
-          {(locale === "ru"
-            ? [["49 000", "сум/мес, первые 6 месяцев"], ["1 день", "на подключение"], ["0", "оборудования на старте"]]
-            : [["49 000", "so'm/oy, birinchi 6 oy"], ["1 kun", "ulanishga"], ["0", "uskuna kerak emas startda"]]
-          ).map(([value, label]) => (
-            <div key={label}>
-              <CountUp value={value} className="text-4xl font-extrabold tabular-nums text-white sm:text-5xl" />
-              <p className="mx-auto mt-2 max-w-[24ch] text-sm font-semibold text-white/60">{label}</p>
-            </div>
-          ))}
+      <section id="price" className="bg-[#0b1826] py-12 text-white sm:py-14">
+        {/* BR-08: transparent price. Three numbers stack one per row on mobile,
+            then a plain line spells out the full price after 6 months and that
+            there are no hidden fees. */}
+        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-green-400">{t.price.eyebrow}</p>
+          <div className="mt-7 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {(locale === "ru"
+              ? [["49 000", "сум/мес, первые 6 месяцев"], ["1 день", "на подключение"], ["0", "оборудования на старте"]]
+              : [["49 000", "so'm/oy, birinchi 6 oy"], ["1 kun", "ulanishga"], ["0", "uskuna kerak emas startda"]]
+            ).map(([value, label]) => (
+              <div key={label}>
+                <CountUp value={value} className="text-4xl font-extrabold tabular-nums text-white sm:text-5xl" />
+                <p className="mx-auto mt-2 max-w-[24ch] text-sm font-semibold text-white/60">{label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mx-auto mt-8 max-w-xl rounded-xl bg-white/5 px-4 py-3 text-sm font-semibold leading-7 text-white/80 ring-1 ring-white/10">
+            {locale === "ru"
+              ? "49 000 сум/мес первые 6 месяцев, дальше 149 000 сум/мес. Полный функционал, без скрытых платежей. Цену вы знаете заранее."
+              : "Birinchi 6 oy 49 000 so'm/oy, keyin 149 000 so'm/oy. To'liq funksiya, yashirin to'lovsiz. Narxni oldindan bilasiz."}
+          </p>
         </div>
         <PriceReceipt locale={locale} />
       </section>
@@ -1716,13 +1883,20 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               <div key={col.title}>
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-500">{col.title}</p>
                 <ul className="mt-4 grid gap-3">
-                  {col.links.map(([label, href]) => (
-                    <li key={label}>
-                      <a href={href} className="text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700">
-                        {label}
-                      </a>
-                    </li>
-                  ))}
+                  {col.links.map(([label, href]) => {
+                    const isBlog = href.includes("/blog");
+                    return (
+                      <li key={label}>
+                        <a
+                          href={href}
+                          onClick={isBlog ? () => trackSiteEvent("blog_click", { cta_location: "footer" }) : undefined}
+                          className="text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700"
+                        >
+                          {label}
+                        </a>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
