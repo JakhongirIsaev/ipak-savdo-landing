@@ -1888,7 +1888,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             <div>
               <a href="#top" className="inline-flex items-center" aria-label="BirLiy">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/birliy-wordmark.png" alt="BirLiy" width={1216} height={403} className="h-9 w-auto" />
+                <img src="/birliy-wordmark.png" alt="BirLiy" width={1216} height={403} loading="lazy" decoding="async" className="h-9 w-auto" />
               </a>
               <p className="mt-4 max-w-[24ch] text-sm font-bold text-ink-500">{t.footer.tagline}</p>
             </div>

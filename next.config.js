@@ -44,6 +44,13 @@ const securityHeaders = [
 const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
+  // Serve modern formats from next/image automatically. AVIF is tried first
+  // (smallest), with WebP as the fallback, and the original JPG/PNG as the last
+  // resort for browsers that support neither. No source files change; the
+  // optimizer transcodes on the fly.
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   async redirects() {
     return [
       // The premium concept is now the live homepage; the old preview URL folds into it.

@@ -143,6 +143,21 @@ export function LandingJsonLd({ locale }: { locale: Locale }) {
           acceptedAnswer: { "@type": "Answer", text: answer },
         })),
       },
+      {
+        // Single-level breadcrumb: the landing IS the site root. The "Home"
+        // crumb label and target follow the locale, so the RU page resolves to
+        // /ru and the UZ page to the root, matching the visible nav home link.
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumbs`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: locale === "ru" ? "Главная" : "Bosh sahifa",
+            item: url,
+          },
+        ],
+      },
     ],
   };
 
