@@ -24,6 +24,7 @@ import {
   Languages,
   Menu,
   PackageCheck,
+  Phone,
   Pill,
   Printer,
   QrCode,
@@ -58,8 +59,10 @@ const copy = {
       subtitle:
         "Касса и склад для магазинов у дома и минимаркетов. BirLiy работает на телефоне: кассир продаёт, вы видите выручку, остатки и смену.",
       primaryCta: "Оставить заявку",
+      ctaShort: "Заявка",
       secondaryCta: "Смотреть продукт",
       telegram: "Telegram",
+      call: "Позвонить",
       pilot: "Пилотная цена",
       up: "Наверх",
       heroPhotoBadge: "Реальные магазины уже работают",
@@ -76,6 +79,12 @@ const copy = {
       { label: "Подключение", value: "1", suffix: "день" },
       { label: "База товаров", value: "9 000+", suffix: "SKU" },
       { label: "Способы оплаты", value: "4", suffix: "в одном чеке" },
+    ],
+    // Condensed three numbers for the mobile first screen (one-screen rule).
+    heroNumbers: [
+      { value: "49 000", suffix: "сум/мес" },
+      { value: "1", suffix: "день" },
+      { value: "0", suffix: "оборудования" },
     ],
     segments: ["Магазин у дома", "Минимаркет", "Аптека", "Сервисная точка"],
     scroll: {
@@ -235,8 +244,10 @@ const copy = {
       subtitle:
         "Uy yonidagi do'kon va minimarketlar uchun kassa va ombor. BirLiy telefonda ishlaydi: kassir sotadi, siz tushum, qoldiq va smenani ko'rasiz.",
       primaryCta: "Ariza qoldirish",
+      ctaShort: "Ariza",
       secondaryCta: "Mahsulotni ko'rish",
       telegram: "Telegram",
+      call: "Qo'ng'iroq",
       pilot: "Pilot narx",
       up: "Yuqoriga",
       heroPhotoBadge: "Haqiqiy do'konlar allaqachon ishlamoqda",
@@ -253,6 +264,12 @@ const copy = {
       { label: "Ulanish", value: "1", suffix: "kun" },
       { label: "Tovar bazasi", value: "9 000+", suffix: "SKU" },
       { label: "To'lov usullari", value: "4", suffix: "bitta chekda" },
+    ],
+    // Condensed three numbers for the mobile first screen (one-screen rule).
+    heroNumbers: [
+      { value: "49 000", suffix: "so'm/oy" },
+      { value: "1", suffix: "kun" },
+      { value: "0", suffix: "uskuna" },
     ],
     segments: ["Uy yonidagi do'kon", "Minimarket", "Dorixona", "Servis nuqtasi"],
     scroll: {
@@ -521,6 +538,12 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const otherHref = locale === "ru" ? "/" : "/ru";
   const switchLangLabel = locale === "ru" ? "Сменить язык на узбекский (UZ)" : "Tilni ruschaga almashtirish (RU)";
 
+  // Cleaned phone for a tappable tel: link (the display value carries spaces).
+  const telHref = `tel:${t.footer.phone.replace(/[^+\d]/g, "")}`;
+  const otherLocale: Locale = locale === "ru" ? "uz" : "ru";
+  const trackLangSwitch = () =>
+    trackSiteEvent("language_switch", { from_lang: locale, to_lang: otherLocale });
+
   // Keep <html lang> in sync with the active locale (app/layout.tsx hardcodes "uz").
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -626,6 +649,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           <div className="flex items-center gap-2">
             <a
               href={otherHref}
+              onClick={trackLangSwitch}
               className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/16 bg-white/8 px-3 py-2 text-sm font-extrabold text-white transition-colors duration-200 ease-birliy hover:bg-white/12"
               aria-label={switchLangLabel}
             >
@@ -638,6 +662,15 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               className="hidden min-h-11 items-center gap-2 rounded-lg bg-green-700 px-4 py-2 text-sm font-extrabold text-white transition-colors duration-200 ease-birliy hover:bg-green-800 sm:inline-flex"
             >
               {t.meta.primaryCta}
+            </button>
+            {/* Compact header CTA for mobile: keeps "Заявка" visible in the top
+                bar on phones (the full button shows at sm:). */}
+            <button
+              type="button"
+              onClick={() => openLead("header")}
+              className="inline-flex min-h-11 items-center rounded-lg bg-green-700 px-3 text-sm font-extrabold text-white transition-colors duration-200 ease-birliy hover:bg-green-800 sm:hidden"
+            >
+              {t.meta.ctaShort}
             </button>
             <button
               type="button"
@@ -672,21 +705,34 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           </nav>
         )}
 
-        <div id="top" className="relative z-10 mx-auto grid max-w-7xl gap-12 px-4 pb-10 pt-8 sm:px-6 md:pb-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8 lg:pb-20 lg:pt-14">
+        <div id="top" className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 pb-8 pt-5 sm:gap-12 sm:pb-10 sm:pt-8 md:pb-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8 lg:pb-20 lg:pt-14 sm:px-6">
           <div>
             {/* Hero renders statically: it is the LCP element and must be visible
                 in SSR HTML, not gated behind JS hydration (PageSpeed mobile). */}
-            <motion.p {...fade(0, true)} className="text-sm font-semibold uppercase tracking-normal text-green-300">
+            <motion.p {...fade(0, true)} className="text-xs font-semibold uppercase tracking-normal text-green-300 sm:text-sm">
               {t.meta.eyebrow}
             </motion.p>
-            <motion.h1 {...fade(0.12, true)} className="mt-4 max-w-[16ch] text-5xl font-extrabold leading-[1.05] tracking-normal text-white sm:text-6xl lg:text-7xl">
+            {/* Mobile caps the H1 at text-4xl so the offer + numbers + CTA fit one
+                390x844 screen without scroll (BR-02); desktop sizes are unchanged. */}
+            <motion.h1 {...fade(0.12, true)} className="mt-3 max-w-[16ch] text-4xl font-extrabold leading-[1.06] tracking-normal text-white sm:mt-4 sm:text-6xl sm:leading-[1.05] lg:text-7xl">
               <HeroTitle lead={t.meta.titleLead} words={t.meta.titleWords} tail={t.meta.titleTail} reduce={reduce} />
             </motion.h1>
-            <motion.p {...fade(0.2, true)} className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
+            <motion.p {...fade(0.2, true)} className="mt-4 max-w-2xl text-base font-medium leading-7 text-white/78 sm:mt-6 sm:text-xl sm:leading-8">
               {t.meta.subtitle}
             </motion.p>
 
-            <motion.div {...fade(0.26, true)} className="mt-8 flex flex-col gap-3 sm:flex-row">
+            {/* Condensed three-number row: visible on mobile only, so the offer
+                proof stays above the fold. Replaced by the 4-card grid at sm:. */}
+            <motion.div {...fade(0.28, true)} className="mt-5 grid grid-cols-3 gap-2 sm:hidden">
+              {t.heroNumbers.map((stat) => (
+                <div key={stat.suffix} className="rounded-lg border border-white/12 bg-white/8 px-2.5 py-3 text-center backdrop-blur">
+                  <CountUp value={stat.value} className="block text-2xl font-extrabold leading-none text-white" />
+                  <span className="mt-1 block text-[11px] font-semibold leading-tight text-white/62">{stat.suffix}</span>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div {...fade(0.26, true)} className="mt-5 flex flex-col gap-3 sm:mt-8 sm:flex-row">
               <button
                 type="button"
                 onClick={() => openLead("hero")}
@@ -696,15 +742,27 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 <ArrowRight size={18} />
               </button>
               <a
+                href={t.footer.telegramHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackSiteEvent("telegram_click", { cta_location: "hero" })}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/22 bg-white/8 px-5 py-3 font-extrabold text-white backdrop-blur transition-colors duration-200 ease-birliy hover:bg-white/12 sm:hidden"
+              >
+                <Send size={18} />
+                {t.meta.telegram}
+              </a>
+              <a
                 href="#reveal"
                 onClick={() => trackSiteEvent("product_demo_click", { placement: "hero" })}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/22 bg-white/8 px-5 py-3 font-extrabold text-white backdrop-blur transition-colors duration-200 ease-birliy hover:bg-white/12"
+                className="hidden min-h-12 items-center justify-center gap-2 rounded-lg border border-white/22 bg-white/8 px-5 py-3 font-extrabold text-white backdrop-blur transition-colors duration-200 ease-birliy hover:bg-white/12 sm:inline-flex"
               >
                 {t.meta.secondaryCta}
               </a>
             </motion.div>
 
-            <motion.div {...fade(0.34, true)} className="mt-9 grid gap-3 sm:grid-cols-2">
+            {/* Full four-card grid: desktop and tablet only. Hidden on mobile in
+                favour of the condensed numbers above. */}
+            <motion.div {...fade(0.34, true)} className="mt-9 hidden gap-3 sm:grid sm:grid-cols-2">
               {t.stats.map((stat) => (
                 <div key={stat.label} className="rounded-lg border border-white/12 bg-white/8 p-4 backdrop-blur">
                   <p className="text-xs font-semibold uppercase tracking-normal text-white/48">{stat.label}</p>
@@ -1550,6 +1608,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 href={t.footer.telegramHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSiteEvent("telegram_click", { cta_location: "footer" })}
                 className="mt-4 inline-flex min-h-9 items-center gap-2 text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700"
               >
                 <Send size={16} className="text-green-700" />
@@ -1559,12 +1618,20 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 href={t.footer.supportHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSiteEvent("telegram_click", { cta_location: "footer_support" })}
                 className="mt-3 flex min-h-9 items-center gap-2 text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700"
               >
                 <Send size={16} className="text-green-700" />
                 {t.footer.support}
               </a>
-              <p className="mt-3 text-base font-extrabold tracking-normal">{t.footer.phone}</p>
+              <a
+                href={telHref}
+                onClick={() => trackSiteEvent("phone_click", { cta_location: "footer" })}
+                className="mt-3 inline-flex min-h-9 items-center gap-2 text-base font-extrabold tracking-normal text-ink-900 transition-colors duration-200 ease-birliy hover:text-green-700"
+              >
+                <Phone size={16} className="text-green-700" />
+                {t.footer.phone}
+              </a>
             </div>
           </div>
           <div className="mt-12 flex flex-col gap-4 border-t border-[#d9e2db] pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -1572,6 +1639,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             <div className="flex items-center gap-2">
               <a
                 href="/ru"
+                onClick={locale === "ru" ? undefined : trackLangSwitch}
                 aria-current={locale === "ru" ? "true" : undefined}
                 className={`inline-flex min-h-9 items-center rounded-full px-4 text-sm font-extrabold transition-colors duration-200 ease-birliy ${locale === "ru" ? "bg-ink-900 text-white" : "border border-[#d9e2db] text-ink-700 hover:bg-white"}`}
               >
@@ -1579,6 +1647,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               </a>
               <a
                 href="/"
+                onClick={locale === "uz" ? undefined : trackLangSwitch}
                 aria-current={locale === "uz" ? "true" : undefined}
                 className={`inline-flex min-h-9 items-center rounded-full px-4 text-sm font-extrabold transition-colors duration-200 ease-birliy ${locale === "uz" ? "bg-ink-900 text-white" : "border border-[#d9e2db] text-ink-700 hover:bg-white"}`}
               >
@@ -1595,18 +1664,37 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         aria-hidden={!showSticky}
         className={`fixed inset-x-0 bottom-0 z-30 border-t border-[#d9e2db] bg-white/94 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-18px_50px_-34px_rgba(11,24,38,0.6)] backdrop-blur transition-transform duration-300 ease-birliy motion-reduce:transition-none sm:hidden ${showSticky ? "translate-y-0" : "translate-y-full"}`}
       >
+        {/* Three persistent actions: primary lead CTA (flex-grows) plus Telegram
+            and phone, so a shop owner can reach us the way they prefer. The bar
+            hides over #lead and the footer (showSticky), so it never covers the
+            form fields or the footer language controls. */}
         <div className="mx-auto flex max-w-md items-center gap-2">
-          <a
-            href={otherHref}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-[#d9e2db] text-sm font-extrabold text-ink-700"
-            aria-label={switchLangLabel}
+          <button
+            type="button"
+            onClick={() => openLead("mobile_sticky")}
+            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg bg-green-700 px-3 text-sm font-extrabold text-white"
           >
-            {t.meta.otherLang}
-          </a>
-          <button type="button" onClick={() => openLead("mobile_sticky")} className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg bg-green-700 px-4 font-extrabold text-white">
             {t.meta.primaryCta}
             <ArrowRight size={17} />
           </button>
+          <a
+            href={t.footer.telegramHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackSiteEvent("telegram_click", { cta_location: "mobile_sticky" })}
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-[#d9e2db] text-green-700"
+            aria-label={t.meta.telegram}
+          >
+            <Send size={18} />
+          </a>
+          <a
+            href={telHref}
+            onClick={() => trackSiteEvent("phone_click", { cta_location: "mobile_sticky" })}
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-[#d9e2db] text-green-700"
+            aria-label={t.meta.call}
+          >
+            <Phone size={18} />
+          </a>
         </div>
       </div>
 

@@ -6,6 +6,13 @@ export const siteEventNames = [
   "lead_form_error",
   "lead_form_submit",
   "lead_form_success",
+  "page_view",
+  "telegram_click",
+  "phone_click",
+  "faq_open",
+  "demo_interaction",
+  "language_switch",
+  "blog_click",
 ] as const;
 
 export type SiteEventName = (typeof siteEventNames)[number];
