@@ -99,6 +99,11 @@ const copy = {
       eyebrow: "Знакомо?",
       headline: "Сколько товара осталось? Сколько вы заработали сегодня? С тетрадью точного ответа нет.",
       body: "Раньше товары записывали в тетрадь, остатки держали в голове, а выручку сводили поздно вечером. Что-то забыли, что-то потеряли, а к утру уже не вспомнить. BirLiy убирает эту головную боль: касса, склад и деньги в одном телефоне. И вы не остаётесь с этим один на один. Мы подключаем за день, заносим первые товары вместе с вами и учим кассира за полчаса. Не нужно быть «технарём», нужно просто продавать.",
+      points: [
+        { title: "Тетрадь не показывает остатки", text: "Сколько товара на полке, узнаёте только когда он закончился. Записи отстают от реальности.", icon: Boxes },
+        { title: "Кассир не считает выручку сам", text: "Вечером пересчитываете деньги вручную и звоните кассиру, чтобы понять, как прошёл день.", icon: Receipt },
+        { title: "QR-оплата живёт отдельно", text: "Касса в тетради, QR на стене, чеки на бумаге. Три разных места, ничего не сходится.", icon: QrCode },
+      ],
     },
     segments2: {
       eyebrow: "Главные клиенты",
@@ -165,22 +170,37 @@ const copy = {
       body:
         "BirLiy соединяет кассовый экран, способы оплаты и склад. Кассиру не нужно прыгать между приложениями, а владельцу не нужно вручную сводить итоги дня.",
       steps: [
-        { title: "Сканирование", text: "Камера или 2D-сканер добавляет товар в чек.", icon: ScanLine },
-        { title: "Оплата", text: "Наличные, терминал, QR или долг остаются в одной смене.", icon: QrCode },
-        { title: "Чек", text: "Электронный чек уходит покупателю в Telegram.", icon: Receipt },
-        { title: "Склад", text: "Остатки и отчёты обновляются после продажи.", icon: PackageCheck },
+        { title: "Скан", text: "Камера или 2D-сканер добавляет товар в чек.", icon: ScanLine },
+        { title: "Чек", text: "Сумма собирается сама, чек готов за секунду.", icon: Receipt },
+        { title: "QR", text: "Покупатель видит QR и сканирует его телефоном.", icon: QrCode },
+        { title: "Оплата", text: "Наличные, карта, QR или долг остаются в одной смене.", icon: Wallet },
+        { title: "Остатки", text: "Остаток и отчёты обновляются сразу после продажи.", icon: PackageCheck },
       ],
     },
     owner: {
       eyebrow: "02 / Панель владельца",
-      title: "Владелец видит магазин даже когда он не у кассы.",
+      title: "Я не в магазине, но вижу бизнес.",
+      remoteNote: "Дома, в дороге или в другой точке. Открыли телефон и видите магазин в реальном времени.",
       body:
         "Выручка, смены кассиров, возвраты, низкие остатки и структура оплат собраны в один командный экран. Не надо звонить кассиру, чтобы понять, как прошёл день.",
       bullets: ["PIN-роли для владельца и кассира", "Журнал продаж, возвратов и списаний", "Telegram-чеки и дневные итоги"],
       metrics: [
-        { label: "Дельта выручки", value: "+12%", detail: "рост за день" },
+        { label: "Выручка сегодня", value: "3 450 000", detail: "+12% ко вчера" },
         { label: "Кассиры", value: "3", detail: "смены под контролем" },
-        { label: "Пополнить", value: "18", detail: "товаров мало" },
+        { label: "Возвраты", value: "2", detail: "за сегодня" },
+        { label: "Заканчиваются", value: "18", detail: "товаров мало" },
+      ],
+    },
+    cashier: {
+      eyebrow: "Для кассира",
+      title: "Кассир разберётся за 30 минут.",
+      body: "Большие кнопки, понятный экран. Кассир входит по своему PIN, сканирует товар камерой или сканером и пробивает чек. Учиться неделю не нужно.",
+      photoAlt: "Кассир пробивает товар на телефоне BirLiy",
+      features: [
+        { title: "Крупные кнопки", text: "Большой экран и понятные надписи. Промахнуться сложно.", icon: ShoppingCart },
+        { title: "Вход по PIN", text: "У каждого кассира свой PIN. Видно, кто продал и кто открыл смену.", icon: ShieldCheck },
+        { title: "Сканер или камера", text: "Товар добавляется камерой телефона или ручным сканером.", icon: ScanLine },
+        { title: "Обучение 30 минут", text: "Кассир осваивает кассу за полчаса. В первый день помогаем лично.", icon: Clock3 },
       ],
     },
     modules: {
@@ -284,6 +304,11 @@ const copy = {
       eyebrow: "Tanish?",
       headline: "Qancha tovar qoldi? Bugun qancha ishladingiz? Daftar bilan aniq javob yo'q.",
       body: "Ilgari tovarlarni daftarga yozardingiz, qoldiqni xayolda sanardingiz, tushumni esa kechqurun zo'rg'a yig'ardingiz. Biror narsa esdan chiqadi, biror narsa yo'qoladi, ertalabga borib eslay olmaysiz. BirLiy bu bosh og'rig'ini olib tashlaydi: kassa, ombor va pul bitta telefonda. Va siz bu ishda yolg'iz qolmaysiz. Bir kunda ulaymiz, birinchi tovarlarni siz bilan birga kiritamiz va kassirni yarim soatda o'rgatamiz. «Texnik» bo'lish shart emas, shunchaki sotsangiz bo'ldi.",
+      points: [
+        { title: "Daftar qoldiqni ko'rsatmaydi", text: "Javonda qancha tovar borligini faqat u tugaganda bilasiz. Yozuvlar haqiqatdan orqada qoladi.", icon: Boxes },
+        { title: "Kassir tushumni o'zi sanamaydi", text: "Kechqurun pulni qo'lda qayta sanaysiz va kun qanday o'tganini bilish uchun kassirga qo'ng'iroq qilasiz.", icon: Receipt },
+        { title: "QR-to'lov alohida yashaydi", text: "Kassa daftarda, QR devorda, cheklar qog'ozda. Uch xil joy, hech narsa to'g'ri kelmaydi.", icon: QrCode },
+      ],
     },
     segments2: {
       eyebrow: "Asosiy mijozlar",
@@ -350,22 +375,37 @@ const copy = {
       body:
         "BirLiy kassa ekrani, to'lov usullari va omborni bog'laydi. Kassir ilovalar orasida almashmaydi, egasi esa kun yakunini qo'lda hisoblamaydi.",
       steps: [
-        { title: "Skanerlash", text: "Kamera yoki 2D-skaner tovarni chekka qo'shadi.", icon: ScanLine },
-        { title: "To'lov", text: "Naqd, terminal, QR yoki qarz bitta smenada qoladi.", icon: QrCode },
-        { title: "Chek", text: "Elektron chek xaridorga Telegram orqali yuboriladi.", icon: Receipt },
-        { title: "Ombor", text: "Qoldiq va hisobotlar sotuvdan keyin yangilanadi.", icon: PackageCheck },
+        { title: "Skan", text: "Kamera yoki 2D-skaner tovarni chekka qo'shadi.", icon: ScanLine },
+        { title: "Chek", text: "Summa o'zi yig'iladi, chek bir soniyada tayyor.", icon: Receipt },
+        { title: "QR", text: "Xaridor QR'ni ko'radi va telefoni bilan skanerlaydi.", icon: QrCode },
+        { title: "To'lov", text: "Naqd, karta, QR yoki qarz bitta smenada qoladi.", icon: Wallet },
+        { title: "Qoldiq", text: "Qoldiq va hisobotlar sotuvdan keyin darhol yangilanadi.", icon: PackageCheck },
       ],
     },
     owner: {
       eyebrow: "02 / Egasi paneli",
-      title: "Egasi kassada bo'lmasa ham do'konni ko'rib turadi.",
+      title: "Men do'konda emasman, lekin biznesni ko'rib turibman.",
+      remoteNote: "Uyda, yo'lda yoki boshqa nuqtada. Telefonni ochdingiz, do'konni real vaqtda ko'rasiz.",
       body:
         "Tushum, kassir smenalari, qaytarishlar, kam qolgan tovarlar va to'lov tarkibi bitta boshqaruv ekranida. Kun qanday o'tganini bilish uchun kassirga qo'ng'iroq qilish shart emas.",
       bullets: ["Egasi va kassir uchun PIN-rollar", "Sotuv, qaytarish va hisobdan chiqarish jurnali", "Telegram-cheklar va kunlik yakunlar"],
       metrics: [
-        { label: "Tushum o'zgarishi", value: "+12%", detail: "kunlik o'sish" },
+        { label: "Bugungi tushum", value: "3 450 000", detail: "+12% kechagiga" },
         { label: "Kassirlar", value: "3", detail: "smenalar nazoratda" },
-        { label: "To'ldirish", value: "18", detail: "tovar kamaygan" },
+        { label: "Qaytarishlar", value: "2", detail: "bugun" },
+        { label: "Tugayapti", value: "18", detail: "tovar kamaygan" },
+      ],
+    },
+    cashier: {
+      eyebrow: "Kassir uchun",
+      title: "Kassir 30 daqiqada o'rganadi.",
+      body: "Katta tugmalar, tushunarli ekran. Kassir o'z PIN'i bilan kiradi, tovarni kamera yoki skaner bilan o'qiydi va chek uradi. Bir hafta o'qishning hojati yo'q.",
+      photoAlt: "Kassir BirLiy telefonida tovarni chek qilmoqda",
+      features: [
+        { title: "Katta tugmalar", text: "Katta ekran va tushunarli yozuvlar. Adashish qiyin.", icon: ShoppingCart },
+        { title: "PIN bilan kirish", text: "Har bir kassirning o'z PIN'i bor. Kim sotgani va kim smena ochgani ko'rinadi.", icon: ShieldCheck },
+        { title: "Skaner yoki kamera", text: "Tovar telefon kamerasi yoki qo'l skaneri bilan qo'shiladi.", icon: ScanLine },
+        { title: "30 daqiqalik o'qitish", text: "Kassir kassani yarim soatda o'rganadi. Birinchi kuni shaxsan yordam beramiz.", icon: Clock3 },
       ],
     },
     modules: {
@@ -846,6 +886,25 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             <h2 className="text-3xl font-extrabold leading-[1.12] tracking-normal text-ink-900 drop-shadow-[0_1px_0_rgba(8,19,28,0.04)] sm:text-4xl lg:text-[2.75rem]">{t.pain.headline}</h2>
             <motion.p {...reveal(0.18, reduce)} className="mt-6 max-w-2xl text-lg leading-8 text-ink-700">{t.pain.body}</motion.p>
           </motion.div>
+          {/* Three owner-language pains (BR-05): scannable cards a shop owner recognises at a glance. */}
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {t.pain.points.map((point, index) => {
+              const Icon = point.icon;
+              return (
+                <motion.article
+                  key={point.title}
+                  {...reveal(0.08 + index * 0.08, reduce)}
+                  className="group relative overflow-hidden rounded-2xl border border-[#e4d9d9] bg-[#fffaf8] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition duration-300 ease-birliy hover:-translate-y-1 hover:border-[#e0b4ad] hover:shadow-[0_22px_50px_-30px_rgba(180,40,30,0.32)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                >
+                  <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-[#fdecea] text-[#c0392b] ring-1 ring-[#f0cfca]">
+                    <Icon size={21} strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-extrabold leading-6 tracking-normal text-ink-900">{point.title}</h3>
+                  <p className="mt-2 leading-7 text-ink-500">{point.text}</p>
+                </motion.article>
+              );
+            })}
+          </div>
           <motion.div {...reveal(0.1, reduce)} className="mx-auto mt-12 max-w-3xl">
             <PaperVsBirliy locale={locale} />
           </motion.div>
@@ -889,7 +948,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             <div className="inline-flex rounded-full border border-[#d9e2db] bg-white p-1 shadow-[0_1px_2px_rgba(11,24,38,0.06)]">
               <button
                 type="button"
-                onClick={() => setDemoRole("cashier")}
+                onClick={() => { setDemoRole("cashier"); trackSiteEvent("demo_interaction", { role: "cashier", step: "role_switch" }); }}
                 aria-pressed={demoRole === "cashier"}
                 className={`min-h-10 rounded-full px-4 text-sm font-extrabold transition sm:px-5 ${demoRole === "cashier" ? "bg-green-700 text-white" : "text-ink-700 hover:text-ink-900"}`}
               >
@@ -897,7 +956,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               </button>
               <button
                 type="button"
-                onClick={() => setDemoRole("owner")}
+                onClick={() => { setDemoRole("owner"); trackSiteEvent("demo_interaction", { role: "owner", step: "role_switch" }); }}
                 aria-pressed={demoRole === "owner"}
                 className={`min-h-10 rounded-full px-4 text-sm font-extrabold transition sm:px-5 ${demoRole === "owner" ? "bg-green-700 text-white" : "text-ink-700 hover:text-ink-900"}`}
               >
@@ -915,7 +974,10 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               transition={reduce ? undefined : { duration: 6, ease: "easeInOut", repeat: Infinity }}
               className="pointer-events-none absolute -inset-6 -z-10 rounded-[36px] bg-[radial-gradient(60%_55%_at_50%_45%,rgba(3,183,61,0.30),transparent_70%)] blur-2xl"
             />
-            <div className="rounded-[28px] border-4 border-[#1b2733] bg-[#0b1826] p-2 shadow-[0_40px_90px_-50px_rgba(11,24,38,0.85)] transition-transform duration-300 ease-birliy hover:-translate-y-1.5 hover:shadow-[0_55px_110px_-50px_rgba(11,24,38,0.9)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-3">
+            <div
+              className="rounded-[28px] border-4 border-[#1b2733] bg-[#0b1826] p-2 shadow-[0_40px_90px_-50px_rgba(11,24,38,0.85)] transition-transform duration-300 ease-birliy hover:-translate-y-1.5 hover:shadow-[0_55px_110px_-50px_rgba(11,24,38,0.9)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-3"
+              onClick={() => trackSiteEvent("demo_interaction", { role: demoRole, step: "demo_tap" })}
+            >
               {demoRole === "cashier" ? <PosDemo locale={locale} /> : <AdminDemo locale={locale} />}
             </div>
             <div className="mt-5 flex justify-center">
@@ -1012,16 +1074,34 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               {locale === "ru" ? "Вся продажа: 15 секунд, без переключений" : "Bitta sotuv: 15 soniya, ilovalar orasida o'tmasdan"}
             </p>
           </motion.div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* BR-06: on mobile a vertical numbered stepper with a connector; on
+              wide screens the 5 steps lay out in a row. Numbers make the 15-second
+              скан -> чек -> QR -> оплата -> остатки sequence easy to follow. */}
+          <div
+            className="relative mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5"
+            onClick={() => trackSiteEvent("demo_interaction", { role: demoRole, step: "flow_view" })}
+          >
             {t.flow.steps.map((step, index) => {
               const Icon = step.icon;
+              const isLast = index === t.flow.steps.length - 1;
               return (
                 <motion.article
                   key={step.title}
                   {...reveal(index * 0.05, reduce)}
-                  className="rounded-lg border border-[#d9e2db] bg-white p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-transform duration-200 ease-birliy hover:-translate-y-0.5"
+                  className="relative rounded-lg border border-[#d9e2db] bg-white p-5 pl-16 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-transform duration-200 ease-birliy hover:-translate-y-0.5 sm:pl-5"
                 >
-                  <div className="mb-4 grid h-11 w-11 place-items-center rounded-lg bg-green-50 text-green-700">
+                  {/* Vertical connector between steps on the single-column mobile stack. */}
+                  {!isLast && (
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute left-[33px] top-12 h-[calc(100%+1rem)] w-0.5 bg-[linear-gradient(to_bottom,#03b73d,rgba(3,183,61,0.18))] sm:hidden"
+                    />
+                  )}
+                  {/* Step number badge: top-left on mobile, inline above the icon on wide screens. */}
+                  <span className="absolute left-4 top-5 grid h-9 w-9 place-items-center rounded-full bg-green-700 text-sm font-extrabold text-white ring-2 ring-green-700/20 sm:static sm:mb-4 sm:h-8 sm:w-8">
+                    {index + 1}
+                  </span>
+                  <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-green-50 text-green-700">
                     <Icon size={22} strokeWidth={1.75} />
                   </div>
                   <h3 className="text-lg font-extrabold tracking-normal">{step.title}</h3>
@@ -1073,7 +1153,11 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 {t.command.status}
               </span>
             </div>
-            <h2 className="max-w-[17ch] text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.owner.title}</h2>
+            <h2 className="max-w-[20ch] text-4xl font-extrabold leading-tight tracking-normal sm:text-5xl">{t.owner.title}</h2>
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-green-500/12 px-3.5 py-1.5 text-sm font-bold text-green-200 ring-1 ring-green-400/20">
+              <Smartphone size={15} strokeWidth={2.25} />
+              {t.owner.remoteNote}
+            </p>
             <p className="mt-5 max-w-xl text-lg leading-8 text-white/72">{t.owner.body}</p>
             <div className="mt-8 grid gap-3">
               {t.owner.bullets.map((item, index) => (
@@ -1091,24 +1175,26 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
             </div>
           </motion.div>
 
-          <motion.div {...reveal(0.08, reduce)} className="grid gap-3 sm:grid-cols-3">
+          {/* Owner-remote panel: today's revenue, cashiers, returns and low-stock,
+              the four numbers an owner checks from the phone (BR / owner panel). */}
+          <motion.div {...reveal(0.08, reduce)} className="grid grid-cols-2 gap-3">
             {t.owner.metrics.map((metric, index) => (
               <motion.article
                 key={metric.label}
                 {...reveal(0.12 + index * 0.08, reduce)}
                 className="group relative overflow-hidden rounded-lg border border-white/12 bg-gradient-to-b from-white/[0.09] to-white/[0.03] p-5 transition duration-200 ease-birliy hover:-translate-y-1 hover:border-green-400/40 before:absolute before:inset-x-5 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-green-400/70 before:to-transparent"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <p className="text-sm font-semibold text-white/52">{metric.label}</p>
                   <motion.span
                     aria-hidden
                     initial={false}
                     animate={reduce ? undefined : { opacity: [1, 0.3, 1], scale: [1, 0.7, 1] }}
                     transition={reduce ? undefined : { duration: 2, ease: "easeInOut", repeat: Infinity, delay: index * 0.4 }}
-                    className="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_2px_rgba(3,183,61,0.6)]"
+                    className="h-1.5 w-1.5 shrink-0 rounded-full bg-green-400 shadow-[0_0_8px_2px_rgba(3,183,61,0.6)]"
                   />
                 </div>
-                <p className="mt-2 bg-gradient-to-b from-white to-green-200 bg-clip-text text-4xl font-extrabold tracking-normal text-transparent">
+                <p className="mt-2 bg-gradient-to-b from-white to-green-200 bg-clip-text text-3xl font-extrabold tracking-normal text-transparent">
                   <CountUp value={metric.value} />
                 </p>
                 <p className="mt-2 text-sm font-semibold text-green-300">{metric.detail}</p>
@@ -1183,6 +1269,44 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               <p className="text-sm font-semibold text-ink-900">{locale === "ru" ? "Вижу всё с телефона" : "Hammasini telefondan ko'raman"}</p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section id="cashier" className="relative overflow-hidden border-t border-[#d9e2db] bg-white py-16 sm:py-20 lg:py-24">
+        {/* Decorative brand-green wash, below content, never gates text/LCP. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_45%_at_85%_-10%,rgba(3,183,61,0.08),transparent_62%)]"
+        />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div {...reveal(0, reduce)} className="max-w-2xl">
+            <SectionLabel>{t.cashier.eyebrow}</SectionLabel>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-normal sm:text-4xl lg:text-5xl">{t.cashier.title}</h2>
+            <p className="mt-5 max-w-xl text-lg leading-8 text-ink-700">{t.cashier.body}</p>
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-green-50 px-3.5 py-1.5 text-sm font-bold text-green-800">
+              <Clock3 size={15} strokeWidth={2.25} />
+              {locale === "ru" ? "Обучение кассира: 30 минут" : "Kassirni o'qitish: 30 daqiqa"}
+            </p>
+          </motion.div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {t.cashier.features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.article
+                  key={feature.title}
+                  {...reveal(index * 0.06, reduce)}
+                  className="group relative overflow-hidden rounded-2xl border border-[#d9e2db] bg-[#fbfcfb] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition duration-300 ease-birliy hover:-translate-y-1.5 hover:border-green-600/60 hover:bg-white hover:shadow-[0_28px_60px_-30px_rgba(3,183,61,0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                >
+                  <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(3,183,61,0.5),transparent)] opacity-0 transition-opacity duration-300 ease-birliy group-hover:opacity-100" />
+                  <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[linear-gradient(135deg,#03b73d,#10a076)] text-white shadow-[0_10px_24px_-12px_rgba(3,183,61,0.7)] transition-transform duration-300 ease-birliy group-hover:scale-110 group-hover:-rotate-3 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0">
+                    <Icon size={22} strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-extrabold tracking-normal text-ink-900">{feature.title}</h3>
+                  <p className="mt-2 leading-7 text-ink-500">{feature.text}</p>
+                </motion.article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
