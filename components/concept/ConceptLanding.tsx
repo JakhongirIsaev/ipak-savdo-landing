@@ -620,10 +620,14 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
     }
   };
   const [leadOpen, setLeadOpen] = useState(false);
+  // Carries the segment that opened the lead form (e.g. "shop", "cafe") so the
+  // form can attach it for attribution; cleared when no segment-card opened it.
+  const [leadSegment, setLeadSegment] = useState<string | undefined>(undefined);
   const [heroGone, setHeroGone] = useState(false);
   const [nearBottom, setNearBottom] = useState(false);
   const openLead = (placement: string, segment?: string) => {
     trackSiteEvent("cta_click", segment ? { placement, segment } : { placement });
+    setLeadSegment(segment);
     setLeadOpen(true);
   };
   const prefersReduce = useReducedMotion() ?? false;
@@ -646,6 +650,15 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
+
+  // BR-12 page_view: fire one funnel page_view per landing render, after the
+  // <html lang> is set above so the beacon and gtag carry the right lang. This
+  // is the GA4-compatible funnel start; VisitorBeacon counts the raw hit in our
+  // own DB separately. Locale is fixed per route, so this runs once on mount.
+  useEffect(() => {
+    trackSiteEvent("page_view");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Mobile sticky CTA visibility. Show it only once the hero (which has its own
   // CTA) has scrolled away, and hide it again as soon as the lead section or the
@@ -1996,7 +2009,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         </div>
       </div>
 
-      <LeadModal open={leadOpen} onClose={() => setLeadOpen(false)} locale={locale} />
+      <LeadModal open={leadOpen} onClose={() => setLeadOpen(false)} locale={locale} segment={leadSegment} />
     </main>
   );
 }

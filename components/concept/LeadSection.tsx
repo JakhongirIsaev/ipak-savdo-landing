@@ -1,10 +1,33 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowRight, Check, ChevronRight, ShieldCheck, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronRight, Send, ShieldCheck, X } from "lucide-react";
 import type { Locale } from "./demoData";
 import { useAttribution } from "@/lib/use-attribution";
 import { trackSiteEvent, trackLeadSubmitAttempt, trackLeadSuccess } from "@/lib/track/client";
+
+// Public Telegram contact, mirrors copy.footer.telegramHref in ConceptLanding.
+// Used as the documents-via-Telegram fallback in the lead form (BR-04) and on
+// the success screen.
+const TELEGRAM_HREF = "https://t.me/bir_liy";
+
+// +998 phone mask. Keeps only digits, drops a leading 998/8/9->normalises, then
+// formats as "+998 90 123 45 67". Shop owners type in many shapes; this gives
+// one predictable display while owner_contact still posts the formatted string
+// (the server regex ^[+()0-9\s-]+$ and the 5-100 length both accept it).
+function formatUzPhone(raw: string): string {
+  let digits = raw.replace(/\D/g, "");
+  if (digits.startsWith("998")) digits = digits.slice(3);
+  // A lone leading 0 (e.g. "0 90 ...") is a local habit; drop it.
+  if (digits.startsWith("0")) digits = digits.slice(1);
+  digits = digits.slice(0, 9); // 9 national digits after +998
+  const parts = ["+998"];
+  if (digits.length > 0) parts.push(digits.slice(0, 2));
+  if (digits.length > 2) parts.push(digits.slice(2, 5));
+  if (digits.length > 5) parts.push(digits.slice(5, 7));
+  if (digits.length > 7) parts.push(digits.slice(7, 9));
+  return parts.join(" ").trim();
+}
 
 // Public dropdown positions BirLiy for shops, minimarkets, pharmacies and market
 // points; it intentionally omits cafe/restaurant/salon (marketing positioning).
@@ -40,16 +63,30 @@ const STR = {
         { title: "Без рисков", items: ["Без покупки оборудования сразу", "Запуск за 1 рабочий день", "Помогаем с первым запуском", "Старт с телефона"] },
       ],
     },
+    step1Label: "Шаг 1 из 2",
+    step2Label: "Шаг 2 из 2",
+    step1Title: "Контакты",
+    step1Desc: "Оставьте контакты, и менеджер свяжется с вами",
+    step2Title: "Фото для подключения",
+    step2Desc: "Чтобы подключить магазин, приложите три фото. Можно прислать их менеджеру в Telegram.",
     contactsTitle: "Контакты",
     contactsDesc: "Как с вами связаться",
     name: "Имя",
     phone: "Телефон",
+    phoneHint: "Формат: +998 90 123 45 67",
     bizTitle: "Бизнес",
     bizDesc: "Пара слов о точке",
     business: "Тип бизнеса",
     businessTypes: ["Магазин", "Минимаркет", "Аптека", "Рынок / точка", "Сервис", "Другое"],
     businessName: "Название магазина",
+    cityTitle: "Город / район",
+    cityDesc: "Где находится точка",
+    city: "Город или район",
     other: "Уточните тип бизнеса",
+    next: "Дальше",
+    back: "Назад",
+    tgFallback: "Не хотите загружать фото здесь? Пришлите их менеджеру в Telegram, мы поможем с подключением.",
+    tgFallbackCta: "Написать в Telegram",
     equipTitle: "Оборудование",
     equipDesc: "Что нужно для старта (необязательно)",
     equipLabel: "Оборудование",
@@ -69,8 +106,9 @@ const STR = {
     commentPh: "Что важно знать о вашей точке?",
     submit: "Отправить заявку",
     submitting: "Отправляем...",
-    successTitle: "Заявка отправлена",
-    successBody: "Команда BirLiy свяжется с вами. Спасибо!",
+    successTitle: "Заявка принята",
+    successBody: "Заявка принята. Менеджер свяжется и поможет подключить магазин.",
+    successTg: "Можно сразу написать нам в Telegram",
     again: "Отправить ещё одну",
     error: "Не удалось отправить. Попробуйте ещё раз.",
     tooMany: "Слишком много попыток. Подождите пару минут и попробуйте снова.",
@@ -101,16 +139,30 @@ const STR = {
         { title: "Xavfsiz boshlash", items: ["Uskunani darhol sotib olishsiz", "1 ish kunida ishga tushirish", "Birinchi startda yordam", "Telefondan start"] },
       ],
     },
+    step1Label: "1-qadam, 2 tadan",
+    step2Label: "2-qadam, 2 tadan",
+    step1Title: "Kontaktlar",
+    step1Desc: "Kontakt qoldiring, menejer siz bilan bog'lanadi",
+    step2Title: "Ulash uchun foto",
+    step2Desc: "Do'konni ulash uchun uchta foto biriktiring. Ularni menejerga Telegram orqali ham yuborsa bo'ladi.",
     contactsTitle: "Kontaktlar",
     contactsDesc: "Siz bilan qanday bog'lanamiz",
     name: "Ism",
     phone: "Telefon",
+    phoneHint: "Format: +998 90 123 45 67",
     bizTitle: "Biznes",
     bizDesc: "Nuqta haqida ikki og'iz",
     business: "Biznes turi",
     businessTypes: ["Do'kon", "Minimarket", "Dorixona", "Bozor / nuqta", "Servis", "Boshqa"],
     businessName: "Do'kon nomi",
+    cityTitle: "Shahar / tuman",
+    cityDesc: "Nuqta qayerda joylashgan",
+    city: "Shahar yoki tuman",
     other: "Biznes turini aniqlang",
+    next: "Keyingisi",
+    back: "Orqaga",
+    tgFallback: "Fotoni shu yerda yuklashni xohlamaysizmi? Ularni menejerga Telegram orqali yuboring, ulashda yordam beramiz.",
+    tgFallbackCta: "Telegramga yozish",
     equipTitle: "Jihozlar",
     equipDesc: "Start uchun nima kerak (ixtiyoriy)",
     equipLabel: "Jihozlar",
@@ -130,8 +182,9 @@ const STR = {
     commentPh: "Nuqtangiz haqida nima bilish muhim?",
     submit: "Ariza yuborish",
     submitting: "Yuborilmoqda...",
-    successTitle: "Ariza yuborildi",
-    successBody: "BirLiy jamoasi siz bilan bog'lanadi. Rahmat!",
+    successTitle: "Ariza qabul qilindi",
+    successBody: "Ariza qabul qilindi. Menejer bog'lanib, do'konni ulashga yordam beradi.",
+    successTg: "Istasangiz, darrov Telegramga yozing",
     again: "Yana bittasini yuborish",
     error: "Yuborib bo'lmadi. Yana urinib ko'ring.",
     tooMany: "Urinishlar juda ko'p. Bir-ikki daqiqa kuting va qayta urining.",
@@ -199,8 +252,29 @@ function EquipToggle({ label, on, onClick }: { label: string; on: boolean; onCli
   );
 }
 
-// Reusable form rendered inside the modal. Submits multipart (with documents).
-function LeadForm({ locale }: { locale: Locale }) {
+// Small step indicator (1 of 2 / 2 of 2). Purely visual progress dots.
+function StepDots({ step }: { step: 1 | 2 }) {
+  return (
+    <div className="flex items-center gap-2" aria-hidden="true">
+      <span className={`h-1.5 w-8 rounded-full transition-colors ${step >= 1 ? "bg-green-500" : "bg-[#d9e2db]"}`} />
+      <span className={`h-1.5 w-8 rounded-full transition-colors ${step >= 2 ? "bg-green-500" : "bg-[#d9e2db]"}`} />
+    </div>
+  );
+}
+
+// Two-step lead form (BR-04). Step 1 collects contacts + business + city so a
+// shop owner can ask to be contacted with a light, low-friction first screen;
+// step 2 collects the three connection photos after consent (with a Telegram
+// fallback for owners who would rather send photos to a manager).
+//
+// IMPORTANT: /api/lead is multipart-only and requires all three documents
+// server-side, so we cannot save a real lead from step 1 alone. The form is one
+// <form>: BOTH steps stay mounted (only the inactive one is hidden), so every
+// field is in a single FormData on the final submit and values never reset when
+// switching steps. "Дальше" validates only the step-1 inputs and advances; the
+// POST happens once on the step-2 submit. `segment` is the segment card that
+// opened the modal, carried into the comment for attribution.
+function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
   const t = STR[locale];
   const attribution = useAttribution();
   const [formState, setFormState] = useState<FormState>("idle");
@@ -208,13 +282,33 @@ function LeadForm({ locale }: { locale: Locale }) {
   const [businessType, setBusinessType] = useState<string>("");
   const [qrScanner, setQrScanner] = useState(false);
   const [tablet, setTablet] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [step, setStep] = useState<1 | 2>(1);
   const startedRef = useRef(false);
   const invalidTrackedRef = useRef(false);
+  // Wraps the step-1 fields so "Дальше" can validate just that step.
+  const step1Ref = useRef<HTMLDivElement>(null);
 
   const markStarted = () => {
     if (startedRef.current) return;
     startedRef.current = true;
     trackSiteEvent("lead_form_start");
+  };
+
+  // Validate the step-1 inputs natively, then advance. We do not POST here: the
+  // server needs the step-2 documents, so step 1 is a guided pre-step.
+  const goToStep2 = () => {
+    markStarted();
+    const fields = step1Ref.current?.querySelectorAll<HTMLInputElement | HTMLSelectElement>(
+      "input[name],select[name]",
+    );
+    if (fields) {
+      for (const field of fields) {
+        if (!field.reportValidity()) return;
+      }
+    }
+    setErrorMsg("");
+    setStep(2);
   };
 
   const submitLead = async (event: FormEvent<HTMLFormElement>) => {
@@ -236,11 +330,21 @@ function LeadForm({ locale }: { locale: Locale }) {
 
     const equip = [qrScanner ? t.equipQr : null, tablet ? t.equipTablet : null].filter(Boolean) as string[];
     fd.set("needs_equipment", equip.length > 0 ? "true" : "false");
-    // Server caps `comment` at 500 chars and we prepend the equipment label,
-    // trim the user's text to the remaining budget so a long comment can never
-    // overflow the cap and silently fail server validation (dropping the lead).
-    const prefix = equip.length ? `${t.equipLabel}: ${equip.join(", ")}` : "";
-    const joiner = prefix ? ": " : "";
+    // City/district + the segment card have NO DB column (lib/db/schema.ts) and
+    // are not in the Zod schema, so we fold them into `comment` (the only free
+    // text the server stores) instead of inventing columns. The server caps
+    // `comment` at 500; build the prefix from equipment + city + segment, then
+    // trim the user's text to the remaining budget so it can never overflow and
+    // silently fail server validation (which would drop the lead).
+    const city = String(fd.get("city") ?? "").trim();
+    fd.delete("city"); // not a server field; carried inside comment only
+    const tags = [
+      equip.length ? `${t.equipLabel}: ${equip.join(", ")}` : null,
+      city ? `${t.city}: ${city}` : null,
+      segment ? `segment: ${segment}` : null,
+    ].filter(Boolean) as string[];
+    const prefix = tags.join(" · ");
+    const joiner = prefix ? " · " : "";
     const userComment = String(fd.get("comment") ?? "")
       .trim()
       .slice(0, Math.max(0, COMMENT_MAX - prefix.length - joiner.length));
@@ -303,7 +407,17 @@ function LeadForm({ locale }: { locale: Locale }) {
         </div>
         <p className="mt-4 text-2xl font-extrabold text-green-800">{t.successTitle}</p>
         <p className="mt-2 max-w-sm leading-7 text-ink-700">{t.successBody}</p>
-        <button type="button" onClick={() => setFormState("idle")} className="mt-6 inline-flex min-h-11 items-center rounded-lg border border-[#d9e2db] px-5 font-extrabold text-ink-700 transition hover:bg-[#f1f4f1]">
+        <a
+          href={TELEGRAM_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackSiteEvent("telegram_click", { cta_location: "lead_success" })}
+          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-lg bg-green-700 px-5 font-extrabold text-white transition hover:bg-green-800"
+        >
+          <Send size={17} />
+          {t.successTg}
+        </a>
+        <button type="button" onClick={() => { setStep(1); setFormState("idle"); }} className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-[#d9e2db] px-5 font-extrabold text-ink-700 transition hover:bg-[#f1f4f1]">
           {t.again}
         </button>
       </div>
@@ -323,52 +437,131 @@ function LeadForm({ locale }: { locale: Locale }) {
     >
       <input type="text" name="_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
 
-      <SectionRow title={t.contactsTitle} desc={t.contactsDesc}>
-        <input required name="owner_name" maxLength={50} minLength={2} aria-label={t.name} placeholder={t.name} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} onInput={(e) => e.currentTarget.setCustomValidity("")} className={inputCls} />
-        <input required name="owner_contact" type="tel" inputMode="tel" autoComplete="tel" pattern="[0-9+() -]{5,}" maxLength={100} minLength={5} aria-label={t.phone} placeholder={t.phone} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} onInput={(e) => e.currentTarget.setCustomValidity("")} className={inputCls} />
-      </SectionRow>
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-sm font-extrabold text-green-700">{step === 1 ? t.step1Label : t.step2Label}</p>
+        <StepDots step={step} />
+      </div>
 
-      <SectionRow title={t.bizTitle} desc={t.bizDesc}>
-        <select required name="business_type" aria-label={t.business} value={businessType} onChange={(e) => { setBusinessType(e.target.value); e.currentTarget.setCustomValidity(""); }} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} className={`${inputCls} ${businessType === "" ? "text-ink-500" : "text-ink-900"}`}>
-          <option value="" disabled>{t.business}</option>
-          {t.businessTypes.map((label, i) => (
-            <option key={BUSINESS_VALUES[i]} value={BUSINESS_VALUES[i]} className="text-ink-900">{label}</option>
-          ))}
-        </select>
-        {businessType === "other" && <input required name="business_type_other" maxLength={50} aria-label={t.other} placeholder={t.other} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} onInput={(e) => e.currentTarget.setCustomValidity("")} className={inputCls} />}
-        <input name="business_name" maxLength={100} aria-label={t.businessName} placeholder={t.businessName} className={inputCls} />
-      </SectionRow>
-
-      <SectionRow title={t.equipTitle} desc={t.equipDesc}>
-        <div className="grid grid-cols-2 gap-2">
-          <EquipToggle label={t.equipQr} on={qrScanner} onClick={() => setQrScanner((v) => !v)} />
-          <EquipToggle label={t.equipTablet} on={tablet} onClick={() => setTablet((v) => !v)} />
+      {/* Step 1: contacts, business, city. Always mounted; hidden on step 2 so
+          its values stay in the single FormData posted at the end. */}
+      <div ref={step1Ref} className={`grid gap-6 ${step === 1 ? "" : "hidden"}`}>
+        <div>
+          <p className="text-lg font-extrabold">{t.step1Title}</p>
+          <p className="mt-1 text-sm font-bold text-ink-500">{t.step1Desc}</p>
         </div>
-      </SectionRow>
 
-      <SectionRow title={t.docsTitle} desc={t.docsNote}>
-        <DocInput name="patent" label={t.docPatent} pickLabel={t.filePick} />
-        <DocInput name="passport" label={t.docPassport} pickLabel={t.filePick} />
-        <DocInput name="shop" label={t.docShop} pickLabel={t.filePick} />
-      </SectionRow>
+        <SectionRow title={t.contactsTitle} desc={t.contactsDesc}>
+          <input required name="owner_name" maxLength={50} minLength={2} aria-label={t.name} placeholder={t.name} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} onInput={(e) => e.currentTarget.setCustomValidity("")} className={inputCls} />
+          <input
+            required
+            name="owner_contact"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            // Parens and hyphen are escaped so the pattern is valid under the
+            // /v (unicodeSets) regex engine current Chrome uses for the HTML
+            // pattern attribute; the unescaped form threw "Invalid character in
+            // character class" when reportValidity() ran on step advance. Mirrors
+            // the server regex ^[+()0-9\s-]+$.
+            pattern="[0-9 +\(\)\-]{5,}"
+            maxLength={100}
+            minLength={5}
+            aria-label={t.phone}
+            placeholder="+998 90 123 45 67"
+            value={phone}
+            onChange={(e) => { setPhone(formatUzPhone(e.target.value)); e.currentTarget.setCustomValidity(""); }}
+            onFocus={(e) => { if (!e.currentTarget.value) setPhone("+998 "); }}
+            onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)}
+            className={inputCls}
+          />
+          <p className="text-xs font-bold text-ink-500">{t.phoneHint}</p>
+        </SectionRow>
 
-      <SectionRow title={t.commentTitle} desc={t.commentDesc}>
-        <textarea name="comment" aria-label={t.commentPh} placeholder={t.commentPh} rows={3} maxLength={450} onInput={(e) => { if (e.currentTarget.value.length > 450) e.currentTarget.value = e.currentTarget.value.slice(0, 450); }} className="min-h-[96px] w-full resize-none rounded-lg border border-[#d9e2db] bg-white px-4 py-3 text-base font-bold outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-500/15" />
-      </SectionRow>
+        <SectionRow title={t.bizTitle} desc={t.bizDesc}>
+          <select required name="business_type" aria-label={t.business} value={businessType} onChange={(e) => { setBusinessType(e.target.value); e.currentTarget.setCustomValidity(""); }} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} className={`${inputCls} ${businessType === "" ? "text-ink-500" : "text-ink-900"}`}>
+            <option value="" disabled>{t.business}</option>
+            {t.businessTypes.map((label, i) => (
+              <option key={BUSINESS_VALUES[i]} value={BUSINESS_VALUES[i]} className="text-ink-900">{label}</option>
+            ))}
+          </select>
+          {businessType === "other" && <input required name="business_type_other" maxLength={50} aria-label={t.other} placeholder={t.other} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} onInput={(e) => e.currentTarget.setCustomValidity("")} className={inputCls} />}
+          <input name="business_name" maxLength={100} aria-label={t.businessName} placeholder={t.businessName} className={inputCls} />
+        </SectionRow>
 
-      {formState === "error" && (
-        <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm font-extrabold text-red-700">{errorMsg || t.error}</p>
-      )}
+        <SectionRow title={t.cityTitle} desc={t.cityDesc}>
+          {/* Not a server field: folded into `comment` on submit (no DB column). */}
+          <input name="city" maxLength={80} aria-label={t.city} placeholder={t.city} className={inputCls} />
+        </SectionRow>
 
-      <button type="submit" disabled={formState === "submitting"} aria-busy={formState === "submitting"} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink-900 px-5 font-extrabold text-white transition hover:bg-ink-700 disabled:opacity-60">
-        {formState === "submitting" ? t.submitting : t.submit}
-      </button>
+        <SectionRow title={t.equipTitle} desc={t.equipDesc}>
+          <div className="grid grid-cols-2 gap-2">
+            <EquipToggle label={t.equipQr} on={qrScanner} onClick={() => setQrScanner((v) => !v)} />
+            <EquipToggle label={t.equipTablet} on={tablet} onClick={() => setTablet((v) => !v)} />
+          </div>
+        </SectionRow>
+
+        <SectionRow title={t.commentTitle} desc={t.commentDesc}>
+          <textarea name="comment" aria-label={t.commentPh} placeholder={t.commentPh} rows={3} maxLength={450} onInput={(e) => { if (e.currentTarget.value.length > 450) e.currentTarget.value = e.currentTarget.value.slice(0, 450); }} className="min-h-[96px] w-full resize-none rounded-lg border border-[#d9e2db] bg-white px-4 py-3 text-base font-bold outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-500/15" />
+        </SectionRow>
+
+        <button type="button" onClick={goToStep2} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-green-700 px-5 font-extrabold text-white transition hover:bg-green-800 active:scale-[0.98] motion-reduce:active:scale-100">
+          {t.next}
+          <ArrowRight size={18} />
+        </button>
+      </div>
+
+      {/* Step 2: connection photos + Telegram fallback. Always mounted; hidden on
+          step 1. The DocInput file inputs are sr-only and the JS guard + server
+          enforce all three, so no native `required` here. */}
+      <div className={`grid gap-6 ${step === 2 ? "" : "hidden"}`}>
+        <div>
+          <p className="text-lg font-extrabold">{t.step2Title}</p>
+          <p className="mt-1 text-sm font-bold text-ink-500">{t.step2Desc}</p>
+        </div>
+
+        <SectionRow title={t.docsTitle} desc={t.docsNote}>
+          <DocInput name="patent" label={t.docPatent} pickLabel={t.filePick} />
+          <DocInput name="passport" label={t.docPassport} pickLabel={t.filePick} />
+          <DocInput name="shop" label={t.docShop} pickLabel={t.filePick} />
+        </SectionRow>
+
+        {/* Documents-via-Telegram fallback (BR-04): owners who would rather not
+            upload here can send photos to a manager. */}
+        <div className="rounded-lg border border-green-200 bg-green-50/70 p-4">
+          <p className="text-sm font-bold leading-6 text-ink-700">{t.tgFallback}</p>
+          <a
+            href={TELEGRAM_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackSiteEvent("telegram_click", { cta_location: "lead_form_docs" })}
+            className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-lg bg-white px-4 font-extrabold text-green-700 ring-1 ring-green-300 transition hover:bg-green-100"
+          >
+            <Send size={17} />
+            {t.tgFallbackCta}
+          </a>
+        </div>
+
+        {formState === "error" && (
+          <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm font-extrabold text-red-700">{errorMsg || t.error}</p>
+        )}
+
+        <div className="grid gap-2 sm:grid-cols-[auto_1fr]">
+          <button type="button" onClick={() => { setErrorMsg(""); setStep(1); }} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-[#d9e2db] px-5 font-extrabold text-ink-700 transition hover:bg-[#f1f4f1]">
+            <ArrowLeft size={18} />
+            {t.back}
+          </button>
+          <button type="submit" disabled={formState === "submitting"} aria-busy={formState === "submitting"} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink-900 px-5 font-extrabold text-white transition hover:bg-ink-700 disabled:opacity-60">
+            {formState === "submitting" ? t.submitting : t.submit}
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
 
-// Accessible modal wrapping the lead form.
-export function LeadModal({ open, onClose, locale = "ru" }: { open: boolean; onClose: () => void; locale?: Locale }) {
+// Accessible modal wrapping the lead form. `segment` is the segment card that
+// opened it (BR-09), forwarded into the form for attribution.
+export function LeadModal({ open, onClose, locale = "ru", segment }: { open: boolean; onClose: () => void; locale?: Locale; segment?: string }) {
   const t = STR[locale];
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -424,7 +617,9 @@ export function LeadModal({ open, onClose, locale = "ru" }: { open: boolean; onC
           </button>
         </div>
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] [-webkit-overflow-scrolling:touch] sm:px-8">
-          <LeadForm locale={locale} />
+          {/* Key by segment so each open starts a fresh form at step 1 and
+              carries the right segment without stale internal state. */}
+          <LeadForm key={segment ?? "default"} locale={locale} segment={segment} />
         </div>
       </div>
     </div>
