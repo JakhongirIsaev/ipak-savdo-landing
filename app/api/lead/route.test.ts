@@ -107,7 +107,12 @@ const makeReq = (body: unknown, ip: string, headers: Record<string, string> = {}
 describe("POST /api/lead", () => {
   beforeEach(() => {
     (dbMod as any).__reset();
+    // Mocks are module-level singletons; clear call history between tests so
+    // per-test call-count assertions (uploadLeadDoc / sendLeadDocsAlbum) are not
+    // polluted by earlier tests.
     vi.mocked(notifyNewLead).mockClear();
+    vi.mocked(uploadLeadDoc).mockClear();
+    vi.mocked(sendLeadDocsAlbum).mockClear();
   });
 
   // Real JPEG magic bytes (FF D8 FF) so the server's magic-byte sniff accepts it.
@@ -185,12 +190,100 @@ describe("POST /api/lead", () => {
     });
   });
 
-  it("multipart: rejects a submission without the three required documents", async () => {
+  it("multipart: creates a CONTACT-ONLY lead with no documents (BR-04)", async () => {
+    process.env.TELEGRAM_BOT_TOKEN = "tok";
+    process.env.TELEGRAM_CHAT_ID = "-100";
+
     const res = await POST(makeMultipart("5.5.5.2", { withFiles: false }));
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(200);
     const json = await res.json();
-    expect(json).toMatchObject({ ok: false, error: "file", reason: "missing", field: "patent" });
-    expect((dbMod as any).__getInserted()).toHaveLength(0);
+    expect(json.ok).toBe(true);
+
+    // The lead is persisted from contacts alone…
+    expect((dbMod as any).__getInserted()).toHaveLength(1);
+    expect(notifyNewLead).toHaveBeenCalledOnce();
+    // …and the document pipeline is skipped entirely (no album, no storage).
+    expect(uploadLeadDoc).not.toHaveBeenCalled();
+    expect(sendLeadDocsAlbum).not.toHaveBeenCalled();
+  });
+
+  it("multipart: omitting business_type folds to 'other' with a not-specified label (BR-04)", async () => {
+    // Contact-only lead with NO business_type field at all.
+    const fd = new FormData();
+    fd.set("owner_name", "Ivan");
+    fd.set("owner_contact", "+998901234567");
+    fd.set("needs_equipment", "on");
+    fd.set("language", "ru");
+    const res = await POST(
+      new Request("http://example.com/api/lead", { method: "POST", headers: { "x-forwarded-for": "5.5.5.9" }, body: fd }),
+    );
+    expect(res.status).toBe(200);
+    const inserted = (dbMod as any).__getInserted();
+    expect(inserted).toHaveLength(1);
+    expect(inserted[0].businessType).toBe("other");
+    expect(inserted[0].businessTypeOther).toBe("Не указан");
+  });
+
+  it("multipart: empty business_type in Uzbek uses the uz not-specified label", async () => {
+    const fd = new FormData();
+    fd.set("business_type", "");
+    fd.set("owner_name", "Ali");
+    fd.set("owner_contact", "+998901234567");
+    fd.set("needs_equipment", "off");
+    fd.set("language", "uz");
+    const res = await POST(
+      new Request("http://example.com/api/lead", { method: "POST", headers: { "x-forwarded-for": "5.5.5.10" }, body: fd }),
+    );
+    expect(res.status).toBe(200);
+    const inserted = (dbMod as any).__getInserted();
+    expect(inserted[0].businessType).toBe("other");
+    expect(inserted[0].businessTypeOther).toBe("Belgilanmagan");
+  });
+
+  it("multipart: a real 'other' type with text is unchanged (not overwritten)", async () => {
+    const fd = new FormData();
+    fd.set("business_type", "other");
+    fd.set("business_type_other", "Bakery chain");
+    fd.set("owner_name", "Ivan");
+    fd.set("owner_contact", "+998901234567");
+    fd.set("needs_equipment", "on");
+    fd.set("language", "ru");
+    const res = await POST(
+      new Request("http://example.com/api/lead", { method: "POST", headers: { "x-forwarded-for": "5.5.5.11" }, body: fd }),
+    );
+    expect(res.status).toBe(200);
+    const inserted = (dbMod as any).__getInserted();
+    expect(inserted[0].businessType).toBe("other");
+    expect(inserted[0].businessTypeOther).toBe("Bakery chain");
+  });
+
+  it("multipart: accepts a PARTIAL document set and maps file_ids by kind", async () => {
+    process.env.TELEGRAM_BOT_TOKEN = "tok";
+    process.env.TELEGRAM_CHAT_ID = "-100";
+
+    // Only the passport is attached; patent/shop omitted.
+    const fd = new FormData();
+    fd.set("business_type", "cafe");
+    fd.set("owner_name", "Ivan");
+    fd.set("owner_contact", "+998901234567");
+    fd.set("needs_equipment", "on");
+    fd.set("language", "ru");
+    fd.set("passport", imgFile("passport.jpg"));
+    const res = await POST(
+      new Request("http://example.com/api/lead", { method: "POST", headers: { "x-forwarded-for": "5.5.5.8" }, body: fd }),
+    );
+    expect(res.status).toBe(200);
+    expect((dbMod as any).__getInserted()).toHaveLength(1);
+    expect(uploadLeadDoc).toHaveBeenCalledTimes(1);
+    expect(sendLeadDocsAlbum).toHaveBeenCalledOnce();
+
+    // The single returned file_id ("fid0") must land in the passport column, not
+    // the patent column (kind-based mapping, not array position).
+    const update = (dbMod as any).__getUpdates()[0];
+    expect(update.passportFileId).toBe("fid0");
+    expect(update.patentFileId).toBeUndefined();
+    expect(update.shopPhotoFileId).toBeUndefined();
+    expect(update.passportStoragePath).toBe("leads/1/passport.jpg");
   });
 
   it("multipart: returns 400 on field validation failure", async () => {
