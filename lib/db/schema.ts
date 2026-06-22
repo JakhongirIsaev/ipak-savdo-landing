@@ -1,4 +1,5 @@
-import { pgTable, serial, text, boolean, timestamp, index, integer } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { pgTable, serial, text, boolean, timestamp, index, integer, jsonb } from "drizzle-orm/pg-core";
 import { siteEventNames } from "@/lib/track/event-types";
 
 // "minimarket" and "pharmacy" are public-facing form options; the older
@@ -194,3 +195,88 @@ export const keywordRanks = pgTable(
 
 export type KeywordRank = typeof keywordRanks.$inferSelect;
 export type NewKeywordRank = typeof keywordRanks.$inferInsert;
+
+export const contentObjectStatuses = [
+  "draft",
+  "generating",
+  "pending_approval",
+  "publishing",
+  "staged",
+  "approved",
+  "rejected",
+  "published",
+  "failed",
+] as const;
+export type ContentObjectStatus = (typeof contentObjectStatuses)[number];
+
+export const contentPlatforms = ["blog", "telegram", "instagram", "linkedin", "tiktok", "pinterest"] as const;
+export type ContentPlatform = (typeof contentPlatforms)[number];
+
+export interface ContentObjectDraft {
+  version: number;
+  platform: ContentPlatform;
+  text: string;
+  created_at: string;
+  format?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface ContentObjectAsset {
+  version: number;
+  type: string;
+  url: string;
+  created_at: string;
+}
+
+export interface ContentObjectPublishJob {
+  platform: ContentPlatform;
+  status: string;
+  job_id?: string;
+  published_at?: string;
+  url?: string;
+  error?: string;
+}
+
+export interface ContentObjectMetrics {
+  saves?: number;
+  shares?: number;
+  comments?: number;
+  gsc_clicks?: number;
+  gsc_impressions?: number;
+  leads?: number;
+}
+
+export interface ContentObjectDeadLetter {
+  timestamp: string;
+  error: string;
+  context?: unknown;
+  retry_count: number;
+}
+
+export const contentObjects = pgTable(
+  "content_objects",
+  {
+    id: text("id").primaryKey(),
+    campaignId: text("campaign_id"),
+    brief: text("brief").notNull(),
+    status: text("status", { enum: contentObjectStatuses }).notNull().default("pending_approval"),
+    platforms: jsonb("platforms").$type<ContentPlatform[]>().notNull().default(sql`'["blog","telegram"]'::jsonb`),
+    drafts: jsonb("drafts").$type<ContentObjectDraft[]>().notNull().default(sql`'[]'::jsonb`),
+    assets: jsonb("assets").$type<ContentObjectAsset[]>().notNull().default(sql`'[]'::jsonb`),
+    approvedDraftVersion: integer("approved_draft_version"),
+    approvedAssetVersion: integer("approved_asset_version"),
+    publishJobs: jsonb("publish_jobs").$type<ContentObjectPublishJob[]>().notNull().default(sql`'[]'::jsonb`),
+    metrics: jsonb("metrics").$type<ContentObjectMetrics>().notNull().default(sql`'{}'::jsonb`),
+    deadLetters: jsonb("dead_letters").$type<ContentObjectDeadLetter[]>().notNull().default(sql`'[]'::jsonb`),
+    source: text("source").notNull().default("api"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    statusIdx: index("content_objects_status_idx").on(t.status),
+    createdAtIdx: index("content_objects_created_at_idx").on(t.createdAt),
+  }),
+);
+
+export type ContentObject = typeof contentObjects.$inferSelect;
+export type NewContentObject = typeof contentObjects.$inferInsert;
