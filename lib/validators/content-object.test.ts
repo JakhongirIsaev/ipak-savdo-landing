@@ -46,10 +46,23 @@ describe("contentObjectCreateSchema", () => {
       status: "generating",
       platforms: ["blog", "telegram"],
       drafts: [],
+      idempotency_key: "telegram:update:12345",
     });
 
     expect(parsed.status).toBe("generating");
     expect(parsed.drafts).toEqual([]);
+    expect(parsed.idempotency_key).toBe("telegram:update:12345");
+  });
+
+  it("rejects unsafe idempotency keys", () => {
+    const parsed = contentObjectCreateSchema.safeParse({
+      brief: "Generate this after the durable record exists.",
+      status: "generating",
+      drafts: [],
+      idempotency_key: "telegram update with spaces",
+    });
+
+    expect(parsed.success).toBe(false);
   });
 
   it("accepts draft format and metadata", () => {

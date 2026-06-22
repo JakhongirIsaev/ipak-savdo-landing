@@ -23,6 +23,7 @@ export const contentObjectCreateSchema = z
     telegram_text: z.string().trim().min(1).max(10000).optional(),
     drafts: z.array(contentObjectDraftSchema).max(20).optional(),
     source: z.string().trim().min(1).max(80).default("api"),
+    idempotency_key: z.string().trim().min(8).max(160).regex(/^[a-zA-Z0-9:._/-]+$/).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.status === "generating" && !data.drafts?.length && !data.draft_text) {

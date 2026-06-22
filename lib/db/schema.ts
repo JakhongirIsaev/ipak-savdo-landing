@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, serial, text, boolean, timestamp, index, integer, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, boolean, timestamp, index, uniqueIndex, integer, jsonb } from "drizzle-orm/pg-core";
 import { siteEventNames } from "@/lib/track/event-types";
 
 // "minimarket" and "pharmacy" are public-facing form options; the older
@@ -269,12 +269,14 @@ export const contentObjects = pgTable(
     metrics: jsonb("metrics").$type<ContentObjectMetrics>().notNull().default(sql`'{}'::jsonb`),
     deadLetters: jsonb("dead_letters").$type<ContentObjectDeadLetter[]>().notNull().default(sql`'[]'::jsonb`),
     source: text("source").notNull().default("api"),
+    webhookEventKey: text("webhook_event_key"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => ({
     statusIdx: index("content_objects_status_idx").on(t.status),
     createdAtIdx: index("content_objects_created_at_idx").on(t.createdAt),
+    webhookEventKeyIdx: uniqueIndex("content_objects_webhook_event_key_idx").on(t.webhookEventKey),
   }),
 );
 

@@ -120,6 +120,7 @@ export function toContentObjectResponse(row: ContentObject) {
     metrics: row.metrics as ContentObjectMetrics,
     dead_letters: row.deadLetters,
     source: row.source,
+    idempotency_key: row.webhookEventKey,
     created_at: row.createdAt,
     updated_at: row.updatedAt,
   };

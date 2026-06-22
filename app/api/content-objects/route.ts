@@ -67,26 +67,50 @@ export async function POST(req: Request): Promise<Response> {
 
   const now = new Date();
   const nowIso = now.toISOString();
-  const [inserted] = await db
-    .insert(contentObjects)
-    .values({
-      id: parsed.data.id ?? randomUUID(),
-      campaignId: parsed.data.campaign_id ?? null,
-      brief: parsed.data.brief,
-      status: parsed.data.status,
-      platforms: parsed.data.platforms,
-      drafts: buildInitialDrafts(parsed.data, nowIso),
-      assets: [],
-      approvedDraftVersion: null,
-      approvedAssetVersion: null,
-      publishJobs: [],
-      metrics: {},
-      deadLetters: [],
-      source: parsed.data.source,
-      createdAt: now,
-      updatedAt: now,
-    })
-    .returning();
+  const values = {
+    id: parsed.data.id ?? randomUUID(),
+    campaignId: parsed.data.campaign_id ?? null,
+    brief: parsed.data.brief,
+    status: parsed.data.status,
+    platforms: parsed.data.platforms,
+    drafts: buildInitialDrafts(parsed.data, nowIso),
+    assets: [],
+    approvedDraftVersion: null,
+    approvedAssetVersion: null,
+    publishJobs: [],
+    metrics: {},
+    deadLetters: [],
+    source: parsed.data.source,
+    webhookEventKey: parsed.data.idempotency_key ?? null,
+    createdAt: now,
+    updatedAt: now,
+  };
 
-  return Response.json({ ok: true, content_object: toContentObjectResponse(inserted) }, { status: 201 });
+  if (parsed.data.idempotency_key) {
+    const [inserted] = await db
+      .insert(contentObjects)
+      .values(values)
+      .onConflictDoNothing({ target: contentObjects.webhookEventKey })
+      .returning();
+
+    if (inserted) {
+      return Response.json({ ok: true, duplicate: false, content_object: toContentObjectResponse(inserted) }, { status: 201 });
+    }
+
+    const [existing] = await db
+      .select()
+      .from(contentObjects)
+      .where(eq(contentObjects.webhookEventKey, parsed.data.idempotency_key))
+      .limit(1);
+
+    if (existing) {
+      return Response.json({ ok: true, duplicate: true, content_object: toContentObjectResponse(existing) });
+    }
+
+    return Response.json({ ok: false, error: "idempotency_conflict_missing" }, { status: 409 });
+  }
+
+  const [inserted] = await db.insert(contentObjects).values(values).returning();
+
+  return Response.json({ ok: true, duplicate: false, content_object: toContentObjectResponse(inserted) }, { status: 201 });
 }
