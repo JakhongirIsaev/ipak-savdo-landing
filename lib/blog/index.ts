@@ -16,9 +16,11 @@ import { post as futbolPortugaliyaKongo } from "./posts/futbol-saboq-portugaliya
 import { post as futbolAngliyaXorvatiya } from "./posts/futbol-saboq-angliya-xorvatiya";
 import { post as futbolGanaPanama } from "./posts/futbol-saboq-gana-panama";
 import { post as futbolUzbekistonKolumbiya } from "./posts/futbol-saboq-uzbekiston-kolumbiya";
+import { post as upravlenieMagazinomBezHlopotTelefonDolgiQr } from "./posts/upravlenie-magazinom-bez-hlopot-telefon-dolgi-qr";
 
 // Newest first: this order drives the blog index pages.
 export const POSTS: BlogPost[] = [
+  upravlenieMagazinomBezHlopotTelefonDolgiQr,
   kassaApparatsizSavdo,
   magazinUchunDastur,
   qarzDaftarOrniga,
