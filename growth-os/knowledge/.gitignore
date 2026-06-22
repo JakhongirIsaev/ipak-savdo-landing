@@ -1,0 +1,4 @@
+# Python caches from running validate_pack.py / test_validate_pack.py
+__pycache__/
+.pytest_cache/
+*.pyc

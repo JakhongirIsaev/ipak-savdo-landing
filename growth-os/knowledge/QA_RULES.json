@@ -1,0 +1,365 @@
+{
+  "meta": {
+    "title": "BirLiy CMO Brain QA Rules",
+    "version": "1.0",
+    "last_updated": "2026-06-23",
+    "purpose": "Deterministic QA rules for every public BirLiy artifact (post, caption, hook, CTA, reply, ad copy, blog intro, outline). Built to drive two consumers: (1) validate_pack.py, a mechanical linter that runs the regex/string/heuristic checks below; (2) an LLM QA reviewer, which applies the same rules plus the judgement-heavy heuristics that need meaning, not pattern matching. Each rule is self-contained: id, severity, description, detection_method, examples_fail, examples_pass, remediation.",
+    "grounding": [
+      "growth-os/knowledge/APPROVED_FACTS.json",
+      "growth-os/knowledge/COMPANY_CONTEXT.md",
+      "growth-os/knowledge/BIRLIY_BRAND_VOICE.md",
+      "growth-os/knowledge/UNVERIFIED_CLAIMS_REPORT.md",
+      "growth-os/knowledge/_grounding/SOURCE_INDEX.md",
+      "marketing/01-strategy.md",
+      "marketing/02-content-system.md"
+    ],
+    "severity_levels": {
+      "blocking": "Artifact is NOT publishable. Must be fixed before it can ship. validate_pack.py exits non-zero; the LLM reviewer returns NO-GO.",
+      "warning": "Artifact is publishable but below brand quality. Should be rewritten unless there is a deliberate reason. validate_pack.py reports but does not fail; the LLM reviewer flags for revision."
+    },
+    "verdict_logic": "PASS only if zero blocking rules fire. WARN if zero blocking and one or more warnings fire. CLEAN if zero of either. Any single blocking hit forces NO-GO regardless of warnings.",
+    "scope_note": "These rules apply to GENERATED public copy. Internal grounding docs, fact files, and source landing copy are exempt (the live landing knowingly contains em-dashes and demo numbers; that is flagged, not replicated). A rule that needs the artifact to declare its target language(s) reads the artifact's 'lang' or 'languages' field if present; otherwise the engine auto-detects RU vs UZ by script and lexicon, and the LLM reviewer confirms.",
+    "engine_conventions": {
+      "regex_flavor": "Python re, Unicode-aware (re.UNICODE). Patterns are given as raw strings; apply re.IGNORECASE only where the rule says case-insensitive.",
+      "em_dash_codepoints": "U+2014 (em dash, —), U+2013 (en dash, –), U+2015 (horizontal bar, ―). A normal hyphen-minus U+002D (-) is allowed.",
+      "currency_space": "Approved amounts use a regular or non-breaking space as the thousands separator: '49 000', '149 000', '9 000+'.",
+      "approved_fact_ids": "The only valid citation targets are the id values in APPROVED_FACTS.json. An artifact references a fact either via an explicit fact_ids field (preferred, machine-checkable) or via an inline marker like (fact_offline). validate_pack.py treats the fact_ids field as source of truth; the LLM reviewer additionally checks that the cited fact actually supports the sentence."
+    }
+  },
+
+  "blocking_rules": [
+    {
+      "rule_id": "B01_forbidden_company_or_bank_mention",
+      "severity": "blocking",
+      "description": "No bank, no parent company, no payment processor may ever be named in public copy. The only allowed origin/trust line is 'Сделано для Узбекистана' / 'O'zbekiston uchun yaratilgan' (fact_made_for_uzbekistan), and it must never be expanded to name an entity.",
+      "detection_method": "Case-insensitive regex over the full artifact text (RU, UZ and Latin transliteration): match any of the forbidden entity tokens. Primary pattern: (?i)(ipak\\s*[-]?\\s*yuli|ipakyuli|ipak\\s*yo'?li|ипак\\s*йули|ипак-йули|ипакйули). Bank/processor pattern: (?i)(\\bbank\\b|\\bбанк\\b|\\bбанком\\b|\\bбанка\\b|\\bбанке\\b|\\bbanki\\b|\\bbankning\\b|процессинг|эквайр|acquir|payment\\s+processor|\\bПСП\\b|\\bPSP\\b|материнск\\w*\\s+компани|parent\\s+company|холдинг). Also flag any attempt to expand the trust line: (?i)сделано\\s+для\\s+узбекистана\\s+(?:банком|от|при\\s+поддержке) and the UZ analogue (?i)o'?zbekiston\\s+uchun\\s+yaratilgan\\s+(?:bank|.*bank). The LLM reviewer additionally checks for any unnamed-but-implied bank ('от создателей крупного банка', 'при поддержке известного банка') and treats it as a fire.",
+      "examples_fail": [
+        "Касса BirLiy от Ipak Yuli Bank.",
+        "Сделано для Узбекистана при поддержке банка.",
+        "BirLiy - продукт известного узбекского банка.",
+        "To'lovlar bizning hamkor bankimiz orqali tushadi."
+      ],
+      "examples_pass": [
+        "Сделано для Узбекистана.",
+        "O'zbekiston uchun yaratilgan.",
+        "Касса, склад и оплаты в одном приложении на телефоне."
+      ],
+      "remediation": "Delete the entity name entirely. If an origin/trust signal is needed, use only the approved line 'Сделано для Узбекистана' / 'O'zbekiston uchun yaratilgan' with no addition. Never imply a bank backer, named or unnamed. Cite fact_made_for_uzbekistan."
+    },
+    {
+      "rule_id": "B02_unsupported_factual_claim",
+      "severity": "blocking",
+      "description": "Every product claim, price, number, capability, guarantee, count, percentage or completion state must trace to an id in APPROVED_FACTS.json. A factual claim with no backing approved fact is fabrication and is blocked. needs_confirmation facts must be present AND qualified (see B07).",
+      "detection_method": "Two-stage. STAGE 1 (validate_pack.py, structural): require every artifact to carry a non-empty fact_ids array; verify each id exists in APPROVED_FACTS.json; if the artifact contains a digit-bearing claim (regex \\d) or a capability sentence but fact_ids is empty or an id is unknown, fire. Also fire on any number that is not a contact/price/known approved figure: build an allowlist of approved numeric tokens from APPROVED_FACTS.json (e.g. 49 000, 149 000, 9 000, 998 97 421 24 54, 30, 100, 6, 200, 2026, 10, 375) and flag any other standalone quantity, %, or 'сум/so'm' amount not in the allowlist. STAGE 2 (LLM reviewer, semantic): for each factual sentence, confirm a cited fact actually supports it; if a sentence asserts a capability, result, count, integration, deadline or metric that no approved fact states, fire. Claims of merchant results, customer counts, % improvements, named integrations, testimonials and deadlines have NO supporting fact by construction and always fire (see B03, B05, B06).",
+      "examples_fail": [
+        "Магазины экономят до 40% времени на учёте.",
+        "Уже 500 магазинов работают на BirLiy.",
+        "Интеграция с платёжной системой подключается за 2 клика.",
+        "Старт всего за 19 000 сум/мес."
+      ],
+      "examples_pass": [
+        "Первые 6 месяцев: 49 000 сум в месяц, дальше 149 000 сум в месяц. (fact_pricing_promo)",
+        "Остаток обновляется сам после каждой продажи. (fact_stock_auto_low_alert)",
+        "В базе 9 000+ распространённых товаров на старте. (fact_sku_base_excel, qualified)"
+      ],
+      "remediation": "Either cite an approved fact id that genuinely supports the claim, or remove the claim. For numbers, use only approved figures with their exact wording. If the claim is true but not yet in APPROVED_FACTS.json, route it to the owner via UNVERIFIED_CLAIMS_REPORT and do not publish until an approved fact exists."
+    },
+    {
+      "rule_id": "B03_fabricated_result_or_metric",
+      "severity": "blocking",
+      "description": "No merchant result, revenue, profit, time-saving, growth %, shop/customer count, or any prohibited demo number may be presented as real. This includes the prohibited demo dashboard/ receipt numbers and the 'real shops already working' badge.",
+      "detection_method": "Regex + allowlist. (a) Prohibited demo tokens, fire on any of (case-insensitive, space-flexible): 3\\s*450\\s*000 ; 87\\s*000 ; \\b42\\b\\s*(продаж|sotuv|sales) ; \\+\\s*12\\s*% ; 20\\s*500 ; 14\\s*000 ; \\b18\\b\\s*(шт|dona|pcs|низк|kam) ; \\b3\\b\\s*(кассир|kassir|cashier) ; \\b2\\b\\s*(возврат|qaytarish|return) when used as a current stat (LLM confirms context). (b) Result-claim patterns: (?i)(экономит|сэконом\\w+|увеличи\\w+|вырос\\w*|рост\\s+на|\\bна\\s+\\d+\\s*%|до\\s+\\d+\\s*%|в\\s+\\d+\\s*раза?|tejaydi|oshirdi|o'?sdi|\\d+\\s*%\\s*(ko'?proq|tezroq)). (c) Customer/shop counts: (?i)(\\d+\\s*(магазин\\w*|клиент\\w*|do'?kon\\w*|mijoz\\w*)\\s*(работают|выбрали|используют|ishlamoqda|tanladi|foydalan\\w*)). (d) Real-shops badge: (?i)(реальные\\s+магазины\\s+уже\\s+работают|haqiqiy\\s+do'?konlar\\s+allaqachon\\s+ishlamoqda). Any (a)-(d) hit is blocking. LLM reviewer confirms the number is presented as a real result, not as a clearly-labelled illustration that is itself disallowed anyway.",
+      "examples_fail": [
+        "Сегодня выручка 3 450 000 сум, средний чек 87 000.",
+        "Магазины с BirLiy продают на 30% больше.",
+        "Реальные магазины уже работают на BirLiy.",
+        "Bizni 500 ta do'kon tanladi."
+      ],
+      "examples_pass": [
+        "Выручка за день, средний чек и топ-товары видно на телефоне. (fact_reporting)",
+        "Сейчас открываем ранний доступ для первых магазинов Ташкента. (fact_stage_early_access)",
+        "Kunlik tushum, o'rtacha chek va top-tovarlar telefonda ko'rinadi. (fact_reporting)"
+      ],
+      "remediation": "Remove the result or count. Describe the capability instead (you can SEE revenue / average check / top products), citing fact_reporting or fact_owner_remote. State stage honestly with fact_stage_early_access. Never reuse demo numbers or the 'real shops already working' badge (fact_demo_*, fact_real_shops_badge are prohibited)."
+    },
+    {
+      "rule_id": "B04_missing_required_language",
+      "severity": "blocking",
+      "description": "When an artifact is declared bilingual or is a key piece (launch, offer) that requires both RU and UZ, a required language version must be present and non-empty. A bilingual artifact missing one language, or with one language left as a placeholder, is blocked.",
+      "detection_method": "Read the artifact's required-languages declaration (field 'languages' or a profile rule: offer/launch posts require ['ru','uz']). For each required language, verify a non-empty body exists. Detect language presence heuristically: RU body must contain Cyrillic (regex [\\u0400-\\u04FF]) and UZ body must contain Latin Uzbek markers (regex (o'|g'|\\bso'm\\b|\\bdo'kon\\b|\\bnasiya\\b|\\bkassa\\b)) without Cyrillic. Fire if a required-language block is absent, empty, whitespace-only, equals a TODO/placeholder (regex (?i)(TODO|TBD|\\[.*перевод.*\\]|\\[.*tarjima.*\\])), or is a duplicate of the other language (Cyrillic found in the UZ slot or vice versa).",
+      "examples_fail": [
+        "{ languages: ['ru','uz'], ru: 'Первые 6 месяцев 49 000 сум.', uz: '' }",
+        "{ languages: ['ru','uz'], ru: '49 000 сум/мес.', uz: 'TODO' }",
+        "{ languages: ['ru','uz'], ru: 'Старт 49 000 сум.', uz: 'Старт 49 000 сум.' }"
+      ],
+      "examples_pass": [
+        "{ languages: ['ru','uz'], ru: 'Первые 6 месяцев: 49 000 сум/мес, дальше 149 000.', uz: 'Birinchi 6 oy: oyiga 49 000 so'm, keyin 149 000.' }",
+        "{ languages: ['ru'], ru: 'Долги покупателей в приложении вместо тетради.' }"
+      ],
+      "remediation": "Provide a native, non-placeholder version in every required language. For UZ, build from the human-written safe_public_wording_uz in APPROVED_FACTS.json, not a transliteration of RU. Offer and launch pieces always require both RU and UZ."
+    },
+    {
+      "rule_id": "B05_em_dash_character",
+      "severity": "blocking",
+      "description": "The em-dash family is banned in all generated public copy, hooks, CTAs, examples, and outlines. Use a colon, a comma, or a hyphen-minus instead. The live landing's em-dashes are a known inconsistency to flag, never to copy.",
+      "detection_method": "String/regex scan of the full artifact for any character in [\\u2014\\u2013\\u2015] (em dash, en dash, horizontal bar). Any occurrence is a blocking hit; report each position. The hyphen-minus U+002D is allowed and must not fire. Apply per language block and to CTA, hook and outline fields too.",
+      "examples_fail": [
+        "BirLiy — это касса, склад и оплаты в одном приложении.",
+        "Старт 49 000 сум/мес – первые 6 месяцев.",
+        "Kassa, ombor va to'lovlar — bitta ilovada."
+      ],
+      "examples_pass": [
+        "BirLiy: касса, склад и оплаты в одном приложении.",
+        "Старт 49 000 сум/мес, первые 6 месяцев.",
+        "Kassa, ombor va to'lovlar bitta ilovada."
+      ],
+      "remediation": "Replace every em/en dash with ':' (for a definition or lead-in), ',' (for a pause), or '-' (a plain hyphen-minus). Re-scan to confirm zero codepoints in [U+2014, U+2013, U+2015]."
+    },
+    {
+      "rule_id": "B06_forbidden_currency_notation",
+      "severity": "blocking",
+      "description": "Currency is written 'сум' in RU and 'so'm' in UZ. The notation 'UZS' is banned everywhere. 'сўм' must not appear in RU body; 'сум' (Cyrillic) must not appear inside a UZ body. Amounts use a space thousands separator.",
+      "detection_method": "Regex scans: (a) banned UZS, fire on (?i)\\bUZS\\b anywhere. (b) RU/UZ currency cross-contamination: in a UZ-language block, fire on Cyrillic 'сум' or 'сўм' (regex с[уў]м); in an RU-language block, fire on Latin 'so'm' used as the RU currency word (regex (?i)\\bso'?m\\b) UNLESS it is inside a clearly quoted UZ fragment (LLM confirms). (c) malformed amount: a price-looking number immediately followed by a currency word but written without the space separator, e.g. regex (\\d{4,})\\s*(сум|so'?m) where the digits run has no space (149000 сум) fires as a formatting block. The space-separated approved forms (49 000 сум, 149 000 so'm) must not fire.",
+      "examples_fail": [
+        "Старт 49 000 UZS в месяц.",
+        "Birinchi 6 oy oyiga 49 000 сум.",
+        "Первые 6 месяцев 149000 сум."
+      ],
+      "examples_pass": [
+        "Первые 6 месяцев: 49 000 сум в месяц.",
+        "Birinchi 6 oy: oyiga 49 000 so'm.",
+        "Дальше 149 000 сум."
+      ],
+      "remediation": "Write 'сум' in RU, 'so'm' in UZ, never 'UZS'. Use a space as the thousands separator (49 000, 149 000). Keep the currency word in the correct script for each language."
+    },
+    {
+      "rule_id": "B07_unqualified_needs_confirmation_claim",
+      "severity": "blocking",
+      "description": "Facts whose status is 'needs_confirmation' in APPROVED_FACTS.json must be stated as a pilot/early-access/typical condition, never as a hard guarantee. Presenting a needs_confirmation fact as a guarantee, or presenting a 'prohibited' fact as real, is blocked. This operationalizes the qualify-or-block policy.",
+      "detection_method": "For each cited fact id, look up its status in APPROVED_FACTS.json. (a) If status == 'prohibited' and the artifact presents it affirmatively as real, fire (this overlaps B03 for demo numbers and the badge). (b) If status == 'needs_confirmation', require a qualifier near the claim: presence of at least one hedge token from the set (?i)(на\\s+старте|в\\s+раннем\\s+доступе|обычно|как\\s+правило|пилот\\w*|первая\\s+когорта|startda|erta\\s+kirish|odatda|pilot\\w*|birinchi\\s+kogorta). If a needs_confirmation claim appears with a guarantee word instead (?i)(гарант\\w+|всегда|точно\\s+за|ровно|kafolat\\w*|albatta|aniq), fire. Specific high-risk facts get targeted checks: fact_qr_no_terminal 'instant settlement', fire on (?i)(мгновенно|сразу\\s+на\\s+счёт|bir\\s+zumda|darhol\\s+hisobga) presented as guaranteed; fact_onboarding_one_day, fire if 'за один день' appears with a guarantee word and no 'обычно/usually'; fact_sku_base_excel, the 9 000+ number must carry 'на старте/на сегодня' or be cited as stated wording. LLM reviewer confirms the qualifier actually scopes the claim.",
+      "examples_fail": [
+        "Деньги от QR поступают на счёт мгновенно, гарантированно. (fact_qr_no_terminal)",
+        "Подключаем за один день, гарантируем. (fact_onboarding_one_day)",
+        "Программа лояльности уже работает. (fact_loyalty)"
+      ],
+      "examples_pass": [
+        "Для QR-оплаты терминал не нужен: покупатель сканирует QR на экране телефона. (fact_qr_no_terminal)",
+        "Обычно подключаем за один день, помогаем загрузить товары. (fact_onboarding_one_day, qualified)",
+        "На старте в базе 9 000+ распространённых товаров. (fact_sku_base_excel, qualified)"
+      ],
+      "remediation": "Add a stage/typicality qualifier ('на старте', 'в раннем доступе', 'обычно' / 'startda', 'erta kirishda', 'odatda') and drop guarantee words. For QR, say 'терминал не нужен' and 'быстро', never 'мгновенно гарантированно'. Never present a prohibited fact as real."
+    },
+    {
+      "rule_id": "B08_fabricated_testimonial",
+      "severity": "blocking",
+      "description": "No testimonial, quote, named customer, named shop, or review may be presented. There are zero approved testimonials; any quoted satisfied-customer voice is fabrication.",
+      "detection_method": "Heuristic + LLM. Regex pre-filter for testimonial shapes: a quoted first-person endorsement, e.g. patterns (?i)(«[^»]{0,200}(теперь|спасибо|очень\\s+удоб|рекоменд|сэконом|стало\\s+легче)[^»]{0,200}») followed/preceded by an attribution (?i)(владелец|хозяин|кассир|магазин\\s+«|do'?kon\\s+egasi|,\\s*[А-ЯA-Z][а-яa-z]+\\s*(из|from)\\s+[А-ЯA-Z]); attribution patterns like 'Имя, владелец магазина X'. UZ analogue: quoted praise plus '...do'kon egasi'. The LLM reviewer fires on any sentence that reads as a customer endorsement, named or anonymous ('один владелец рассказал нам, что...'), because no approved fact provides one. Author/brand first-person ('мы помогаем') is NOT a testimonial and must not fire.",
+      "examples_fail": [
+        "«Теперь я вижу выручку с телефона, очень удобно», Алишер, владелец магазина в Чиланзаре.",
+        "Один кассир сказал, что освоил BirLiy за пять минут.",
+        "«BirLiy bizning savdoni o'zgartirdi», Toshkentlik do'kon egasi."
+      ],
+      "examples_pass": [
+        "Владелец видит магазин с телефона: выручка, кто на смене, последние продажи. (fact_owner_remote)",
+        "Кассир осваивает обычно за 30 минут, в первый день помогаем лично. (fact_onboarding_cashier_30min, qualified)"
+      ],
+      "remediation": "Remove the quote and attribution. Describe the capability in BirLiy's own calm voice tied to an approved fact. If a real testimonial exists, route it to the owner; it can be published only after it becomes an approved fact with evidence."
+    },
+    {
+      "rule_id": "B09_fabricated_deadline_or_roadmap_as_done",
+      "severity": "blocking",
+      "description": "No launch, delivery, or availability deadline beyond 'early access 2026' may be stated, and no roadmap/planned item may be presented as already shipped. Inventing a date, a 'launching on X', a countdown, or claiming a planned feature is live is blocked.",
+      "detection_method": "Regex for date/deadline shapes not equal to the approved 'early access 2026' framing: (?i)(\\b\\d{1,2}\\s*(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)\\b|\\bQ[1-4]\\s*20\\d{2}\\b|\\b(запуск|релиз|старт продаж|выходит|launch|release)\\s+(в|on|\\d)|до\\s+\\d{1,2}\\s+\\w+\\s+20\\d{2}|осталось\\s+\\d+\\s+(дн|час|мест)). Allow only 'ранний доступ 2026' / 'erta kirish 2026' (regex (?i)(ранн\\w+\\s+доступ\\s+2026|erta\\s+kirish\\s+2026)). Roadmap-as-done: cross-check any cited fact whose status is needs_confirmation for unshipped features (fact_loyalty, fact_branches_multipoint, fact_turnover_analytics, fact_day_register_realtime, fact_equipment_platforms) against present-tense 'уже работает / доступно сейчас / allaqachon ishlaydi' claims; fire if a needs_confirmation feature is stated as currently shipped without qualification (this is also caught by B07).",
+      "examples_fail": [
+        "Полный запуск 1 сентября 2026.",
+        "Маркетплейс уже доступен в приложении.",
+        "Осталось 3 дня до старта продаж.",
+        "Финансовые сервисы работают прямо сейчас."
+      ],
+      "examples_pass": [
+        "Ранний доступ 2026: с первой когортой пилотов, сначала для первых магазинов Ташкента. (fact_stage_early_access)",
+        "Это планы на будущее, а не то, что работает сегодня."
+      ],
+      "remediation": "Use only 'ранний доступ 2026' / 'erta kirish 2026'. Do not add any other date or countdown. Present planned items explicitly as plans ('что дальше'), never as shipped, and only if needed. Cite fact_stage_early_access."
+    },
+    {
+      "rule_id": "B10_empty_or_placeholder_artifact",
+      "severity": "blocking",
+      "description": "An artifact with no usable body, or that is only a placeholder/template skeleton, is not publishable.",
+      "detection_method": "Fire if, after trimming whitespace, the artifact body (per required language) is empty, shorter than a minimum threshold (default: fewer than 3 non-whitespace words in any required-language body for a post), or consists only of template tokens. Placeholder regex: (?i)(lorem\\s+ipsum|\\bTODO\\b|\\bTBD\\b|\\bXXX\\b|\\[.*\\]|\\{\\{.*\\}\\}|<.*вставить.*>|<.*matn.*>|заполнить|to'?ldirilsin). Also fire if the artifact equals an unfilled template from 02-content-system.md (unreplaced bracket slots like '[Узнаваемая проблема...]').",
+      "examples_fail": [
+        "{ ru: '   ' }",
+        "{ ru: '[Узнаваемая проблема в 1-2 строки.]\\n\\n[CTA.]' }",
+        "{ ru: 'TODO написать оффер' }"
+      ],
+      "examples_pass": [
+        "{ ru: 'Интернет пропал, касса работает дальше. Связь вернулась, всё синхронизировалось само. Написать в Telegram: +998 97 421 24 54' }"
+      ],
+      "remediation": "Write real copy that fills every template slot, tied to approved facts, ending in an approved CTA. Remove all bracket placeholders and TODO markers."
+    },
+    {
+      "rule_id": "B11_missing_required_cta",
+      "severity": "blocking",
+      "description": "Every public piece must end with exactly one of the two approved CTAs. No CTA, a non-approved CTA, or more than one CTA makes it unpublishable. Approved: 'Оставить заявку' to birliy.uz (#lead) / 'Ariza qoldirish'; and 'Написать в Telegram' to +998 97 421 24 54 / 'Telegramga yozish'.",
+      "detection_method": "Detect an approved CTA in the (last lines of the) artifact: regex (?i)(оставить\\s+заявку|оставьте\\s+заявку|ariza\\s+qoldir|написать\\s+в\\s+telegram|напишите\\s+(нам\\s+)?в\\s+telegram|telegramga\\s+yoz) OR presence of the approved destinations: birliy\\.uz (optionally with #lead) or the phone \\+?998\\s*97\\s*421\\s*24\\s*54. Fire if NONE present (missing CTA). Fire if a NON-approved CTA verb/destination is the call to action: regex (?i)(перейти\\s+на\\s+сайт|купить\\s+сейчас|подписаться|регистр\\w+|закаж\\w+|позвоните|whatsapp|instagram\\.com/|@(?!bir_liy|birliy_support_bot)\\w+) used as the action, or any link/handle that is not birliy.uz, +998 97 421 24 54, @bir_liy or @birliy_support_bot. Fire if MORE than one distinct approved CTA action appears (one piece = one CTA). LLM reviewer confirms the CTA is the closing action, on its own line.",
+      "examples_fail": [
+        "49 000 сум/мес первые 6 месяцев. Полный функционал.",
+        "Купите BirLiy прямо сейчас на нашем сайте!",
+        "Оставить заявку: birliy.uz. Или напишите в Telegram: +998 97 421 24 54. Или позвоните."
+      ],
+      "examples_pass": [
+        "49 000 сум/мес первые 6 месяцев, дальше 149 000. Оставить заявку: birliy.uz",
+        "Долги покупателей в приложении вместо тетради. Написать в Telegram: +998 97 421 24 54",
+        "Erta kirish ochiq. Ariza qoldiring: birliy.uz"
+      ],
+      "remediation": "End with exactly one approved CTA on its own line: 'Оставить заявку: birliy.uz' (#lead) or 'Написать в Telegram: +998 97 421 24 54' (UZ: 'Ariza qoldiring: birliy.uz' / 'Telegramga yozing: +998 97 421 24 54'). Remove any other call to action, link, or handle used as the action."
+    }
+  ],
+
+  "warning_rules": [
+    {
+      "rule_id": "W01_generic_ai_language",
+      "severity": "warning",
+      "description": "Generic AI-slop openers and filler that signal machine-written copy and break the calm-neighbour voice. From BRAND_VOICE section 12.",
+      "detection_method": "Regex set (case-insensitive): empty openers (?i)(в\\s+современном\\s+мире|в\\s+наше\\s+время|в\\s+эпоху\\s+цифров|сегодня,?\\s+когда|bugungi\\s+kunda|hozirgi\\s+zamonda); self-narration (?i)(мы\\s+рады\\s+(представить|сообщить)|наша\\s+команда\\s+(разработала|создала)|мы\\s+с\\s+гордостью|biz\\s+faxr\\s+bilan|taqdim\\s+etishdan\\s+mamnun); buzzword closers (?i)(присоединяйтесь\\s+к\\s+революции|не\\s+упустите\\s+свой\\s+шанс|сделайте\\s+первый\\s+шаг\\s+к\\s+успеху); hedging fog (?i)(возможно,?\\s+это\\s+поможет|скорее\\s+всего\\s+вам\\s+подойдёт|как\\s+нам\\s+кажется). Each match is a warning.",
+      "examples_fail": [
+        "В современном мире малого бизнеса важно идти в ногу со временем.",
+        "Мы рады представить вам нашу передовую разработку.",
+        "Bugungi kunda har bir do'kon raqamlashtirishga muhtoj."
+      ],
+      "examples_pass": [
+        "Интернет пропал, касса работает дальше.",
+        "Долги покупателей в приложении вместо тетради.",
+        "Internet uzildi, kassa ishlashda davom etadi."
+      ],
+      "remediation": "Cut the generic opener and the self-narration. Start with the owner's real situation, end on a concrete benefit tied to an approved fact, close with an approved CTA. Talk to the owner, not about BirLiy."
+    },
+    {
+      "rule_id": "W02_paragraph_too_long",
+      "severity": "warning",
+      "description": "A post should be 3 to 6 short lines, sentences 6 to 12 words, with breathing room. Walls of text break the editorial, calm look. From BRAND_VOICE section 4 and 02-content-system.md.",
+      "detection_method": "Heuristic counts per language block. Fire if: any single sentence exceeds 22 words (split on . ! ? and newline); OR any paragraph (text between blank lines) exceeds 45 words; OR a post body has no line breaks and exceeds 35 words; OR average sentence length across the body exceeds 16 words. Count words by splitting on whitespace. Report the offending sentence/paragraph.",
+      "examples_fail": [
+        "BirLiy это удобное приложение которое объединяет кассу склад оплаты долги покупателей отчёты по выручке среднему чеку и топ-товарам а также позволяет владельцу видеть магазин с телефона из любого места и работает даже без интернета сохраняя продажи локально."
+      ],
+      "examples_pass": [
+        "Касса, склад и оплаты в одном приложении.\nВечером цифры сходятся сами.\nОставить заявку: birliy.uz"
+      ],
+      "remediation": "Break into 3 to 6 short lines. One thought per sentence, 6 to 12 words. Add line breaks for white space. Read it aloud; if you run out of breath, cut it."
+    },
+    {
+      "rule_id": "W03_vague_benefit",
+      "severity": "warning",
+      "description": "Benefits must be concrete and tied to the owner's money, time, or control, backed by an approved fact. Vague, unmeasurable benefit language ('удобно', 'эффективно', 'экономит время' with no specifics) is weak. From BRAND_VOICE section 3 and 12.",
+      "detection_method": "Regex for vague benefit phrases without a concrete anchor: (?i)(удобно\\s+и\\s+просто|быстро\\s+и\\s+удобно|эффективн\\w+|оптимизир\\w+|экономит\\s+(ваше\\s+)?время(?!\\s+на\\s+\\w)|повыша\\w+\\s+эффективность|улучша\\w+\\s+бизнес|qulay\\s+va\\s+oson|samarali\\b|vaqtingizni\\s+tejaydi(?!\\s+\\w)). A match fires UNLESS the same sentence/line also contains a concrete anchor (a trade noun from the dictionary: касса|склад|остат|долг|насия|выручка|смена|чек|kassa|ombor|qoldiq|nasiya|tushum|smena|chek, or a price/QR/PIN/Telegram specific). LLM reviewer judges whether the benefit names a real owner gain.",
+      "examples_fail": [
+        "BirLiy сделает ваш бизнес удобнее и эффективнее.",
+        "Экономьте время с BirLiy.",
+        "BirLiy biznesingizni samarali qiladi."
+      ],
+      "examples_pass": [
+        "Остаток обновляется сам после каждой продажи, пересчитывать вручную не нужно. (fact_stock_auto_low_alert)",
+        "Долги покупателей в приложении вместо тетради. (fact_nasiya_debt)"
+      ],
+      "remediation": "Replace the vague benefit with a concrete one from the benefit map in BRAND_VOICE section 10, naming the exact owner gain (less recounting, debts not lost, see revenue from the phone), and cite the fact id."
+    },
+    {
+      "rule_id": "W04_excessive_jargon",
+      "severity": "warning",
+      "description": "Reader is non-technical and busy. Tech jargon, anglicisms where a plain local word exists, and abstract nouns break the kitchen-table vocabulary rule. From BRAND_VOICE section 3 and 11.",
+      "detection_method": "Regex for discouraged jargon/anglicisms (case-insensitive): (?i)(\\bапп\\b|\\bрепорт\\b|топов\\w+|лайфхак|must[- ]?have|game[- ]?changer|онбординг|интерфейс\\s+юзера|UX|фич\\w+(?!а\\s+крупно)|синхронизац\\w+\\s+данных\\s+в\\s+облаке|облачн\\w+\\s+инфраструктур|API|SaaS|диджитал|омниканальн\\w+). Also flag 'функционал' in body copy EXCEPT inside the exact approved price line 'полный функционал' (allow regex (?i)полный\\s+функционал; fire on other uses of функционал). Each non-allowed match is a warning. LLM reviewer flags any term a corner-shop owner would not use.",
+      "examples_fail": [
+        "Топовый апп с облачной синхронизацией данных и удобным UX.",
+        "Наш SaaS закрывает весь функционал ритейла.",
+        "Bu eng zo'r digital yechim."
+      ],
+      "examples_pass": [
+        "Простое приложение на телефоне: касса, склад, оплаты. (fact_positioning)",
+        "Полный функционал, без скрытых платежей. (fact_pricing_promo)"
+      ],
+      "remediation": "Swap jargon for the owner's own words ('приложение' not 'апп', 'отчёт' not 'репорт'). Keep 'функционал' only inside the approved price line. Use the terminology dictionary in COMPANY_CONTEXT.md."
+    },
+    {
+      "rule_id": "W05_weak_hook",
+      "severity": "warning",
+      "description": "The first line carries the post. A weak, generic, or buried hook loses the reader. The lead should name a recognizable situation or a concrete benefit, not a label. From 01-strategy.md section 7 and 02-content-system.md.",
+      "detection_method": "Heuristic on the first non-empty line. Fire if the hook: is a bare brand/label line (regex ^(?i)(birliy|наша\\s+касса|новое\\s+приложение)\\s*[.!]?\\s*$); is a generic benefit with no situation (caught partly by W03); is a question with no stakes ('Хотите больше продаж?'); exceeds 14 words; or is the CTA itself. Pass if the first line names a concrete pain/situation or a fact-backed benefit. LLM reviewer scores hook strength 1 to 5 and warns below 3.",
+      "examples_fail": [
+        "BirLiy.",
+        "Хотите развивать свой бизнес?",
+        "Представляем новое приложение для вашего магазина которое поможет вам во многом."
+      ],
+      "examples_pass": [
+        "Касса отдельно, склад отдельно, оплаты отдельно.",
+        "Интернет пропал, а касса работает дальше.",
+        "Qarz daftari yana yo'qoldimi?"
+      ],
+      "remediation": "Open with the recognizable daily pain or a concrete fact-backed benefit in under 14 words. Use content pillar 1 (Боль -> облегчение): name the situation first, then the relief."
+    },
+    {
+      "rule_id": "W06_literal_translation",
+      "severity": "warning",
+      "description": "UZ must read as native Tashkent-shopkeeper Uzbek, not a word-for-word calque of RU. Mirror translations and Russian-calque syntax are weak. From BRAND_VOICE section 15.",
+      "detection_method": "Heuristic + LLM. Flag UZ blocks that show calque markers: RU loanwords where a native term exists (regex (?i)(\\bмагазин\\b|\\bвыручка\\b|\\bостаток\\b|\\bскидка\\b) appearing inside a UZ block), unnatural literal connectors, or near-identical token order to the RU version (compute a crude alignment: if the UZ block, after stripping shared proper nouns/numbers, maps token-for-token onto the RU block at the same positions, warn). Prefer reuse of safe_public_wording_uz from APPROVED_FACTS.json: warn if the UZ text diverges from the human-written wording into a literal RU rebuild. LLM reviewer is the primary judge; the regex is a pre-filter.",
+      "examples_fail": [
+        "Sizning vyruchka telefondan ko'rinadi.",
+        "Kassa alohida, sklad alohida, oplata alohida (literal RU calque)."
+      ],
+      "examples_pass": [
+        "Kunlik tushum telefonda ko'rinadi. (fact_reporting)",
+        "Kassa boshqa, ombor boshqa, to'lovlar boshqa joyda."
+      ],
+      "remediation": "Rebuild the line in natural Uzbek word order and idiom using the trade words (tushum, ombor, qoldiq, nasiya, qarz daftari). Reuse safe_public_wording_uz from APPROVED_FACTS.json; do not transliterate the RU sentence."
+    },
+    {
+      "rule_id": "W07_duplicated_meaning",
+      "severity": "warning",
+      "description": "One post = one idea. Repeating the same point in different words, triad padding (three adjectives), or saying the same benefit twice wastes the reader's attention. From BRAND_VOICE section 12 and 02-content-system.md.",
+      "detection_method": "Heuristic: (a) triad padding, regex for three coordinated adjectives, e.g. (\\b\\w+о\\b,\\s+\\b\\w+о\\b\\s+и\\s+\\b\\w+о\\b) like 'быстро, удобно и эффективно', or any list of 3+ near-synonym adjectives; (b) repeated benefit, fire if two sentences in the same block share a high token-overlap (Jaccard over content words > 0.6) or restate the same cited fact id twice with no new information; (c) the same CTA or same fact id appearing more than needed. LLM reviewer confirms genuine redundancy vs deliberate parallelism.",
+      "examples_fail": [
+        "Быстро, удобно и эффективно.",
+        "Вы видите выручку с телефона. Выручку видно прямо в телефоне в любое время.",
+        "Касса в телефоне. Касса всегда с вами в телефоне."
+      ],
+      "examples_pass": [
+        "Выручка за день видна на телефоне. Средний чек и топ-товары тоже. (fact_reporting)",
+        "Касса, склад и оплаты в одном приложении. (fact_positioning)"
+      ],
+      "remediation": "Keep one idea. Cut triad adjective stacks to one concrete claim. Remove the restated sentence; if a second line is needed, add new information, not a paraphrase."
+    },
+    {
+      "rule_id": "W08_inconsistent_product_terminology",
+      "severity": "warning",
+      "description": "Product and trade terms must be used consistently per the dictionary in COMPANY_CONTEXT.md. Mixing synonyms for the same concept (касса vs 'кассовый модуль' vs 'POS-система' in body) or inconsistent feature names confuses the reader and dilutes the brand.",
+      "detection_method": "Maintain a canonical-term map from COMPANY_CONTEXT.md (касса/kassa, склад/ombor, остатки/qoldiq, насия/nasiya + В долг/Qarzga, выручка/tushum, смена/smena, средний чек/o'rtacha chek, чек/chek, сканер/skaner, термопринтер/termoprinter, планшет/planshet). Warn if a non-canonical synonym for a mapped concept is used in body copy: regex examples (?i)(POS[- ]?система|кассовый\\s+аппарат(?!ом\\s+не)|товарный\\s+учёт|ритейл[- ]?платформа) when a canonical word exists; or if the SAME artifact uses two different terms for one concept (e.g. both 'склад' and 'инвентарь', both 'насия' and only 'кредит'). Brand name must be spelled 'BirLiy' (warn on 'Birliy', 'BIRLIY', 'бирлай' in body). LLM reviewer checks concept-level consistency.",
+      "examples_fail": [
+        "Наша POS-система и товарный учёт в одном.",
+        "Склад в приложении. Инвентарь обновляется сам.",
+        "Birliy kassasi ishonchli."
+      ],
+      "examples_pass": [
+        "Касса и склад в одном приложении. (fact_positioning)",
+        "Остатки на складе обновляются сами. (fact_stock_auto_low_alert)",
+        "BirLiy kassasi ishonchli."
+      ],
+      "remediation": "Use one canonical term per concept from the dictionary (касса, склад, остатки, насия, выручка, смена, чек). Spell the brand 'BirLiy'. Do not switch synonyms for the same feature within a piece."
+    },
+    {
+      "rule_id": "W09_aggressive_or_misleading_persuasion",
+      "severity": "warning",
+      "description": "BirLiy shows, it does not push. Fake scarcity, hype superlatives, pressure verbs, caps-lock, emoji walls, and overpromise tone break the calm-confidence voice. These are not factual fabrications (those are blocking under B02/B03) but manipulative or misleading framing. From BRAND_VOICE section 5, 7, 11; 01-strategy.md section 5.",
+      "detection_method": "Regex set (case-insensitive): fake scarcity (?i)(осталось\\s+\\d+\\s+мест|только\\s+сегодня|успей\\w*|последн\\w+\\s+шанс|спешите|таймер|обратный\\s+отсчёт|faqat\\s+bugun|shoshiling|joy\\s+qoldi); empty superlatives (?i)(уникальн\\w+|не\\s+имеющ\\w+\\s+аналог|идеальн\\w+|\\b100\\s*%\\b|лучш\\w+|№\\s*1|номер\\s+один|tengi\\s+yo'?q|eng\\s+yaxshi|raqam\\s+1); hype/banned words (?i)(револю\\w+|инноваци\\w+|трансформ\\w+|синерги\\w+|inqilob\\w*|innovatsiya|transformatsiya|sinergiya); hollow promise verbs (?i)(перевернёт|изменит\\s+навсегда|взорвёт\\s+продажи|выведет\\s+(ваш\\s+)?бизнес\\s+на\\s+новый\\s+уровень); corporate filler (?i)(комплексное\\s+решение|под\\s+ключ|вывести\\s+на\\s+новый\\s+уровень); caps-lock words (a token of 4+ letters all uppercase, regex \\b[А-ЯA-Z]{4,}\\b excluding allowed acronyms like QR, PIN, SKU, BirLiy is mixed-case so excluded); emoji wall (3+ emoji in the artifact, or any of \\U0001F680\\U0001F525\\U0001F4AF\\U0001F4A5 rocket/fire/100/boom). Note: the banned hype words from section 11 are warnings here for tone; if such a word ALSO carries a fabricated factual claim, the relevant blocking rule (B02/B03) still applies.",
+      "examples_fail": [
+        "🚀🔥 РЕВОЛЮЦИОННАЯ касса! ТОЛЬКО СЕГОДНЯ! ОСТАЛОСЬ 2 МЕСТА! 🔥",
+        "Уникальное решение №1, которое перевернёт вашу торговлю.",
+        "Inqilobiy yechim, tengi yo'q!"
+      ],
+      "examples_pass": [
+        "49 000 сум/мес первые 6 месяцев, дальше 149 000. Полный функционал, цена известна заранее. (fact_pricing_promo)",
+        "Сейчас открываем ранний доступ для первых магазинов Ташкента. (fact_stage_early_access)",
+        "Erta kirish ochiq. Ariza qoldiring: birliy.uz"
+      ],
+      "remediation": "Remove scarcity, superlatives, hype words, caps-lock and emoji walls. Let the offer and the concrete benefit do the work. Use calm, plain statements (max 1 to 2 soft emoji, at most one '!'). The strong price needs no pressure (fact_pricing_promo)."
+    }
+  ]
+}

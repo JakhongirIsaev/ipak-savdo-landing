@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "title": "BirLiy Content Operating Model",
+    "purpose": "Single content operating model for the BirLiy CMO: the 7 content pillars, what each pillar is for, which channel and format fit it, what proof it needs, how it is measured, and which claims it must never make. Built only from the approved grounding files. Every public claim is tied to an approved fact id or qualified.",
+    "built_from": [
+      "marketing/01-strategy.md",
+      "marketing/02-content-system.md",
+      "COMPANY_CONTEXT.md",
+      "APPROVED_FACTS.json"
+    ],
+    "channels": ["Instagram", "Telegram"],
+    "audience": "Owner of a neighborhood corner shop (магазин у дома / uy yonidagi do'kon) or minimarket in Uzbekistan, starting with Tashkent. Non-technical, busy, keeps records in a notebook, Excel, or in their head.",
+    "voice": "Calm, experienced shopkeeper-neighbour, not a salesperson. Brand principle: 'Меньше частей. Больше ясности.' / 'Kamroq qism. Ko'proq aniqlik.' Short sentences, real verbs, about the owner's money and time. No hype words (революция, инновация, лучший, №1, трансформация, синергия). No fake scarcity. Max 1-2 emoji per post.",
+    "approved_cta": [
+      {
+        "id": "cta_lead_form",
+        "label_ru": "Оставить заявку",
+        "label_uz": "Ariza qoldirish",
+        "destination": "birliy.uz (#lead)",
+        "use_when": "Offer and conversion posts; Instagram bio link"
+      },
+      {
+        "id": "cta_telegram",
+        "label_ru": "Написать в Telegram",
+        "label_uz": "Telegramga yozish",
+        "destination": "+998 97 421 24 54",
+        "use_when": "Default low-friction CTA, most posts",
+        "fact_id": "fact_contacts"
+      }
+    ],
+    "global_rules": {
+      "currency": "RU 'сум', UZ \"so'm\". Never 'UZS'.",
+      "no_bank_name": "Never name a bank, never name a parent company. 'Сделано для Узбекистана' / 'O'zbekiston uchun yaratilgan' must never be expanded (fact_made_for_uzbekistan).",
+      "no_em_dash": "No em-dash character in any public copy. Use ':' ',' or '-'.",
+      "ru_uz_parity": "RU is primary; UZ is an equivalent native mirror for key posts (launch, offer, segment), not a literal translation.",
+      "every_post_needs_a_cta": "A post without one of the two approved CTAs is not publishable.",
+      "no_invention": "Never invent customer counts, % improvements, testimonials, integrations, deadlines beyond 'early access 2026', kit prices, or completion states.",
+      "prohibited_facts_never_real": "Demo dashboard numbers (fact_demo_revenue, fact_demo_avg_check, fact_demo_sales_delta, fact_demo_stock, fact_demo_receipt, fact_demo_cashiers_returns) and the 'real shops already working' badge (fact_real_shops_badge) must never be presented as real."
+    }
+  },
+  "content_pillars": [
+    {
+      "pillar_id": 1,
+      "name_ru": "Боль и облегчение",
+      "name_uz": "Og'riq va yengillik",
+      "description_ru": "Узнаваемая проблема магазина у дома (касса, склад и оплаты по отдельности; пересчёт по тетради), затем спокойное 'а у нас вот так'.",
+      "description_uz": "Uy yonidagi do'konning tanish muammosi (kassa, ombor va to'lovlar alohida; daftarni qayta sanash), keyin xotirjam 'bizda esa shunday'.",
+      "audience_stage": "unaware_to_problem_aware",
+      "business_objective": "Узнавание и резонанс: владелец узнаёт свою боль и начинает связывать её с BirLiy. / Tanish va rezonans.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Карусель (проблема по шагам)", "Карточка-цитата на бумажном фоне", "Короткий текстовый пост в Telegram"],
+      "recommended_cta": "cta_telegram",
+      "evidence_requirement": "Описание боли не требует доказательств. Решение опирается на verified-факты: единая поверхность (fact_single_surface_demo), позиционирование (fact_positioning), сравнение с тетрадью/Excel/1С (fact_competitive_vs_notebook_1c). Никаких чисел результата.",
+      "measurement_metric": "Сохранения и репосты (Instagram saves/shares); комментарии 'это про меня'. В Telegram: просмотры и пересылки.",
+      "prohibited_claims": [
+        "Любой % экономии времени или денег для магазина",
+        "Число магазинов/клиентов",
+        "fact_real_shops_badge ('реальные магазины уже работают')"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало для ключевых болевых постов. Тон спокойный, без капса, 1-2 эмодзи максимум.",
+      "approved_fact_ids": ["fact_positioning", "fact_single_surface_demo", "fact_competitive_vs_notebook_1c"]
+    },
+    {
+      "pillar_id": 2,
+      "name_ru": "Как это работает",
+      "name_uz": "Bu qanday ishlaydi",
+      "description_ru": "Продукт в действии, по шагам: продажа, оплата, чек в Telegram, обновление склада.",
+      "description_uz": "Mahsulot ish jarayonida, bosqichma-bosqich: sotuv, to'lov, Telegramda chek, ombor yangilanishi.",
+      "audience_stage": "problem_aware_to_solution_aware",
+      "business_objective": "Показать, что продукт простой и реальный: снять страх 'это сложно'. / Mahsulot sodda va haqiqiy ekanini ko'rsatish.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Карусель (6 шагов продажи)", "Reels с экраном продукта", "Скриншоты продукта на бумажном фоне"],
+      "recommended_cta": "cta_telegram",
+      "evidence_requirement": "Опираться на verified поток и способы оплаты. '15 секунд' держать как иллюстрацию, а не гарантию (fact_sale_flow_15s, условие). Не показывать демо-цифры на скриншотах как реальные.",
+      "measurement_metric": "Досмотры Reels (видеопросмотры, retention); сохранения карусели; клики по ссылке в шапке.",
+      "prohibited_claims": [
+        "fact_sale_flow_15s как гарантированная скорость ('ровно 15 секунд')",
+        "Демо-цифры на скриншотах как реальные (fact_demo_revenue, fact_demo_avg_check, fact_demo_sales_delta, fact_demo_stock, fact_demo_receipt)",
+        "QR как гарантированно мгновенное зачисление (fact_qr_no_terminal, условие)"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало по запросу. Подписи к шагам короткие, глаголами.",
+      "approved_fact_ids": ["fact_sale_flow_15s", "fact_checkout_sales", "fact_payment_methods", "fact_qr_no_terminal", "fact_ereceipt_telegram", "fact_stock_auto_low_alert"]
+    },
+    {
+      "pillar_id": 3,
+      "name_ru": "Свобода собственника",
+      "name_uz": "Egasi erkinligi",
+      "description_ru": "Контроль магазина с телефона из любого места: выручка, остатки, кто на смене, последние продажи; итоги в Telegram.",
+      "description_uz": "Do'konni istalgan joydan telefondan nazorat qilish: tushum, qoldiqlar, kim smenada, oxirgi sotuvlar; yakunlar Telegramda.",
+      "audience_stage": "solution_aware",
+      "business_objective": "Эмоциональная выгода владельца: спокойствие и контроль без стояния за прилавком. / Egasining xotirjamligi va nazorati.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Скриншот дашборда владельца на бумажном фоне", "Карточка-цитата", "Короткое видео экрана (моб. дашборд)"],
+      "recommended_cta": "cta_telegram",
+      "evidence_requirement": "Опираться на verified удалённый просмотр и Telegram-итоги (fact_owner_remote). 'Последние 10 продаж' - описательная деталь UI, не гарантия. Демо-метрики на скриншоте не выдавать за реальные.",
+      "measurement_metric": "Вовлечённость поста (лайки/коммент/сохранения); прирост подписчиков канала после поста.",
+      "prohibited_claims": [
+        "Любая реальная выручка/прибыль/% магазина",
+        "Демо-метрики дашборда как реальные (fact_demo_revenue, fact_demo_avg_check, fact_demo_sales_delta, fact_demo_cashiers_returns)"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало для запуска/ключевых. Тон спокойный, про свободу и спокойствие.",
+      "approved_fact_ids": ["fact_owner_remote", "fact_reporting"]
+    },
+    {
+      "pillar_id": 4,
+      "name_ru": "Одна фича крупно",
+      "name_uz": "Bitta imkoniyat yaqindan",
+      "description_ru": "Одна возможность за пост, раскрыта понятно: офлайн-работа, авто-склад, насия вместо тетради, нет терминала для QR.",
+      "description_uz": "Bir postda bitta imkoniyat, tushunarli ochib berilgan: internetsiz ishlash, avto-ombor, daftar o'rniga nasiya, QR uchun terminal shart emas.",
+      "audience_stage": "solution_aware",
+      "business_objective": "Закрыть конкретный вопрос/возражение через одну сильную фичу. / Bitta kuchli imkoniyat orqali aniq savolni yopish.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Карточка-цитата (фича одной фразой)", "Карусель (фича по шагам)", "Скриншот фичи на бумажном фоне"],
+      "recommended_cta": "cta_telegram",
+      "evidence_requirement": "Брать только verified-фичи для жёстких утверждений (офлайн, авто-склад, насия, нет терминала). Фичи со статусом needs_confirmation (лояльность, оборачиваемость, мульти-точка, касса дня в реальном времени) подавать как заявленную возможность с оговоркой, не как гарантию.",
+      "measurement_metric": "Сохранения (saves) как сигнал полезности; клики по ссылке в шапке; ответы в личку/бот.",
+      "prohibited_claims": [
+        "fact_loyalty, fact_turnover_analytics, fact_branches_multipoint, fact_day_register_realtime как уже отгруженные без оговорки",
+        "QR 'деньги приходят мгновенно' как гарантированное зачисление (fact_qr_no_terminal, условие)",
+        "'Данные защищены' как широкая гарантия безопасности (fact_roles_security, условие)"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало для ключевых фич (офлайн, насия). Один пост - одна фича - одна мысль.",
+      "approved_fact_ids": ["fact_offline", "fact_stock_auto_low_alert", "fact_nasiya_debt", "fact_qr_no_terminal", "fact_scanner_2d_bluetooth", "fact_equipment_phone_only", "fact_catalog_stock", "fact_sku_base_excel"]
+    },
+    {
+      "pillar_id": 5,
+      "name_ru": "Доверие",
+      "name_uz": "Ishonch",
+      "description_ru": "Безопасность и честность: роли Владелец/Кассир/Суперадмин, вход по PIN, журнал всех действий, журнал смен; 'Сделано для Узбекистана'.",
+      "description_uz": "Xavfsizlik va halollik: Egasi/Kassir/Superadmin rollari, PIN orqali kirish, barcha amallar jurnali, smenalar jurnali; 'O'zbekiston uchun yaratilgan'.",
+      "audience_stage": "solution_aware_to_consideration",
+      "business_objective": "Снять страх 'а вдруг кассир обманет' и 'безликое облако из интернета'. / 'Kassir aldab ketsa-chi' qo'rquvini olib tashlash.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Карточка-цитата ('каждый кассир по своему PIN')", "Скриншот журнала действий/кассиров", "Текстовый пост в Telegram"],
+      "recommended_cta": "cta_telegram",
+      "evidence_requirement": "Роли, PIN, журнал действий и смен - verified (fact_roles_security). 'Сделано для Узбекистана' - verified, но НИКОГДА не расширять до названия банка (fact_made_for_uzbekistan). 'Данные защищены' - не превращать в широкую гарантию.",
+      "measurement_metric": "Вовлечённость и доверие-сигналы: ответы/вопросы в личку; рост подписчиков канала; сохранения.",
+      "prohibited_claims": [
+        "Название банка/процессинга/материнской компании (fact_made_for_uzbekistan, условие)",
+        "Широкая гарантия безопасности сверх PIN/ролей/журнала (fact_roles_security, условие)",
+        "'Безлимит кассиров' без оговорки про ранний доступ (fact_unlimited_cashiers_early, условие)"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало для постов про 'Сделано для Узбекистана'. Спокойно, без давления.",
+      "approved_fact_ids": ["fact_roles_security", "fact_made_for_uzbekistan", "fact_unlimited_cashiers_early", "fact_lead_form_docs"]
+    },
+    {
+      "pillar_id": 6,
+      "name_ru": "Под сегмент",
+      "name_uz": "Segment kesimida",
+      "description_ru": "Отдельный пост под сегмент: магазин у дома и минимаркет в приоритете; кафе, аптека, продуктовый, сервис - дополнительно.",
+      "description_uz": "Segment uchun alohida post: uy yonidagi do'kon va minimarket ustuvor; kafe, dorixona, oziq-ovqat, xizmat - qo'shimcha.",
+      "audience_stage": "consideration",
+      "business_objective": "Самоузнавание: владелец видит свой тип бизнеса и понимает, что это для него. / O'zini tanish: egasi o'z biznes turini ko'radi.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Карточка под сегмент (3 выгоды)", "Карусель по сегменту", "Текстовый пост в Telegram"],
+      "recommended_cta": "cta_telegram",
+      "evidence_requirement": "Опираться на verified ICP/сегменты (fact_icp_segments). Кафе - вторичный сегмент только из ConceptLanding; не переобещать ресторанные/общепит-фичи. Сегментные выгоды собирать только из verified-фич.",
+      "measurement_metric": "Охват по сегменту (reach); сохранения; заявки/обращения с упоминанием типа бизнеса.",
+      "prohibited_claims": [
+        "Переобещание общепит/ресторанных функций для кафе (fact_icp_segments, условие)",
+        "'До 200 чеков в день' как гарантированная пропускная способность (fact_segment_sizing_200, условие)"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало для сегментных запусков. Под каждый сегмент - свой угол боли.",
+      "approved_fact_ids": ["fact_icp_segments", "fact_segment_sizing_200", "fact_catalog_stock", "fact_payment_methods"]
+    },
+    {
+      "pillar_id": 7,
+      "name_ru": "Оффер и ранний доступ",
+      "name_uz": "Taklif va erta kirish",
+      "description_ru": "Низкая стартовая цена для первой когорты и сервисный запуск: подключаем за один день, помогаем загрузить товары.",
+      "description_uz": "Birinchi kogorta uchun past start narxi va servisli ishga tushirish: bir kunda ulaymiz, tovarlarni yuklashda yordam beramiz.",
+      "audience_stage": "consideration_to_conversion",
+      "business_objective": "Заявка: довести тёплого владельца до 'Оставить заявку' или 'Написать в Telegram'. / Ariza: iliq egasini arizagacha olib kelish.",
+      "suitable_channels": ["Instagram", "Telegram"],
+      "suitable_formats": ["Карточка-оффер (цена + что входит)", "Текстовый пост в Telegram с кнопкой", "Карусель (оффер + сервисный запуск)"],
+      "recommended_cta": "cta_lead_form",
+      "evidence_requirement": "Цены 49 000 / 149 000 и 6 месяцев - reusable wording лендинга, но это needs_confirmation: подавать как стартовую/пилотную цену первой когорты, не как навсегда зафиксированную (fact_pricing_promo, fact_promo_six_month). Сервисный запуск - verified (fact_onboarding_service). 'За один день' - типично, не гарантия.",
+      "measurement_metric": "Заявки (главная метрика): отправки формы #lead на сайте + обращения в Telegram/бот. Это основной конверсионный столп.",
+      "prohibited_claims": [
+        "Фейковая срочность ('осталось 2 места', таймеры)",
+        "Любой дедлайн запуска сверх 'ранний доступ 2026' (fact_stage_early_access, условие)",
+        "Число клиентов когорты / 'нас выбрали N магазинов'",
+        "'Подключаем за один день' как жёсткая гарантия (fact_onboarding_one_day, условие)"
+      ],
+      "language_requirements": "RU основной; UZ-зеркало обязательно (оффер - ключевой пост). Оффер сам по себе сильный, без давления.",
+      "approved_fact_ids": ["fact_pricing_promo", "fact_pricing_start_chip", "fact_promo_six_month", "fact_onboarding_service", "fact_onboarding_one_day", "fact_stage_early_access", "fact_contacts"]
+    }
+  ],
+  "weekly_balance": {
+    "cadence_note": "Реалистичный ритм без отдельной команды: 3 поста в неделю на Instagram (пн/ср/пт) + зеркала и польза в Telegram, всего около 6 публикаций в неделю по двум каналам. Лучше стабильно 3 в неделю, чем 7 за день и тишина месяц. Не раздувать объём.",
+    "posts_per_week_instagram": 3,
+    "posts_per_week_telegram": "3-4",
+    "schedule": [
+      {
+        "day": "Понедельник / Dushanba",
+        "instagram": "1 пост: pillar 1, 2 или 6 (боль / как работает / сегмент)",
+        "telegram": "Дублируем пост Instagram + расширяем текстом"
+      },
+      {
+        "day": "Среда / Chorshanba",
+        "instagram": "1 пост: pillar 3, 4 или 5 (свобода собственника / одна фича / доверие)",
+        "telegram": "Отдельный пост: фича или польза"
+      },
+      {
+        "day": "Пятница / Juma",
+        "instagram": "1 пост: pillar 7 (оффер / ранний доступ)",
+        "telegram": "Пост: оффер + 'Напишите нам'"
+      }
+    ],
+    "content_mix_per_week": {
+      "educational": {
+        "share": "~33% (1 из 3 IG-постов / неделя)",
+        "pillars": [2, 4],
+        "rationale": "Образовательный контент ('как это работает', 'одна фича крупно') чередуется по средам и снимает страх сложности.",
+        "primary_cta": "cta_telegram"
+      },
+      "engagement": {
+        "share": "~33% (1 из 3 IG-постов / неделя)",
+        "pillars": [1, 3],
+        "rationale": "Боль->облегчение и свобода собственника дают резонанс, сохранения и репосты; обычно понедельник.",
+        "primary_cta": "cta_telegram"
+      },
+      "owner_story": {
+        "share": "встроено в pillar 3, без выдуманных клиентов",
+        "pillars": [3],
+        "rationale": "'Свобода собственника' играет роль owner-story, но НИКОГДА не как реальный отзыв или кейс клиента. Только обобщённая ситуация владельца, пока нет подтверждённых клиентов с доказательством.",
+        "primary_cta": "cta_telegram",
+        "guard": "Запрещены testimonial, имя клиента, число магазинов, fact_real_shops_badge."
+      },
+      "objection_handling": {
+        "share": "встроено в pillar 5 и частично pillar 4",
+        "pillars": [5, 4],
+        "rationale": "Доверие (PIN, роли, журнал, 'Сделано для Узбекистана') и фичи-ответы (офлайн, нет терминала) закрывают возражения по средам.",
+        "primary_cta": "cta_telegram"
+      },
+      "product_demonstration": {
+        "share": "входит в educational-слот",
+        "pillars": [2, 6],
+        "rationale": "Демонстрация продукта через реальные скриншоты/Reels (как работает, под сегмент). Демо-цифры на экранах НЕ выдаём за реальные.",
+        "primary_cta": "cta_telegram",
+        "guard": "Демо-метрики (fact_demo_*) только как иллюстрация интерфейса, не как результат."
+      },
+      "conversion": {
+        "share": "~33% (1 из 3 IG-постов / неделя, пятница)",
+        "pillars": [7],
+        "rationale": "Оффер/ранний доступ - единственный явно конверсионный слот в неделю; ведёт на заявку.",
+        "primary_cta": "cta_lead_form"
+      }
+    },
+    "balance_summary": "За одну неделю: 1 вовлекающий пост (пн), 1 образовательный/демо или доверие/возражения (ср), 1 конверсионный оффер (пт). Telegram зеркалит и добавляет пользу/оффер. owner_story и product_demonstration встроены в столпы 2/3/6 без отдельных слотов, чтобы не раздувать график. Это удерживаемый объём, а не нереалистичный 'каждый день'."
+  },
+  "self_check": {
+    "em_dash_free": true,
+    "no_uzs": true,
+    "no_bank_name": true,
+    "ru_uz_parity": true,
+    "every_claim_tied_or_qualified": true,
+    "prohibited_facts_flagged_not_used_as_real": true,
+    "two_ctas_only": true,
+    "realistic_cadence": "3 IG posts/week (Mon/Wed/Fri) + 3-4 Telegram; no inflated volume"
+  }
+}
