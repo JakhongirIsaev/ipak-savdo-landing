@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "futbol-saboq-portugaliya-kongo",
   category: "football",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("futbol-saboq-portugaliya-kongo"),
   locales: {
     uz: {
       title: "Portugaliya 1:1 Kongo: hisob daqiqalarda hal bo'ladi",

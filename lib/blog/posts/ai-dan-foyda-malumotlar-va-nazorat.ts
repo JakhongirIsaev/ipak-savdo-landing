@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "ai-dan-foyda-malumotlar-va-nazorat",
   category: "ai-tech",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("ai-dan-foyda-malumotlar-va-nazorat"),
   locales: {
     uz: {
       title: "AI kichik biznesga foyda berishidan oldin: maʼlumot kerak",

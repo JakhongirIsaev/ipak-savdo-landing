@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "futbol-saboq-angliya-xorvatiya",
   category: "football",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("futbol-saboq-angliya-xorvatiya"),
   locales: {
     uz: {
       title: "Angliya Xorvatiya JCh 2026: do'kon foydasi haqida saboq",

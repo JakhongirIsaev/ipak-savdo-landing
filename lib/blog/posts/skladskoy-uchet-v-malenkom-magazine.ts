@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "skladskoy-uchet-v-malenkom-magazine",
   category: "product",
   date: "2026-06-11",
   modified: "2026-06-23",
+  image: blogCover("skladskoy-uchet-v-malenkom-magazine"),
   locales: {
     uz: {
       title: "Do'konda ombor hisobi: tugab qolmaslik uchun amaliy yo'l",

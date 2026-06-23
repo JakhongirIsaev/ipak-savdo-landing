@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "qarz-daftar-orniga-nima",
   category: "product",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("qarz-daftar-orniga-nima"),
   locales: {
     uz: {
       title: "Qarz daftar o'rniga nima: nasiyani telefonda yuritish",

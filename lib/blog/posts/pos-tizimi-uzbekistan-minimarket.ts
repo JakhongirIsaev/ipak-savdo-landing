@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "pos-tizimi-uzbekistan-minimarket",
   category: "product",
   date: "2026-06-15",
   modified: "2026-06-23",
+  image: blogCover("pos-tizimi-uzbekistan-minimarket"),
   locales: {
     uz: {
       title: "POS tizimi minimarket uchun: O'zbekistonda tanlash",

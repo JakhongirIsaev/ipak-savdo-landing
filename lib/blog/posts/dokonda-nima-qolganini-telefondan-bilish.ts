@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "dokonda-nima-qolganini-telefondan-bilish",
   category: "product",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("dokonda-nima-qolganini-telefondan-bilish"),
   locales: {
     uz: {
       title: "Do'konda nima qolganini telefondan qanday bilish",
