@@ -599,6 +599,11 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const [menuOpen, setMenuOpen] = useState(false);
   const [demoRole, setDemoRole] = useState<"cashier" | "owner">("cashier");
   const [setupTab, setSetupTab] = useState<"phone" | "setup">("phone");
+  // Mobile-only progressive disclosure: the modules grid shows the first three
+  // cards, the rest stay collapsed behind a toggle so the page is not an endless
+  // wall on a phone. Desktop always shows the full grid (sm: classes below).
+  const [modulesExpanded, setModulesExpanded] = useState(false);
+  const [segmentsExpanded, setSegmentsExpanded] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number>(0);
   // Refs to the FAQ question buttons so Up/Down/Home/End move focus between them
   // (BR-11 keyboard navigation for the accordion).
@@ -799,6 +804,18 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         {menuOpen && (
           <nav id="concept-mobile-menu" className="relative z-20 border-y border-white/10 bg-[#08131c]/96 px-4 py-3 md:hidden">
             <div className="mx-auto grid max-w-7xl gap-1">
+              {/* Pilot price front-and-centre so the offer is reachable from the
+                  first tap, not buried near the footer. */}
+              <a
+                href="#price"
+                onClick={() => setMenuOpen(false)}
+                className="mb-1 flex min-h-11 items-center justify-between rounded-lg bg-green-500/12 px-3 ring-1 ring-green-400/20"
+              >
+                <span className="text-sm font-semibold text-white/70">{t.meta.pilot}</span>
+                <span className="text-sm font-extrabold text-green-300">
+                  {locale === "ru" ? "49 000 сум/мес" : "49 000 so'm/oy"}
+                </span>
+              </a>
               {t.nav.map((item) => (
                 <a
                   key={item.href}
@@ -812,6 +829,26 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               <button type="button" onClick={() => { setMenuOpen(false); openLead("mobile_menu"); }} className="mt-2 inline-flex min-h-11 items-center justify-center rounded-lg bg-green-700 px-4 font-extrabold text-white">
                 {t.meta.primaryCta}
               </button>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <a
+                  href={t.footer.telegramHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => { setMenuOpen(false); trackSiteEvent("telegram_click", { cta_location: "mobile_menu" }); }}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/16 bg-white/8 px-3 text-sm font-extrabold text-white"
+                >
+                  <Send size={16} />
+                  {t.meta.telegram}
+                </a>
+                <a
+                  href={telHref}
+                  onClick={() => { setMenuOpen(false); trackSiteEvent("phone_click", { cta_location: "mobile_menu" }); }}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/16 bg-white/8 px-3 text-sm font-extrabold text-white"
+                >
+                  <Phone size={16} />
+                  {t.meta.call}
+                </a>
+              </div>
             </div>
           </nav>
         )}
@@ -1021,7 +1058,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 type="button"
                 onClick={() => { setDemoRole("cashier"); trackSiteEvent("demo_interaction", { role: "cashier", step: "role_switch" }); }}
                 aria-pressed={demoRole === "cashier"}
-                className={`min-h-10 rounded-full px-4 text-sm font-extrabold transition sm:px-5 ${demoRole === "cashier" ? "bg-green-700 text-white" : "text-ink-700 hover:text-ink-900"}`}
+                className={`min-h-11 rounded-full px-4 text-sm font-extrabold transition sm:min-h-10 sm:px-5 ${demoRole === "cashier" ? "bg-green-700 text-white" : "text-ink-700 hover:text-ink-900"}`}
               >
                 {t.scroll.roleCashier}
               </button>
@@ -1029,7 +1066,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 type="button"
                 onClick={() => { setDemoRole("owner"); trackSiteEvent("demo_interaction", { role: "owner", step: "role_switch" }); }}
                 aria-pressed={demoRole === "owner"}
-                className={`min-h-10 rounded-full px-4 text-sm font-extrabold transition sm:px-5 ${demoRole === "owner" ? "bg-green-700 text-white" : "text-ink-700 hover:text-ink-900"}`}
+                className={`min-h-11 rounded-full px-4 text-sm font-extrabold transition sm:min-h-10 sm:px-5 ${demoRole === "owner" ? "bg-green-700 text-white" : "text-ink-700 hover:text-ink-900"}`}
               >
                 {t.scroll.roleOwner}
               </button>
@@ -1102,13 +1139,15 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {t.segments2.cards.map((card, index) => {
               const Icon = card.icon;
+              // On mobile show the first three, collapse the rest behind a toggle.
+              const hiddenOnMobile = index >= 3 && !segmentsExpanded;
               return (
                 <motion.button
                   key={card.title}
                   type="button"
                   onClick={() => openLead("segment_" + card.key, card.key)}
                   {...reveal(0.08 + index * 0.07, reduce)}
-                  className="group relative flex flex-col overflow-hidden rounded-xl border border-[#d9e2db] bg-white p-5 text-left shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-all duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.02] hover:border-green-600/60 hover:shadow-[0_28px_60px_-32px_rgba(3,183,61,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600/60 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+                  className={`group relative flex flex-col overflow-hidden rounded-xl border border-[#d9e2db] bg-white p-5 text-left shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition-all duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.02] hover:border-green-600/60 hover:shadow-[0_28px_60px_-32px_rgba(3,183,61,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600/60 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none ${hiddenOnMobile ? "hidden sm:flex" : ""}`}
                 >
                   {/* Top accent bar grows to full width on hover. */}
                   <span
@@ -1136,6 +1175,17 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               );
             })}
           </div>
+          {/* Mobile-only: reveal the remaining shop types. Hidden at sm: (full grid). */}
+          {!segmentsExpanded && (
+            <button
+              type="button"
+              onClick={() => setSegmentsExpanded(true)}
+              className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#d9e2db] bg-white px-5 font-extrabold text-green-800 transition-colors duration-200 ease-birliy hover:border-green-600/50 hover:bg-green-50 sm:hidden"
+            >
+              {locale === "ru" ? "Показать все типы" : "Barcha turlarni ko'rsatish"}
+              <ChevronDown size={18} />
+            </button>
+          )}
         </div>
       </section>
 
@@ -1426,7 +1476,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                     type="button"
                     onClick={() => setSetupTab(tab.id)}
                     aria-pressed={setupTab === tab.id}
-                    className={`min-h-10 rounded-full px-5 py-2 text-sm font-extrabold transition-colors duration-200 ease-birliy ${
+                    className={`min-h-11 rounded-full px-5 py-2 text-sm font-extrabold transition-colors duration-200 ease-birliy sm:min-h-10 ${
                       setupTab === tab.id
                         ? "bg-green-700 text-white shadow-[0_8px_20px_-10px_rgba(3,183,61,0.9)]"
                         : "text-ink-500 hover:text-ink-900"
@@ -1557,11 +1607,13 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {t.modules.items.map((item, index) => {
               const Icon = item.icon;
+              // Hide the 4th+ card on mobile until expanded; always shown at sm:.
+              const hiddenOnMobile = index >= 3 && !modulesExpanded;
               return (
                 <motion.article
                   key={item.title}
                   {...reveal(index * 0.04, reduce)}
-                  className="group relative overflow-hidden rounded-xl border border-[#d9e2db] bg-[#fbfcfb] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.015] hover:border-green-600/60 hover:bg-white hover:shadow-[0_28px_60px_-30px_rgba(3,183,61,0.45)] hover:ring-1 hover:ring-green-600/30 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100"
+                  className={`group relative overflow-hidden rounded-xl border border-[#d9e2db] bg-[#fbfcfb] p-5 shadow-[0_1px_2px_rgba(11,24,38,0.04)] transition duration-300 ease-birliy hover:-translate-y-1.5 hover:scale-[1.015] hover:border-green-600/60 hover:bg-white hover:shadow-[0_28px_60px_-30px_rgba(3,183,61,0.45)] hover:ring-1 hover:ring-green-600/30 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 ${hiddenOnMobile ? "hidden md:block" : ""}`}
                 >
                   {/* Top hairline lights up on hover use a hyphen '-', comma, or period (no long dash) branded accent, decorative. */}
                   <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(3,183,61,0.5),transparent)] opacity-0 transition-opacity duration-300 ease-birliy group-hover:opacity-100" />
@@ -1578,6 +1630,17 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               );
             })}
           </div>
+          {/* Mobile-only: reveal the remaining modules. Hidden at md: (full grid). */}
+          {!modulesExpanded && (
+            <button
+              type="button"
+              onClick={() => setModulesExpanded(true)}
+              className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#d9e2db] bg-white px-5 font-extrabold text-green-800 transition-colors duration-200 ease-birliy hover:border-green-600/50 hover:bg-green-50 md:hidden"
+            >
+              {locale === "ru" ? "Показать ещё 3 модуля" : "Yana 3 modulni ko'rsatish"}
+              <ChevronDown size={18} />
+            </button>
+          )}
         </div>
       </section>
 
@@ -1886,7 +1949,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_1fr]">
             <div>
-              <a href="#top" className="inline-flex items-center" aria-label="BirLiy">
+              <a href="#top" className="inline-flex min-h-11 items-center sm:min-h-0" aria-label="BirLiy">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/birliy-wordmark.png" alt="BirLiy" width={1216} height={403} loading="lazy" decoding="async" className="h-9 w-auto" />
               </a>
@@ -1903,7 +1966,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                         <a
                           href={href}
                           onClick={isBlog ? () => trackSiteEvent("blog_click", { cta_location: "footer" }) : undefined}
-                          className="text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700"
+                          className="inline-flex min-h-11 items-center text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700 sm:min-h-0"
                         >
                           {label}
                         </a>
@@ -1920,7 +1983,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackSiteEvent("telegram_click", { cta_location: "footer" })}
-                className="mt-4 inline-flex min-h-9 items-center gap-2 text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700"
+                className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700 sm:mt-4 sm:min-h-9"
               >
                 <Send size={16} className="text-green-700" />
                 {t.footer.telegram}
@@ -1930,7 +1993,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackSiteEvent("telegram_click", { cta_location: "footer_support" })}
-                className="mt-3 flex min-h-9 items-center gap-2 text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700"
+                className="mt-1 flex min-h-11 items-center gap-2 text-sm font-bold text-ink-700 transition-colors duration-200 ease-birliy hover:text-green-700 sm:mt-3 sm:min-h-9"
               >
                 <Send size={16} className="text-green-700" />
                 {t.footer.support}
@@ -1938,7 +2001,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               <a
                 href={telHref}
                 onClick={() => trackSiteEvent("phone_click", { cta_location: "footer" })}
-                className="mt-3 inline-flex min-h-9 items-center gap-2 text-base font-extrabold tracking-normal text-ink-900 transition-colors duration-200 ease-birliy hover:text-green-700"
+                className="mt-1 inline-flex min-h-11 items-center gap-2 text-base font-extrabold tracking-normal text-ink-900 transition-colors duration-200 ease-birliy hover:text-green-700 sm:mt-3 sm:min-h-9"
               >
                 <Phone size={16} className="text-green-700" />
                 {t.footer.phone}
@@ -1952,7 +2015,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 href="/ru"
                 onClick={locale === "ru" ? undefined : trackLangSwitch}
                 aria-current={locale === "ru" ? "true" : undefined}
-                className={`inline-flex min-h-9 items-center rounded-full px-4 text-sm font-extrabold transition-colors duration-200 ease-birliy ${locale === "ru" ? "bg-ink-900 text-white" : "border border-[#d9e2db] text-ink-700 hover:bg-white"}`}
+                className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-extrabold transition-colors duration-200 ease-birliy sm:min-h-9 ${locale === "ru" ? "bg-ink-900 text-white" : "border border-[#d9e2db] text-ink-700 hover:bg-white"}`}
               >
                 RU
               </a>
@@ -1960,7 +2023,7 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 href="/"
                 onClick={locale === "uz" ? undefined : trackLangSwitch}
                 aria-current={locale === "uz" ? "true" : undefined}
-                className={`inline-flex min-h-9 items-center rounded-full px-4 text-sm font-extrabold transition-colors duration-200 ease-birliy ${locale === "uz" ? "bg-ink-900 text-white" : "border border-[#d9e2db] text-ink-700 hover:bg-white"}`}
+                className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-extrabold transition-colors duration-200 ease-birliy sm:min-h-9 ${locale === "uz" ? "bg-ink-900 text-white" : "border border-[#d9e2db] text-ink-700 hover:bg-white"}`}
               >
                 UZ
               </a>
