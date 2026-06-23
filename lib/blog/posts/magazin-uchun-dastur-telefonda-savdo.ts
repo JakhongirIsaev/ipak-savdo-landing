@@ -4,80 +4,88 @@ export const post: BlogPost = {
   slug: "magazin-uchun-dastur-telefonda-savdo",
   category: "product",
   date: "2026-06-19",
-  modified: "2026-06-19",
-  image: {
-    square: "https://birliy.uz/photos/blog/magazin-uchun-dastur-telefonda-savdo-1x1.jpg",
-    landscape: "https://birliy.uz/photos/blog/magazin-uchun-dastur-telefonda-savdo-4x3.jpg",
-    wide: "https://birliy.uz/photos/blog/magazin-uchun-dastur-telefonda-savdo-16x9.jpg",
-  },
+  modified: "2026-06-23",
   locales: {
     uz: {
-      title: "Magazin uchun dastur: telefon orqali savdoni qanday yuritish mumkin?",
+      title: "Magazin uchun dastur: telefondan qaysidan boshlash kerak",
       description:
-        "Magazin uchun dastur va telefonda kassa: do'kon uchun dasturda sotuvni qanday yozish, naqd, karta, QR va qarzni ajratish hamda egasi tushumni masofadan ko'rishi.",
+        "Magazin uchun dastur tanlash: kassa apparat, ombor, nasiya va tushum bitta telefonda. Qaysi vazifani birinchi raqamlashtirish va BirLiyni qanday boshlash.",
       keywords: [
         "magazin uchun dastur",
         "magazin uchun programma",
         "do'kon uchun dastur",
         "telefonda kassa",
-        "telefonda savdo",
-        "do'kon dasturi O'zbekiston",
-        "QR to'lov",
+        "kassa dasturi minimarket",
+        "ombor hisobi",
+        "nasiya daftar",
         "BirLiy",
       ],
       intro: [
-        "Qisqa javob: bugun magazin uchun dastur sifatida oddiy telefoningiz yetadi. Kassa mashinasi sotib olmasdan ham sotuvni yozish, qoldiqni yuritish va tushumni ko'rish mumkin.",
-        "BirLiy aynan uy yonidagi do'kon va minimarket egalari uchun yaratilgan telefon-first dastur. Kassir telefon yoki planshetda sotuvni kiritadi, egasi esa tushum va qoldiqni o'z telefonidan kuzatadi.",
-        "Quyida do'kon uchun dasturni telefonda qanday boshlash, sotuvni qanday yozish va egasi nimani masofadan ko'rishi mumkinligini bosqichma-bosqich ko'rib chiqamiz.",
+        "Magazin uchun dastur sifatida ko'pchilik darhol qimmat kassa apparat va kompyuterni tasavvur qiladi. Aslida birinchi qadam oddiyroq: qo'lingizdagi telefon yetadi, faqat qaysi vazifani undan boshlashni hal qilish kerak.",
+        "Bu maqola dastur tanlash haqida, tovar ro'yxati haqida emas. Quyida do'koningizdagi qaysi daftar eng ko'p og'riq berayotganini topamiz va aynan o'shanidan telefonda boshlashni ko'rsatamiz.",
       ],
       sections: [
         {
-          h2: "Telefon kassa mashinasini qanday almashtiradi",
+          h2: "Magazin uchun dastur aslida qaysi muammoni yopadi",
           paragraphs: [
-            "Avval do'konda alohida kassa mashinasi, qog'oz daftar va kalkulyator kerak edi. Endi magazin uchun programma o'rnatilgan telefon shu uch vazifani bitta ekranda bajaradi.",
-            "Telefonda kassa ochiq turadi, tovarni tanlaysiz, summa o'zi hisoblanadi va sotuv yoziladi. Qimmat uskuna birinchi kundan shart emas, navbat ko'paysa keyin skaner yoki printer qo'shasiz.",
+            "Kechqurun do'konni yopasiz. Kassadagi naqd pul bitta raqam, daftardagi yozuv ikkinchi raqam, esingizdagi nasiya uchinchi raqam. Uchchovi bir-biriga to'g'ri kelmaydi va siz qayerda farq borligini bilmaysiz.",
+            "Magazin uchun dasturning asosiy ishi shu: bir nechta daftar va kalkulyatorni bitta hisobga yig'ish. Kassa, ombor va nasiya alohida emas, bitta joyda turganda kechqurun raqamlar o'zi to'g'ri keladi.",
+            "Shuning uchun dastur tanlashda birinchi savol funksiyalar soni emas. Birinchi savol: bugun sizni qaysi daftar ko'proq charchatyapti. Ana o'shanidan boshlash kerak.",
           ],
         },
         {
-          h2: "Bitta sotuv qanday yoziladi",
+          h2: "Telefon kassa apparatning o'rnini qanday bosadi",
           paragraphs: [
-            "BirLiyda har bir sotuv bir necha bosqichda yoziladi. Bazada 9 000 dan ortiq keng tarqalgan tovar bor, o'z katalogingizni Exceldan ham yuklash mumkin, shuning uchun hamma narsani qo'lda kiritib o'tirmaysiz.",
-            "Sotuv yozilganda tizim faqat chek bermaydi, u qoldiqni kamaytiradi va kunlik hisobotga qo'shadi. Shu sababli kun oxirida qancha sotilgani va nima kamayganini alohida sanab chiqishingiz shart emas.",
+            "Avval do'konda alohida kassa apparat, qog'oz daftar va kalkulyator kerak edi. Telefonga o'rnatilgan dastur bu uch vazifani bitta ekranda bajaradi, alohida apparat birinchi kundan shart emas.",
+            "BirLiy aynan uy yonidagi do'kon, minimarket, dorixona va xizmat nuqtalari uchun yaratilgan, og'ir tarmoq dasturi emas. Bazada keng tarqalgan tovarlar ro'yxati bor, o'z katalogingizni Exceldan ham yuklash mumkin, shuning uchun hamma narsani qo'lda yozib o'tirmaysiz.",
+            "Navbat ko'paysa, keyin skaner yoki printer qo'shasiz. Lekin boshlash uchun qo'lingizdagi telefonning o'zi yetadi.",
+          ],
+        },
+        {
+          h2: "Qaysi vazifani birinchi raqamlashtirish kerak",
+          paragraphs: [
+            "Hamma narsani bir vaqtda o'zgartirishga urinmang. Eng ko'p pul yo'qotayotgan yoki eng ko'p vaqt olayotgan bitta daftarni tanlang va telefonni o'shanidan boshlang. Quyidagi ro'yxat qaysi og'riq sizniki ekanini topishga yordam beradi.",
           ],
           list: [
-            "Tovarni nomi yoki shtrix-kod orqali toping.",
-            "Soni va narxini tasdiqlang, summa o'zi chiqadi.",
-            "To'lov turini tanlang: naqd, karta, QR yoki qarz.",
-            "Sotuv yozilib, qoldiq avtomatik kamayadi.",
-            "Xohlasangiz, chekni Telegram orqali yuborasiz.",
+            "Xaridor nasiyasi haqida tez-tez bahslashsangiz: nasiya daftaridan boshlang.",
+            "Tez sotiladigan tovar tugaganini xaridordan bilib qolsangiz: ombor qoldig'idan boshlang.",
+            "Do'konda o'zingiz turmasangiz va kassirga ishonchingiz to'liq bo'lmasa: kassa va smena nazoratidan boshlang.",
+            "Oy oxirida do'kon foyda qildimi yo'qmi bilmasangiz: kunlik tushum hisobidan boshlang.",
           ],
         },
         {
-          h2: "To'lov turlari: naqd, karta, QR va qarz",
+          h2: "Nasiya daftar: eng og'ir og'riq nuqtasi",
           paragraphs: [
-            "Do'konda pul har xil keladi va dastur shuni ajratib yozishi muhim. BirLiy naqd, karta, QR to'lov va qarz (nasiya)ni alohida ko'rsatadi, shuning uchun kun oxirida qaysi pul qayerdan kelganini aniq bilasiz.",
-            "QR to'lov xaridor telefoni orqali to'g'ridan-to'g'ri o'tadi, naqd va karta esa odatdagidek qoladi. Qarzga bergan tovaringiz ham yo'qolib qolmaydi, u alohida mijoz hisobiga yoziladi.",
+            "Uy yonidagi do'kon uchun eng sezilarli og'riq shu: doimiy mijozga nasiyaga berasiz, hammasi qog'oz daftarda. Sahifa yirtilsa yoki ho'l bo'lsa, kim qancha qarz ekanini isbotlashga hujjat qolmaydi.",
+            "BirLiyda xaridorlar nasiyasi daftar o'rniga ilovada ko'rinadi: kim qancha qarz va qachon to'lashni va'da qilgani, hammasi bitta ro'yxatda. Qarzning yonida naqd, karta va QR ham bitta hisobda turadi.",
+            "Qarz daftari yillar davomida hisob yuritdi. BirLiy bu hisobni telefonga ko'chiradi, shuncha. Daftarni eski deb masxara qilmaymiz, telefon shunchaki yo'qolmaydi.",
           ],
         },
         {
-          h2: "Egasi tushumni qanday masofadan ko'radi",
+          h2: "Egasi do'konda turmasdan nimani ko'radi",
           paragraphs: [
-            "Magazin uchun dasturning asosiy foydasi shundaki, egasi do'konda turmasdan ham hisobni ko'radi. Boshqa shaharda yoki uyda bo'lsangiz ham, telefoningizdan bugungi tushum va kam qolgan tovarni ochasiz.",
-            "Kassirlar uchun PIN va harakatlar jurnali bor, shuning uchun kim qachon nima sotgani va qaytarganini ko'rasiz. Bu ishonchni saqlaydi va kassada doimo o'zingiz turishingiz shart emas.",
+            "Yetkazib beruvchining oldiga ketdingiz, do'kon esa ishlashda davom etyapti. Telefoningizdan bugungi tushum, kam qolgan tovar va kim smenada ekanini ko'rasiz, kassada doim o'zingiz turishingiz shart emas.",
+            "Kassirlar uchun PIN va amallar jurnali bor. Kim qachon nima sotgani, hisobdan chiqargani yoki qaytargani ko'rinadi. Bu o'g'irlikni ayblash emas, bu shunchaki har bir kassir nima urganini ko'rish.",
+            "Internet uzilsa ham kassa ishlashda davom etadi, sotuvlar telefonda saqlanadi. Aloqa tiklanganida hamma narsa o'zi sinxronlanadi.",
           ],
         },
         {
           h2: "Faqat telefon bilan qanday boshlash mumkin",
           paragraphs: [
-            "Boshlash uchun yangi uskuna shart emas, qo'lingizdagi telefon yetadi. Internet uzilsa ham BirLiy oflayn rejimda ishlaydi, aloqa qaytganda esa ma'lumotlar o'zi sinxronlanadi.",
-            "Birinchi olti oy narxi oyiga 49 000 so'm, keyin oyiga 149 000 so'm. Jamoa do'koningizni taxminan bir ish kunida ulashga, dastlabki tovarlarni kiritishga va kassirni o'rgatishga yordam beradi.",
+            "Boshlash uchun yangi uskuna sotib olish shart emas. Tanlagan bitta daftaringizni ilovaga ko'chirasiz, ishlab ko'rasiz, keyin ikkinchi vazifani qo'shasiz. Bu og'ir tarmoq dasturidan farqli: bitta telefon, bitta kassir va yuz ta tovardan boshlanadi.",
+            "Narx oldindan ma'lum. Erta kirish davrida birinchi kogorta uchun e'lon qilingan narx oyiga 49 000 so'm birinchi 6 oy, keyin 149 000 so'm. To'liq funksionallik, yashirin to'lov yo'q.",
+            "Hozir Toshkentning birinchi do'konlari uchun erta kirishni ochmoqdamiz. Jamoa ulanish va katalogni tayyorlashda yordam beradi.",
           ],
         },
       ],
       faq: [
         {
           q: "Magazin uchun qanday dastur kerak?",
-          a: "Sotuvni yozadigan, qoldiqni yuritadigan va egasiga hisobot beradigan dastur kerak. BirLiy shu vazifalarni telefon yoki planshetda birlashtiradi, alohida kassa mashinasi shart emas.",
+          a: "Sizga eng ko'p og'riq berayotgan bitta vazifani yopadigan dastur kerak: nasiya, ombor qoldig'i, kassa yoki tushum. BirLiy bularni telefon yoki planshetda birlashtiradi, alohida kassa apparat shart emas.",
+        },
+        {
+          q: "Magazin uchun dasturni qaysi vazifadan boshlash kerak?",
+          a: "Eng ko'p pul yo'qotayotgan yoki eng ko'p vaqt olayotgan daftardan boshlang. Nasiyada bahs ko'p bo'lsa nasiya daftaridan, qoldiq adashsa ombordan boshlang, qolganini keyin qo'shing.",
         },
         {
           q: "Telefonda kassa yuritish mumkinmi?",
@@ -85,85 +93,95 @@ export const post: BlogPost = {
         },
         {
           q: "Egasi tushumni boshqa joydan ko'ra oladimi?",
-          a: "Egasi do'konda turmasdan ham telefonidan bugungi tushum, kam qolgan tovar va kassir smenasini ko'radi.",
+          a: "Egasi do'konda turmasdan telefonidan bugungi tushum, kam qolgan tovar va kim smenada ekanini ko'radi.",
         },
         {
           q: "Internet bo'lmasa do'kon dasturi ishlaydimi?",
-          a: "BirLiy oflayn rejimda sotuvni davom ettiradi, internet qaytganda ma'lumotlar avtomatik sinxronlanadi.",
+          a: "BirLiy oflayn rejimda sotuvni davom ettiradi, internet qaytganda ma'lumotlar o'zi sinxronlanadi.",
         },
       ],
-      cta: {
-        text: "Magazin savdosini telefondan yuritishni boshlang. BirLiy jamoasi ulanish va katalogni tayyorlashda yordam beradi.",
-        button: "Ariza qoldirish",
-      },
+      cta: { text: "Do'koningizdagi eng og'ir daftarni telefonga ko'chirishdan boshlang. Erta kirish ochiq, jamoa ulanishda yordam beradi.", button: "Ariza qoldirish" },
     },
     ru: {
-      title: "Программа для магазина: как вести продажи через телефон",
+      title: "Программа для магазина: с чего начать в телефоне",
       description:
-        "Программа для магазина и касса в телефоне: как записать продажу, разделить наличные, карту, QR и долг и видеть выручку магазина удалённо.",
+        "Программа для магазина: касса, остатки, насия и выручка в телефоне. С какой тетради начать оцифровку первой и как подключить BirLiy без кассового аппарата.",
       keywords: [
         "программа для магазина",
         "касса в телефоне",
-        "программа для магазина Узбекистан",
-        "продажи через телефон",
-        "учёт продаж в магазине",
-        "QR-оплата",
         "программа для магазина у дома",
+        "учёт остатков в магазине",
+        "долговая тетрадь",
+        "программа для минимаркета",
+        "выручка магазина удалённо",
         "BirLiy",
       ],
       intro: [
-        "Короткий ответ: сегодня программой для магазина может быть обычный телефон. Не покупая кассовый аппарат, вы записываете продажи, ведёте остатки и видите выручку.",
-        "BirLiy: телефонное приложение, созданное прежде всего для магазинов у дома и минимаркетов. Кассир проводит продажу на телефоне или планшете, а владелец следит за выручкой и остатками со своего телефона.",
-        "Ниже по шагам разберём, как запустить программу для магазина на телефоне, как записывается продажа и что владелец видит удалённо.",
+        "При словах программа для магазина многие сразу представляют дорогой кассовый аппарат и компьютер. На деле первый шаг проще: хватает телефона в руках, надо лишь решить, с какой задачи начать.",
+        "Эта статья про выбор программы, а не про список товаров. Ниже разберём, какая тетрадь в вашем магазине болит сильнее всего, и именно с неё начнём оцифровку в телефоне.",
       ],
       sections: [
         {
+          h2: "Какую задачу программа для магазина закрывает на самом деле",
+          paragraphs: [
+            "Вечером закрываете магазин. Наличные в кассе, одна цифра, запись в тетради, другая, насия в памяти, третья. Все три не сходятся, и вы не знаете, где именно разошлось.",
+            "Главная работа программы для магазина в том, чтобы свести несколько тетрадей и калькулятор в один учёт. Когда касса, остатки и насия лежат в одном месте, а не врозь, вечером цифры сходятся сами.",
+            "Поэтому первый вопрос при выборе не количество функций. Первый вопрос: какая тетрадь сегодня выматывает вас больше всего. С неё и начинать.",
+          ],
+        },
+        {
           h2: "Как телефон заменяет кассовый аппарат",
           paragraphs: [
-            "Раньше в магазине нужны были отдельный кассовый аппарат, бумажная тетрадь и калькулятор. Теперь телефон с установленной программой делает все три задачи на одном экране.",
-            "Касса в телефоне открыта, вы выбираете товар, сумма считается сама, и продажа записывается. Дорогое оборудование не нужно в первый день: когда вырастет очередь, добавите сканер или принтер.",
+            "Раньше в магазине нужны были отдельный кассовый аппарат, бумажная тетрадь и калькулятор. Телефон с установленной программой делает эти три задачи на одном экране, и отдельное оборудование не нужно в первый день.",
+            "BirLiy сделан именно для магазинов у дома, минимаркетов, аптек и сервисных точек, а не тяжёлая корпоративная программа. В базе есть распространённые товары, свой каталог можно загрузить из Excel, поэтому всё вручную вбивать не придётся.",
+            "Когда вырастет очередь, добавите сканер или принтер. Но чтобы начать, хватает телефона, который уже у вас в руках.",
           ],
         },
         {
-          h2: "Как записывается одна продажа",
+          h2: "Какую задачу оцифровать первой",
           paragraphs: [
-            "В BirLiy каждая продажа проводится в несколько шагов. В базе более 9 000 распространённых товаров, свой каталог можно загрузить из Excel, поэтому всё вручную вбивать не придётся.",
-            "При продаже система не просто печатает чек, она уменьшает остаток и добавляет запись в дневной отчёт. Поэтому в конце дня вам не нужно отдельно пересчитывать, сколько продано и что закончилось.",
+            "Не пытайтесь поменять всё сразу. Выберите одну тетрадь, которая теряет больше всего денег или забирает больше всего времени, и начните телефон с неё. Список ниже поможет понять, какая боль ваша.",
           ],
           list: [
-            "Найдите товар по названию или штрихкоду.",
-            "Подтвердите количество и цену, сумма посчитается сама.",
-            "Выберите способ оплаты: наличные, карта, QR или долг.",
-            "Продажа записана, остаток уменьшается автоматически.",
-            "При желании отправьте чек через Telegram.",
+            "Часто спорите с покупателем о долге: начните с долговой тетради (насия).",
+            "Узнаёте, что ходовой товар кончился, от самого покупателя: начните с учёта остатков.",
+            "Сами не стоите за прилавком и кассиру доверяете не до конца: начните с кассы и контроля смены.",
+            "В конце месяца не понимаете, заработал магазин или нет: начните с дневной выручки.",
           ],
         },
         {
-          h2: "Способы оплаты: наличные, карта, QR и долг",
+          h2: "Долговая тетрадь: самая острая боль",
           paragraphs: [
-            "В магазине деньги приходят по-разному, и важно, чтобы программа их разделяла. BirLiy отдельно показывает наличные, карту, QR-оплату и долг (нася), поэтому в конце дня вы точно знаете, откуда пришли деньги.",
-            "QR-оплата проходит прямо через телефон покупателя, наличные и карта остаются как обычно. Товар, отданный в долг, тоже не теряется: он записывается на отдельный счёт клиента.",
+            "Для магазина у дома самая заметная боль такая: отдаёте постоянному покупателю в долг, всё в бумажной тетради. Страница порвалась или намокла, и доказать, кто сколько должен, уже нечем.",
+            "В BirLiy долги покупателей в приложении вместо тетради: кто сколько должен и когда обещал оплатить, всё в одном списке. Рядом с долгом наличные, карта и QR в том же учёте.",
+            "Долговая тетрадь вела счёт годами. BirLiy переносит этот счёт в телефон, и только. Тетрадь не высмеиваем, телефон просто не теряется.",
           ],
         },
         {
-          h2: "Как владелец видит выручку удалённо",
+          h2: "Что владелец видит, не стоя за прилавком",
           paragraphs: [
-            "Главная польза программы для магазина в том, что владелец видит цифры, не стоя за прилавком. Даже находясь в другом городе или дома, вы открываете на телефоне сегодняшнюю выручку и заканчивающиеся товары.",
-            "Для кассиров есть PIN и журнал действий, поэтому видно, кто и когда что продал или вернул. Это сохраняет доверие, и стоять у кассы самому всё время не нужно.",
+            "Вы уехали к поставщику, а магазин работает дальше. С телефона видите сегодняшнюю выручку, что заканчивается и кто на смене, стоять у кассы самому всё время не нужно.",
+            "Для кассиров есть вход по PIN и журнал действий. Видно, кто и когда что продал, списал или вернул. Это не обвинение в воровстве, это просто возможность видеть, что пробил каждый кассир.",
+            "Если интернет пропал, касса работает дальше, продажи сохраняются на телефоне. Когда связь вернётся, всё синхронизируется само.",
           ],
         },
         {
           h2: "Как начать только с телефоном",
           paragraphs: [
-            "Чтобы начать, новое оборудование не нужно, хватит телефона в руках. Если интернет пропадёт, BirLiy работает в офлайн-режиме, а при возврате связи данные синхронизируются сами.",
-            "Первые шесть месяцев стоят 49 000 сум в месяц, затем 149 000 сум в месяц. Команда помогает подключить магазин примерно за один рабочий день, внести первые товары и обучить кассира.",
+            "Чтобы начать, новое оборудование покупать не нужно. Переносите в приложение одну выбранную тетрадь, пробуете, потом добавляете вторую задачу. В отличие от тяжёлой программы, старт идёт с одного телефона, одного кассира и сотни товаров.",
+            "Цена известна заранее. В раннем доступе для первой когорты объявленная цена: 49 000 сум в месяц первые 6 месяцев, затем 149 000 сум. Полный функционал, скрытых платежей нет.",
+            "Сейчас открываем ранний доступ для первых магазинов Ташкента. Команда поможет с подключением и каталогом.",
           ],
         },
       ],
       faq: [
         {
           q: "Какая программа нужна для магазина?",
-          a: "Нужна программа, которая записывает продажи, ведёт остатки и даёт владельцу отчёты. BirLiy объединяет эти задачи на телефоне или планшете, отдельный кассовый аппарат не обязателен.",
+          a: "Нужна программа, которая закрывает одну самую болезненную задачу: насия, остатки, кассу или выручку. BirLiy объединяет их на телефоне или планшете, отдельный кассовый аппарат не обязателен.",
+        },
+        {
+          q: "С какой задачи начать программу для магазина?",
+          a: "Начните с тетради, которая теряет больше всего денег или времени. Если много споров по долгам, с долговой тетради, если расходятся остатки, со склада, остальное добавите потом.",
         },
         {
           q: "Можно ли вести кассу в телефоне?",
@@ -171,84 +189,95 @@ export const post: BlogPost = {
         },
         {
           q: "Может ли владелец видеть выручку удалённо?",
-          a: "Владелец видит со своего телефона сегодняшнюю выручку, заканчивающиеся товары и смену кассира, даже не находясь в магазине.",
+          a: "Владелец видит со своего телефона сегодняшнюю выручку, заканчивающиеся товары и кто на смене, даже не находясь в магазине.",
         },
         {
           q: "Работает ли программа для магазина без интернета?",
           a: "BirLiy продолжает продажи в офлайн-режиме, а когда интернет возвращается, данные синхронизируются автоматически.",
         },
       ],
-      cta: {
-        text: "Начните вести продажи магазина с телефона. Команда BirLiy поможет с подключением и каталогом.",
-        button: "Оставить заявку",
-      },
+      cta: { text: "Начните с переноса самой тяжёлой тетради магазина в телефон. Ранний доступ открыт, команда поможет с подключением.", button: "Оставить заявку" },
     },
     en: {
-      title: "Shop software: how to run sales from your phone",
+      title: "Shop software: where to start on your phone",
       description:
-        "Shop software and a phone cash register: how to record a sale, split cash, card, QR and credit, and see your shop's revenue remotely with BirLiy.",
+        "Shop software for a small shop: till, stock, credit and revenue on one phone. Which notebook to digitize first and how to start BirLiy without a cash register.",
       keywords: [
         "shop software",
         "phone cash register",
-        "shop software Uzbekistan",
-        "sell from phone",
-        "small shop sales",
-        "QR payment",
+        "small shop software Uzbekistan",
+        "stock tracking shop",
+        "customer credit ledger",
+        "minimarket software",
+        "see shop revenue remotely",
         "BirLiy",
       ],
       intro: [
-        "Short answer: today your shop software can be an ordinary phone. Without buying a cash register, you can record sales, track stock and see revenue.",
-        "BirLiy is a phone app built primarily for neighborhood shops and minimarkets. The cashier records a sale on a phone or tablet, while the owner watches revenue and stock from a phone.",
-        "Below we walk step by step through how to start shop software on a phone, how a sale is recorded and what the owner can see remotely.",
+        "When people hear shop software, they picture an expensive cash register and a computer. In practice the first step is simpler: the phone in your hand is enough, you only need to decide which job to start with.",
+        "This article is about choosing software, not about a product list. Below we find which notebook hurts most in your shop and start digitizing exactly that one on a phone.",
       ],
       sections: [
         {
-          h2: "How a phone replaces a cash machine",
+          h2: "What shop software actually fixes",
           paragraphs: [
-            "A shop used to need a separate cash machine, a paper notebook and a calculator. Now a phone with the right software does all three jobs on one screen.",
-            "The cash register in the phone stays open, you pick a product, the total is calculated for you, and the sale is recorded. Expensive hardware is not required on day one: when queues grow, you can add a scanner or printer.",
+            "You close the shop in the evening. Cash in the till is one number, the notebook says another, the credit you carry in your head is a third. The three never match, and you cannot tell where the gap is.",
+            "The main job of shop software is to fold several notebooks and a calculator into one record. When the till, stock and credit sit in one place instead of apart, the numbers reconcile on their own at night.",
+            "So the first question when choosing is not how many features there are. The first question is which notebook wears you out the most today. Start there.",
           ],
         },
         {
-          h2: "How a single sale is recorded",
+          h2: "How a phone replaces a cash register",
           paragraphs: [
-            "In BirLiy each sale is processed in a few steps. The catalog contains more than 9 000 common products, and you can import your own list from Excel, so you do not have to type everything by hand.",
-            "When a sale is recorded, the system does not just print a receipt, it reduces stock and adds the entry to the daily report. So at the end of the day you do not need to separately count what was sold and what ran out.",
+            "A shop used to need a separate cash register, a paper notebook and a calculator. A phone with the right software does these three jobs on one screen, and separate hardware is not needed on day one.",
+            "BirLiy is built for neighborhood shops, minimarkets, pharmacies and service points, not as heavy corporate software. The catalog holds common products, and you can import your own list from Excel, so you do not type everything by hand.",
+            "When queues grow, you add a scanner or printer. But to start, the phone already in your hand is enough.",
+          ],
+        },
+        {
+          h2: "Which job to digitize first",
+          paragraphs: [
+            "Do not try to change everything at once. Pick the one notebook that loses the most money or takes the most time, and start the phone with that. The list below helps you find which pain is yours.",
           ],
           list: [
-            "Find the product by name or barcode.",
-            "Confirm quantity and price, the total appears automatically.",
-            "Pick the payment type: cash, card, QR or credit.",
-            "The sale is saved and stock drops automatically.",
-            "If you want, send the receipt through Telegram.",
+            "If you often argue with a customer about credit, start with the debt ledger (nasiya).",
+            "If you learn a fast seller ran out from the customer, start with stock tracking.",
+            "If you are not behind the counter and do not fully trust the cashier, start with the till and shift control.",
+            "If at month end you cannot tell whether the shop earned, start with daily revenue.",
           ],
         },
         {
-          h2: "Payment types: cash, card, QR and credit",
+          h2: "The debt ledger: the sharpest pain",
           paragraphs: [
-            "Money comes into a shop in different ways, and it matters that the software separates it. BirLiy shows cash, card, QR payment and credit (nasiya) separately, so at the end of the day you know exactly where the money came from.",
-            "A QR payment goes straight through the buyer's phone, while cash and card stay as usual. Goods given on credit are not lost either: they are recorded on a separate customer account.",
+            "For a corner shop the most visible pain is this: you give a regular customer credit, all in a paper notebook. The page tears or gets wet, and you have nothing left to prove who owes what.",
+            "In BirLiy customer credit lives in the app instead of the notebook: who owes how much and when they promised to pay, all in one list. Next to the debt sit cash, card and QR in the same record.",
+            "The debt notebook kept the count for years. BirLiy moves that count into the phone, that is all. We do not mock the notebook, the phone simply does not get lost.",
           ],
         },
         {
-          h2: "How the owner sees revenue remotely",
+          h2: "What the owner sees without standing at the counter",
           paragraphs: [
-            "The main benefit of shop software is that the owner sees the numbers without standing at the counter. Even from another city or at home, you open today's revenue and low-stock items on your phone.",
-            "Cashiers have PINs and an action log, so you can see who sold or returned what and when. This keeps trust, and you do not have to stand at the till the whole time.",
+            "You left for a supplier, and the shop keeps running. From your phone you see today's revenue, what is running low and who is on shift, so you do not have to stand at the till the whole time.",
+            "Cashiers log in by PIN and there is an action log. You can see who sold, wrote off or returned what and when. This is not a theft accusation, it is simply seeing what each cashier rang up.",
+            "If the internet drops, the till keeps working and sales are saved on the phone. When the connection returns, everything syncs on its own.",
           ],
         },
         {
           h2: "How to start with just a phone",
           paragraphs: [
-            "To start, no new hardware is needed, the phone in your hand is enough. If the internet drops, BirLiy works in offline mode, and when the connection returns, the data syncs on its own.",
-            "The price is 49 000 som per month for the first six months and 149 000 som per month afterward. The team helps connect your shop in roughly one working day, load the first products and train the cashier.",
+            "To start, you do not buy new hardware. You move one chosen notebook into the app, try it, then add the second job. Unlike heavy software, it begins with one phone, one cashier and a hundred products.",
+            "The price is known upfront. In early access, the stated rate for the first cohort is 49 000 som per month for the first 6 months, then 149 000 som. Full functionality, no hidden charges.",
+            "We are now opening early access for the first shops in Tashkent. The team helps with setup and the catalog.",
           ],
         },
       ],
       faq: [
         {
           q: "What software does a shop need?",
-          a: "You need software that records sales, tracks stock and gives the owner reports. BirLiy combines these tasks on a phone or tablet, and a separate cash machine is not required.",
+          a: "You need software that closes your single most painful job: credit, stock, the till or revenue. BirLiy combines them on a phone or tablet, and a separate cash register is not required.",
+        },
+        {
+          q: "Which job should I start shop software with?",
+          a: "Start with the notebook that loses the most money or time. If debt disputes are common, start with the credit ledger; if stock drifts, start with inventory, and add the rest later.",
         },
         {
           q: "Can you run a cash register on a phone?",
@@ -256,17 +285,14 @@ export const post: BlogPost = {
         },
         {
           q: "Can the owner see revenue remotely?",
-          a: "The owner sees today's revenue, low-stock items and the cashier's shift from a phone, even without being in the shop.",
+          a: "The owner sees today's revenue, low-stock items and who is on shift from a phone, even without being in the shop.",
         },
         {
           q: "Does shop software work without internet?",
           a: "BirLiy continues sales in offline mode, and when the internet returns, the data syncs automatically.",
         },
       ],
-      cta: {
-        text: "Start running your shop's sales from a phone. The BirLiy team helps with setup and the catalog.",
-        button: "Leave a request",
-      },
+      cta: { text: "Start by moving your heaviest shop notebook into the phone. Early access is open, the team helps with setup.", button: "Leave a request" },
     },
   },
 };

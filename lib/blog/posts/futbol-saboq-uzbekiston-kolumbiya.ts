@@ -1,268 +1,268 @@
 import type { BlogPost } from "../types";
 
-const SRC_ESPN = "https://www.espn.com/soccer/match/_/gameId/760436/colombia-uzbekistan";
-const SRC_FIFA =
-  "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/uzbekistan-colombia-match-report-highlights";
-
 export const post: BlogPost = {
   slug: "futbol-saboq-uzbekiston-kolumbiya",
   category: "football",
   date: "2026-06-19",
-  modified: "2026-06-19",
-  image: {
-    square: "https://birliy.uz/photos/blog/futbol-saboq-uzbekiston-kolumbiya-1x1.jpg",
-    landscape: "https://birliy.uz/photos/blog/futbol-saboq-uzbekiston-kolumbiya-4x3.jpg",
-    wide: "https://birliy.uz/photos/blog/futbol-saboq-uzbekiston-kolumbiya-16x9.jpg",
-  },
+  modified: "2026-06-23",
   locales: {
     uz: {
-      title: "O'zbekiston 1:3 Kolumbiya: katta sahnaga birinchi qadam eng muhimi",
+      title: "O'zbekiston Kolumbiya CHM 2026: do'konni raqamlashtirishning birinchi oyi",
       description:
-        "O'zbekistonning ilk jahon chempionati o'yini do'kon egasi uchun saboq: kattaroq sahnaga birinchi qadam eng muhimi. Do'konni raqamlashtirish, ana o'sha yangi daraja.",
+        "O'zbekiston Kolumbiya CHM 2026 debyutidan do'kon egasiga amaliy saboq: birinchi oy nega qiyin va do'konni raqamlashtirishni qanday yengil boshlash mumkin.",
       keywords: [
-        "O'zbekiston Kolumbiya",
-        "O'zbekiston jahon chempionati",
-        "futbol biznes saboq",
+        "O'zbekiston Kolumbiya CHM 2026",
         "do'konni raqamlashtirish",
-        "birinchi qadam",
-        "do'kon nazorati",
+        "qarz daftari",
+        "do'kon hisobi",
+        "kassir nazorati",
+        "qoldiq nazorati",
         "BirLiy POS",
         "do'kon egasi uchun",
       ],
       intro: [
-        "Qisqa javob: O'zbekiston Kolumbiyaga yutqazdi, lekin ilk bor jahon chempionatida o'ynash tarixiy qadam edi. Do'kon egasi uchun saboq: do'konni birinchi marta BirLiyda raqamli yuritish ham shunday qadam, darhol mukammal natija shart emas, tushum, qoldiq va qarz ko'rina boshlashi bilan o'sish boshlanadi.",
-        "2026-yil 17-iyun kuni O'zbekiston Kolumbiyaga 1:3 hisobida yutqazdi, ammo bu O'zbekiston uchun tarixiy kun edi: jamoa ilk bor jahon chempionatida maydonga chiqdi va Mexiko shahridagi mashhur Asteka stadionida o'ynadi.",
-        "Daniel Munyos 40-daqiqada Kolumbiyani oldinga chiqardi, Abbosbek Fayzullayev esa 60-daqiqada hisobni tengladi. So'ng Luis Dias 65-daqiqada va Yaminton Kampas qo'shimcha vaqtda (90+9) Kolumbiya foydasiga 3:1 ni ta'minladi. Natija mag'lubiyat bo'lsa-da, sahna eng baland edi.",
-        "Bu sport tahlili yoki bashorat emas, balki do'kon egasi uchun amaliy saboq. Kattaroq sahnaga birinchi qadam, hatto darhol g'alaba kelmasa ham, eng muhimi.",
+        "17-iyun kuni O'zbekiston ilk bor jahon chempionatida maydonga chiqdi va Kolumbiyaga 1:3 yutqazdi. Tarixiy o'yin edi, ammo debyut oson kechmadi. Kuchli raqib, notanish sahna, birinchi tajriba.",
+        "Do'kon egasi uchun bu tanish his. Yillab qarzni daftarga yozib kelgan odam telefondagi ilovaga o'tsa, birinchi oy aynan shunday tuyuladi. Yangi, notanish, biroz noqulay.",
+        "Bu maqola sport bashorati emas. Bu birinchi raqamli oy nega qiyin va uni qanday yengilroq o'tkazish haqida amaliy gap.",
       ],
       sections: [
         {
-          h2: "Birinchi qadam eng katta qadam",
+          h2: "O'zbekiston Kolumbiya CHM 2026: birinchi oy nega aynan qiyin",
           paragraphs: [
-            "O'zbekiston ilk bor jahon chempionatiga chiqdi va bu o'zi tarixiy yutuq. Do'kon egasi uchun ham birinchi qadam, ya'ni do'konni birinchi marta raqamlashtirish, eng katta qadamdir.",
-            "Darhol mukammal natija shart emas. Muhimi, endi siz yuqori darajada o'ynayapsiz va tez o'rganib, har kuni kuchayib borasiz.",
-          ],
-        },
-        {
-          h2: "Yuqori darajada o'ynash sizni o'stiradi",
-          paragraphs: [
-            "Asteka kabi sahnada o'ynash jamoaga katta tajriba beradi, kuchli raqib esa kelajakdagi o'sishni tezlashtiradi. Do'konda ham aniq sonlar bilan ishlash sizni kuchli darajaga olib chiqadi.",
-            "Quchog'ingizdagi daftar emas, raqamli hisob sizni xatolardan o'rgatadi va keyingi qadamlarni aniqroq qiladi. Bu o'sishning eng tez yo'li.",
+            "Jamoa birinchi marta bunday sahnaga chiqqanida hamma narsa yangi bo'ladi. Do'konda ham xuddi shunday. Eng katta qiyinchilik, qadrli natija emas, balki dastlabki kunlardagi ish.",
+            "Ikki narsa odamni cho'chitadi. Birinchisi, tovarlarni ilovaga kiritish. Ikkinchisi, kassir ish uslubini o'zgartirish. Ko'pchilik aynan shu ikki nuqtada to'xtab qoladi.",
           ],
           list: [
-            "Tushum va xarajat aniq ko'rinadi.",
-            "Qoldiq har kuni nazoratda bo'ladi.",
-            "Qarz kim va qancha ekani yoziladi.",
-            "Egasi qarorlarni tezroq va aniqroq qabul qiladi.",
+            "Tovar nomlari va narxlarni birinchi marta ilovaga yozish vaqt oladi.",
+            "Kassir daftarga emas, ekranga o'tishni darrov yoqtirmasligi mumkin.",
+            "Birinchi hafta sotuvlar biroz sekinroq urilishi normal hol.",
+            "Egasi avval daftar va ilova ikkalasini parallel yuritgisi keladi.",
           ],
         },
         {
-          h2: "Mag'lubiyat emas, tajriba muhim",
+          h2: "Tovar kiritishni bir kunda emas, qismlarga bo'lib qiling",
           paragraphs: [
-            "Abbosbek Fayzullayevning goli ko'rsatdiki, O'zbekiston eng kuchli raqibga ham javob bera oladi. Do'konda ham birinchi raqamli oy mukammal bo'lmasligi mumkin, lekin har kuni tajriba ortadi.",
-            "Har bir kun yangi ma'lumot beradi, har bir hisobot keyingi qarorni yaxshilaydi. Aynan shu jarayon sizni vaqt o'tib kuchli qiladi.",
+            "Butun do'konni bir kechada ilovaga ko'chirishga urinmang. Eng ko'p sotiladigan tovarlardan boshlang. Non, suv, sigaret, sut, eng ko'p uriladigan o'ttiz qirq nom yetarli.",
+            "Qolganini har kuni o'n nomdan qo'shib boring. Bir haftada katalog deyarli to'ladi va siz buni og'irlik sezmasdan qilasiz. Tayyor katalogni Excel'dan ham yuklash mumkin, bu ishni yanada qisqartiradi.",
           ],
         },
         {
-          h2: "BirLiy bilan yuqori darajaga chiqing",
+          h2: "Kassirni majburlamang, oddiy ekranni ko'rsating",
           paragraphs: [
-            "BirLiy telefonda do'koningizni raqamli boshqaruvga olib chiqadi: kassa, ombor, QR to'lov va egasi hisobotlari bir tizimda. Jamoa birinchi qadamni qo'yishda yordam beradi.",
-            "Siz darhol katta g'alaba qilmasligingiz mumkin, lekin endi kuchliroq darajada o'ynaysiz va tez o'rganasiz. Bu g'ururlanadigan boshlanish.",
+            "Kassir qarshiligi tabiiy. Daftar unga tanish, ilova esa yangi. Shuning uchun unga uzun dars bermang, faqat bitta narsani ko'rsating: tovarni tanlash va chekni urish.",
+            "BirLiyda kassir o'z PIN kodi bilan kiradi va faqat sotuvni ko'radi. Egasi esa kim qaysi smenada ishlaganini va qanday sotuv bo'lganini alohida ko'radi. Shu sababli kassir ortiqcha tugmalarga chalg'imaydi, siz esa nazoratni yo'qotmaysiz.",
+          ],
+        },
+        {
+          h2: "Qarz daftarini birinchi kundan ilovaga ko'chiring",
+          paragraphs: [
+            "Eng katta foydani qarzdan olasiz. Daftar yo'qolsa yoki sahifa yirtilsa, bahslashishga hujjat qolmaydi. Birinchi oyning aynan shu qismi do'kon egasiga darrov tinchlik beradi.",
+            "BirLiyda xaridorlar nasiyasi daftar o'rniga ilovada ko'rinadi. Kim qancha qarz va qachon to'lashni va'da qilgani, hammasi bitta ro'yxatda. Bugun nasiyaga bergan har bir tovarni shu yerga yozib boring, ertaga daftar qidirmaysiz.",
+          ],
+        },
+        {
+          h2: "Birinchi oy mukammal bo'lishi shart emas",
+          paragraphs: [
+            "Debyut o'yinda ham gol bo'ldi. Abbosbek Fayzullayev Kolumbiyaga javob qaytardi. Ya'ni birinchi marta chiqqaningizda ham natija bera olasiz, faqat hammasi birdaniga emas.",
+            "Birinchi raqamli oyda xato kiritishlar, unutilgan tovar, sekin smenalar bo'ladi. Bu jarayonning bir qismi. Muhimi, ikkinchi oyda tushum, qoldiq va qarz allaqachon ekranda ko'rinib turadi va siz daftarga qaytmaysiz.",
           ],
         },
       ],
       faq: [
         {
-          q: "Bu maqola sport bashoratimi?",
-          a: "Yo'q. Bu o'yin natijasidan olingan amaliy biznes saboq, bashorat yoki stavka emas. Maqsad birinchi qadamning ahamiyatini ko'rsatish.",
+          q: "Bu maqola O'zbekiston Kolumbiya o'yiniga bashoratmi?",
+          a: "Yo'q. Bu o'yin bashorati yoki stavka emas. Debyut o'yindan olingan amaliy saboq: birinchi qadam qiyin, lekin uni qismlarga bo'lib yengillashtirish mumkin.",
         },
         {
-          q: "Nega birinchi qadam shunchalik muhim?",
-          a: "Chunki yuqori darajaga chiqish o'rganishni tezlashtiradi. Do'konni birinchi marta raqamlashtirish ham sizni kuchliroq darajaga olib chiqadi.",
+          q: "Tovarlarni ilovaga kiritish juda ko'p vaqt oladimi?",
+          a: "Hammasini birdan kiritsangiz, ha. Shuning uchun eng ko'p sotiladigan o'ttiz qirq nomdan boshlang, qolganini har kuni qo'shib boring. Katalogni Excel'dan ham yuklash mumkin.",
         },
         {
-          q: "Birinchi raqamli oy mukammal bo'lmasa-chi?",
-          a: "Bu normal holat. Muhimi, endi aniq sonlar bilan ishlaysiz va har kungi tajriba sizni tez kuchaytiradi.",
+          q: "Kassir ilovaga o'tishni istamasa nima qilish kerak?",
+          a: "Unga butun tizimni emas, faqat sotuv ekranini ko'rsating. Kassir o'z PIN kodi bilan kirib, faqat chekni uradi, egasi esa nazoratni alohida ko'radi.",
         },
         {
-          q: "BirLiy birinchi qadamda qanday yordam beradi?",
-          a: "BirLiy do'konni telefonda raqamli boshqaruvga oladi va jamoa ulanish, dastlabki katalog hamda kassirni sozlashda yordam beradi.",
+          q: "Qarz daftarini birdaniga ko'chirish shartmi?",
+          a: "Eng yaxshisi, bugundan boshlab har bir yangi nasiyani ilovaga yozing. Eski qarzlarni esa bo'sh vaqtda qo'shib boring.",
+        },
+        {
+          q: "BirLiyni qanday boshlash mumkin?",
+          a: "Hozir Toshkentning birinchi do'konlari uchun erta kirish ochilmoqda. Telefonda boshlanadi, jamoa esa birinchi katalog va sozlashda yordam beradi.",
         },
       ],
-      sources: [
-        { label: "ESPN: o'yin sahifasi Kolumbiya - O'zbekiston", url: SRC_ESPN },
-        { label: "FIFA: rasmiy o'yin hisoboti", url: SRC_FIFA },
-      ],
-      cta: {
-        text: "Do'koningizni yuqori darajaga olib chiqing. BirLiy jamoasi birinchi qadamda yordam beradi.",
-        button: "Ariza qoldirish",
-      },
+      cta: { text: "Do'koningizni telefonda raqamli yuritishni boshlang. Birinchi qadamda BirLiy jamoasi yordam beradi.", button: "Ariza qoldirish" },
     },
     ru: {
-      title: "Узбекистан 1:3 Колумбия: первый шаг на большую сцену важнее всего",
+      title: "Узбекистан Колумбия ЧМ 2026: первый месяц цифровизации магазина",
       description:
-        "Дебютный матч Узбекистана на чемпионате мира как урок для владельца магазина: первый шаг на большую сцену важнее всего. Цифровизация магазина, вот этот новый уровень.",
+        "Дебют Узбекистан Колумбия на ЧМ 2026 как урок владельцу магазина: почему первый месяц цифровизации магазина трудный и как его пройти легче.",
       keywords: [
-        "Узбекистан Колумбия",
-        "Узбекистан чемпионат мира",
-        "футбол урок для бизнеса",
+        "Узбекистан Колумбия ЧМ 2026",
         "цифровизация магазина",
-        "первый шаг",
-        "контроль магазина",
+        "долговая тетрадь",
+        "учёт в магазине",
+        "контроль кассира",
+        "контроль остатков",
         "BirLiy POS",
         "для владельца магазина",
       ],
       intro: [
-        "Короткий ответ: Узбекистан проиграл Колумбии, но впервые в истории вышел на чемпионат мира - это и есть главный шаг. Урок для владельца магазина: первый раз перевести магазин на цифровой учёт в BirLiy - такой же шаг, и совершенство с первого дня не обязательно, выручка, остатки и долги начинают быть видны, и рост начинается.",
-        "17 июня 2026 года Узбекистан уступил Колумбии 1:3, но это был исторический день: сборная впервые вышла на чемпионат мира и сыграла на знаменитом стадионе Ацтека в Мехико.",
-        "Даниэль Муньос на 40-й минуте вывел Колумбию вперёд, а Аббосбек Файзуллаев на 60-й минуте сравнял счёт. Затем Луис Диас на 65-й минуте и Яминтон Кампас в добавленное время (90+9) сделали 3:1 в пользу Колумбии. Результат, поражение, но сцена была самой высокой.",
-        "Это не спортивный прогноз и не ставки, а практический урок для владельца магазина. Первый шаг на большую сцену важнее всего, даже если победа не приходит сразу.",
+        "17 июня Узбекистан впервые вышел на чемпионат мира и уступил Колумбии 1:3. Матч исторический, но дебют дался непросто. Сильный соперник, незнакомая сцена, первый опыт.",
+        "Владельцу магазина это чувство знакомо. Человек, который годами вёл долги в тетради, переходит на приложение в телефоне, и первый месяц ощущается именно так. Новое, непривычное, немного неудобное.",
+        "Это не спортивный прогноз. Это разговор о том, почему первый цифровой месяц трудный и как пройти его легче.",
       ],
       sections: [
         {
-          h2: "Первый шаг, это самый большой шаг",
+          h2: "Узбекистан Колумбия ЧМ 2026: почему первый месяц именно трудный",
           paragraphs: [
-            "Узбекистан впервые вышел на чемпионат мира, и это само по себе историческое достижение. Для владельца магазина первый шаг, то есть первая цифровизация магазина, тоже самый большой шаг.",
-            "Идеальный результат сразу не обязателен. Важно, что теперь вы играете на высоком уровне, быстро учитесь и день за днём становитесь сильнее.",
-          ],
-        },
-        {
-          h2: "Игра на высоком уровне растит вас",
-          paragraphs: [
-            "Игра на сцене вроде Ацтеки даёт команде большой опыт, а сильный соперник ускоряет будущий рост. В магазине работа с точными цифрами тоже выводит вас на сильный уровень.",
-            "Не тетрадь в руках, а цифровой учёт учит вас на ошибках и делает следующие шаги точнее. Это самый быстрый путь роста.",
+            "Когда команда впервые выходит на такую сцену, всё новое. В магазине то же самое. Самая большая трудность не в каком-то результате, а в работе первых дней.",
+            "Пугают две вещи. Первая, занести товары в приложение. Вторая, изменить привычку кассира. Большинство останавливается именно на этих двух точках.",
           ],
           list: [
-            "Выручка и расходы видны точно.",
-            "Остатки под контролем каждый день.",
-            "Записано, кто и сколько должен.",
-            "Владелец принимает решения быстрее и точнее.",
+            "Названия товаров и цены первый раз заносятся вручную, это занимает время.",
+            "Кассир не сразу полюбит экран вместо тетради.",
+            "В первую неделю чеки бьются чуть медленнее, и это нормально.",
+            "Владельцу хочется первое время вести тетрадь и приложение параллельно.",
           ],
         },
         {
-          h2: "Важно не поражение, а опыт",
+          h2: "Заносите товары не за один день, а частями",
           paragraphs: [
-            "Гол Аббосбека Файзуллаева показал, что Узбекистан может ответить даже сильнейшему сопернику. В магазине первый цифровой месяц тоже может быть неидеальным, но опыт растёт каждый день.",
-            "Каждый день даёт новые данные, каждый отчёт улучшает следующее решение. Именно этот процесс со временем делает вас сильнее.",
+            "Не пытайтесь перенести весь магазин за одну ночь. Начните с того, что продаётся чаще всего. Хлеб, вода, сигареты, молоко, тридцать сорок самых ходовых позиций уже достаточно.",
+            "Остальное добавляйте по десять позиций в день. За неделю каталог почти заполнен, и вы делаете это без надрыва. Готовый каталог можно загрузить и из Excel, это сокращает работу ещё сильнее.",
           ],
         },
         {
-          h2: "Выйдите на высокий уровень с BirLiy",
+          h2: "Не заставляйте кассира, покажите простой экран",
           paragraphs: [
-            "BirLiy выводит ваш магазин на цифровое управление в телефоне: касса, склад, QR-оплата и отчёты владельца в одной системе. Команда помогает сделать первый шаг.",
-            "Возможно, вы не одержите большую победу сразу, но теперь вы играете на более сильном уровне и быстро учитесь. Это начало, которым можно гордиться.",
+            "Сопротивление кассира естественно. Тетрадь ему привычна, приложение новое. Поэтому не давайте длинный урок, покажите одно: выбрать товар и пробить чек.",
+            "В BirLiy кассир входит по своему PIN-коду и видит только продажу. А владелец отдельно видит, кто был на смене и какие были продажи. Так кассир не отвлекается на лишние кнопки, а вы не теряете контроль.",
+          ],
+        },
+        {
+          h2: "Перенесите долговую тетрадь в приложение с первого дня",
+          paragraphs: [
+            "Самую большую пользу вы получите от долгов. Если тетрадь потерялась или страница порвалась, спорить уже не с чем. Именно эта часть первого месяца сразу даёт владельцу спокойствие.",
+            "В BirLiy долги покупателей видны в приложении вместо тетради. Кто сколько должен и когда обещал оплатить, всё в одном списке. Записывайте сюда каждый товар, отданный сегодня в долг, и завтра не придётся искать тетрадь.",
+          ],
+        },
+        {
+          h2: "Первый месяц не обязан быть идеальным",
+          paragraphs: [
+            "В дебютном матче тоже был гол. Аббосбек Файзуллаев ответил Колумбии. То есть даже в первый раз можно дать результат, просто не всё сразу.",
+            "В первый цифровой месяц будут ошибки ввода, забытый товар, медленные смены. Это часть процесса. Важно, что на втором месяце выручка, остатки и долги уже видны на экране, и к тетради вы не возвращаетесь.",
           ],
         },
       ],
       faq: [
         {
-          q: "Это спортивный прогноз?",
-          a: "Нет. Это практический бизнес-урок из результата матча, а не прогноз или ставка. Цель, показать важность первого шага.",
+          q: "Это прогноз на матч Узбекистан Колумбия?",
+          a: "Нет. Это не прогноз и не ставка. Это практический урок из дебютного матча: первый шаг трудный, но его можно облегчить, если разбить на части.",
         },
         {
-          q: "Почему первый шаг так важен?",
-          a: "Потому что выход на высокий уровень ускоряет обучение. Первая цифровизация магазина тоже выводит вас на более сильный уровень.",
+          q: "Занести товары в приложение занимает много времени?",
+          a: "Если заносить всё сразу, да. Поэтому начните с тридцати сорока самых ходовых позиций, остальное добавляйте каждый день. Каталог можно загрузить и из Excel.",
         },
         {
-          q: "А если первый цифровой месяц неидеален?",
-          a: "Это нормально. Важно, что теперь вы работаете с точными цифрами, и ежедневный опыт быстро вас усиливает.",
+          q: "Что делать, если кассир не хочет переходить на приложение?",
+          a: "Покажите ему не всю систему, а только экран продажи. Кассир входит по PIN-коду и просто пробивает чек, а владелец видит контроль отдельно.",
         },
         {
-          q: "Как BirLiy помогает на первом шаге?",
-          a: "BirLiy выводит магазин на цифровое управление в телефоне, а команда помогает с подключением, первым каталогом и настройкой кассира.",
+          q: "Обязательно переносить долговую тетрадь сразу всю?",
+          a: "Лучше с сегодняшнего дня записывать в приложение каждый новый долг. Старые долги добавляйте в свободное время.",
+        },
+        {
+          q: "Как начать с BirLiy?",
+          a: "Сейчас открывается ранний доступ для первых магазинов Ташкента. Начинается на телефоне, а команда помогает с первым каталогом и настройкой.",
         },
       ],
-      sources: [
-        { label: "ESPN: страница матча Колумбия - Узбекистан", url: SRC_ESPN },
-        { label: "FIFA: официальный отчёт о матче", url: SRC_FIFA },
-      ],
-      cta: {
-        text: "Выведите магазин на высокий уровень. Команда BirLiy поможет сделать первый шаг.",
-        button: "Оставить заявку",
-      },
+      cta: { text: "Начните вести магазин в телефоне. Команда BirLiy поможет на первом шаге.", button: "Оставить заявку" },
     },
     en: {
-      title: "Uzbekistan 1-3 Colombia: the first step onto a bigger stage matters most",
+      title: "Uzbekistan Colombia WC 2026: the first month of digitizing a shop",
       description:
-        "Uzbekistan's debut World Cup match as a lesson for a shop owner: the first step onto a bigger stage matters most. Digitizing the shop is that new level.",
+        "Uzbekistan Colombia at WC 2026 as a lesson for a shop owner: why the first month of digitizing a shop is hard and how to make it easier.",
       keywords: [
-        "Uzbekistan Colombia",
-        "Uzbekistan World Cup",
-        "football business lesson",
-        "digitize the shop",
-        "first step",
-        "shop control",
+        "Uzbekistan Colombia WC 2026",
+        "digitize a shop",
+        "paper debt book",
+        "shop bookkeeping",
+        "cashier control",
+        "stock control",
         "BirLiy POS",
         "for shop owners",
       ],
       intro: [
-        "Short answer: Uzbekistan lost to Colombia, but making a World Cup debut for the first time in history is the step that matters most. The lesson for a shop owner is the same: digitizing the shop for the first time in BirLiy is that step, perfection on day one is not required, once revenue, stock and debts become visible, growth begins.",
-        "On 17 June 2026 Uzbekistan lost 1-3 to Colombia, but it was a historic day: the team appeared at a World Cup for the first time and played at the famous Estadio Azteca in Mexico City.",
-        "Daniel Munoz put Colombia ahead in the 40th minute, and Abbosbek Fayzullaev equalized in the 60th minute. Then Luis Diaz in the 65th minute and Jaminton Campaz in stoppage time (90+9) made it 3-1 for Colombia. The result was a defeat, but the stage was the highest.",
-        "This is not sports analysis or betting, just a practical lesson for a shop owner. The first step onto a bigger stage matters most, even if the win does not come right away.",
+        "On 17 June Uzbekistan played at a World Cup for the first time and lost 1:3 to Colombia. A historic match, but the debut was not easy. A strong opponent, an unfamiliar stage, a first experience.",
+        "A shop owner knows this feeling. Someone who kept debts in a paper notebook for years moves to a phone app, and the first month feels exactly like that. New, unfamiliar, a little awkward.",
+        "This is not a sports prediction. It is a plain talk about why the first digital month is hard and how to make it easier.",
       ],
       sections: [
         {
-          h2: "The first step is the biggest step",
+          h2: "Uzbekistan Colombia WC 2026: why the first month is the hard part",
           paragraphs: [
-            "Uzbekistan reached a World Cup for the first time, and that itself is a historic achievement. For a shop owner the first step, the first time you digitize the shop, is also the biggest step.",
-            "A perfect result right away is not required. What matters is that you now play at a higher level, learn fast and grow stronger day by day.",
-          ],
-        },
-        {
-          h2: "Playing at a higher level grows you",
-          paragraphs: [
-            "Playing on a stage like the Azteca gives a team great experience, and a strong opponent speeds up future growth. In a shop, working with exact numbers also lifts you to a stronger level.",
-            "Not a notebook in your hands but digital records teach you from mistakes and make the next steps sharper. This is the fastest path to growth.",
+            "When a team steps onto such a stage for the first time, everything is new. A shop is the same. The biggest difficulty is not some result, it is the work of the first few days.",
+            "Two things worry an owner. First, entering products into the app. Second, changing the cashier's habit. Most people stop at exactly these two points.",
           ],
           list: [
-            "Revenue and costs are seen precisely.",
-            "Stock is under control every day.",
-            "It is recorded who owes how much.",
-            "The owner makes decisions faster and more precisely.",
+            "Product names and prices are entered by hand the first time, and that takes time.",
+            "The cashier will not love the screen instead of the notebook right away.",
+            "In the first week receipts ring up a bit slower, and that is normal.",
+            "The owner wants to run the notebook and the app in parallel at first.",
           ],
         },
         {
-          h2: "It is the experience, not the defeat, that matters",
+          h2: "Enter products in parts, not in one day",
           paragraphs: [
-            "Abbosbek Fayzullaev's goal showed that Uzbekistan can answer even the strongest opponent. In a shop the first digital month may also be imperfect, but experience grows every day.",
-            "Each day brings new data, each report improves the next decision. It is this process that makes you stronger over time.",
+            "Do not try to move the whole shop in one night. Start with what sells most. Bread, water, cigarettes, milk, the thirty or forty top sellers are already enough.",
+            "Add the rest ten items a day. In a week the catalog is almost full, and you do it without strain. A ready catalog can also be loaded from Excel, which cuts the work even further.",
           ],
         },
         {
-          h2: "Step up to a higher level with BirLiy",
+          h2: "Do not force the cashier, show one simple screen",
           paragraphs: [
-            "BirLiy lifts your shop to digital management on a phone: checkout, inventory, QR payments and owner reports in one system. The team helps you take the first step.",
-            "You may not win big right away, but you now play at a stronger level and learn fast. This is a start to be proud of.",
+            "Cashier resistance is natural. The notebook is familiar, the app is new. So do not give a long lesson, show one thing: pick a product and ring up a receipt.",
+            "In BirLiy the cashier logs in with their own PIN and sees only the sale. The owner separately sees who was on shift and what sales happened. So the cashier is not distracted by extra buttons, and you do not lose control.",
+          ],
+        },
+        {
+          h2: "Move the debt notebook into the app from day one",
+          paragraphs: [
+            "Your biggest gain comes from debts. If the notebook is lost or a page tears, there is nothing left to argue with. This part of the first month gives an owner peace of mind right away.",
+            "In BirLiy customer debts are visible in the app instead of the notebook. Who owes how much and when they promised to pay, all in one list. Record every item given on credit today, and tomorrow you will not be hunting for the notebook.",
+          ],
+        },
+        {
+          h2: "The first month does not have to be perfect",
+          paragraphs: [
+            "There was a goal in the debut match too. Abbosbek Fayzullaev answered Colombia. So even on your first appearance you can deliver a result, just not all at once.",
+            "In the first digital month there will be entry mistakes, a forgotten item, slow shifts. That is part of the process. What matters is that by the second month revenue, stock and debts are already on the screen, and you do not go back to the notebook.",
           ],
         },
       ],
       faq: [
         {
-          q: "Is this article a sports prediction?",
-          a: "No. It is a practical business lesson drawn from a match result, not a prediction or a bet. The goal is to show how important the first step is.",
+          q: "Is this a prediction for the Uzbekistan Colombia match?",
+          a: "No. It is not a prediction or a bet. It is a practical lesson from the debut match: the first step is hard, but you can make it easier by breaking it into parts.",
         },
         {
-          q: "Why does the first step matter so much?",
-          a: "Because stepping onto a higher level speeds up learning. Digitizing the shop for the first time also lifts you to a stronger level.",
+          q: "Does entering products into the app take a lot of time?",
+          a: "If you enter everything at once, yes. So start with the thirty or forty top sellers and add the rest each day. The catalog can also be loaded from Excel.",
         },
         {
-          q: "What if the first digital month is not perfect?",
-          a: "That is normal. What matters is that you now work with exact numbers, and daily experience strengthens you fast.",
+          q: "What if the cashier does not want to switch to the app?",
+          a: "Show them not the whole system, only the sale screen. The cashier logs in with a PIN and just rings up a receipt, while the owner sees the control separately.",
         },
         {
-          q: "How does BirLiy help with the first step?",
-          a: "BirLiy lifts the shop to digital management on a phone, and the team helps with setup, the first catalog and cashier configuration.",
+          q: "Do I have to move the whole debt notebook at once?",
+          a: "Better to record every new debt in the app from today. Add the old debts in your free time.",
+        },
+        {
+          q: "How do I start with BirLiy?",
+          a: "Early access is now opening for the first shops in Tashkent. It starts on a phone, and the team helps with the first catalog and setup.",
         },
       ],
-      sources: [
-        { label: "ESPN: match page Colombia vs Uzbekistan", url: SRC_ESPN },
-        { label: "FIFA: official match report", url: SRC_FIFA },
-      ],
-      cta: {
-        text: "Step your shop up to a higher level. The BirLiy team helps with the first step.",
-        button: "Leave a request",
-      },
+      cta: { text: "Start running your shop from a phone. The BirLiy team helps with the first step.", button: "Leave a request" },
     },
   },
 };
