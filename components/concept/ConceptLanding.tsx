@@ -712,7 +712,9 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   }, [showSticky]);
 
   return (
-    <main className="min-h-screen bg-[#f4f6f1] text-ink-900 antialiased">
+    <main className="min-h-screen bg-[#f4f6f1] text-ink-900 antialiased pb-24 sm:pb-0">
+      {/* pb-24 on mobile reserves space so the fixed sticky CTA never overlaps the
+          footer's last row; removed at sm: where there is no sticky bar. */}
       <a
         href="#top"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:font-extrabold focus:text-ink-900 focus:shadow-lg"
@@ -2038,6 +2040,14 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         aria-hidden={!showSticky}
         className={`fixed inset-x-0 bottom-0 z-30 border-t border-[#d9e2db] bg-white/94 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-18px_50px_-34px_rgba(11,24,38,0.6)] backdrop-blur transition-transform duration-300 ease-birliy motion-reduce:transition-none sm:hidden ${showSticky ? "translate-y-0" : "translate-y-full"}`}
       >
+        {/* Pilot price line so the offer is always in view while scrolling, above
+            the action row. */}
+        <p className="mx-auto mb-2 flex max-w-md items-center justify-center gap-1.5 text-xs font-semibold text-ink-500">
+          <span className="font-extrabold text-green-800">
+            {locale === "ru" ? "49 000 сум/мес" : "49 000 so'm/oy"}
+          </span>
+          {locale === "ru" ? "первые 6 месяцев" : "birinchi 6 oy"}
+        </p>
         {/* Three persistent actions: primary lead CTA (flex-grows) plus Telegram
             and phone, so a shop owner can reach us the way they prefer. The bar
             hides over #lead and the footer (showSticky), so it never covers the
