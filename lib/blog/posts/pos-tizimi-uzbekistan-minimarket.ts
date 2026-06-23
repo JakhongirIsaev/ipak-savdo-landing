@@ -1,79 +1,85 @@
 import type { BlogPost } from "../types";
 
-const LEX_POS = "https://lex.uz/uz/docs/5665877";
-const LEX_CASH = "https://lex.uz/docs/4603340";
-
 export const post: BlogPost = {
   slug: "pos-tizimi-uzbekistan-minimarket",
   category: "product",
   date: "2026-06-15",
-  modified: "2026-06-19",
-  image: {
-    square: "https://birliy.uz/photos/blog/pos-tizimi-uzbekistan-minimarket-1x1.jpg",
-    landscape: "https://birliy.uz/photos/blog/pos-tizimi-uzbekistan-minimarket-4x3.jpg",
-    wide: "https://birliy.uz/photos/blog/pos-tizimi-uzbekistan-minimarket-16x9.jpg",
-  },
+  modified: "2026-06-23",
   locales: {
     uz: {
-      title: "O'zbekistonda minimarket uchun POS tizimi: 2026 qo'llanma",
+      title: "POS tizimi minimarket uchun: O'zbekistonda tanlash",
       description:
-        "Minimarket va uy yonidagi do'kon uchun POS tizimini tanlash: telefonda ishlash, kassa, ombor, kassir nazorati, QR to'lov va ishga tushirish mezonlari.",
+        "Minimarket uchun POS tizimini qanday tanlash: telefonda kassa, ombor, nasiya, kassir nazorati va O'zbekistonda alohida tekshiriladigan talablar.",
       keywords: [
+        "POS tizimi minimarket uchun",
         "POS tizimi O'zbekiston",
-        "minimarket uchun dastur",
         "minimarket uchun kassa",
-        "telefonda POS",
+        "telefonda kassa",
         "do'kon avtomatlashtirish",
-        "savdo dasturi O'zbekiston",
         "ombor hisobi",
+        "nasiya yuritish",
         "kassir nazorati",
         "BirLiy POS",
       ],
       intro: [
-        "Qisqa javob: kichik minimarket uchun eng qulay POS tizimi sotuv, ombor va egasi nazoratini bitta joyda berishi, telefonda yoki planshetda ishlashi va qimmat uskunani birinchi kundan talab qilmasligi kerak.",
-        "BirLiy aynan O'zbekistondagi uy yonidagi do'kon va minimarketlar uchun yaratilgan telefon-first POS dasturi. Kassir savdoni kiritadi, egasi esa tushum, qoldiq va smenani telefonidan ko'radi.",
-        "Quyida reklama ro'yxati emas, minimarket egasi tekshirishi kerak bo'lgan aniq mezonlar bor.",
+        "Kechqurun do'konni yopasiz. Kassadagi pul bir xil, daftardagi qoldiq boshqacha, nasiya esa alohida varaqda. Uchtasini bir-biriga to'g'rilash yarim soat oladi va baribir biror joyda xato qoladi.",
+        "Minimarket uchun POS tizimi aynan shu uchta ishni bitta joyga olib keladigan dastur: har bir sotuv qoldiqni o'zi kamaytiradi, to'lov turi yoziladi va kun yakuni tayyor turadi.",
+        "Quyida reklama ro'yxati emas, do'kon egasi sotib olishdan oldin o'zi tekshirishi mumkin bo'lgan aniq mezonlar bor.",
       ],
       sections: [
         {
-          h2: "Minimarket POS tizimidan nimani kutishi kerak",
+          h2: "Minimarket POS tizimi nima qiladi",
           paragraphs: [
-            "POS faqat chek uradigan ekran emas. Minimarketda har bir sotuv ombordagi qoldiqni kamaytirishi, to'lov turini yozishi va kun yakunidagi hisobotga tushishi kerak.",
-            "Egasi uchun eng muhim natija: kassada turmasdan ham bugungi tushum, kam qolgan tovar va kassir smenasini ko'rish.",
+            "POS faqat chek uradigan ekran emas. Minimarketda har bir sotuv uchta ishni bir vaqtda bajarishi kerak: ombordagi qoldiqni kamaytirishi, pul naqd, karta, QR yoki nasiya bilan kelganini yozishi va kun hisobotiga tushishi.",
+            "Egasi uchun asosiy natija oddiy: kassada turmasdan ham bugungi tushumni, kam qolgan tovarni va qaysi kassir smenada ekanini telefonidan ko'rish.",
           ],
           list: [
-            "Tez kassa va shtrix-kod orqali tovar topish.",
-            "Har bir sotuvdan keyin avtomatik qoldiq hisobi.",
-            "Naqd, karta, QR va qarzni alohida ko'rsatish.",
-            "Kassirlar uchun PIN va harakatlar jurnali.",
+            "Tez kassa va shtrix-kod orqali tovarni topish.",
+            "Har bir sotuvdan keyin qoldiq o'zi yangilanadi.",
+            "Naqd, karta, QR va nasiya alohida ko'rinadi.",
+            "Kassirlar uchun alohida kirish va harakatlar yozuvi.",
             "Kunlik, haftalik va oylik hisobot.",
           ],
         },
         {
           h2: "Telefon yetadimi yoki alohida uskuna kerakmi",
           paragraphs: [
-            "Bitta yoki ikkita kassirli minimarket startni telefon yoki planshetdan boshlashi mumkin. Bu dastur bilan ishlashni tekshirishga va katta xarajatni kechiktirishga yordam beradi.",
-            "Navbat ko'payganda 2D-skaner, printer yoki alohida terminal qo'shiladi. Muhimi, dastur uskunasiz boshlashga ham, keyin uskunani ulashga ham imkon bersin.",
+            "Bitta yoki ikkita kassirli minimarket savdoni telefon yoki planshetdan boshlashi mumkin. Bu yangi dasturni katta xarajatsiz sinab ko'rishga yordam beradi: avval ishlashini ko'rasiz, keyin uskunaga pul tikasiz.",
+            "Navbat ko'paygach 2D-skaner yoki printer qo'shiladi. Muhimi, dastur uskunasiz boshlashga ham, keyin uskuna ulashga ham xalal bermasin. Demo vaqtida shuni so'rang: bugun faqat telefon bilan sota olamanmi.",
           ],
         },
         {
-          h2: "O'zbekistonda alohida tekshiriladigan savollar",
+          h2: "Nasiyani daftarda emas, dasturda yuritish",
           paragraphs: [
-            "Savdo dasturi tanlashda biznesingiz uchun fiskal chek, mahsulot kodi va raqamli markirovka bo'yicha qanday talablar borligini buxgalter yoki integrator bilan tekshiring. Ayniqsa markirovkalanadigan mahsulotlar sotilsa, uskuna va integratsiya talablari muhim.",
-            "POS dasturining ombor va boshqaruv imkoniyatlari bilan onlayn yoki virtual kassa talablari bir xil savol emas. Sotib olishdan oldin yetkazib beruvchidan aynan qaysi vazifani mahsulotning o'zi bajarishini yozma ravishda so'rang.",
+            "Doimiy xaridorga nasiyaga berish minimarketda oddiy hol. Muammo nasiyada emas, uni qog'oz daftarda yuritishda: sahifa yo'qoladi, suv tegadi yoki kim qancha qarz ekani esdan chiqadi.",
+            "POS tanlashda nasiya kassaning o'zida bo'lishi katta farq qiladi. Sotuv naqd, karta va QR bilan bitta ro'yxatda tursa, kim qancha qarz va qachon to'lashni va'da qilgani bitta joyda ko'rinadi.",
           ],
         },
         {
-          h2: "Yetkazib beruvchiga beriladigan 7 savol",
+          h2: "O'zbekistonda alohida tekshiriladigan talablar",
           paragraphs: [
-            "Demo vaqtida chiroyli bosh sahifadan ko'ra kundalik jarayonni tekshiring. Bitta tovarni soting, qaytaring, qoldiqni ko'ring va kassir amalini jurnal ichidan toping.",
+            "Bu yerda 'buxgalterdan so'rang' deb qo'yib yuborilmaydi. Aniq qadam shu: demo vaqtida yetkazib beruvchidan ikkita rasmiy hujjat bo'yicha javob yozma so'rang. Birinchisi onlayn nazorat-kassa mashinalari va virtual kassa tartibi (LEX.UZ, hujjat 4603340), ikkinchisi mahsulot kodlari va raqamli markirovka talablari (LEX.UZ, hujjat 5665877).",
+            "Savol oddiy: mening tovarlarim bo'yicha fiskal chek va markirovka talablarini mahsulotning o'zi bajaradimi yoki alohida tizim kerakmi. Agar markirovkalanadigan tovar sotsangiz, javob ayniqsa muhim, chunki bu uskuna va integratsiyaga ta'sir qiladi.",
+            "POS dasturining ombor va boshqaruv qismi bilan kassa qonun talablari bir xil savol emas. Shuning uchun har bir javobni og'zaki emas, yozma oling. Keyin nizo chiqsa, sizda hujjat bo'ladi.",
+          ],
+          list: [
+            "Fiskal chek talabini kim bajaradi: dasturmi yoki alohida tizimmi.",
+            "Mening tovarlarim markirovkaga tushadimi.",
+            "Markirovka uchun qanday uskuna kerak.",
+            "Javoblar yozma berilganmi.",
+          ],
+        },
+        {
+          h2: "Demo vaqtida yetkazib beruvchiga beriladigan savollar",
+          paragraphs: [
+            "Demoda chiroyli bosh sahifaga emas, kundalik jarayonga qarang. Bitta tovarni soting, keyin qaytaring, qoldiqni ko'ring va kassir qaytarishini yozuv ichidan toping. Shu uch qadam dasturning haqiqatda ishlashini ko'rsatadi.",
           ],
           list: [
             "Internet uzilsa sotuv davom etadimi?",
             "Tovarlarni Exceldan yuklash mumkinmi?",
             "Telefon kamerasi shtrix-kodni o'qiydimi?",
             "Egasi boshqa joydan tushumni ko'ra oladimi?",
-            "Kassirning qaytarish va o'chirishlari jurnalga yoziladimi?",
+            "Kassirning qaytarish va o'chirishlari yozuvga tushadimi?",
             "Narx olti oydan keyin qancha bo'ladi?",
             "Birinchi katalog va kassirni sozlashga kim yordam beradi?",
           ],
@@ -81,91 +87,102 @@ export const post: BlogPost = {
         {
           h2: "BirLiy minimarketga qanday mos keladi",
           paragraphs: [
-            "BirLiy telefonda yoki planshetda ishlaydi va kassa, ombor, QR to'lov hamda egasi hisobotlarini birlashtiradi. Bazada 9 000 dan ortiq keng tarqalgan tovar bor, katalogni Exceldan ham yuklash mumkin.",
-            "Birinchi olti oy narxi oyiga 49 000 so'm, keyin oyiga 149 000 so'm. Jamoa do'konni bir ish kunida ulashga, dastlabki tovarlarni kiritishga va kassirni o'rgatishga yordam beradi.",
+            "BirLiy O'zbekiston do'konlari uchun telefondagi POS. Kassa, ombor, to'lovlar va hisobotlar bitta ilovada turadi, nasiya esa naqd va QR bilan bitta ro'yxatda ko'rinadi. Saytda ikkala rol uchun jonli kliklanadigan demo bor, sotib olishdan oldin o'zingiz bosib ko'rasiz.",
+            "Erta kirish davrida katalogni Exceldan yuklash mumkin, ilovada keng tarqalgan tovarlar uchun tayyor baza ham bor. BirLiy hozir Toshkentning birinchi do'konlari uchun erta kirishni ochmoqda. Birinchi kogorta uchun e'lon qilingan narx birinchi olti oy oyiga 49 000 so'm, keyin oyiga 149 000 so'm.",
           ],
         },
       ],
       faq: [
         {
           q: "Minimarket uchun POS tizimi nima?",
-          a: "Bu savdoni kiritish, tovar qoldig'ini yuritish, to'lovlarni ajratish va egasiga hisobot beradigan dastur. BirLiy bu vazifalarni telefon yoki planshetda birlashtiradi.",
+          a: "Bu sotuvni kiritadigan, tovar qoldig'ini yuritadigan, to'lov turlarini ajratadigan va egasiga hisobot beradigan dastur. BirLiy bu ishlarni telefon yoki planshetda bitta joyga bog'laydi.",
         },
         {
-          q: "Minimarket kassasi telefonda ishlashi mumkinmi?",
-          a: "Kichik nuqta telefon yoki planshetdan boshlashi, savdo hajmi oshganda esa skaner va boshqa uskunani qo'shishi mumkin.",
+          q: "Minimarket kassasi telefonda ishlaydimi?",
+          a: "Kichik nuqta telefon yoki planshetdan boshlashi, savdo ko'payganda esa skaner va boshqa uskuna qo'shishi mumkin.",
         },
         {
-          q: "O'zbekistonda POS tanlashda eng muhim narsa nima?",
-          a: "Kundalik savdo va ombor jarayonidan tashqari, biznesingizga tegishli fiskal va markirovka talablarini alohida tekshirish muhim.",
+          q: "O'zbekistonda POS tanlashda nimani alohida tekshirish kerak?",
+          a: "Kundalik kassa va ombordan tashqari, fiskal chek va markirovka talablarini yetkazib beruvchidan yozma so'rang. Rasmiy tartib LEX.UZ hujjatlarida (4603340 va 5665877) keltirilgan.",
         },
         {
-          q: "BirLiy kimlar uchun mo'ljallangan?",
-          a: "BirLiyning asosiy mijozlari O'zbekistondagi uy yonidagi do'konlar va minimarketlardir.",
+          q: "Nasiyani POS dasturida yuritsa bo'ladimi?",
+          a: "Ha. BirLiy'da xaridor nasiyasi daftar o'rniga ilovada ko'rinadi: kim qancha qarz va qachon to'lashni va'da qilgani bitta ro'yxatda.",
+        },
+        {
+          q: "BirLiy kimlar uchun?",
+          a: "BirLiy uy yonidagi do'konlar, minimarketlar, oziq-ovqat do'konlari va shunga o'xshash kichik nuqtalar uchun. Hozir Toshkentda erta kirish ochilmoqda.",
         },
       ],
-      sources: [
-        { label: "LEX.UZ: onlayn kassa va mahsulot kodlari bo'yicha PP-5252", url: LEX_POS },
-        { label: "LEX.UZ: onlayn nazorat-kassa mashinalari va virtual kassa tizimi", url: LEX_CASH },
-      ],
-      cta: {
-        text: "Minimarketingizni telefondan boshqarishni boshlang. BirLiy jamoasi ulanish va katalogni tayyorlashda yordam beradi.",
-        button: "Ariza qoldirish",
-      },
+      cta: { text: "Minimarketingizni telefondan boshqarib ko'ring. Erta kirishga ariza qoldiring, jonli demoni saytda o'zingiz sinab ko'rasiz.", button: "Ariza qoldirish" },
     },
     ru: {
-      title: "POS-система для минимаркета в Узбекистане: гид 2026",
+      title: "POS-система для минимаркета: как выбрать в Узбекистане",
       description:
-        "Как выбрать POS для минимаркета или магазина у дома: работа на телефоне, касса, склад, контроль кассиров, QR-оплата и запуск.",
+        "Как выбрать POS-систему для минимаркета: касса в телефоне, склад, насия, контроль кассира и требования, которые в Узбекистане проверяют отдельно.",
       keywords: [
+        "POS система для минимаркета",
         "POS система Узбекистан",
-        "POS для минимаркета",
         "касса для минимаркета",
         "касса в телефоне",
         "автоматизация минимаркета",
-        "программа для магазина Узбекистан",
         "складской учет",
+        "учет долгов покупателей",
         "контроль кассира",
         "BirLiy POS",
       ],
       intro: [
-        "Короткий ответ: POS для небольшого минимаркета должен объединять продажи, склад и контроль владельца, работать на телефоне или планшете и не требовать дорогого оборудования в первый день.",
-        "BirLiy: телефонная POS-система, созданная прежде всего для магазинов у дома и минимаркетов Узбекистана. Кассир проводит продажи, а владелец видит выручку, остатки и смену со своего телефона.",
-        "Ниже не рекламный рейтинг, а конкретные критерии, которые стоит проверить владельцу минимаркета.",
+        "Вечером закрываете магазин. Деньги в кассе одни, остаток в тетради другой, насия записана на отдельном листке. Свести три цифры занимает полчаса, и где-то всё равно остаётся ошибка.",
+        "POS-система для минимаркета сводит эти три вещи в одно место: каждая продажа сама уменьшает остаток, фиксирует способ оплаты и попадает в дневной отчёт.",
+        "Ниже не рекламный рейтинг, а конкретные критерии, которые владелец минимаркета может проверить сам до покупки.",
       ],
       sections: [
         {
-          h2: "Что минимаркет должен получать от POS",
+          h2: "Что делает POS-система для минимаркета",
           paragraphs: [
-            "POS, это не только экран для пробития чека. Каждая продажа должна уменьшать остаток, фиксировать способ оплаты и попадать в итоговый отчёт.",
-            "Главный результат для владельца: видеть сегодняшнюю выручку, заканчивающиеся товары и смену кассира, даже когда он не стоит у кассы.",
+            "POS, это не только экран для пробития чека. В минимаркете каждая продажа должна делать три дела сразу: уменьшать остаток на складе, фиксировать оплату наличными, картой, QR или в долг, и попадать в итоговый отчёт.",
+            "Главный результат для владельца простой: видеть сегодняшнюю выручку, заканчивающийся товар и кто из кассиров на смене, не стоя у кассы.",
           ],
           list: [
             "Быстрая касса и поиск товара по штрихкоду.",
-            "Автоматический остаток после каждой продажи.",
-            "Разделение наличных, карты, QR и продажи в долг.",
-            "PIN для кассиров и журнал действий.",
-            "Дневные, недельные и месячные отчёты.",
+            "Остаток обновляется сам после каждой продажи.",
+            "Наличные, карта, QR и насия видны отдельно.",
+            "Отдельный вход для кассиров и журнал действий.",
+            "Дневной, недельный и месячный отчёт.",
           ],
         },
         {
           h2: "Достаточно телефона или нужно оборудование",
           paragraphs: [
-            "Минимаркет с одним или двумя кассирами может начать с телефона или планшета. Так проще проверить рабочий процесс и отложить крупные расходы.",
-            "Когда очередь вырастет, можно добавить 2D-сканер, принтер или отдельный терминал. Хорошая система позволяет начать без оборудования и подключить его позже.",
+            "Минимаркет с одним или двумя кассирами может начать продажи с телефона или планшета. Так новую программу можно проверить без крупных трат: сначала видите, что она работает, потом вкладываетесь в оборудование.",
+            "Когда вырастет очередь, добавляется 2D-сканер или принтер. Важно, чтобы программа не мешала ни старту без оборудования, ни подключению оборудования позже. На демо спросите прямо: смогу ли я сегодня продавать только с телефона.",
           ],
         },
         {
-          h2: "Что отдельно проверить в Узбекистане",
+          h2: "Насия в программе вместо тетради",
           paragraphs: [
-            "Уточните у бухгалтера или интегратора требования к фискальному чеку, кодам товаров и цифровой маркировке именно для вашего ассортимента. Для маркируемых товаров особенно важны требования к оборудованию и интеграции.",
-            "Складские и управленческие функции POS и требования к онлайн- или виртуальной кассе, это разные вопросы. До покупки попросите поставщика письменно указать, какие задачи выполняет сам продукт.",
+            "Дать в долг постоянному покупателю в минимаркете дело обычное. Проблема не в насии, а в том, что её ведут в бумажной тетради: страница теряется, намокает, или забывается, кто сколько должен.",
+            "При выборе POS большая разница, когда насия живёт в самой кассе. Если продажа стоит в одном списке с наличными, картой и QR, то кто сколько должен и когда обещал оплатить видно в одном месте.",
           ],
         },
         {
-          h2: "7 вопросов поставщику POS",
+          h2: "Что в Узбекистане проверяют отдельно",
           paragraphs: [
-            "На демонстрации проверяйте не красивую главную страницу, а ежедневный процесс: продайте товар, сделайте возврат, посмотрите остаток и найдите действие кассира в журнале.",
+            "Здесь нельзя отделаться фразой 'спросите бухгалтера'. Конкретный шаг такой: на демо письменно запросите у поставщика ответ по двум официальным документам. Первый, порядок применения онлайн-ККМ и системы виртуальной кассы (LEX.UZ, документ 4603340). Второй, требования к кодам товаров и цифровой маркировке (LEX.UZ, документ 5665877).",
+            "Вопрос простой: по моему ассортименту требования к фискальному чеку и маркировке выполняет сам продукт или нужна отдельная система. Если вы продаёте маркируемый товар, ответ особенно важен, потому что он влияет на оборудование и интеграцию.",
+            "Складская и управленческая часть POS и требования кассового закона, это разные вопросы. Поэтому берите каждый ответ письменно, а не на словах. Если позже возникнет спор, у вас будет документ.",
+          ],
+          list: [
+            "Кто выполняет требование фискального чека: программа или отдельная система.",
+            "Попадает ли мой товар под маркировку.",
+            "Какое оборудование нужно для маркировки.",
+            "Даны ли ответы письменно.",
+          ],
+        },
+        {
+          h2: "Что спросить у поставщика на демо",
+          paragraphs: [
+            "На демонстрации смотрите не на красивую главную страницу, а на ежедневный процесс. Продайте товар, потом сделайте возврат, посмотрите остаток и найдите возврат кассира в журнале. Эти три шага показывают, как программа работает на деле.",
           ],
           list: [
             "Продолжится ли продажа без интернета?",
@@ -180,8 +197,8 @@ export const post: BlogPost = {
         {
           h2: "Как BirLiy подходит минимаркету",
           paragraphs: [
-            "BirLiy работает на телефоне или планшете и объединяет кассу, склад, QR-оплату и отчёты владельца. В базе есть более 9 000 распространённых товаров, каталог также можно загрузить из Excel.",
-            "Первые шесть месяцев стоят 49 000 сум в месяц, затем 149 000 сум в месяц. Команда помогает подключить магазин за один рабочий день, внести первые товары и обучить кассира.",
+            "BirLiy, это POS в телефоне для магазинов Узбекистана. Касса, склад, оплаты и отчёты живут в одном приложении, а насия видна в одном списке с наличными и QR. На сайте есть живое кликабельное демо для обеих ролей, можно нажать самому до покупки.",
+            "В раннем доступе каталог можно загрузить из Excel, в приложении есть и готовая база распространённых товаров. Сейчас BirLiy открывает ранний доступ для первых магазинов Ташкента. Объявленная для первой когорты цена: первые шесть месяцев 49 000 сум в месяц, затем 149 000 сум в месяц.",
           ],
         },
       ],
@@ -195,74 +212,85 @@ export const post: BlogPost = {
           a: "Небольшая точка может начать с телефона или планшета, а при росте потока добавить сканер и другое оборудование.",
         },
         {
-          q: "Что важнее всего при выборе POS в Узбекистане?",
-          a: "Кроме ежедневной продажи и склада, отдельно проверьте фискальные требования и требования к маркировке для вашего бизнеса.",
+          q: "Что в Узбекистане проверяют отдельно при выборе POS?",
+          a: "Помимо ежедневной кассы и склада, письменно запросите у поставщика требования к фискальному чеку и маркировке. Официальный порядок изложен в документах LEX.UZ (4603340 и 5665877).",
+        },
+        {
+          q: "Можно ли вести насию в POS-программе?",
+          a: "Да. В BirLiy долг покупателя виден в приложении вместо тетради: кто сколько должен и когда обещал оплатить, всё в одном списке.",
         },
         {
           q: "Для кого создан BirLiy?",
-          a: "Основные клиенты BirLiy: магазины у дома и минимаркеты Узбекистана.",
+          a: "BirLiy для магазинов у дома, минимаркетов, продуктовых и похожих небольших точек. Сейчас открывается ранний доступ в Ташкенте.",
         },
       ],
-      sources: [
-        { label: "LEX.UZ: ПП-5252 об онлайн-кассах, кодах товаров и маркировке", url: LEX_POS },
-        { label: "LEX.UZ: о применении онлайн-ККМ и системы виртуальной кассы", url: LEX_CASH },
-      ],
-      cta: {
-        text: "Начните управлять минимаркетом с телефона. Команда BirLiy поможет с подключением и каталогом.",
-        button: "Оставить заявку",
-      },
+      cta: { text: "Попробуйте управлять минимаркетом с телефона. Оставьте заявку на ранний доступ, а живое демо можно нажать на сайте.", button: "Оставить заявку" },
     },
     en: {
-      title: "POS system for a minimarket in Uzbekistan: 2026 guide",
+      title: "POS system for a minimarket in Uzbekistan: how to choose",
       description:
-        "How to choose a POS for a minimarket or neighborhood shop in Uzbekistan: phone operation, checkout, inventory, cashier control, QR payments and setup.",
+        "How to choose a POS system for a minimarket in Uzbekistan: phone checkout, inventory, credit sales, cashier control and the rules you verify separately.",
       keywords: [
+        "POS system for minimarket",
         "POS system Uzbekistan",
-        "POS for minimarket",
         "phone POS app",
-        "retail software Uzbekistan",
         "minimarket inventory",
         "cashier control",
+        "credit sales tracking",
         "BirLiy POS",
       ],
       intro: [
-        "Short answer: a POS for a small minimarket should combine checkout, inventory and owner control, run on a phone or tablet, and avoid forcing expensive hardware on day one.",
-        "BirLiy is a phone-first POS system designed primarily for neighborhood shops and minimarkets in Uzbekistan. The cashier records sales while the owner sees revenue, stock and shifts from a phone.",
-        "This is not an advertising ranking. It is a practical checklist for a minimarket owner.",
+        "You close the shop in the evening. The cash in the till says one thing, the stock notebook says another, and the credit sales sit on a separate sheet. Reconciling the three takes half an hour, and an error still slips through somewhere.",
+        "A POS system for a minimarket pulls those three things into one place: every sale lowers the stock itself, records the payment method, and lands in the daily report.",
+        "This is not an advertising ranking. It is a set of concrete criteria a minimarket owner can check before buying.",
       ],
       sections: [
         {
-          h2: "What a minimarket should expect from a POS",
+          h2: "What a POS system for a minimarket actually does",
           paragraphs: [
-            "A POS is more than a checkout screen. Every sale should reduce inventory, record the payment method and appear in the daily report.",
-            "The most important owner outcome is seeing today's revenue, low-stock items and the active cashier without standing at the till.",
+            "A POS is more than a checkout screen. In a minimarket every sale should do three things at once: lower the stock, record whether the money came in as cash, card, QR or credit, and land in the end-of-day report.",
+            "The main outcome for the owner is simple: see today's revenue, the items running low, and which cashier is on shift, without standing at the till.",
           ],
           list: [
             "Fast checkout and barcode product lookup.",
-            "Automatic inventory updates after every sale.",
-            "Separate cash, card, QR and credit sales.",
-            "Cashier PINs and an action log.",
+            "Stock updates itself after every sale.",
+            "Cash, card, QR and credit shown separately.",
+            "Separate cashier logins and an action log.",
             "Daily, weekly and monthly reports.",
           ],
         },
         {
           h2: "Is a phone enough or do you need hardware",
           paragraphs: [
-            "A minimarket with one or two cashiers can start on a phone or tablet. This makes it easier to validate the workflow and delay a large hardware expense.",
-            "As queues grow, a 2D scanner, printer or dedicated terminal can be added. A useful system supports both a phone-first start and later hardware.",
+            "A minimarket with one or two cashiers can start selling from a phone or tablet. That lets you test a new program without a large outlay: first you see it works, then you spend on hardware.",
+            "As the queue grows, a 2D scanner or printer can be added. What matters is that the program blocks neither a hardware-free start nor adding hardware later. At the demo, ask plainly: can I sell with just a phone today.",
           ],
         },
         {
-          h2: "Questions to verify separately in Uzbekistan",
+          h2: "Credit sales in the app instead of a notebook",
           paragraphs: [
-            "Ask an accountant or integrator which fiscal receipt, product-code and digital-marking rules apply to your assortment. Hardware and integration requirements are especially important for marked goods.",
-            "POS inventory and management features are not the same question as online or virtual cash-register compliance. Ask the vendor to state in writing which tasks the product itself covers.",
+            "Giving a regular customer goods on credit is normal in a minimarket. The problem is not the credit, it is keeping it in a paper notebook: the page gets lost, gets wet, or you forget who owes how much.",
+            "When choosing a POS, it makes a real difference if credit lives inside the checkout itself. When a sale sits in one list with cash, card and QR, who owes how much and when they promised to pay is visible in one place.",
           ],
         },
         {
-          h2: "Seven questions to ask a POS vendor",
+          h2: "What to verify separately in Uzbekistan",
           paragraphs: [
-            "During a demo, test the daily workflow instead of the polished home screen: sell an item, return it, inspect stock and find the cashier action in the log.",
+            "You cannot settle this with 'ask an accountant'. The concrete step is this: at the demo, ask the vendor in writing for an answer on two official documents. The first covers online cash registers and the virtual cash-register system (LEX.UZ, document 4603340). The second covers product codes and digital marking (LEX.UZ, document 5665877).",
+            "The question is simple: for my assortment, does the product itself meet the fiscal receipt and marking requirements, or do I need a separate system. If you sell marked goods, the answer matters most, because it affects hardware and integration.",
+            "The inventory and management side of a POS is a different question from cash-register law. So take every answer in writing, not by word of mouth. If a dispute comes up later, you will have a document.",
+          ],
+          list: [
+            "Who meets the fiscal receipt requirement: the program or a separate system.",
+            "Whether my goods fall under marking rules.",
+            "What hardware marking requires.",
+            "Whether the answers were given in writing.",
+          ],
+        },
+        {
+          h2: "Questions to ask the vendor at the demo",
+          paragraphs: [
+            "At the demo, look at the daily workflow, not the polished home screen. Sell an item, then return it, check the stock, and find the cashier return in the log. Those three steps show how the program works in practice.",
           ],
           list: [
             "Can checkout continue without internet?",
@@ -271,43 +299,40 @@ export const post: BlogPost = {
             "Can the owner see revenue remotely?",
             "Are cashier returns and deletions logged?",
             "What is the price after six months?",
-            "Who helps configure the catalog and train the cashier?",
+            "Who helps set up the catalog and train the cashier?",
           ],
         },
         {
           h2: "How BirLiy fits a minimarket",
           paragraphs: [
-            "BirLiy runs on a phone or tablet and combines checkout, inventory, QR payments and owner reports. Its catalog contains more than 9 000 common products and also supports Excel import.",
-            "The price is 49 000 som per month for the first six months and 149 000 som per month afterward. The team helps connect the shop in one working day, load the first products and train the cashier.",
+            "BirLiy is a POS in the phone for shops in Uzbekistan. Checkout, inventory, payments and reports live in one app, and credit shows up in one list with cash and QR. The site has a live clickable demo for both roles, so you can try it yourself before buying.",
+            "In early access the catalog can be loaded from Excel, and the app also has a ready base of common goods. BirLiy is now opening early access for the first shops in Tashkent. The stated price for the first cohort is 49 000 som per month for the first six months, then 149 000 som per month.",
           ],
         },
       ],
       faq: [
         {
           q: "What is a POS system for a minimarket?",
-          a: "It is software that records sales, tracks inventory, separates payment methods and gives the owner reports. BirLiy combines these tasks on a phone or tablet.",
+          a: "It is software that records sales, tracks stock, separates payment methods and gives the owner reports. BirLiy combines these tasks on a phone or tablet.",
         },
         {
           q: "Can a minimarket checkout run on a phone?",
-          a: "A small shop can start with a phone or tablet and add a scanner or other hardware as transaction volume grows.",
+          a: "A small shop can start with a phone or tablet and add a scanner or other hardware as the volume grows.",
         },
         {
-          q: "What matters most when choosing a POS in Uzbekistan?",
-          a: "Alongside checkout and inventory, separately verify the fiscal and product-marking requirements that apply to your business.",
+          q: "What do you verify separately when choosing a POS in Uzbekistan?",
+          a: "Besides daily checkout and inventory, ask the vendor in writing about fiscal receipt and marking requirements. The official rules are set out in LEX.UZ documents 4603340 and 5665877.",
         },
         {
-          q: "Who is BirLiy designed for?",
-          a: "BirLiy is designed primarily for neighborhood shops and minimarkets in Uzbekistan.",
+          q: "Can credit sales be tracked in the POS app?",
+          a: "Yes. In BirLiy a customer's debt shows up in the app instead of a notebook: who owes how much and when they promised to pay, all in one list.",
+        },
+        {
+          q: "Who is BirLiy for?",
+          a: "BirLiy is for neighborhood shops, minimarkets, grocery and similar small points. Early access is opening now in Tashkent.",
         },
       ],
-      sources: [
-        { label: "LEX.UZ: Presidential Resolution PP-5252 on online cash registers, product codes and marking", url: LEX_POS },
-        { label: "LEX.UZ: rules for online cash registers and virtual cash-register systems", url: LEX_CASH },
-      ],
-      cta: {
-        text: "Start managing your minimarket from a phone. The BirLiy team helps with setup and the product catalog.",
-        button: "Leave a request",
-      },
+      cta: { text: "Try running your minimarket from a phone. Leave a request for early access, and you can click through the live demo on the site.", button: "Leave a request" },
     },
   },
 };

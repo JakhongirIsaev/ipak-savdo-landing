@@ -1,268 +1,241 @@
 import type { BlogPost } from "../types";
 
-const SRC_ESPN = "https://www.espn.com/soccer/report/_/gameId/760434";
-const SRC_FIFA =
-  "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/ghana-panama-highlights-match-report";
-
 export const post: BlogPost = {
   slug: "futbol-saboq-gana-panama",
   category: "football",
   date: "2026-06-19",
-  modified: "2026-06-19",
-  image: {
-    square: "https://birliy.uz/photos/blog/futbol-saboq-gana-panama-1x1.jpg",
-    landscape: "https://birliy.uz/photos/blog/futbol-saboq-gana-panama-4x3.jpg",
-    wide: "https://birliy.uz/photos/blog/futbol-saboq-gana-panama-16x9.jpg",
-  },
+  modified: "2026-06-23",
   locales: {
     uz: {
-      title: "Gana 1:0 Panama: kichik va izchil harakat natijani hal qiladi",
+      title: "Gana Panama: gol oxirgi daqiqada keldi, smena ham shunday",
       description:
-        "Gana, Panama o'yini do'kon egasi uchun saboq: kichik, kech va izchil harakatlar natijani hal qiladi. Har kungi 5 daqiqalik hisobot, ana o'sha qo'shimcha vaqt goli.",
+        "Gana Panama o'yini 90+5 da hal bo'ldi. Do'kon egasi uchun saboq: pul kechki oxirgi soatlarda oqib ketadi, smena yopilguncha nazorat tushmasin.",
       keywords: [
         "Gana Panama",
-        "futbol biznes saboq",
         "kunlik hisobot",
-        "izchil harakat",
-        "do'kon nazorati",
-        "qoldiq va qarz",
-        "BirLiy POS",
-        "do'kon egasi uchun",
+        "smena yopilishi",
+        "kassir nazorati",
+        "kechki smena",
+        "qarz daftari",
+        "do'kon egasi",
+        "BirLiy",
       ],
       intro: [
-        "Qisqa javob: Gana 90 daqiqa g'alaba qila olmadi, lekin qo'shimcha vaqtdagi bitta aniq harakat o'yinni hal qildi. Do'kon egasi uchun saboq: kundalik 5 daqiqalik tushum, qoldiq va qarz tekshiruvi, ana o'sha kech gol, oy oxirida katta farq yaratadi va BirLiy bu odatni osonlashtiradi.",
-        "2026-yil 17-iyun kuni Gana Panamani 1:0 hisobida yengdi. Kaleb Yirenkyi qo'shimcha vaqtda, 90+5-daqiqada yaqin masofadan gol urib, o'yinni hal qildi, bu turnirdagi eng kech urilgan gol bo'ldi.",
-        "O'yinning birinchi yarmi tig'iz o'tdi va kam imkoniyat bo'ldi, ammo Gana sabr bilan o'ynab, eng oxirida g'alabani qo'lga kiritdi. Bitta kichik va aniq harakat butun natijani belgiladi.",
-        "Bu sport tahlili yoki bashorat emas, balki do'kon egasi uchun amaliy saboq. Kichik, kech va izchil harakatlar oyning natijasini hal qiladi.",
+        "Gana Panama o'yini deyarli oxirigacha 0:0 edi. Ko'pchilik allaqachon durang deb o'ylab bo'lgan, futbolchilar charchagan, vaqt tugayotgandi. Keyin 90+5-daqiqada Gana gol urdi va o'yinni oldi.",
+        "Bu butun turnirdagi eng kech urilgan gollardan biri bo'ldi. Ya'ni hammasi xuddi do'kondagi kechki oxirgi soatga o'xshaydi: hamma charchagan, kassir tezroq yopgisi keladi, lekin natija aynan shu yerda hal bo'ladi.",
+        "Bu sport bashorati emas. Bu do'kon egasi uchun bitta amaliy fikr: pul ko'pincha kun boshida emas, smenaning eng oxirida, hamma diqqatni tushirgan paytda oqib ketadi.",
       ],
       sections: [
         {
-          h2: "Kichik harakat ham natijani o'zgartiradi",
+          h2: "Kechki oxirgi soat eng tavakkalli soat",
           paragraphs: [
-            "Gana 90 daqiqa davomida g'alaba qila olmadi, lekin bitta aniq harakat hammasini hal qildi. Do'konda ham natija ko'pincha bitta katta ishda emas, kichik kunlik odatlarda hal bo'ladi.",
-            "Egasi har kuni bir necha daqiqada do'kon sonlarini ko'rsa, oxirida bu kichik odat katta farq qiladi. Bitta kun emas, takror muhim.",
+            "Ertalab egasi hushyor, sonlarni tekshiradi, kassani yangidan ochadi. Kechqurun esa boshqacha. Charchaganlik bor, mijozlar kamaygan, kassir bir ko'zi eshikda, qachon yopamiz deb turadi.",
+            "Aynan shu paytda kichik narsalar e'tibordan chetda qoladi. Bitta naqd to'lov daftarsiz o'tib ketadi, bitta qaytarish yozilmaydi, bitta nasiya og'zaki aytiladi va ertaga unutiladi. Bularning hech biri katta emas, lekin har kuni takrorlanadi.",
           ],
         },
         {
-          h2: "Sabr va izchillik - bu yutuq sirlari",
+          h2: "Gana smenani vaqtidan oldin yopmadi",
           paragraphs: [
-            "Gana o'yin oxirigacha sabr qilib, izchil bosim ostida g'alabani topdi. Do'konda ham izchillik, ya'ni har kuni bir xil tekshirish, sekin-asta foydani saqlaydi.",
-            "Bir kun tekshirib, keyin unutib qo'yish yetarli emas. Aynan har kungi takror sizni muammodan ogohlantiradi va pulni saqlaydi.",
+            "Gana 85-daqiqada o'ynashni to'xtatmadi, oxirgi hushtakkacha harakat qildi va shuning uchun goalni topdi. Do'konda ham smena hushtak chalingunicha ochiq turadi.",
+            "Smenani vaqtidan oldin yopish degani, kassani sanashdan oldin diqqatni tushirish. O'sha paytda kim nima urgani, nima qaytgani, qancha naqd qolgani tumanli bo'lib qoladi. Ertasi kuni nima bo'lganini eslay olmaysiz, faqat sonlar to'g'ri kelmaganini ko'rasiz.",
+          ],
+        },
+        {
+          h2: "Smena oxirida tekshiriladigan uchta narsa",
+          paragraphs: [
+            "Kun yopilayotganda egaga uzun hisobot kerak emas. Uchta savol yetadi, ana shu uchtasi kechki oqishni ushlaydi.",
           ],
           list: [
-            "Bugun qancha tushum bo'ldi.",
-            "Qaysi tovar kam qoldi.",
-            "Kim qarzga oldi va qancha qaytarishi kerak.",
-            "Smenada nima qaytarildi yoki o'chirildi.",
+            "Bugun kassada qancha naqd bor va u urilgan sotuvlarga to'g'ri keladimi.",
+            "Smena davomida nima qaytarildi yoki o'chirildi va kim qildi.",
+            "Bugun kim nasiyaga oldi va qancha qaytarishi yozildimi.",
           ],
         },
         {
-          h2: "Kunlik 5 daqiqa - bu sizning qo'shimcha vaqt goli",
+          h2: "BirLiy smenani hushtakgacha ochiq tutadi",
           paragraphs: [
-            "Yirenkyining qo'shimcha vaqtdagi goli kabi, sizning kunlik 5 daqiqalik hisobotingiz ham kichik, lekin hal qiluvchi harakat. U bugungi tushum, kam qolgan tovar va qarzdorlarni ko'rsatadi.",
-            "Shu qisqa odat oy oxirida natijani o'zgartiradi. Chunki muammoni kech emas, o'sha kuni ko'rasiz va tuzatasiz.",
-          ],
-        },
-        {
-          h2: "BirLiy kunlik hisobotni oson qiladi",
-          paragraphs: [
-            "BirLiy telefonda egaga kunlik hisobotni beradi: tushum, qoldiq va qarz bir joyda ko'rinadi. Kassir savdoni kiritadi, egasi esa bir necha daqiqada manzarani ko'radi.",
-            "Shunday qilib kunlik 5 daqiqa odatga aylanadi va do'kon izchil o'sadi. Kichik harakat, katta natija.",
+            "BirLiy'da har bir kassir o'z PIN'i bilan kiradi va kim nima urgani, qaytargani yoki o'chirgani jurnalda ismi bilan turadi. Smena yopilganda egasi o'sha kunni telefondan ko'radi, kassa yonida turishi shart emas.",
+            "Nasiya ham daftar o'rniga ilovada: kim qancha qarz va qachon to'lashni va'da qilgani bitta ro'yxatda. Shunday qilib kechki oxirgi soatda hech narsa og'zaki qolmaydi, hammasi yozilib turadi.",
           ],
         },
       ],
       faq: [
         {
           q: "Bu maqola sport bashoratimi?",
-          a: "Yo'q. Bu o'yin natijasidan olingan amaliy biznes saboq, bashorat yoki stavka emas. Maqsad kichik va izchil harakatlarning kuchini ko'rsatish.",
+          a: "Yo'q. Bu o'yin natijasidan olingan amaliy fikr, bashorat yoki stavka emas. Asosiy g'oya: pul ko'pincha smenaning eng oxirida oqib ketadi.",
         },
         {
-          q: "Nega kunlik 5 daqiqa muhim?",
-          a: "Chunki har kuni tushum, qoldiq va qarzni ko'rish muammoni o'sha kuni aniqlaydi. Bu kichik odat oy oxirida katta farq qiladi.",
+          q: "Nega kechki oxirgi soat muhim?",
+          a: "Chunki o'sha paytda hamma charchagan va diqqat tushadi. Kichik xatolar aynan shunda yozilmay qoladi va kun oxirida sonlar to'g'ri kelmaydi.",
         },
         {
-          q: "Kunlik hisobotda nimani ko'rish kerak?",
-          a: "Bugungi tushum, kam qolgan tovar va qarzdorlarni. Shu uchta son odatda ko'pchilik muammoni erta ko'rsatadi.",
+          q: "Smena yopilishda nimani tekshirish kerak?",
+          a: "Kassadagi naqd urilgan sotuvga to'g'ri keladimi, nima qaytarildi va kim qildi, kim nasiyaga oldi. Shu uchta narsa kechki oqishni erta ko'rsatadi.",
+        },
+        {
+          q: "Kassir nimani vaqtidan oldin yopib qo'yishi mumkin?",
+          a: "Charchaganda naqd to'lov yoki qaytarishni og'zaki o'tkazib yuborishi mumkin. PIN va amallar jurnali bo'lsa, kim nima qilgani ismi bilan ko'rinadi.",
         },
         {
           q: "BirLiy buni qanday osonlashtiradi?",
-          a: "BirLiy egaga kunlik tushum, qoldiq va qarz hisobotini telefonda beradi, shuning uchun 5 daqiqalik tekshiruv oson odatga aylanadi.",
+          a: "Har bir kassir PIN bilan kiradi, amallar ismi bilan jurnalga tushadi, nasiya ilovada turadi. Egasi smenani telefondan ko'radi, kassa yonida turishi shart emas.",
         },
       ],
-      sources: [
-        { label: "ESPN: o'yin hisoboti Gana - Panama", url: SRC_ESPN },
-        { label: "FIFA: rasmiy o'yin hisoboti", url: SRC_FIFA },
-      ],
-      cta: {
-        text: "Kunlik 5 daqiqani odatga aylantiring. BirLiy jamoasi ulanish va sozlashda yordam beradi.",
-        button: "Ariza qoldirish",
-      },
+      cta: { text: "Kechki smenani nazoratdan chiqarmang. BirLiy jamoasi ulanish va sozlashda yordam beradi.", button: "Ariza qoldirish" },
     },
     ru: {
-      title: "Гана 1:0 Панама: маленькое и постоянное действие решает результат",
+      title: "Гана Панама: гол пришёл в последнюю минуту, смена тоже",
       description:
-        "Матч Гана, Панама как урок для владельца магазина: маленькие, поздние и постоянные действия решают результат. Ежедневный отчёт на 5 минут, вот тот самый гол в добавленное время.",
+        "Матч Гана Панама решился на 90+5. Урок для владельца магазина: деньги утекают в последние вечерние часы, не отпускайте смену до самого закрытия.",
       keywords: [
         "Гана Панама",
-        "футбол урок для бизнеса",
         "ежедневный отчёт",
-        "постоянное действие",
-        "контроль магазина",
-        "остатки и долги",
-        "BirLiy POS",
-        "для владельца магазина",
+        "закрытие смены",
+        "контроль кассира",
+        "вечерняя смена",
+        "долговая тетрадь",
+        "владелец магазина",
+        "BirLiy",
       ],
       intro: [
-        "Короткий ответ: Гана 90 минут не могла победить, но одно точное действие в добавленное время решило матч. Урок для владельца магазина: ежедневная пятиминутная проверка выручки, остатков и долгов в BirLiy - это тот самый поздний гол, который к концу месяца даёт большую разницу.",
-        "17 июня 2026 года Гана победила Панаму 1:0. Калеб Йиренкьи забил в добавленное время, на 90+5-й минуте, с близкого расстояния и решил матч, это стал самый поздний гол турнира.",
-        "Первый час игры был плотным, моментов было мало, но Гана играла терпеливо и вырвала победу в самом конце. Одно маленькое и точное действие определило весь результат.",
-        "Это не спортивный прогноз и не ставки, а практический урок для владельца магазина. Маленькие, поздние и постоянные действия решают результат месяца.",
+        "Матч Гана Панама почти до конца был 0:0. Многие уже решили, что будет ничья, игроки устали, время уходило. Потом на 90+5-й минуте Гана забила и забрала игру.",
+        "Это стал один из самых поздних голов всего турнира. По сути всё похоже на вечерний последний час в магазине: все устали, кассир хочет закрыть пораньше, но результат решается именно здесь.",
+        "Это не спортивный прогноз. Это одна практическая мысль для владельца магазина: деньги чаще утекают не в начале дня, а в самом конце смены, когда внимание у всех уже упало.",
       ],
       sections: [
         {
-          h2: "Даже маленькое действие меняет результат",
+          h2: "Последний вечерний час, это самый рискованный час",
           paragraphs: [
-            "Гана 90 минут не могла забить, но одно точное действие решило всё. В магазине результат тоже чаще решается не одним большим делом, а маленькими ежедневными привычками.",
-            "Если владелец каждый день за несколько минут смотрит цифры магазина, эта маленькая привычка в итоге даёт большую разницу. Важен не один день, а повторение.",
+            "Утром владелец бодрый, проверяет цифры, заново открывает кассу. Вечером всё иначе. Усталость, покупателей меньше, кассир одним глазом на двери и думает, когда закрываемся.",
+            "Именно в этот момент мелочи проходят мимо внимания. Один наличный платёж без записи, один возврат не отмечен, одна насия сказана на словах и завтра забыта. Каждое по отдельности не страшно, но повторяется каждый день.",
           ],
         },
         {
-          h2: "Терпение и постоянство, это секреты победы",
+          h2: "Гана не закрыла смену раньше времени",
           paragraphs: [
-            "Гана терпела до конца игры и под постоянным давлением нашла победу. В магазине постоянство, то есть одна и та же ежедневная проверка, постепенно сохраняет прибыль.",
-            "Проверить один день и потом забыть недостаточно. Именно ежедневное повторение предупреждает вас о проблеме и сохраняет деньги.",
+            "Гана не перестала играть на 85-й минуте, давила до последнего свистка и поэтому нашла гол. В магазине смена так же открыта до самого свистка.",
+            "Закрыть смену раньше времени, это уронить внимание до того, как пересчитали кассу. Тогда кто что пробил, что вернулось, сколько осталось наличных, всё становится мутным. На следующий день вы не вспомните, что было, только увидите, что цифры не сошлись.",
+          ],
+        },
+        {
+          h2: "Три вещи, которые проверяют в конце смены",
+          paragraphs: [
+            "При закрытии дня владельцу не нужен длинный отчёт. Хватает трёх вопросов, и именно они ловят вечернюю утечку.",
           ],
           list: [
-            "Сколько сегодня выручка.",
-            "Какой товар заканчивается.",
-            "Кто взял в долг и сколько должен вернуть.",
-            "Что в смене было возвращено или удалено.",
+            "Сколько сегодня наличных в кассе и сходится ли это с пробитыми продажами.",
+            "Что за смену вернули или удалили и кто это сделал.",
+            "Кто сегодня взял в долг и записано ли, сколько он должен вернуть.",
           ],
         },
         {
-          h2: "Ежедневные 5 минут, это ваш гол в добавленное время",
+          h2: "BirLiy держит смену открытой до свистка",
           paragraphs: [
-            "Как гол Йиренкьи в добавленное время, ваш ежедневный отчёт на 5 минут, это маленькое, но решающее действие. Он показывает сегодняшнюю выручку, заканчивающийся товар и должников.",
-            "Эта короткая привычка меняет результат в конце месяца. Потому что проблему вы видите и исправляете в тот же день, а не поздно.",
-          ],
-        },
-        {
-          h2: "BirLiy делает ежедневный отчёт простым",
-          paragraphs: [
-            "BirLiy даёт владельцу дневной отчёт на телефоне: выручка, остатки и долги в одном месте. Кассир проводит продажи, а владелец за несколько минут видит картину.",
-            "Так ежедневные 5 минут превращаются в привычку, и магазин растёт постоянно. Маленькое действие, большой результат.",
+            "В BirLiy каждый кассир входит по своему PIN, и кто что пробил, вернул или удалил, стоит в журнале с его именем. При закрытии смены владелец видит этот день с телефона, стоять у кассы не нужно.",
+            "Насия тоже в приложении вместо тетради: кто сколько должен и когда обещал оплатить, всё в одном списке. Так в вечерний последний час ничего не остаётся на словах, всё записано.",
           ],
         },
       ],
       faq: [
         {
           q: "Это спортивный прогноз?",
-          a: "Нет. Это практический бизнес-урок из результата матча, а не прогноз или ставка. Цель, показать силу маленьких и постоянных действий.",
+          a: "Нет. Это практическая мысль из результата матча, а не прогноз и не ставка. Главная идея: деньги чаще всего утекают в самом конце смены.",
         },
         {
-          q: "Почему важны ежедневные 5 минут?",
-          a: "Потому что ежедневный взгляд на выручку, остатки и долги выявляет проблему в тот же день. Эта маленькая привычка даёт большую разницу к концу месяца.",
+          q: "Почему важен последний вечерний час?",
+          a: "Потому что в это время все устали и внимание падает. Мелкие ошибки именно тогда не записываются, и в конце дня цифры не сходятся.",
         },
         {
-          q: "Что смотреть в ежедневном отчёте?",
-          a: "Сегодняшнюю выручку, заканчивающийся товар и должников. Эти три цифры в привычке заранее показывают большинство проблем.",
+          q: "Что проверять при закрытии смены?",
+          a: "Сходятся ли наличные в кассе с пробитыми продажами, что вернули и кто это сделал, кто взял в долг. Эти три вещи рано показывают вечернюю утечку.",
+        },
+        {
+          q: "Что кассир может закрыть раньше времени?",
+          a: "Уставший кассир может провести наличный платёж или возврат на словах. С PIN и журналом действий видно, кто что сделал, с именем.",
         },
         {
           q: "Как BirLiy это упрощает?",
-          a: "BirLiy даёт владельцу отчёт по дневной выручке, остаткам и долгам на телефоне, поэтому пятиминутная проверка становится лёгкой привычкой.",
+          a: "Каждый кассир входит по PIN, действия попадают в журнал с именем, насия в приложении. Владелец видит смену с телефона, стоять у кассы не нужно.",
         },
       ],
-      sources: [
-        { label: "ESPN: отчёт о матче Гана - Панама", url: SRC_ESPN },
-        { label: "FIFA: официальный отчёт о матче", url: SRC_FIFA },
-      ],
-      cta: {
-        text: "Сделайте ежедневные 5 минут привычкой. Команда BirLiy поможет с подключением и настройкой.",
-        button: "Оставить заявку",
-      },
+      cta: { text: "Не отпускайте вечернюю смену из-под контроля. Команда BirLiy поможет с подключением и настройкой.", button: "Оставить заявку" },
     },
     en: {
-      title: "Ghana 1-0 Panama: a small, consistent action decides the result",
+      title: "Ghana Panama: the goal came in the last minute, so does the shift",
       description:
-        "The Ghana vs Panama match as a lesson for a shop owner: small, late and consistent actions decide the result. A daily 5-minute report is that stoppage-time goal.",
+        "Ghana Panama was decided at 90+5. The lesson for a shop owner: money leaks in the late evening hours, do not let the shift go before close.",
       keywords: [
         "Ghana Panama",
-        "football business lesson",
         "daily report",
-        "consistent action",
-        "shop control",
-        "stock and debt",
-        "BirLiy POS",
-        "for shop owners",
+        "shift close",
+        "cashier control",
+        "evening shift",
+        "debt notebook",
+        "shop owner",
+        "BirLiy",
       ],
       intro: [
-        "Short answer: Ghana could not score for 90 minutes, but one precise stoppage-time action decided the match. For a shop owner the lesson is the same: a daily five-minute check of revenue, stock and debts in BirLiy is that late goal, and it makes a big difference by the end of the month.",
-        "On 17 June 2026 Ghana beat Panama 1-0. Caleb Yirenkyi scored a tap-in in stoppage time, in the 90+5 minute, and decided the match, the latest goal of the tournament so far.",
-        "The first hour was tight with few chances, but Ghana played patiently and won it at the very end. One small and precise action determined the whole result.",
-        "This is not sports analysis or betting, just a practical lesson for a shop owner. Small, late and consistent actions decide the result of the month.",
+        "The Ghana Panama match was 0:0 almost to the end. Many had already settled on a draw, the players were tired, time was running out. Then in the 90+5 minute Ghana scored and took the game.",
+        "It became one of the latest goals of the whole tournament. In a way it is just like the late evening hour in a shop: everyone is tired, the cashier wants to close early, but the result is decided right here.",
+        "This is not a sports prediction. It is one practical thought for a shop owner: money more often leaks not at the start of the day but at the very end of the shift, when everyone's attention has already dropped.",
       ],
       sections: [
         {
-          h2: "Even a small action changes the result",
+          h2: "The last evening hour is the riskiest hour",
           paragraphs: [
-            "Ghana could not score for 90 minutes, but one precise action decided everything. In a shop the result is also more often decided not by one big task but by small daily habits.",
-            "If the owner spends a few minutes each day on the shop's numbers, that small habit makes a big difference in the end. It is not one day but repetition that matters.",
+            "In the morning the owner is sharp, checks the numbers, reopens the till. In the evening it is different. Tiredness, fewer customers, the cashier with one eye on the door wondering when they close.",
+            "That is exactly when small things slip past. One cash payment with no record, one return not marked, one debt agreed out loud and forgotten by tomorrow. None of them is big on its own, but each repeats every day.",
           ],
         },
         {
-          h2: "Patience and consistency are the secrets of winning",
+          h2: "Ghana did not close the shift early",
           paragraphs: [
-            "Ghana stayed patient to the end of the game and found the win under steady pressure. In a shop consistency, the same daily check, gradually keeps the profit.",
-            "Checking one day and then forgetting is not enough. It is the daily repetition that warns you about a problem and keeps the money.",
+            "Ghana did not stop playing at the 85th minute, they pressed until the final whistle and so they found the goal. In a shop the shift is open until the whistle too.",
+            "Closing the shift early means dropping your attention before the till is counted. Then who rang up what, what was returned, how much cash is left, all of it goes blurry. The next day you will not remember what happened, you will only see that the numbers did not match.",
+          ],
+        },
+        {
+          h2: "Three things to check at the end of the shift",
+          paragraphs: [
+            "At close of day the owner does not need a long report. Three questions are enough, and these are the ones that catch the evening leak.",
           ],
           list: [
-            "How much today's revenue is.",
-            "Which product is running low.",
-            "Who took credit and how much they owe.",
-            "What was returned or deleted in the shift.",
+            "How much cash is in the till today and whether it matches the rung-up sales.",
+            "What was returned or deleted during the shift and who did it.",
+            "Who took credit today and whether how much they owe was written down.",
           ],
         },
         {
-          h2: "A daily 5 minutes is your stoppage-time goal",
+          h2: "BirLiy keeps the shift open until the whistle",
           paragraphs: [
-            "Like Yirenkyi's stoppage-time goal, your daily 5-minute report is a small but decisive action. It shows today's revenue, low-stock items and debtors.",
-            "This short habit changes the result at the end of the month. Because you see and fix a problem that same day, not late.",
-          ],
-        },
-        {
-          h2: "BirLiy makes the daily report simple",
-          paragraphs: [
-            "BirLiy gives the owner a daily report on a phone: revenue, stock and debts in one place. The cashier records sales while the owner sees the picture in a few minutes.",
-            "This way the daily 5 minutes becomes a habit and the shop grows consistently. A small action, a big result.",
+            "In BirLiy each cashier logs in with their own PIN, and who rang up, returned or deleted what stands in the log with their name. At shift close the owner sees that day from the phone, no need to stand at the till.",
+            "Debt is in the app instead of the notebook too: who owes how much and when they promised to pay, all in one list. This way nothing in the late evening hour is left as a spoken word, it is all written down.",
           ],
         },
       ],
       faq: [
         {
           q: "Is this article a sports prediction?",
-          a: "No. It is a practical business lesson drawn from a match result, not a prediction or a bet. The goal is to show the power of small, consistent actions.",
+          a: "No. It is a practical thought drawn from a match result, not a prediction or a bet. The main idea is that money most often leaks at the very end of the shift.",
         },
         {
-          q: "Why does a daily 5 minutes matter?",
-          a: "Because a daily look at revenue, stock and debts spots a problem the same day. This small habit makes a big difference by the end of the month.",
+          q: "Why does the last evening hour matter?",
+          a: "Because everyone is tired by then and attention drops. Small mistakes go unrecorded right at that point, and at close of day the numbers do not match.",
         },
         {
-          q: "What should you check in the daily report?",
-          a: "Today's revenue, low-stock items and debtors. As a habit these three numbers reveal most problems early.",
+          q: "What should you check when closing the shift?",
+          a: "Whether the cash in the till matches the rung-up sales, what was returned and who did it, and who took credit. These three catch the evening leak early.",
+        },
+        {
+          q: "What can a cashier close out early?",
+          a: "A tired cashier may pass a cash payment or a return as a spoken word. With a PIN and an action log you can see who did what, with their name.",
         },
         {
           q: "How does BirLiy make this easier?",
-          a: "BirLiy gives the owner a daily revenue, stock and debt report on a phone, so the five-minute check becomes an easy habit.",
+          a: "Each cashier logs in with a PIN, actions land in the log with a name, debt sits in the app. The owner sees the shift from the phone, no need to stand at the till.",
         },
       ],
-      sources: [
-        { label: "ESPN: match report Ghana vs Panama", url: SRC_ESPN },
-        { label: "FIFA: official match report", url: SRC_FIFA },
-      ],
-      cta: {
-        text: "Make the daily 5 minutes a habit. The BirLiy team helps with setup and configuration.",
-        button: "Leave a request",
-      },
+      cta: { text: "Do not let the evening shift slip out of control. The BirLiy team helps with setup and configuration.", button: "Leave a request" },
     },
   },
 };
