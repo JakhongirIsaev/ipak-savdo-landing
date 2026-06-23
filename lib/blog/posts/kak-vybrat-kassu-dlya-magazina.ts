@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "kak-vybrat-kassu-dlya-magazina",
   category: "product",
   date: "2026-06-11",
   modified: "2026-06-23",
+  image: blogCover("kak-vybrat-kassu-dlya-magazina"),
   locales: {
     uz: {
       title: "Do'kon uchun kassa dasturini qanday tanlash (2026)",

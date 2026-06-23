@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "magazin-uchun-dastur-telefonda-savdo",
   category: "product",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("magazin-uchun-dastur-telefonda-savdo"),
   locales: {
     uz: {
       title: "Magazin uchun dastur: telefondan qaysidan boshlash kerak",

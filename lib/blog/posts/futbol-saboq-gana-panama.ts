@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "futbol-saboq-gana-panama",
   category: "football",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("futbol-saboq-gana-panama"),
   locales: {
     uz: {
       title: "Gana Panama: gol oxirgi daqiqada keldi, smena ham shunday",

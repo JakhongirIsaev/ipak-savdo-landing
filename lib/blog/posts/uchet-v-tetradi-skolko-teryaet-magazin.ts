@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "uchet-v-tetradi-skolko-teryaet-magazin",
   category: "product",
   date: "2026-06-11",
   modified: "2026-06-23",
+  image: blogCover("uchet-v-tetradi-skolko-teryaet-magazin"),
   locales: {
     uz: {
       title: "Daftar hisobi: do'kon pulni qayerda jim yo'qotadi",

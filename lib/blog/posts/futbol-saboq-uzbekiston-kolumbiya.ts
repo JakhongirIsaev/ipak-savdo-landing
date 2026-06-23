@@ -1,10 +1,12 @@
 import type { BlogPost } from "../types";
+import { blogCover } from "../blog-image";
 
 export const post: BlogPost = {
   slug: "futbol-saboq-uzbekiston-kolumbiya",
   category: "football",
   date: "2026-06-19",
   modified: "2026-06-23",
+  image: blogCover("futbol-saboq-uzbekiston-kolumbiya"),
   locales: {
     uz: {
       title: "O'zbekiston Kolumbiya CHM 2026: do'konni raqamlashtirishning birinchi oyi",
