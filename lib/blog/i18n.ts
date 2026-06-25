@@ -6,9 +6,16 @@ export const BLOG_UI: Record<
   {
     blogTitle: string;
     blogDescription: string;
+    blogEyebrow: string;
     breadcrumbHome: string;
     breadcrumbBlog: string;
+    navHome: string;
+    categoriesLabel: string;
+    latestArticles: string;
+    featuredLabel: string;
+    readArticle: string;
     readingTime: (min: number) => string;
+    articleCount: (count: number) => string;
     faqTitle: string;
     relatedTitle: string;
     sourcesTitle: string;
@@ -29,9 +36,16 @@ export const BLOG_UI: Record<
     blogTitle: "BirLiy blog: do'kon yuritish bo'yicha maslahatlar",
     blogDescription:
       "Kassa, ombor hisobi, QR to'lov va do'kon boshqaruvi haqida amaliy maqolalar. O'zbekiston kichik biznesi uchun.",
+    blogEyebrow: "Bilim markazi",
     breadcrumbHome: "Bosh sahifa",
     breadcrumbBlog: "Blog",
+    navHome: "Asosiy",
+    categoriesLabel: "Bo'limlar",
+    latestArticles: "Yangi maqolalar",
+    featuredLabel: "Tanlangan",
+    readArticle: "Maqolani o'qish",
     readingTime: (min) => `${min} daqiqa o'qiladi`,
+    articleCount: (count) => `${count} maqola`,
     faqTitle: "Ko'p so'raladigan savollar",
     relatedTitle: "Tegishli maqolalar",
     sourcesTitle: "Manbalar",
@@ -52,9 +66,16 @@ export const BLOG_UI: Record<
     blogTitle: "Блог BirLiy: советы по управлению магазином",
     blogDescription:
       "Практичные статьи о кассе, складском учёте, QR-оплате и управлении магазином. Для малого бизнеса Узбекистана.",
+    blogEyebrow: "Центр знаний",
     breadcrumbHome: "Главная",
     breadcrumbBlog: "Блог",
+    navHome: "Главная",
+    categoriesLabel: "Разделы",
+    latestArticles: "Новые статьи",
+    featuredLabel: "Выбор редакции",
+    readArticle: "Читать статью",
     readingTime: (min) => `${min} мин чтения`,
+    articleCount: (count) => `${count} статей`,
     faqTitle: "Частые вопросы",
     relatedTitle: "Похожие статьи",
     sourcesTitle: "Источники",
@@ -75,9 +96,16 @@ export const BLOG_UI: Record<
     blogTitle: "BirLiy blog: practical advice for shop owners",
     blogDescription:
       "Practical articles on POS, inventory tracking, QR payments and running a small shop in Uzbekistan.",
+    blogEyebrow: "Knowledge center",
     breadcrumbHome: "Home",
     breadcrumbBlog: "Blog",
+    navHome: "Home",
+    categoriesLabel: "Categories",
+    latestArticles: "Latest articles",
+    featuredLabel: "Featured",
+    readArticle: "Read article",
     readingTime: (min) => `${min} min read`,
+    articleCount: (count) => `${count} articles`,
     faqTitle: "Frequently asked questions",
     relatedTitle: "Related articles",
     sourcesTitle: "Sources",
@@ -119,9 +147,9 @@ export function landingPath(locale: BlogLocale): string {
 }
 
 export const CATEGORY_LABEL: Record<BlogCategory, Record<BlogLocale, string>> = {
-  product: { uz: "Mahsulot", ru: "Продукт", en: "Product" },
+  product: { uz: "Kassa va ombor", ru: "Касса и склад", en: "POS & inventory" },
   "ai-tech": { uz: "AI va texnologiya", ru: "AI и технологии", en: "AI & Technology" },
-  football: { uz: "Futbol", ru: "Футбол", en: "Football" },
+  football: { uz: "Futbol saboqlari", ru: "Уроки футбола", en: "Football lessons" },
 };
 
 export function blogCategoryPath(locale: BlogLocale, category: BlogCategory): string {

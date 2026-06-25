@@ -26,47 +26,11 @@ export interface LeadFormDict {
   optional: string;
   submit: string;
   formSecurity: string;
-  formDocsTitle: string;
-  formDocsNote: string;
-  formPatent: string;
-  formPassport: string;
-  formShop: string;
-  formFilePick: string;
-  formFileTooBig: string;
-  formFileWrongType: string;
-  formFilesRequired: string;
   success: string;
   formSubmitError: string;
   formRateLimited: string;
   formValidationError: string;
   businessTypes: readonly string[];
-}
-
-const MAX_DOC_BYTES = 10 * 1024 * 1024;
-const ALLOWED_DOC_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const DOC_FIELDS = ["patent", "passport", "shop"] as const;
-
-function DocInput({ name, label, pickLabel }: { name: string; label: string; pickLabel: string }) {
-  const [fileName, setFileName] = useState("");
-  return (
-    <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-mist bg-white px-4 py-3">
-      <span className="flex min-w-0 flex-1 flex-col">
-        <span className="text-sm font-semibold text-ink-900">{label}</span>
-        {fileName && <span className="truncate text-xs text-ink-500">{fileName}</span>}
-      </span>
-      <span className="shrink-0 rounded-full bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-800">
-        {pickLabel}
-      </span>
-      <input
-        type="file"
-        name={name}
-        accept="image/jpeg,image/png,image/webp"
-        required
-        onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
-        className="sr-only"
-      />
-    </label>
-  );
 }
 
 export interface LeadFormProps {
@@ -110,25 +74,6 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
     if (attribution?.utm_medium) fd.set("utm_medium", attribution.utm_medium);
     if (attribution?.utm_campaign) fd.set("utm_campaign", attribution.utm_campaign);
 
-    for (const field of DOC_FIELDS) {
-      const f = fd.get(field);
-      if (!(f instanceof File) || f.size === 0) {
-        setErrorMsg(t.formFilesRequired);
-        setState("error");
-        return;
-      }
-      if (!ALLOWED_DOC_TYPES.includes(f.type)) {
-        setErrorMsg(t.formFileWrongType);
-        setState("error");
-        return;
-      }
-      if (f.size > MAX_DOC_BYTES) {
-        setErrorMsg(t.formFileTooBig);
-        setState("error");
-        return;
-      }
-    }
-
     try {
       // No content-type header: the browser sets multipart/form-data with the boundary.
       const res = await fetch("/api/lead", { method: "POST", body: fd });
@@ -139,11 +84,7 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         return;
       }
       if (res.status === 400) {
-        if (json?.error === "file") {
-          setErrorMsg(json.reason === "size" ? t.formFileTooBig : json.reason === "type" ? t.formFileWrongType : t.formFilesRequired);
-        } else {
-          setErrorMsg(t.formValidationError);
-        }
+        setErrorMsg(t.formValidationError);
         setState("error");
         return;
       }
@@ -211,16 +152,6 @@ export default function LeadForm({ t, locale, compact, attribution }: LeadFormPr
         <input type="checkbox" name="needs_equipment" className="h-5 w-5 rounded border-mist text-green-500" />
         {t.formNeedsEquipment}
       </label>
-
-      <div className="grid gap-3 rounded-xl border border-mist bg-paper/60 p-4">
-        <div>
-          <p className="text-sm font-bold text-ink-900">{t.formDocsTitle}</p>
-          <p className="mt-1 text-xs leading-snug text-ink-700">{t.formDocsNote}</p>
-        </div>
-        <DocInput name="patent" label={t.formPatent} pickLabel={t.formFilePick} />
-        <DocInput name="passport" label={t.formPassport} pickLabel={t.formFilePick} />
-        <DocInput name="shop" label={t.formShop} pickLabel={t.formFilePick} />
-      </div>
 
       <button
         type="button"

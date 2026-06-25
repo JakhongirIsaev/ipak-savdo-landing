@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Check, ChevronRight, Send, ShieldCheck, X } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Send, ShieldCheck, X } from "lucide-react";
 import type { Locale } from "./demoData";
 import { useAttribution } from "@/lib/use-attribution";
 import { trackSiteEvent, trackLeadSubmitAttempt, trackLeadSuccess } from "@/lib/track/client";
 
 // Public Telegram contact, mirrors copy.footer.telegramHref in ConceptLanding.
-// Used as the documents-via-Telegram fallback in the lead form (BR-04) and on
-// the success screen.
+// Used on the success screen.
 const TELEGRAM_HREF = "https://t.me/bir_liy";
 
 // +998 phone mask. Keeps only digits, drops a leading 998/8/9->normalises, then
@@ -37,22 +36,19 @@ function formatUzPhone(raw: string): string {
 const BUSINESS_VALUES = ["shop", "minimarket", "pharmacy", "market", "service", "other"] as const;
 type FormState = "idle" | "submitting" | "sent" | "error";
 
-const MAX_DOC_BYTES = 10 * 1024 * 1024;
-const ALLOWED_DOC_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const DOC_FIELDS = ["patent", "passport", "shop"] as const;
 const COMMENT_MAX = 500; // must match lib/validators/lead.ts comment.max(500)
 
 const STR = {
   ru: {
     eyebrow: "05 / Заявка",
-    title: "Пилотная цена для магазинов у дома и минимаркетов.",
-    body: "Оставьте контакты, и менеджер свяжется с вами. Документы можно приложить позже или прислать менеджеру в Telegram.",
+    title: "Стартовая цена для магазинов у дома и минимаркетов.",
+    body: "Оставьте контакты, и менеджер свяжется с вами. Уточним точку, оборудование и удобное время подключения.",
     openCta: "Оставить заявку",
-    modalTitle: "Заявка в пилот",
+    modalTitle: "Заявка",
     close: "Закрыть",
     pricing: {
-      badge: "Пилотная программа",
-      title: "Начните с телефона по пилотной цене",
+      badge: "Стартовая цена",
+      title: "Начните с телефона",
       price: "49 000",
       unit: "сум / месяц",
       note: "первые 6 месяцев · далее",
@@ -64,11 +60,8 @@ const STR = {
       ],
     },
     step1Label: "Заявка",
-    step2Label: "Документы · необязательно",
     step1Title: "Контакты",
     step1Desc: "Оставьте контакты, и менеджер свяжется с вами",
-    step2Title: "Документы для подключения",
-    step2Desc: "Это необязательно. Чтобы ускорить подключение, приложите три фото или пришлите их менеджеру в Telegram. Заявка уже принята.",
     contactsTitle: "Контакты",
     contactsDesc: "Как с вами связаться",
     name: "Имя",
@@ -84,25 +77,11 @@ const STR = {
     cityDesc: "Где находится точка",
     city: "Город или район",
     other: "Уточните тип бизнеса",
-    next: "Дальше",
-    back: "Назад",
     sendContacts: "Отправить заявку",
-    addDocs: "Приложить документы (необязательно)",
-    tgFallback: "Не хотите загружать фото здесь? Пришлите их менеджеру в Telegram, мы поможем с подключением.",
-    tgFallbackCta: "Написать в Telegram",
     equipTitle: "Оборудование",
-    equipDesc: "Что нужно для старта (необязательно)",
+    equipDesc: "Если нужен полный комплект, отметьте одним нажатием",
     equipLabel: "Оборудование",
-    equipQr: "Сканер штрих-кодов",
-    equipTablet: "Планшет",
-    docsTitle: "Документы (необязательно)",
-    docsNote: "Чтобы ускорить подключение, можно сразу приложить фото патента, паспорта владельца и магазина. Файлы передаются по защищённому каналу.",
-    docPatent: "Фото патента",
-    docPassport: "Фото паспорта директора/владельца",
-    docShop: "Фото магазина",
-    filePick: "Выбрать фото",
-    fileTooBig: "Файл слишком большой: максимум 10 МБ.",
-    fileWrongType: "Нужно фото: JPG, PNG или WEBP.",
+    equipBundle: "Нужен комплект: планшет, сканер и чековый принтер",
     commentTitle: "Комментарий",
     commentDesc: "Необязательно",
     commentPh: "Что важно знать о вашей точке?",
@@ -118,19 +97,19 @@ const STR = {
     aside: {
       title: "Почему BirLiy",
       items: ["Касса, склад и деньги в одном экране", "Запуск за один день, старт с телефона", "Помощь с первым запуском, лично"],
-      note: "Документы передаются по защищённому каналу.",
+      note: "Ваши данные используем только для подключения и связи с вами.",
     },
   },
   uz: {
     eyebrow: "05 / Ariza",
-    title: "Uy yonidagi do'kon va minimarketlar uchun pilot narx.",
-    body: "Kontaktlarni qoldiring, menejer siz bilan bog'lanadi. Hujjatlarni keyinroq biriktirsangiz yoki menejerga Telegram orqali yuborsangiz bo'ladi.",
+    title: "Uy yonidagi do'kon va minimarketlar uchun start narx.",
+    body: "Kontaktlarni qoldiring, menejer siz bilan bog'lanadi. Nuqta, kerakli jihoz va ulash vaqtini aniqlaymiz.",
     openCta: "Ariza qoldirish",
-    modalTitle: "Pilotga ariza",
+    modalTitle: "Ariza",
     close: "Yopish",
     pricing: {
-      badge: "Pilot dasturi",
-      title: "Telefondan pilot narxda boshlang",
+      badge: "Start narxi",
+      title: "Telefondan boshlang",
       price: "49 000",
       unit: "so'm / oy",
       note: "birinchi 6 oy · keyin",
@@ -142,11 +121,8 @@ const STR = {
       ],
     },
     step1Label: "Ariza",
-    step2Label: "Hujjatlar · ixtiyoriy",
     step1Title: "Kontaktlar",
     step1Desc: "Kontakt qoldiring, menejer siz bilan bog'lanadi",
-    step2Title: "Ulash uchun hujjatlar",
-    step2Desc: "Bu ixtiyoriy. Ulashni tezlashtirish uchun uchta foto biriktiring yoki menejerga Telegram orqali yuboring. Ariza allaqachon qabul qilindi.",
     contactsTitle: "Kontaktlar",
     contactsDesc: "Siz bilan qanday bog'lanamiz",
     name: "Ism",
@@ -162,25 +138,11 @@ const STR = {
     cityDesc: "Nuqta qayerda joylashgan",
     city: "Shahar yoki tuman",
     other: "Biznes turini aniqlang",
-    next: "Keyingisi",
-    back: "Orqaga",
     sendContacts: "Ariza yuborish",
-    addDocs: "Hujjat biriktirish (ixtiyoriy)",
-    tgFallback: "Fotoni shu yerda yuklashni xohlamaysizmi? Ularni menejerga Telegram orqali yuboring, ulashda yordam beramiz.",
-    tgFallbackCta: "Telegramga yozish",
     equipTitle: "Jihozlar",
-    equipDesc: "Start uchun nima kerak (ixtiyoriy)",
-    equipLabel: "Jihozlar",
-    equipQr: "Shtrix-kod skaner",
-    equipTablet: "Planshet",
-    docsTitle: "Hujjatlar (ixtiyoriy)",
-    docsNote: "Ulashni tezlashtirish uchun patent, egasi pasporti va do'kon fotosini darrov biriktirsangiz bo'ladi. Fayllar himoyalangan kanal orqali yuboriladi.",
-    docPatent: "Patent fotosi",
-    docPassport: "Direktor/egasi pasporti fotosi",
-    docShop: "Do'kon fotosi",
-    filePick: "Foto tanlash",
-    fileTooBig: "Fayl juda katta: maksimum 10 MB.",
-    fileWrongType: "Foto kerak: JPG, PNG yoki WEBP.",
+    equipDesc: "Kerak bo'lsa, to'liq to'plamni bir marta belgilang",
+    equipLabel: "Jihoz",
+    equipBundle: "Menga jihoz kerak: planshet, skaner va chek printeri",
     commentTitle: "Izoh",
     commentDesc: "Ixtiyoriy",
     commentPh: "Nuqtangiz haqida nima bilish muhim?",
@@ -196,7 +158,7 @@ const STR = {
     aside: {
       title: "Nega BirLiy",
       items: ["Kassa, ombor va pul bitta ekranda", "Bir kunda ishga tushirish, telefondan start", "Birinchi startda shaxsan yordam"],
-      note: "Hujjatlar himoyalangan kanal orqali yuboriladi.",
+      note: "Ma'lumotlaringiz faqat ulash va aloqa uchun ishlatiladi.",
     },
   },
 } as const;
@@ -216,30 +178,6 @@ function SectionRow({ title, desc, children }: { title: string; desc: string; ch
 const inputCls =
   "min-h-12 w-full rounded-lg border border-[#d9e2db] bg-white px-4 text-base font-bold outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-500/15";
 
-function DocInput({ name, label, pickLabel }: { name: string; label: string; pickLabel: string }) {
-  const [fileName, setFileName] = useState("");
-  return (
-    <label className="flex min-h-12 cursor-pointer items-center gap-3 rounded-lg border border-[#d9e2db] bg-white px-4 py-3 transition hover:border-green-500">
-      <span className="flex min-w-0 flex-1 flex-col">
-        <span className="text-sm font-semibold text-ink-900">{label}</span>
-        {fileName && <span className="truncate text-xs font-bold text-ink-500">{fileName}</span>}
-      </span>
-      <span className="shrink-0 rounded-full bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-800">{pickLabel}</span>
-      {/* No native `required`: this input is sr-only (clipped, 0-size), and Chrome
-          cannot anchor a validation bubble to it, so native validation would silently
-          block submit. The JS guard in submitLead enforces all three documents with a
-          visible message; the server rejects missing docs with 400 as the hard gate. */}
-      <input
-        type="file"
-        name={name}
-        accept="image/jpeg,image/png,image/webp"
-        onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
-        className="sr-only"
-      />
-    </label>
-  );
-}
-
 function EquipToggle({ label, on, onClick }: { label: string; on: boolean; onClick: () => void }) {
   return (
     <button
@@ -256,44 +194,20 @@ function EquipToggle({ label, on, onClick }: { label: string; on: boolean; onCli
   );
 }
 
-// Small step indicator (1 of 2 / 2 of 2). Purely visual progress dots.
-function StepDots({ step }: { step: 1 | 2 }) {
-  return (
-    <div className="flex items-center gap-2" aria-hidden="true">
-      <span className={`h-1.5 w-8 rounded-full transition-colors ${step >= 1 ? "bg-green-500" : "bg-[#d9e2db]"}`} />
-      <span className={`h-1.5 w-8 rounded-full transition-colors ${step >= 2 ? "bg-green-500" : "bg-[#d9e2db]"}`} />
-    </div>
-  );
-}
-
-// Lead form (BR-04). The FIRST lead is captured with CONTACT INFO ONLY so a shop
-// owner is never blocked from reaching us: step 1 (contacts + business + city)
-// submits a real lead on its own. Documents (patent / passport / shop photo) are
-// an OPTIONAL step 2: an owner can attach them in the same submission to speed
-// up connection, or skip them and send them later via the Telegram fallback (and
-// on the success screen).
-//
-// /api/lead is multipart-only but documents are now optional server-side, so a
-// contact-only submission creates a valid lead. The form is one <form>: BOTH
-// steps stay mounted (only the inactive one is hidden), so when step 2 submits,
-// the step-1 fields are still in the single FormData and values never reset when
-// switching steps. The POST happens once per submit, from EITHER step's submit
-// button, so there is never a duplicate lead. `segment` is the segment card that
-// opened the modal, carried into the comment for attribution.
-function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
+// Lead form (BR-04). A shop owner can submit with contact info only, plus an
+// optional equipment bundle flag. `segment` is the segment card that opened the
+// modal, carried into the comment for attribution.
+function LeadForm({ locale, segment, initialNeedsEquipment = false }: { locale: Locale; segment?: string; initialNeedsEquipment?: boolean }) {
   const t = STR[locale];
   const attribution = useAttribution();
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [businessType, setBusinessType] = useState<string>("");
-  const [qrScanner, setQrScanner] = useState(false);
-  const [tablet, setTablet] = useState(false);
+  const [equipmentBundle, setEquipmentBundle] = useState(initialNeedsEquipment);
   const [phone, setPhone] = useState("");
-  const [step, setStep] = useState<1 | 2>(1);
   const startedRef = useRef(false);
   const invalidTrackedRef = useRef(false);
-  // Wraps the step-1 fields so "Дальше" can validate just that step.
-  const step1Ref = useRef<HTMLDivElement>(null);
+  const fieldsRef = useRef<HTMLDivElement>(null);
 
   const markStarted = () => {
     if (startedRef.current) return;
@@ -301,21 +215,8 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
     trackSiteEvent("lead_form_start");
   };
 
-  // Validate the step-1 inputs natively, then reveal the OPTIONAL documents step.
-  // No POST here: this only advances the UI so an owner who wants to attach docs
-  // can do so. The lead is still saved by whichever submit button is pressed.
-  const goToStep2 = () => {
-    markStarted();
-    if (!step1IsValid()) return;
-    setErrorMsg("");
-    setStep(2);
-  };
-
-  // True only when every step-1 field passes native validation. Used by both the
-  // "attach documents" advance and the step-1 "send contacts" submit so a
-  // contact-only lead can never be posted with an empty name / bad phone.
-  const step1IsValid = (): boolean => {
-    const fields = step1Ref.current?.querySelectorAll<HTMLInputElement | HTMLSelectElement>(
+  const fieldsAreValid = (): boolean => {
+    const fields = fieldsRef.current?.querySelectorAll<HTMLInputElement | HTMLSelectElement>(
       "input[name],select[name]",
     );
     if (!fields) return true;
@@ -327,15 +228,11 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
 
   const submitLead = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Submit can fire from either step's button. When it fires from step 1
-    // (contact-only), step-2 docs are hidden and carry no native validation, so
-    // guard the step-1 fields explicitly. Step 2's own submit reaches here only
-    // after the form's native validation, but re-checking is harmless.
-    if (!step1IsValid()) return;
+    if (!fieldsAreValid()) return;
     setErrorMsg("");
     setFormState("submitting");
-    // Submit attempt: the form passed validation and we are about to validate any
-    // attached documents + call the API. NOT a conversion yet.
+    // Submit attempt: the form passed validation and we are about to call the API.
+    // NOT a conversion yet.
     trackLeadSubmitAttempt();
 
     const fd = new FormData(event.currentTarget);
@@ -347,7 +244,7 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
     if (attribution.utm_medium) fd.set("utm_medium", attribution.utm_medium);
     if (attribution.utm_campaign) fd.set("utm_campaign", attribution.utm_campaign);
 
-    const equip = [qrScanner ? t.equipQr : null, tablet ? t.equipTablet : null].filter(Boolean) as string[];
+    const equip = [equipmentBundle ? t.equipBundle : null].filter(Boolean) as string[];
     fd.set("needs_equipment", equip.length > 0 ? "true" : "false");
     // City/district + the segment card have NO DB column (lib/db/schema.ts) and
     // are not in the Zod schema, so we fold them into `comment` (the only free
@@ -369,29 +266,6 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
       .slice(0, Math.max(0, COMMENT_MAX - prefix.length - joiner.length));
     fd.set("comment", `${prefix}${joiner}${userComment}`.slice(0, COMMENT_MAX));
 
-    // Documents are OPTIONAL (BR-04). Validate only the files the owner actually
-    // attached; an empty/absent file part is fine and produces a contact-only
-    // lead. Empty parts are dropped so the server sees no zero-byte uploads.
-    for (const field of DOC_FIELDS) {
-      const f = fd.get(field);
-      if (!(f instanceof File) || f.size === 0) {
-        fd.delete(field);
-        continue;
-      }
-      if (!ALLOWED_DOC_TYPES.includes(f.type)) {
-        setErrorMsg(t.fileWrongType);
-        setFormState("error");
-        trackSiteEvent("lead_form_error", { reason: "document_type" });
-        return;
-      }
-      if (f.size > MAX_DOC_BYTES) {
-        setErrorMsg(t.fileTooBig);
-        setFormState("error");
-        trackSiteEvent("lead_form_error", { reason: "document_size" });
-        return;
-      }
-    }
-
     try {
       // No Content-Type header: the browser sets multipart/form-data with the boundary.
       const response = await fetch("/api/lead", { method: "POST", body: fd });
@@ -404,13 +278,9 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
         return;
       }
       // Surface the real reason instead of a generic "try again" dead-end.
-      // Documents are optional, so a "file" error is always a bad ATTACHED file
-      // (wrong type or too big), never a missing-document rejection.
       let msg: string = t.error;
       if (response.status === 429) msg = t.tooMany;
-      else if (json?.error === "file") {
-        msg = json.reason === "size" ? t.fileTooBig : t.fileWrongType;
-      } else if (json?.error === "validation") msg = t.validation;
+      else if (json?.error === "validation") msg = t.validation;
       setErrorMsg(msg);
       setFormState("error");
       trackSiteEvent("lead_form_error", { reason: json?.error || `http_${response.status}` });
@@ -439,7 +309,7 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
           <Send size={17} />
           {t.successTg}
         </a>
-        <button type="button" onClick={() => { setStep(1); setFormState("idle"); }} className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-[#d9e2db] px-5 font-extrabold text-ink-700 transition hover:bg-[#f1f4f1]">
+        <button type="button" onClick={() => { setFormState("idle"); }} className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-[#d9e2db] px-5 font-extrabold text-ink-700 transition hover:bg-[#f1f4f1]">
           {t.again}
         </button>
       </div>
@@ -460,13 +330,10 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
       <input type="text" name="_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
 
       <div className="flex items-center justify-between gap-4">
-        <p className="text-sm font-extrabold text-green-700">{step === 1 ? t.step1Label : t.step2Label}</p>
-        <StepDots step={step} />
+        <p className="text-sm font-extrabold uppercase tracking-normal text-green-700">{t.step1Label}</p>
       </div>
 
-      {/* Step 1: contacts, business, city. Always mounted; hidden on step 2 so
-          its values stay in the single FormData posted at the end. */}
-      <div ref={step1Ref} className={`grid gap-6 ${step === 1 ? "" : "hidden"}`}>
+      <div ref={fieldsRef} className="grid gap-6">
         <div>
           <p className="text-lg font-extrabold">{t.step1Title}</p>
           <p className="mt-1 text-sm font-bold text-ink-500">{t.step1Desc}</p>
@@ -520,79 +387,21 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
         </SectionRow>
 
         <SectionRow title={t.equipTitle} desc={t.equipDesc}>
-          <div className="grid grid-cols-2 gap-2">
-            <EquipToggle label={t.equipQr} on={qrScanner} onClick={() => setQrScanner((v) => !v)} />
-            <EquipToggle label={t.equipTablet} on={tablet} onClick={() => setTablet((v) => !v)} />
-          </div>
+          <EquipToggle label={t.equipBundle} on={equipmentBundle} onClick={() => setEquipmentBundle((v) => !v)} />
         </SectionRow>
 
         <SectionRow title={t.commentTitle} desc={t.commentDesc}>
           <textarea name="comment" aria-label={t.commentPh} placeholder={t.commentPh} rows={3} maxLength={450} onInput={(e) => { if (e.currentTarget.value.length > 450) e.currentTarget.value = e.currentTarget.value.slice(0, 450); }} className="min-h-[96px] w-full resize-none rounded-lg border border-[#d9e2db] bg-white px-4 py-3 text-base font-bold outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-500/15" />
         </SectionRow>
 
-        {/* Error from the contact-only submit (e.g. rate limit). Step 2 has its
-            own copy of this alert, so an error is always visible on either step. */}
         {formState === "error" && (
           <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm font-extrabold text-red-700">{errorMsg || t.error}</p>
         )}
 
-        {/* Primary action: submit a CONTACT-ONLY lead now (BR-04). Documents are
-            an optional second step below; the lead is captured either way. */}
         <button type="submit" disabled={formState === "submitting"} aria-busy={formState === "submitting"} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-green-700 px-5 font-extrabold text-white transition hover:bg-green-800 active:scale-[0.98] disabled:opacity-60 motion-reduce:active:scale-100">
           {formState === "submitting" ? t.submitting : t.sendContacts}
           {formState !== "submitting" && <Send size={18} />}
         </button>
-        <button type="button" onClick={goToStep2} className="-mt-2 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg px-5 text-sm font-extrabold text-green-700 transition hover:bg-green-50">
-          {t.addDocs}
-          <ArrowRight size={16} />
-        </button>
-      </div>
-
-      {/* Step 2 (OPTIONAL): connection photos + Telegram fallback. Always mounted;
-          hidden on step 1. The DocInput file inputs are sr-only with no native
-          `required`: documents are optional, validated client- and server-side
-          only when actually attached. */}
-      <div className={`grid gap-6 ${step === 2 ? "" : "hidden"}`}>
-        <div>
-          <p className="text-lg font-extrabold">{t.step2Title}</p>
-          <p className="mt-1 text-sm font-bold text-ink-500">{t.step2Desc}</p>
-        </div>
-
-        <SectionRow title={t.docsTitle} desc={t.docsNote}>
-          <DocInput name="patent" label={t.docPatent} pickLabel={t.filePick} />
-          <DocInput name="passport" label={t.docPassport} pickLabel={t.filePick} />
-          <DocInput name="shop" label={t.docShop} pickLabel={t.filePick} />
-        </SectionRow>
-
-        {/* Documents-via-Telegram fallback (BR-04): owners who would rather not
-            upload here can send photos to a manager. */}
-        <div className="rounded-lg border border-green-200 bg-green-50/70 p-4">
-          <p className="text-sm font-bold leading-6 text-ink-700">{t.tgFallback}</p>
-          <a
-            href={TELEGRAM_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackSiteEvent("telegram_click", { cta_location: "lead_form_docs" })}
-            className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-lg bg-white px-4 font-extrabold text-green-700 ring-1 ring-green-300 transition hover:bg-green-100"
-          >
-            <Send size={17} />
-            {t.tgFallbackCta}
-          </a>
-        </div>
-
-        {formState === "error" && (
-          <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm font-extrabold text-red-700">{errorMsg || t.error}</p>
-        )}
-
-        <div className="grid gap-2 sm:grid-cols-[auto_1fr]">
-          <button type="button" onClick={() => { setErrorMsg(""); setStep(1); }} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-[#d9e2db] px-5 font-extrabold text-ink-700 transition hover:bg-[#f1f4f1]">
-            <ArrowLeft size={18} />
-            {t.back}
-          </button>
-          <button type="submit" disabled={formState === "submitting"} aria-busy={formState === "submitting"} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink-900 px-5 font-extrabold text-white transition hover:bg-ink-700 disabled:opacity-60">
-            {formState === "submitting" ? t.submitting : t.submit}
-          </button>
-        </div>
       </div>
     </form>
   );
@@ -600,14 +409,54 @@ function LeadForm({ locale, segment }: { locale: Locale; segment?: string }) {
 
 // Accessible modal wrapping the lead form. `segment` is the segment card that
 // opened it (BR-09), forwarded into the form for attribution.
-export function LeadModal({ open, onClose, locale = "ru", segment }: { open: boolean; onClose: () => void; locale?: Locale; segment?: string }) {
+export function LeadModal({
+  open,
+  onClose,
+  locale = "ru",
+  segment,
+  initialNeedsEquipment = false,
+}: {
+  open: boolean;
+  onClose: () => void;
+  locale?: Locale;
+  segment?: string;
+  initialNeedsEquipment?: boolean;
+}) {
   const t = STR[locale];
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const focusable = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => {
+        const style = window.getComputedStyle(el);
+        return el.tabIndex >= 0 && style.display !== "none" && style.visibility !== "hidden";
+      });
+
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -658,7 +507,12 @@ export function LeadModal({ open, onClose, locale = "ru", segment }: { open: boo
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] [-webkit-overflow-scrolling:touch] sm:px-8">
           {/* Key by segment so each open starts a fresh form at step 1 and
               carries the right segment without stale internal state. */}
-          <LeadForm key={segment ?? "default"} locale={locale} segment={segment} />
+          <LeadForm
+            key={`${segment ?? "default"}-${initialNeedsEquipment ? "equipment" : "plain"}`}
+            locale={locale}
+            segment={segment}
+            initialNeedsEquipment={initialNeedsEquipment}
+          />
         </div>
       </div>
     </div>

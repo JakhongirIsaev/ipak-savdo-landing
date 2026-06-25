@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { POSTS } from "../lib/blog";
+import { SEO_KEYWORD_PAGES } from "../lib/seo/keyword-pages";
 
 // ──────────────────────────────────────────────────────────────
 // SEO / indexability verification for EVERY blog article in POSTS,
@@ -105,6 +106,31 @@ for (const post of POSTS) {
   }
 }
 
+for (const seoPage of SEO_KEYWORD_PAGES) {
+  test(`SEO keyword page :: ${seoPage.path} :: indexable + FAQ schema`, async ({ page }) => {
+    const res = await page.goto(seoPage.path);
+    expect(res?.status(), `${seoPage.path} status`).toBe(200);
+
+    await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `${SITE}${seoPage.path}`);
+    await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator("h1")).toHaveText(seoPage.h1);
+
+    const title = await page.title();
+    expect(title).toContain(seoPage.title.slice(0, 20));
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", seoPage.description);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", seoPage.ogTitle);
+    await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", seoPage.ogDescription);
+
+    const nodes = await jsonLdGraph(page);
+    const faq = nodes.find((n) => n["@type"] === "FAQPage");
+    expect(faq, "FAQPage node present").toBeTruthy();
+    expect(faq.mainEntity).toHaveLength(seoPage.faq.length);
+    expect(faq.mainEntity[0].name).toBe(seoPage.faq[0].q);
+    expect(nodes.some((n) => n["@type"] === "BreadcrumbList"), "BreadcrumbList present").toBe(true);
+  });
+}
+
 test.describe("SEO: site infrastructure", () => {
   test("sitemap.xml lists every article in all three locales; no admin/api", async ({ page }) => {
     const res = await page.request.get("/sitemap.xml");
@@ -114,6 +140,9 @@ test.describe("SEO: site infrastructure", () => {
       for (const lang of LOCALES) {
         expect(xml, `${lang} ${post.slug}`).toContain(`${SITE}${postPath(lang, post.slug)}`);
       }
+    }
+    for (const seoPage of SEO_KEYWORD_PAGES) {
+      expect(xml, seoPage.path).toContain(`${SITE}${seoPage.path}`);
     }
     expect(xml).not.toContain("/admin");
     expect(xml).not.toContain("/api");

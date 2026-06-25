@@ -28,9 +28,10 @@ export function CountUp({ value, className }: { value: string; className?: strin
     if (!node) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactViewport = window.matchMedia("(max-width: 1023px)").matches;
     // Skip tiny counters (e.g. "1", "4"): animating 0->N over ~1s is imperceptible
     // and reads as inconsistent next to "49 000"; render them final immediately.
-    if (reduce || target < 10) return;
+    if (reduce || compactViewport || target < 10) return;
 
     let raf = 0;
     let started = false;

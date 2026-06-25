@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+﻿import { describe, it, expect } from "vitest";
 import { renderToString } from "react-dom/server";
 import { Footer } from "./Footer";
 import { dicts } from "@/lib/landing/i18n";
@@ -14,8 +14,8 @@ describe("Footer", () => {
     expect(html).toContain("Подключение");
     expect(html).toContain("Контакт");
     // phone as tel: link
-    expect(html).toContain('href="tel:+998974212454"');
-    expect(html).toContain("+998 97 421 24 54");
+    expect(html).toContain('href="tel:+998952402454"');
+    expect(html).toContain("+998 95 240 24 54");
     // logo
     expect(html).toContain("/birliy-wordmark.png");
     // copyright

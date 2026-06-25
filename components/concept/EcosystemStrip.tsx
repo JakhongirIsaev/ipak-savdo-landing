@@ -2,10 +2,10 @@ import { ShieldCheck, Zap, Users } from "lucide-react";
 
 const STR = {
   ru: {
-    chips: ["Подключение за 1 день", "Данные под защитой", "Запуск с первой группой"],
+    chips: ["Подключение за 1 день", "Данные под защитой", "Пилотные магазины подключаются"],
   },
   uz: {
-    chips: ["1 kunda ulanish", "Ma'lumotlar himoyada", "Birinchi guruh bilan"],
+    chips: ["1 kunda ulanish", "Ma'lumotlar himoyada", "Pilot do'konlar bilan"],
   },
 } as const;
 

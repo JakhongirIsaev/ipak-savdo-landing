@@ -1,4 +1,4 @@
-import { POSTS } from "@/lib/blog";
+﻿import { POSTS } from "@/lib/blog";
 import { blogPostPath } from "@/lib/blog/i18n";
 
 // llms.txt: a plain-text site summary for AI agents and LLM crawlers,
@@ -27,7 +27,7 @@ Key facts:
 - PIN access and a full action journal protect owners from cashier fraud.
 - Languages: Uzbek (default), Russian. Site sections: https://birliy.uz (uz), https://birliy.uz/ru (ru).
 - Status: early access, first pilot shops in Tashkent (2026).
-- Contact: Telegram +998 97 421 24 54, lead form at https://birliy.uz/#lead
+- Contact: Telegram +998 95 240 24 54, lead form at https://birliy.uz/#lead
 - Full machine-readable product and article text: https://birliy.uz/llms-full.txt
 
 ## Supported business types
@@ -45,7 +45,7 @@ BirLiy is built for: neighborhood shops (dukan), minimarkets, grocery and produc
 - How are cashiers controlled? PIN access per cashier and a full action journal protect owners from fraud.
 - Can I import products? Yes, from Excel, plus the built-in catalog of 9 000+ common items.
 - What languages does it support? Uzbek (default) and Russian.
-- How do I start? Leave a request at https://birliy.uz/#lead or message Telegram +998 97 421 24 54.
+- How do I start? Leave a request at https://birliy.uz/#lead or message Telegram +998 95 240 24 54.
 
 ## What owners call BirLiy in everyday speech
 

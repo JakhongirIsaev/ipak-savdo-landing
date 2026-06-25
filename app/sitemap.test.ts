@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import sitemap from "./sitemap";
 import { POSTS, BLOG_CATEGORIES, postsByCategory } from "@/lib/blog";
+import { SEO_KEYWORD_LAST_MODIFIED, SEO_KEYWORD_PAGES } from "@/lib/seo/keyword-pages";
 
 const SITE = "https://birliy.uz";
 const LOCALE_PREFIX = ["", "/ru", "/en"] as const;
@@ -99,6 +100,16 @@ describe("sitemap", () => {
     for (const e of categoryEntries) {
       const langs = e.alternates?.languages ?? {};
       expect(Object.keys(langs).sort(), e.url).toEqual(["en", "ru", "uz", "x-default"]);
+    }
+  });
+
+  it("includes every SEO keyword landing page with stable freshness", () => {
+    for (const page of SEO_KEYWORD_PAGES) {
+      const url = `${SITE}${page.path}`;
+      const entry = byUrl.get(url);
+      expect(entry, url).toBeTruthy();
+      expect(entry!.lastModified).toBe(SEO_KEYWORD_LAST_MODIFIED);
+      expect(entry!.changeFrequency).toBe("monthly");
     }
   });
 });

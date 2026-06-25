@@ -24,9 +24,9 @@ function imgPath(url: string): string {
   return url.startsWith(SITE) ? url.slice(SITE.length) : url;
 }
 
-// Shared article card used on the blog index and category pages. Shows a
-// thumbnail when the post has an image, a category badge, date and reading
-// time. Stacks vertically on mobile, image-left on >= sm. No horizontal scroll.
+// Shared archive card used on the blog index, category pages, and related
+// articles. The full card is clickable, mirroring the simple archive pattern
+// users expect from a clean blog index.
 function PostCard({ post, locale }: { post: BlogPost; locale: BlogLocale }) {
   const ui = BLOG_UI[locale];
   const c = post.locales[locale];
@@ -34,37 +34,74 @@ function PostCard({ post, locale }: { post: BlogPost; locale: BlogLocale }) {
   return (
     <Link
       href={blogPostPath(locale, post.slug)}
-      className="group block overflow-hidden rounded-2xl border border-mist bg-white transition-colors duration-200 hover:border-green-700"
+      className="group flex h-full flex-col overflow-hidden rounded-lg border border-mist bg-white shadow-[0_1px_2px_rgba(11,24,38,0.05)] transition-all duration-200 hover:-translate-y-0.5 hover:border-green-700 hover:shadow-[0_24px_56px_-38px_rgba(11,24,38,0.48)]"
     >
-      <div className="flex flex-col sm:flex-row">
-        {post.image && (
-          <div className="shrink-0 overflow-hidden bg-paper sm:w-52 md:w-56">
-            <Image
-              src={imgPath(post.image.landscape)}
-              alt={c.title}
-              width={1200}
-              height={900}
-              sizes="(min-width: 1024px) 224px, (min-width: 640px) 208px, 100vw"
-              className="aspect-[4/3] h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-            />
-          </div>
-        )}
-        <div className="min-w-0 flex-1 p-5 sm:p-6">
-          <div className="mb-2">
-            <span className="inline-block rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800">
-              {catLabel}
-            </span>
-          </div>
-          <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900 transition-colors duration-200 group-hover:text-green-800">
-            {c.title}
-          </h2>
-          <p className="mt-2 text-sm leading-6 text-ink-700">{c.description}</p>
-          <p className="mt-3 text-xs text-ink-500">
-            {post.date} · {ui.readingTime(readingTimeMin(post, locale))}
-          </p>
+      {post.image && (
+        <div className="overflow-hidden bg-paper">
+          <Image
+            src={imgPath(post.image.landscape)}
+            alt={c.title}
+            width={1200}
+            height={900}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="aspect-[4/3] h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.035] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          />
         </div>
+      )}
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3 flex flex-wrap items-center gap-2 text-xs font-bold text-ink-500">
+          <span className="rounded-full bg-green-50 px-2.5 py-1 text-green-800">{catLabel}</span>
+          <span>{ui.readingTime(readingTimeMin(post, locale))}</span>
+        </div>
+        <h2 className="font-display text-xl font-extrabold leading-snug tracking-normal text-ink-900 transition-colors duration-200 group-hover:text-green-800">
+          {c.title}
+        </h2>
+        <p className="mt-2 line-clamp-3 text-sm leading-6 text-ink-700">{c.description}</p>
+        <span className="mt-auto inline-flex min-h-11 items-end pt-4 text-sm font-extrabold text-green-800">
+          {ui.readArticle}
+        </span>
       </div>
     </Link>
+  );
+}
+
+function CategoryStrip({ locale, activeCategory }: { locale: BlogLocale; activeCategory?: BlogCategory }) {
+  const ui = BLOG_UI[locale];
+  return (
+    <nav className="mt-8 flex flex-wrap gap-2" aria-label={ui.categoriesLabel}>
+      <Link
+        href={blogIndexPath(locale)}
+        aria-current={activeCategory ? undefined : "page"}
+        className={
+          activeCategory
+            ? "inline-flex min-h-11 items-center rounded-full border border-mist bg-white px-4 text-sm font-extrabold text-ink-700 transition-colors hover:border-green-700 hover:text-green-800"
+            : "inline-flex min-h-11 items-center rounded-full bg-ink-900 px-4 text-sm font-extrabold text-white"
+        }
+      >
+        {ui.allPosts}
+        <span className="ml-2 rounded-full bg-white/15 px-2 py-0.5 text-xs">{POSTS.length}</span>
+      </Link>
+      {BLOG_CATEGORIES.map((category) => {
+        const active = activeCategory === category;
+        return (
+          <Link
+            key={category}
+            href={blogCategoryPath(locale, category)}
+            aria-current={active ? "page" : undefined}
+            className={
+              active
+                ? "inline-flex min-h-11 items-center rounded-full bg-green-700 px-4 text-sm font-extrabold text-white"
+                : "inline-flex min-h-11 items-center rounded-full border border-mist bg-white px-4 text-sm font-extrabold text-ink-700 transition-colors hover:border-green-700 hover:text-green-800"
+            }
+          >
+            {CATEGORY_LABEL[category][locale]}
+            <span className={`ml-2 rounded-full px-2 py-0.5 text-xs ${active ? "bg-white/18" : "bg-[#f1f4f1] text-ink-500"}`}>
+              {postsByCategory(category).length}
+            </span>
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
 
@@ -206,7 +243,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
           {related.length > 0 && (
             <section className="mt-14 border-t border-mist pt-8">
               <h2 className="font-display text-xl font-semibold tracking-tightish text-ink-900">{ui.relatedTitle}</h2>
-              <div className="mt-5 space-y-4">
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 {related.map((r) => (
                   <PostCard key={r.slug} post={r} locale={locale} />
                 ))}
@@ -260,46 +297,23 @@ export function BlogCategoryIndex({ category, locale }: { category: BlogCategory
     <div lang={ui.htmlLang} className="min-h-screen bg-paper">
       <HtmlLang lang={ui.htmlLang} />
       <BlogHeader locale={locale} switchPaths={switchPaths} />
-      <main className="mx-auto max-w-3xl px-5 py-10">
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd).replace(/</g, "\\u003c") }}
         />
 
-        {/* Category tab strip */}
-        <nav className="mb-8 flex flex-wrap gap-2" aria-label="blog categories">
-          <Link
-            href={blogIndexPath(locale)}
-            className="inline-block rounded-full border border-mist bg-white px-4 py-1.5 text-sm font-medium text-ink-700 transition-colors duration-200 hover:border-green-700 hover:text-green-800"
-          >
-            {ui.allPosts}
-          </Link>
-          {BLOG_CATEGORIES.map((cat) => {
-            const isActive = cat === category;
-            return (
-              <Link
-                key={cat}
-                href={blogCategoryPath(locale, cat)}
-                className={
-                  isActive
-                    ? "inline-block rounded-full bg-green-700 px-4 py-1.5 text-sm font-medium text-white"
-                    : "inline-block rounded-full border border-mist bg-white px-4 py-1.5 text-sm font-medium text-ink-700 transition-colors duration-200 hover:border-green-700 hover:text-green-800"
-                }
-                aria-current={isActive ? "page" : undefined}
-              >
-                {CATEGORY_LABEL[cat][locale]}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <h1 className="font-display text-3xl font-bold tracking-tightish text-ink-900 sm:text-4xl">{title}</h1>
-        <p className="mt-3 text-base leading-7 text-ink-700">{description}</p>
+        <section className="rounded-2xl border border-mist bg-white p-6 shadow-[0_24px_70px_-55px_rgba(11,24,38,0.45)] sm:p-8">
+          <p className="text-sm font-extrabold uppercase tracking-normal text-green-700">{ui.blogEyebrow}</p>
+          <h1 className="mt-3 max-w-3xl font-display text-3xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-5xl">{title}</h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-ink-700">{description}</p>
+          <CategoryStrip locale={locale} activeCategory={category} />
+        </section>
 
         {posts.length === 0 ? (
           <p className="mt-10 text-base text-ink-500">{ui.categoryEmpty}</p>
         ) : (
-          <div className="mt-10 space-y-5">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
               <PostCard key={post.slug} post={post} locale={locale} />
             ))}
@@ -340,15 +354,27 @@ export function BlogIndex({ posts, locale }: { posts: BlogPost[]; locale: BlogLo
     <div lang={ui.htmlLang} className="min-h-screen bg-paper">
       <HtmlLang lang={ui.htmlLang} />
       <BlogHeader locale={locale} switchPaths={switchPathsFor()} />
-      <main className="mx-auto max-w-3xl px-5 py-10">
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(indexJsonLd).replace(/</g, "\\u003c") }}
         />
-        <h1 className="font-display text-3xl font-bold tracking-tightish text-ink-900 sm:text-4xl">{ui.blogTitle}</h1>
-        <p className="mt-3 text-base leading-7 text-ink-700">{ui.blogDescription}</p>
+        <section className="rounded-2xl border border-mist bg-white p-6 shadow-[0_24px_70px_-55px_rgba(11,24,38,0.45)] sm:p-8 lg:grid lg:grid-cols-[1fr_0.6fr] lg:items-end lg:gap-10">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-normal text-green-700">{ui.blogEyebrow}</p>
+            <h1 className="mt-3 max-w-3xl font-display text-3xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-5xl">{ui.blogTitle}</h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-ink-700">{ui.blogDescription}</p>
+          </div>
+          <div className="mt-6 rounded-xl bg-[#f7faf8] p-4 ring-1 ring-mist lg:mt-0">
+            <p className="text-sm font-extrabold text-ink-900">{ui.latestArticles}</p>
+            <p className="mt-1 text-sm leading-6 text-ink-500">{ui.articleCount(posts.length)}</p>
+          </div>
+          <div className="lg:col-span-2">
+            <CategoryStrip locale={locale} />
+          </div>
+        </section>
 
-        <div className="mt-10 space-y-5">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} locale={locale} />
           ))}
