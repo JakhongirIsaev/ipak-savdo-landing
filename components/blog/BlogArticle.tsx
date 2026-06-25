@@ -181,18 +181,6 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: BlogLoca
             </section>
           )}
 
-          <section className="mt-12">
-            <h2 className="font-display text-2xl font-semibold tracking-tightish text-ink-900">{ui.faqTitle}</h2>
-            <div className="mt-5 space-y-4">
-              {c.faq.map((f, i) => (
-                <details key={i} className="rounded-xl border border-mist bg-white p-5">
-                  <summary className="cursor-pointer text-base font-semibold text-ink-900">{f.q}</summary>
-                  <p className="mt-3 text-base leading-7 text-ink-700">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-
           <div className="mt-12 rounded-2xl bg-ink-900 p-7 text-white">
             <p className="text-lg leading-7">{c.cta.text}</p>
             <a

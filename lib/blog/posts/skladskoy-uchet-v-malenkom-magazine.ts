@@ -28,7 +28,7 @@ export const post: BlogPost = {
         {
           h2: "Nega daftardagi hisob ishonchsiz?",
           paragraphs: [
-            "Daftarda xaridorni topish, qoldiqni sarhisob qilish, bir necha kun oldin qancha kirganini aniqlash , bularning barchasi qog'ozda ancha murakkab. Har kuni yoziladigan raqamlar bilan xatoliklar ko'payadi.",
+            "Daftarda xaridorni topish, qoldiqni sarhisob qilish, bir necha kun oldin qancha kirganini aniqlash, bularning barchasi qog'ozda ancha murakkab. Har kuni yoziladigan raqamlar bilan xatoliklar ko'payadi.",
             "Ayniqsa, agar bir vaqtning o'zida ikki kishi kassa oldida ishlayotgan bo'lsa, daftarga yozish tartibsizlikka olib keladi. Mahsulotlarning bir qismi oddiygina unutiladi.",
           ],
           list: [
@@ -41,14 +41,14 @@ export const post: BlogPost = {
         {
           h2: "Raqamli yechim qanday yordam beradi?",
           paragraphs: [
-            "BirLiy , bu telefoningizdagi POS va ombor hisobi. Barcha qabullar, sotuvlar va qoldiq bir ekranda. Sizga faqat smartfon kerak, maxsus qurilma yo'q.",
-            "Har bir mahsulotni kiriting, narxni belgilang, sotilganda esa u avtomatik tarzda qoldiqdan chiqadi. Nasiya qilish ham mumkin , u maxsus bo'limda ko'rinadi va unutilmaydi. Hech qanday daftar kerak emas.",
+            "BirLiy, bu telefoningizdagi POS va ombor hisobi. Barcha qabullar, sotuvlar va qoldiq bir ekranda. Sizga faqat smartfon kerak, maxsus qurilma yo'q.",
+            "Har bir mahsulotni kiriting, narxni belgilang, sotilganda esa u avtomatik tarzda qoldiqdan chiqadi. Nasiya qilish ham mumkin, u maxsus bo'limda ko'rinadi va unutilmaydi. Hech qanday daftar kerak emas.",
           ],
         },
         {
-          h2: "Kechqurun hisobot , do'kon egasi uchun eng muhimi",
+          h2: "Kechqurun hisobot, do'kon egasi uchun eng muhimi",
           paragraphs: [
-            "Siz do'kondan uzoqda bo'lsangiz ham, telefon orqali kunlik hisobotni ko'rasiz. Qancha savdo bo'lgan, qaysi mahsulot eng ko'p ketgan, qoldiqda nimadir tugab boryaptimi , hammasi aniq.",
+            "Siz do'kondan uzoqda bo'lsangiz ham, telefon orqali kunlik hisobotni ko'rasiz. Qancha savdo bo'lgan, qaysi mahsulot eng ko'p ketgan, qoldiqda nimadir tugab boryaptimi, hammasi aniq.",
             "Bu sizga vaqtni tejaydi va do'koningizning moliyaviy ahvolini nazorat qilish imkonini beradi. Xatoliklar kamayadi, tovar yo'qotishlari esa sezilarli darajada pasayadi.",
           ],
           list: [
@@ -72,7 +72,7 @@ export const post: BlogPost = {
         },
         {
           q: "Telefonim eski bo'lsa, ishlaydimi?",
-          a: "BirLiy oddiy smartfonlar uchun mo'ljallangan. Asosiy talab , internet va Android yoki iOS.",
+          a: "BirLiy oddiy smartfonlar uchun mo'ljallangan. Asosiy talab, internet va Android yoki iOS.",
         },
         {
           q: "Nasiya hisobi aniqmi?",
@@ -92,7 +92,7 @@ export const post: BlogPost = {
     ru: {
       title: "Складской учёт в маленьком магазине: как не терять товар и остатки",
       description:
-        "Как вести учёт остатков в небольшом магазине? Ошибки бумажной тетради, неучтённые долги и потери товара , простые решения. Узнайте про BirLiy , телефонную кассу и склад.",
+        "Как вести учёт остатков в небольшом магазине? Ошибки бумажной тетради, неучтённые долги и потери товара, простые решения. Узнайте про BirLiy, телефонную кассу и склад.",
       keywords: [
         "складской учёт в маленьком магазине",
         "учёт остатков",
@@ -103,15 +103,15 @@ export const post: BlogPost = {
         "BirLiy",
       ],
       intro: [
-        "Каждый день в небольшой магазин поступают десятки позиций: молоко, хлеб, крупы, бытовая химия. Часть продаётся, часть остаётся на полках. Если вести учёт в бумажной тетради, очень легко ошибиться , забыть записать приход, перепутать количество или потерять запись о долге.",
-        "Потеря товара и неучтённые остатки , это прямые убытки. Хорошая новость: сегодня не обязательно покупать дорогую кассу или нанимать бухгалтера. Достаточно телефона и простого приложения.",
+        "Каждый день в небольшой магазин поступают десятки позиций: молоко, хлеб, крупы, бытовая химия. Часть продаётся, часть остаётся на полках. Если вести учёт в бумажной тетради, очень легко ошибиться, забыть записать приход, перепутать количество или потерять запись о долге.",
+        "Потеря товара и неучтённые остатки, это прямые убытки. Хорошая новость: сегодня не обязательно покупать дорогую кассу или нанимать бухгалтера. Достаточно телефона и простого приложения.",
       ],
       sections: [
         {
           h2: "Проблемы бумажного учёта в магазине у дома",
           paragraphs: [
-            "Тетрадь на кассе , привычный, но очень ненадёжный способ. Она быстро заполняется, страницы рвутся, а если за прилавком два человека, записи путаются. Часто продавец забывает записать долг, а покупатель , отдать.",
-            "В итоге вечером сходятся копейка в копейку только если очень повезёт. В остальных случаях , недостача, просроченный товар, потраченное время на пересчёт.",
+            "Тетрадь на кассе, привычный, но очень ненадёжный способ. Она быстро заполняется, страницы рвутся, а если за прилавком два человека, записи путаются. Часто продавец забывает записать долг, а покупатель, отдать.",
+            "В итоге вечером сходятся копейка в копейку только если очень повезёт. В остальных случаях, недостача, просроченный товар, потраченное время на пересчёт.",
           ],
           list: [
             "Один товар записывается дважды или не записывается вовсе",
@@ -121,17 +121,17 @@ export const post: BlogPost = {
           ],
         },
         {
-          h2: "Как телефонная касса решает这些问题?",
+          h2: "Как телефонная касса решает эти проблемы?",
           paragraphs: [
-            "BirLiy , это приложение, которое заменяет и кассу, и складскую книгу. Вы добавляете товары один раз, а при продаже они автоматически списываются с остатка. Долги фиксируются отдельно и не исчезают.",
-            "Вам не нужен специальный сканер или терминал , только телефон. Продавец нажимает на экране, и всё записывается. Вечером вы видите точный отчёт: сколько продано, какой товар заканчивается, кто сколько должен.",
+            "BirLiy: это приложение, которое заменяет и кассу, и складскую книгу. Вы добавляете товары один раз, а при продаже они автоматически списываются с остатка. Долги фиксируются отдельно и не исчезают.",
+            "Вам не нужен специальный сканер или терминал, только телефон. Продавец нажимает на экране, и всё записывается. Вечером вы видите точный отчёт: сколько продано, какой товар заканчивается, кто сколько должен.",
           ],
         },
         {
           h2: "Что даёт учёт остатков владельцу?",
           paragraphs: [
-            "Когда вы знаете точные остатки, вы не заказываете лишнего и не упускаете ходовые позиции. Это экономит деньги и время. К тому же вы можете контролировать магазин удалённо , смотреть отчёты в телефоне, даже если находитесь дома или в поездке.",
-            "Больше не нужно каждый вечер пересчитывать товар вручную. Приложение сделает это за вас. Ошибки становятся редкими, а работа продавцов , прозрачной.",
+            "Когда вы знаете точные остатки, вы не заказываете лишнего и не упускаете ходовые позиции. Это экономит деньги и время. К тому же вы можете контролировать магазин удалённо, смотреть отчёты в телефоне, даже если находитесь дома или в поездке.",
+            "Больше не нужно каждый вечер пересчитывать товар вручную. Приложение сделает это за вас. Ошибки становятся редкими, а работа продавцов, прозрачной.",
           ],
           list: [
             "Экономия на списаниях просрочки",
@@ -169,12 +169,12 @@ export const post: BlogPost = {
           a: "Данные хранятся в облаке, их можно восстановить на новом устройстве после входа в аккаунт.",
         },
       ],
-      cta: { text: "Хотите навести порядок в учёте? Напишите нам в Telegram или оставьте заявку на birliy.uz , покажем, как это работает.", button: "Оставить заявку" },
+      cta: { text: "Хотите навести порядок в учёте? Напишите нам в Telegram или оставьте заявку на birliy.uz, покажем, как это работает.", button: "Оставить заявку" },
     },
     en: {
       title: "Inventory Management for a Small Shop: Stop Losing Goods and Stock",
       description:
-        "How to track stock in a neighbourhood minimarket? Paper notebook errors, forgotten debts, and spoiled goods , simple solutions. Meet BirLiy , phone-based POS and inventory app.",
+        "How to track stock in a neighbourhood minimarket? Paper notebook errors, forgotten debts, and spoiled goods, simple solutions. Meet BirLiy, phone-based POS and inventory app.",
       keywords: [
         "inventory management for small shop",
         "stock control for minimarket",
@@ -185,7 +185,7 @@ export const post: BlogPost = {
         "BirLiy",
       ],
       intro: [
-        "Every day dozens of items come into a small shop , milk, bread, rice, soap. Some sell, some stay on the shelf. If you use a paper notebook, mistakes are easy: forget to write a delivery, mix up quantities, or lose a customer's debt.",
+        "Every day dozens of items come into a small shop, milk, bread, rice, soap. Some sell, some stay on the shelf. If you use a paper notebook, mistakes are easy: forget to write a delivery, mix up quantities, or lose a customer's debt.",
         "Lost goods and unknown stock mean direct losses. The good news: you don't need an expensive cash register or an accountant. Just your phone and a simple app.",
       ],
       sections: [
@@ -193,7 +193,7 @@ export const post: BlogPost = {
           h2: "Why paper accounting fails at the corner shop",
           paragraphs: [
             "The notebook at the checkout is familiar but unreliable. It fills up fast, pages tear, and if two people work, notes get mixed up. Often the seller forgets to record a debt, and the buyer forgets to pay.",
-            "At the end of the day, numbers match only if you're very lucky. Otherwise , shortage, expired goods, and hours wasted on recounts.",
+            "At the end of the day, numbers match only if you're very lucky. Otherwise, shortage, expired goods, and hours wasted on recounts.",
           ],
           list: [
             "Items get recorded twice or not at all",
@@ -206,13 +206,13 @@ export const post: BlogPost = {
           h2: "How a phone-based POS solves these problems",
           paragraphs: [
             "BirLiy is an app that replaces both the cash register and the stock book. Add products once, and when you sell them, stock is deducted automatically. Debts are tracked separately and never vanish.",
-            "No need for a scanner or terminal , just your phone. The seller taps on the screen, and everything is recorded. In the evening you see an accurate report: how much you sold, what's running low, who owes what.",
+            "No need for a scanner or terminal, just your phone. The seller taps on the screen, and everything is recorded. In the evening you see an accurate report: how much you sold, what's running low, who owes what.",
           ],
         },
         {
           h2: "What stock control gives to the owner",
           paragraphs: [
-            "When you know exact stock, you don't order too much or miss popular items. This saves money and time. You can also control the shop remotely , check reports from your phone even when you're at home or travelling.",
+            "When you know exact stock, you don't order too much or miss popular items. This saves money and time. You can also control the shop remotely, check reports from your phone even when you're at home or travelling.",
             "No more evening hand-counts. The app does it for you. Mistakes become rare, and your staff's work becomes transparent.",
           ],
           list: [
@@ -251,7 +251,7 @@ export const post: BlogPost = {
           a: "Data is stored in the cloud and can be restored on a new device after logging into your account.",
         },
       ],
-      cta: { text: "Ready to clean up your inventory? Contact us on Telegram or leave a request at birliy.uz , we'll show you how it works.", button: "Apply now" },
+      cta: { text: "Ready to clean up your inventory? Contact us on Telegram or leave a request at birliy.uz, we'll show you how it works.", button: "Apply now" },
     },
   },
 };

@@ -3,9 +3,10 @@ import { BLOG_UI, blogIndexPath, blogPostPath, landingPath } from "./i18n";
 
 const SITE = "https://birliy.uz";
 
-// Pure builder for a blog article's JSON-LD @graph (BlogPosting + FAQPage +
+// Pure builder for a blog article's JSON-LD @graph (BlogPosting +
 // BreadcrumbList). Extracted from BlogArticle so the structured-data shape can
-// be unit-tested deterministically. Output is identical to the inline version.
+// be unit-tested deterministically. FAQ is intentionally not emitted (the FAQ
+// block was removed from the article body, so no FAQPage schema is shipped).
 export function articleJsonLd(post: BlogPost, locale: BlogLocale) {
   const ui = BLOG_UI[locale];
   const c = post.locales[locale];
@@ -34,14 +35,6 @@ export function articleJsonLd(post: BlogPost, locale: BlogLocale) {
           logo: { "@type": "ImageObject", url: `${SITE}/birliy-wordmark.png` },
         },
         citation: c.sources?.map((source) => source.url),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: c.faq.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
       },
       {
         "@type": "BreadcrumbList",
