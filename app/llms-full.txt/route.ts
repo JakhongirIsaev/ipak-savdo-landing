@@ -1,4 +1,4 @@
-import { POSTS } from "@/lib/blog";
+﻿import { POSTS } from "@/lib/blog";
 import { blogPostPath } from "@/lib/blog/i18n";
 import type { BlogLocale } from "@/lib/blog/types";
 
@@ -56,7 +56,7 @@ Product facts:
 - Operation: offline sales with synchronization when connectivity returns.
 - Control: cashier PIN roles and an action journal.
 - Languages: Uzbek and Russian product pages; Uzbek, Russian and English blog articles.
-- Contact: https://birliy.uz/#lead and Telegram +998 97 421 24 54.
+- Contact: https://birliy.uz/#lead and Telegram +998 95 240 24 54.
 
 ## Primary and secondary customer segments
 

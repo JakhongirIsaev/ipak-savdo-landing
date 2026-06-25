@@ -18,6 +18,7 @@ function baseValues(data: LeadInput, req: Request, ip: string | null): NewLead {
     businessName: data.business_name ?? "",
     businessType: data.business_type,
     businessTypeOther: data.business_type_other ?? null,
+    city: data.city ?? null,
     ownerName: data.owner_name,
     ownerContact: data.owner_contact,
     needsEquipment: data.needs_equipment,
@@ -124,6 +125,9 @@ async function handleMultipart(req: Request, ip: string | null): Promise<Respons
       : null;
   const raw = {
     business_name: fieldNullable(form.get("business_name")),
+    // Optional city/district sent as a real field by the public form's city
+    // selector (12 cities + free-text "other"). Empty → null (kept optional).
+    city: fieldNullable(form.get("city")),
     business_type: businessType,
     business_type_other: businessTypeOther,
     owner_name: fieldStr(form.get("owner_name")),

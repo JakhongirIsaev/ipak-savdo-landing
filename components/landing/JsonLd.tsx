@@ -1,4 +1,4 @@
-import { dicts } from "@/lib/landing/i18n";
+﻿import { dicts } from "@/lib/landing/i18n";
 
 type Locale = keyof typeof dicts;
 
@@ -84,7 +84,7 @@ export function LandingJsonLd({ locale }: { locale: Locale }) {
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "sales",
-          telephone: "+998974212454",
+          telephone: "+998952402454",
           availableLanguage: ["uz", "ru"],
           url: `${SITE}/#lead`,
         },

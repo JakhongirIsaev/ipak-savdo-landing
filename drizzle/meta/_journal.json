@@ -71,6 +71,20 @@
       "when": 1781776800216,
       "tag": "0009_minor_zaran",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1782130417980,
+      "tag": "0010_known_serpent_society",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1782159091263,
+      "tag": "0011_content_object_webhook_event_key",
+      "breakpoints": true
     }
   ]
 }

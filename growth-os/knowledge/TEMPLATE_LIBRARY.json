@@ -1,0 +1,480 @@
+{
+  "meta": {
+    "title": "BirLiy Template Library (Deliverable 7)",
+    "purpose": "Reusable, fact-grounded content structures for the BirLiy CMO. Each template tells the writer exactly which inputs to gather, which APPROVED_FACTS ids must back the copy, how to structure RU and UZ output, which CTA to use, and which conditions fail QA. Templates are blueprints, not pre-written posts; they enforce the hard rules so any generated piece stays truthful and on-brand.",
+    "generated_for": "BirLiy CMO brain pack",
+    "relies_on": [
+      "growth-os/knowledge/APPROVED_FACTS.json (the only source of factual claims; cite ids)",
+      "growth-os/knowledge/COMPANY_CONTEXT.md (what the CMO may, must qualify, must never claim)",
+      "growth-os/knowledge/UNVERIFIED_CLAIMS_REPORT.md (needs_confirmation and prohibited items)",
+      "growth-os/knowledge/BIRLIY_BRAND_VOICE.md (tone, banned words, formatting)",
+      "growth-os/knowledge/ICP_AND_PAIN_MAP.json (segments and pains)",
+      "marketing/01-strategy.md and marketing/02-content-system.md (positioning, 7 pillars, post templates A-D)"
+    ],
+    "currency_style": "RU 'сум', UZ 'so'm'. NEVER 'UZS'.",
+    "tone": "calm experienced shopkeeper-neighbour. Brand principle: 'Меньше частей. Больше ясности.' Short sentences, real verbs, money and time of the owner, not features for their own sake. Max 1-2 emoji per piece.",
+    "hard_rules": [
+      "Use only facts from APPROVED_FACTS.json and cite their ids in required_factual_evidence; never invent numbers, customer counts, percentages, testimonials, integrations, deadlines, install times, team actions, or completion states.",
+      "Qualify every needs_confirmation fact as a stated / pilot / early-access claim, never as a guarantee.",
+      "Never present a prohibited fact as real: demo dashboard numbers (3 450 000, 87 000, 42, +12%, 18, 3 cashiers, 2 returns), the sample receipt (Milk/Bread/Coffee, 20 500), or 'real shops already working'.",
+      "Never name a bank, Ipak Yuli, or any parent company. Never expand 'Сделано для Узбекистана' / 'O'zbekiston uchun yaratilgan' to name one.",
+      "No em-dash character in any generated public copy, hook, CTA, post, outline, or example. Use ':' ',' or '-'.",
+      "RU and UZ must carry equivalent meaning and read native, not literal. No hype words (революция, инновация, лучший, №1, трансформация, синергия). No fake scarcity.",
+      "Two approved CTAs only: 'Оставить заявку' (birliy.uz #lead) and 'Написать в Telegram' (+998 97 421 24 54). No CTA means not publishable.",
+      "Currency stays сум / so'm; quote the price wording from fact_pricing_promo / fact_pricing_start_chip only, and frame it as the first-cohort / early-access rate."
+    ],
+    "fact_status_reminder": {
+      "verified": "Reusable as public product-capability copy.",
+      "needs_confirmation": "Reusable wording, but frame as a stated / pilot / typical claim, never a guarantee; offer to confirm specifics via @birliy_support_bot.",
+      "prohibited": "Never present as real. Used here only on a do-not-use list inside failure_conditions."
+    },
+    "approved_cta_catalog": {
+      "leave_request": {
+        "ru": "Оставить заявку",
+        "uz": "Ariza qoldirish",
+        "destination": "birliy.uz (#lead block)",
+        "source_fact": "fact_lead_form_docs",
+        "source": "strategy marketing/01-strategy.md section 8",
+        "use_when": "Offer, launch, product-announcement, and any piece pushing to the site form (especially Instagram where the link sits in the profile bio)."
+      },
+      "write_telegram": {
+        "ru": "Написать в Telegram",
+        "uz": "Telegramga yozish",
+        "destination": "+998 97 421 24 54",
+        "source_fact": "fact_contacts",
+        "source": "strategy marketing/01-strategy.md section 8",
+        "use_when": "Lowest-friction action; the default for Telegram posts, pain posts, objection handling, owner stories. Cite the channel @bir_liy and support @birliy_support_bot when relevant."
+      }
+    },
+    "global_qa_rules": [
+      "Scan the final text for the em-dash character; if present, replace with ':' ',' or '-'.",
+      "Scan for 'UZS'; currency must be 'сум' (RU) or 'so'm' (UZ).",
+      "Scan for any bank / Ipak Yuli / parent-company name; must be absent.",
+      "Every factual claim maps to an APPROVED_FACTS id; needs_confirmation facts are qualified; no prohibited fact is presented as real.",
+      "RU and UZ versions carry equivalent meaning, read native, and use the canonical terms from COMPANY_CONTEXT terminology dictionary.",
+      "No banned hype word, no fake scarcity, max 1-2 emoji.",
+      "Exactly one approved CTA is present and routed to the correct destination.",
+      "Holds the brand promise: one mind, one thought, one CTA; 'Меньше частей. Больше ясности.'"
+    ],
+    "global_failure_conditions": [
+      "Any em-dash character in public copy.",
+      "'UZS' anywhere; or a currency figure without 'сум' / 'so'm'.",
+      "Any bank / Ipak Yuli / parent-company name, or an expanded 'made for Uzbekistan' line that names one.",
+      "Any invented number, customer count, percentage, testimonial, integration, deadline, install time, or completion state.",
+      "A prohibited demo number, the sample receipt, or 'real shops already working' presented as a real result.",
+      "A needs_confirmation fact stated as a guarantee instead of a stated / pilot claim.",
+      "No CTA, or a CTA other than the two approved ones, or a wrong destination.",
+      "RU and UZ diverge in meaning, or the UZ reads like a literal machine translation."
+    ]
+  },
+
+  "templates": {
+
+    "telegram_post": {
+      "id": "telegram_post",
+      "label": "Telegram post (core conversion channel)",
+      "use_when": "The main channel for requests. A short, readable post built on ONE of the 7 content pillars, ending in a Telegram CTA. Audience reads the whole text, so it is warmer and more direct than Instagram.",
+      "maps_to_strategy": "marketing/01-strategy.md sections 6-8; marketing/02-content-system.md templates A/B/C/D and the 7 pillars.",
+      "required_inputs": [
+        "content_pillar: one of [pain_to_relief, how_it_works, owner_freedom, one_feature_big, trust, by_segment, offer]",
+        "single_idea: the one thought this post carries (one pillar, one idea, one CTA)",
+        "language_mode: ru | uz | ru_then_uz (offer and launch posts ship bilingual)"
+      ],
+      "optional_inputs": [
+        "target_segment: from ICP_AND_PAIN_MAP (neighbourhood/minimarket primary; grocery, pharmacy, service, cafe secondary)",
+        "product_screenshot_ref: real screenshot from .research/product-walk/ (preferred over mockups)",
+        "season_or_hook: a calm, true hook (no fake scarcity)"
+      ],
+      "required_factual_evidence": [
+        "At least one APPROVED_FACTS id whose status is verified backs the core claim.",
+        "If the post is an offer post, fact_pricing_promo or fact_pricing_start_chip plus fact_promo_six_month, framed as the first-cohort rate.",
+        "If it touches onboarding (fact_onboarding_one_day, fact_onboarding_cashier_30min, fact_install_time) or QR settlement timing (fact_qr_no_terminal), qualify per needs_confirmation."
+      ],
+      "language_output": "RU primary. UZ is a native mirror (not literal) for launch and offer posts, or on request. Use canonical RU/UZ terms (касса/kassa, склад/ombor, насия/nasiya, остатки/qoldiq).",
+      "structure": [
+        "Hook line: a recognizable situation or the one idea, calm and concrete.",
+        "Body: 2-4 short lines in real verbs explaining the relief in terms of the owner's money and time.",
+        "Proof line: one verified capability tied to a fact id (qualify if needs_confirmation).",
+        "CTA line: one approved CTA."
+      ],
+      "cta_rules": "Default 'Написать в Telegram' (+998 97 421 24 54). Use 'Оставить заявку' (birliy.uz #lead) for offer posts. Exactly one CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "One pillar, one idea, one CTA; do not stack features.",
+        "If a real product screenshot is used, place it on the warm paper background, not raw from a phone."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "More than one idea or more than one CTA.",
+        "An offer post that omits the first-cohort framing or quotes a price not from the pricing facts."
+      ]
+    },
+
+    "seo_blog_article": {
+      "id": "seo_blog_article",
+      "label": "SEO blog article (RU/UZ, ICP-pain led)",
+      "use_when": "A long-form article targeting an ICP pain or a money keyword (notebook bookkeeping, nasiya vs qarz daftari, stock in a small shop, kassa without a register, choosing a POS). Builds organic and AI-discovery reach, then routes to a request.",
+      "maps_to_strategy": "marketing/05-blog-ai-discovery.md, 08-behavioral-seo-keywords.md, 11-blog-keyword-map.md, 12-money-keywords-onpage-spec.md; mirrors the existing 14 blog posts.",
+      "required_inputs": [
+        "primary_keyword: RU and UZ form of the target query",
+        "search_intent: the question the reader is actually asking",
+        "icp_pain: the pain from ICP_AND_PAIN_MAP this article resolves",
+        "language: ru | uz (publish both as native mirrors where the keyword map calls for it)"
+      ],
+      "optional_inputs": [
+        "secondary_keywords: supporting queries",
+        "internal_links: other blog posts or the landing #lead",
+        "faq_questions: 2-4 real reader questions for an FAQ block / AEO"
+      ],
+      "required_factual_evidence": [
+        "Every product capability named in the body cites a verified APPROVED_FACTS id.",
+        "Comparisons to notebook / Excel / 1C use fact_competitive_vs_notebook_1c only, stated factually.",
+        "Pricing, onboarding times, QR settlement, 9 000+ SKU, multi-point, loyalty, turnover are qualified per their needs_confirmation status."
+      ],
+      "language_output": "Native RU or UZ matching the keyword; if both, they are equivalent, not literal translations. Currency сум / so'm.",
+      "structure": [
+        "H1 with the primary keyword phrased as the reader would say it.",
+        "Intro: name the pain in the reader's words, promise a plain answer.",
+        "Body H2/H3: the answer, with verified BirLiy capabilities woven in where they genuinely solve the pain (each tied to a fact id).",
+        "Factual comparison block (optional): notebook / Excel / 1C vs BirLiy per fact_competitive_vs_notebook_1c, no defamation.",
+        "FAQ block: 2-4 short Q&A for AEO, answers grounded in facts.",
+        "Closing CTA section: one approved CTA."
+      ],
+      "cta_rules": "End with 'Оставить заявку' (birliy.uz #lead) for product-intent articles, or 'Написать в Telegram' (+998 97 421 24 54) for softer educational ones. Exactly one primary CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "Keyword used naturally, no stuffing; headings answer the intent.",
+        "No claim that is not in APPROVED_FACTS; needs_confirmation framed as stated/pilot."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "Any feature described as shipped that is needs_confirmation (loyalty, turnover, week/month reports, multi-point, day-register real-time, both app stores) without qualification.",
+        "A competitor named or disparaged beyond the factual notebook/Excel/1C comparison."
+      ]
+    },
+
+    "product_announcement": {
+      "id": "product_announcement",
+      "label": "Product announcement (capability or milestone)",
+      "use_when": "Announce something that is genuinely true and verified: a capability the product has, the early-access window, the onboarding service. NOT for unconfirmed features or invented milestones.",
+      "maps_to_strategy": "marketing/01-strategy.md section 3 (key messages), section 5 (what we do not say); 03-launch-calendar.md.",
+      "required_inputs": [
+        "announcement_subject: what is being announced",
+        "verification_check: confirmation the subject is a verified fact, not needs_confirmation or aspirational",
+        "language_mode: ru | uz | ru_then_uz"
+      ],
+      "optional_inputs": [
+        "supporting_screenshot_ref",
+        "linked_pain: the owner pain this capability removes"
+      ],
+      "required_factual_evidence": [
+        "The announced subject maps to a verified APPROVED_FACTS id (e.g. fact_offline, fact_payment_methods, fact_nasiya_debt, fact_owner_remote, fact_stage_early_access, fact_onboarding_service).",
+        "If the subject is needs_confirmation, the announcement must be reframed as a stated / early-access capability or held until owner confirmation; never announced as newly shipped."
+      ],
+      "language_output": "RU primary, UZ mirror for launch-level announcements. Calm, factual, no hype.",
+      "structure": [
+        "Lead: name the capability or milestone in one plain line.",
+        "What it does for the owner: 2-3 lines of concrete benefit in money/time terms.",
+        "Honest scope line: state the early-access stage where relevant (fact_stage_early_access); do not imply a live customer base.",
+        "CTA."
+      ],
+      "cta_rules": "Usually 'Оставить заявку' (birliy.uz #lead); 'Написать в Telegram' for question-driven announcements. One CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "The subject is verified, or clearly framed as a stated early-access capability.",
+        "No deadline beyond 'early access 2026'."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "Announcing a needs_confirmation feature as 'now available' / 'just launched'.",
+        "Implying existing live customers or quoting 'real shops already working'.",
+        "Any launch / delivery deadline beyond 'early access 2026'."
+      ]
+    },
+
+    "pain_to_solution_post": {
+      "id": "pain_to_solution_post",
+      "label": "Pain to solution post (pillar 1)",
+      "use_when": "The bread-and-butter format: name a pain the owner feels every day, show the cost, then show how BirLiy quietly removes it. Works on Instagram and Telegram.",
+      "maps_to_strategy": "marketing/02-content-system.md template A; pillar 1 'Боль to облегчение'; ICP_AND_PAIN_MAP pains.",
+      "required_inputs": [
+        "pain: a single recognizable pain from ICP_AND_PAIN_MAP (e.g. lost stock counts, paper debt notebook, three separate programs, no QR so a customer walks off)",
+        "relief_fact: the verified APPROVED_FACTS id that resolves this pain",
+        "language_mode: ru | uz | ru_then_uz"
+      ],
+      "optional_inputs": [
+        "segment: to sharpen the pain",
+        "screenshot_ref"
+      ],
+      "required_factual_evidence": [
+        "The relief maps to a verified fact id (e.g. notebook -> fact_nasiya_debt; lost stock -> fact_stock_auto_low_alert; three programs -> fact_single_surface_demo / fact_positioning; no QR -> fact_qr_no_terminal qualified on settlement timing; internet drops -> fact_offline).",
+        "Do not quantify the pain with an invented number or percentage; describe it qualitatively."
+      ],
+      "language_output": "RU primary, UZ native mirror on request. Use the owner's own words for the pain.",
+      "structure": [
+        "Pain in 1-2 lines, recognizable and specific.",
+        "Why it costs time or money, described qualitatively (no invented figures).",
+        "BirLiy relief in one sentence, tied to a fact id.",
+        "CTA."
+      ],
+      "cta_rules": "Default 'Написать в Telegram'. One CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "Pain stated without exaggeration or fake urgency.",
+        "Relief is a real verified capability, not a wish."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "Quantifying the pain or the relief with an invented number or percentage.",
+        "Promising a needs_confirmation outcome (instant settlement, one-day onboarding) as a guarantee."
+      ]
+    },
+
+    "owner_story": {
+      "id": "owner_story",
+      "label": "Owner story (illustrative day-in-the-life, NOT a testimonial)",
+      "use_when": "A narrative 'day of a shop owner' that dramatizes a pain and the relief. It is an ILLUSTRATION written in a generic or clearly hypothetical voice. It is NOT a customer testimonial and must never claim a named or real customer.",
+      "maps_to_strategy": "marketing/01-strategy.md tone (calm neighbour); pillar 3 'Свобода собственника'; pillar 1.",
+      "required_inputs": [
+        "owner_situation: a realistic, generic shop scenario (no real person, no real shop name)",
+        "pains_and_reliefs: 1-3 pains each tied to a verified relief fact id",
+        "language_mode: ru | uz | ru_then_uz"
+      ],
+      "optional_inputs": [
+        "segment",
+        "time_of_day_frame: morning open, midday rush, evening close (the 'numbers reconcile in the evening' angle from fact_positioning)"
+      ],
+      "required_factual_evidence": [
+        "Every capability the story shows in action maps to a verified fact id (fact_offline, fact_owner_remote, fact_nasiya_debt, fact_payment_methods, fact_reporting, fact_single_surface_demo).",
+        "Any figure shown on a screen in the story is treated as the prohibited demo set and must NOT be quoted as a real result.",
+        "needs_confirmation capabilities are shown as 'helps with', not as a guaranteed outcome."
+      ],
+      "language_output": "RU primary, UZ native mirror. Warm, plain, first or third person generic owner; no named individual.",
+      "structure": [
+        "Set the scene: a generic owner and a familiar moment in the shop.",
+        "The friction: the pain shows up (no invented numbers).",
+        "The shift: BirLiy quietly handles it, capability by capability, each tied to a fact id.",
+        "Calm close: the evening reconciles itself (fact_positioning).",
+        "CTA."
+      ],
+      "cta_rules": "Default 'Написать в Telegram'. One CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "The owner is explicitly generic / illustrative; no claim it is a real customer.",
+        "No on-screen demo figure is cited as a real metric."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "Presenting the story as a real, named, or verifiable customer (that would be an invented testimonial).",
+        "Quoting demo dashboard numbers or the sample receipt as the owner's real results.",
+        "Implying the owner is one of an existing live customer base ('real shops already working')."
+      ]
+    },
+
+    "objection_handling_post": {
+      "id": "objection_handling_post",
+      "label": "Objection handling post / FAQ answer",
+      "use_when": "Answer a real prospect objection or fear honestly: 'it's complicated to set up', 'I have no computer', 'what if the internet drops', 'what if a cashier cheats', 'is it expensive', 'do I need a terminal'. Builds trust by being straight, including saying 'we will check' for unconfirmed specifics.",
+      "maps_to_strategy": "marketing/01-strategy.md section 4 (trust triggers); COMPANY_CONTEXT truthful-answering policy; landing FAQ.",
+      "required_inputs": [
+        "objection: the fear or question, in the prospect's words",
+        "truthful_answer_facts: the APPROVED_FACTS ids that honestly address it",
+        "language_mode: ru | uz | ru_then_uz"
+      ],
+      "optional_inputs": [
+        "follow_up_offer: route specifics to @birliy_support_bot"
+      ],
+      "required_factual_evidence": [
+        "The answer rests on verified facts (no computer -> fact_equipment_phone_only; internet -> fact_offline; cashier control -> fact_roles_security; no terminal -> fact_qr_no_terminal; price -> fact_pricing_promo).",
+        "If the honest answer touches a needs_confirmation item (one-day onboarding, 30-min learning, instant QR settlement, 9 000+ SKU, both app stores, unlimited cashiers), qualify it and offer to confirm specifics via @birliy_support_bot rather than guaranteeing.",
+        "If the truthful answer is not provable from any fact, say BirLiy will check and route to support; never invent the answer."
+      ],
+      "language_output": "RU or UZ in the prospect's language, plain and reassuring, no defensiveness.",
+      "structure": [
+        "Restate the objection plainly so the reader feels heard.",
+        "Honest answer grounded in verified facts.",
+        "Qualify any unconfirmed specifics; offer to confirm via support.",
+        "CTA."
+      ],
+      "cta_rules": "Default 'Написать в Telegram' (+998 97 421 24 54); reference @birliy_support_bot for detailed questions. One CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "Honesty over salesmanship; no overstated security or settlement guarantees.",
+        "'Данные защищены' is bounded to PIN, roles, and action log, not a broad security guarantee."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "Inventing an answer to make the objection disappear.",
+        "Turning a needs_confirmation point into a hard guarantee to win the argument."
+      ]
+    },
+
+    "case_study_without_invented_data": {
+      "id": "case_study_without_invented_data",
+      "label": "Case study WITHOUT invented data (capability-led, no fabricated results)",
+      "use_when": "A structured 'how BirLiy would solve this for a shop like yours' piece. Because BirLiy is in early access with no owner-confirmed customer results, this template FORBIDS any real-customer claim, any results number, and any testimonial. It is a capability-and-workflow case, not a metrics case.",
+      "maps_to_strategy": "COMPANY_CONTEXT 'what the CMO must never claim'; marketing/01-strategy.md section 5; UNVERIFIED_CLAIMS_REPORT groups H and I.",
+      "forbids_invented_data": true,
+      "required_inputs": [
+        "scenario_segment: a generic shop type from ICP_AND_PAIN_MAP",
+        "before_state: the manual pains (notebook, scattered tools), described qualitatively",
+        "after_workflow: the BirLiy workflow, each step tied to a verified fact id",
+        "language_mode: ru | uz | ru_then_uz"
+      ],
+      "optional_inputs": [
+        "screenshot_ref: real product screenshots from .research/product-walk/ (these are real UI, not result mockups)"
+      ],
+      "required_factual_evidence": [
+        "Every 'after' step maps to a verified APPROVED_FACTS id; needs_confirmation steps are framed as stated capabilities.",
+        "ZERO results metrics: no revenue, profit, time-saving, sales-count, or percentage figures of any kind, real or estimated.",
+        "No named customer, no quote attributed to a real owner, no 'X shops use BirLiy'."
+      ],
+      "language_output": "RU primary, UZ native mirror. Frame explicitly as 'a shop like yours' / 'magazin u dome kabi do'kon uchun', clearly hypothetical.",
+      "structure": [
+        "Context: a generic shop and its manual 'before' (qualitative, no numbers).",
+        "Walkthrough: the BirLiy workflow step by step, each tied to a verified fact id.",
+        "What changes for the owner: described in plain terms (clarity, fewer parts, the evening reconciles per fact_positioning), with NO results figures.",
+        "Honest scope: early access stage (fact_stage_early_access).",
+        "CTA."
+      ],
+      "cta_rules": "'Оставить заявку' (birliy.uz #lead) to invite a real pilot conversation, or 'Написать в Telegram'. One CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "Confirm absolutely no results number, percentage, or money figure appears as an outcome.",
+        "Confirm the case is clearly framed as illustrative / hypothetical, not a real customer story."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "ANY invented or estimated result (money saved, time saved, revenue, percentage, sales count).",
+        "Any named or implied real customer, any testimonial quote.",
+        "Quoting demo dashboard numbers or the sample receipt as a real outcome.",
+        "Implying an existing live customer base or 'real shops already working'."
+      ]
+    },
+
+    "weekly_campaign": {
+      "id": "weekly_campaign",
+      "label": "Weekly campaign (3-post rhythm across Instagram and Telegram)",
+      "use_when": "Plan a coherent week of content that rotates the 7 pillars on the realistic 3-times-a-week rhythm (Mon / Wed / Fri), so the owner audience sees variety without overload.",
+      "maps_to_strategy": "marketing/02-content-system.md rhythm table and 7 pillars; 03-launch-calendar.md.",
+      "required_inputs": [
+        "week_theme: a loose connecting thread (optional but recommended)",
+        "three_pillars: pillar choices for Mon (1/2/6), Wed (3/4/5), Fri (7 offer)",
+        "language_plan: which posts ship bilingual (offer and launch always do)"
+      ],
+      "optional_inputs": [
+        "focus_segment: a segment to feature this week",
+        "available_screenshots: real screenshots to allocate to posts"
+      ],
+      "required_factual_evidence": [
+        "Each post inherits the required_factual_evidence of its own template (telegram_post, pain_to_solution_post, product_announcement, objection_handling_post, etc.).",
+        "The Friday offer post uses fact_pricing_promo / fact_pricing_start_chip + fact_promo_six_month, framed as the first-cohort rate.",
+        "No post repeats a prohibited demo number or implies a customer base."
+      ],
+      "language_output": "RU primary across the week; UZ native mirrors for the offer post and any launch post.",
+      "structure": [
+        "Monday: pain-to-relief, how-it-works, or by-segment (Instagram + extended Telegram).",
+        "Wednesday: owner-freedom, one-feature-big, or trust (Telegram feature/value post).",
+        "Friday: offer / early-access post with 'Оставить заявку'.",
+        "Each slot specifies pillar, template, fact ids, language, CTA, and an optional screenshot."
+      ],
+      "cta_rules": "Per-post one CTA; Telegram posts default to 'Написать в Telegram', the Friday offer to 'Оставить заявку'.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules per post.",
+        "No single pillar repeats twice in one week; one idea per post.",
+        "The week stays calm and consistent; no escalating scarcity across days."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions per post.",
+        "Stacking multiple ideas into one post to fill the calendar.",
+        "Manufactured urgency building across the week ('last chance', countdowns)."
+      ]
+    },
+
+    "competitor_comparison_without_defamation": {
+      "id": "competitor_comparison_without_defamation",
+      "label": "Competitor comparison WITHOUT defamation (notebook / Excel / 1C only)",
+      "use_when": "Position BirLiy against the real alternatives an Uzbek small-shop owner actually uses today: a paper notebook, Excel, or 1C. The comparison is FACTUAL and respectful; it never names or disparages another POS vendor and never makes a false claim about any competitor.",
+      "maps_to_strategy": "fact_competitive_vs_notebook_1c; marketing/01-strategy.md section 3; COMPANY_CONTEXT value proposition.",
+      "forbids_defamation": true,
+      "allowed_comparison_targets": ["paper notebook / тетрадь / daftar", "Excel", "1C"],
+      "required_inputs": [
+        "comparison_target: one of the allowed targets",
+        "dimension: an honest dimension (ease of use, cost for a small shop, where data lives, learning curve, what gets lost)",
+        "language_mode: ru | uz | ru_then_uz"
+      ],
+      "optional_inputs": [
+        "segment_context"
+      ],
+      "required_factual_evidence": [
+        "The comparison rests on fact_competitive_vs_notebook_1c: works on a phone, understandable without training, combines register/stock/debts/reports in one place; 1C is complex and expensive for a small shop; a notebook or Excel loses debts and balances.",
+        "Any BirLiy advantage claimed maps to a verified capability fact id (fact_positioning, fact_single_surface_demo, fact_offline, fact_nasiya_debt, fact_stock_auto_low_alert).",
+        "No factual claim is made about a competitor's price, feature, or behavior beyond what fact_competitive_vs_notebook_1c states."
+      ],
+      "language_output": "RU primary, UZ native mirror. Respectful, factual tone; the notebook and 1C are described as familiar tools, not as 'bad'.",
+      "structure": [
+        "Name the familiar alternative the owner uses today, with respect.",
+        "State its honest limitation for a small shop, per fact_competitive_vs_notebook_1c (debts/balances get lost; 1C is complex and costly).",
+        "Show how BirLiy handles the same job, tied to verified fact ids.",
+        "CTA."
+      ],
+      "cta_rules": "'Написать в Telegram' or 'Оставить заявку'. One CTA.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "Only notebook / Excel / 1C are compared against; no named POS vendor.",
+        "Every competitor statement is factual and within fact_competitive_vs_notebook_1c; tone stays respectful."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "Naming or attacking a specific competing POS product or company.",
+        "Any false, exaggerated, or unverifiable claim about a competitor (defamation).",
+        "Mocking the owner's current notebook/Excel/1C rather than respecting it."
+      ]
+    },
+
+    "seo_content_brief": {
+      "id": "seo_content_brief",
+      "label": "SEO content brief (input spec for an seo_blog_article)",
+      "use_when": "Before writing an article, produce a brief that locks the keyword, intent, structure, fact ids, and CTA so the writer cannot drift off-fact. Hands off cleanly to the seo_blog_article template.",
+      "maps_to_strategy": "marketing/08-behavioral-seo-keywords.md, 11-blog-keyword-map.md, 12-money-keywords-onpage-spec.md.",
+      "required_inputs": [
+        "primary_keyword: RU and UZ",
+        "search_intent",
+        "target_icp_pain: from ICP_AND_PAIN_MAP",
+        "language: ru | uz | both"
+      ],
+      "optional_inputs": [
+        "secondary_keywords",
+        "competing_serp_notes: what existing pages cover (observed, not invented)",
+        "target_word_count_range"
+      ],
+      "required_factual_evidence": [
+        "The brief lists the exact APPROVED_FACTS ids the article may use, marking each verified or needs_confirmation (with its required framing).",
+        "It flags any prohibited fact that must NOT appear (demo numbers, sample receipt, 'real shops already working').",
+        "It specifies that competitor mentions are limited to notebook / Excel / 1C per fact_competitive_vs_notebook_1c."
+      ],
+      "language_output": "Brief written for the writer; output language(s) of the article stated explicitly. Currency сум / so'm.",
+      "structure": [
+        "Title options (2-3) using the primary keyword as the reader phrases it.",
+        "Meta description draft (no em-dash, with the keyword).",
+        "H2/H3 outline mapped to search intent, each heading tagged with the fact ids that back it.",
+        "FAQ questions (2-4) for AEO.",
+        "Allowed-facts list (ids + status + framing) and a do-not-use list (prohibited facts).",
+        "Internal links and the single CTA to use."
+      ],
+      "cta_rules": "Specify exactly one approved CTA for the article and its destination.",
+      "qa_rules": [
+        "Inherit meta.global_qa_rules.",
+        "Every outline section is backed by at least one fact id or flagged as general education with no product claim.",
+        "Do-not-use list explicitly names the prohibited facts."
+      ],
+      "failure_conditions": [
+        "Inherit meta.global_failure_conditions.",
+        "A brief that allows a needs_confirmation fact without specifying its qualified framing.",
+        "A brief that does not name a single CTA, or permits a competitor comparison beyond notebook/Excel/1C.",
+        "Inventing SERP / competitor data instead of marking it as observed or unknown."
+      ]
+    }
+
+  }
+}

@@ -3,6 +3,7 @@ import { POSTS, BLOG_CATEGORIES, postsByCategory } from "@/lib/blog";
 import type { BlogPost } from "@/lib/blog/types";
 import type { BlogCategory } from "@/lib/blog/types";
 import { blogIndexPath, blogPostPath, blogCategoryPath } from "@/lib/blog/i18n";
+import { SEO_KEYWORD_LAST_MODIFIED, SEO_KEYWORD_PAGES } from "@/lib/seo/keyword-pages";
 
 const SITE = "https://birliy.uz";
 const landingLanguages = { uz: SITE, ru: `${SITE}/ru`, "x-default": SITE };
@@ -84,6 +85,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         alternates: { languages },
       });
     }
+  }
+
+  for (const page of SEO_KEYWORD_PAGES) {
+    entries.push({
+      url: `${SITE}${page.path}`,
+      lastModified: SEO_KEYWORD_LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.55,
+    });
   }
 
   return entries;

@@ -58,7 +58,7 @@ export function formatLeadPhotoCaption(lead: Lead): string {
   ];
 
   if (lead.city && lead.city.trim().length > 0) {
-    lines.push(`📍 <b>Город:</b> ${escapeHtml(lead.city)}`);
+    lines.push(`🏙 <b>Город:</b> ${escapeHtml(lead.city)}`);
   }
 
   return lines.join("\n");
@@ -88,7 +88,7 @@ export function formatLeadMessage(lead: Lead, siteUrl: string): string {
   ];
 
   if (lead.city && lead.city.trim().length > 0) {
-    lines.push(`📍 <b>Город:</b> ${escapeHtml(lead.city)}`);
+    lines.push(`🏙 <b>Город:</b> ${escapeHtml(lead.city)}`);
   }
 
   if (lead.comment && lead.comment.trim().length > 0) {

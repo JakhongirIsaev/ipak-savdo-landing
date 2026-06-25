@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "source_commit": "ffd6c4feaeded5d3b7077f00f2050bd623653b5c",
+  "policy": {
+    "runtime_public_requires_status": "verified",
+    "runtime_public_allowed_source_classifications": [
+      "operational_evidence",
+      "product_code",
+      "owner_confirmed",
+      "commercial_policy"
+    ],
+    "default_when_source_is_only_landing_or_blog_copy": {
+      "source_classification": "marketing_copy_only",
+      "effective_status": "needs_confirmation"
+    },
+    "notes": [
+      "Existing landing-page marketing copy is not treated as independent factual proof.",
+      "Prompt text, old specifications, mockups, and demo data are never runtime-public evidence.",
+      "Temporary owner decisions are conservative until Jack confirms otherwise."
+    ]
+  },
+  "source_classification_rules": [
+    {
+      "match": "demo dashboard, sample receipt, mock metric, fixture number",
+      "source_classification": "demo_placeholder",
+      "effective_status": "prohibited"
+    },
+    {
+      "match": "old specification, prompt, planning document, unused roadmap copy",
+      "source_classification": "specification_only",
+      "effective_status": "needs_confirmation"
+    },
+    {
+      "match": "current landing page, blog post, i18n marketing copy",
+      "source_classification": "marketing_copy_only",
+      "effective_status": "needs_confirmation"
+    }
+  ],
+  "fact_overrides": {
+    "fact_positioning": {
+      "source_classification": "commercial_policy",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Core offer/category wording, not a performance or implementation claim."
+    },
+    "fact_made_for_uzbekistan": {
+      "source_classification": "commercial_policy",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Brand positioning line approved for public use."
+    },
+    "fact_stage_early_access": {
+      "source_classification": "commercial_policy",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Conservative stage wording prevents over-claiming launch/customer state."
+    },
+    "fact_contacts": {
+      "source_classification": "commercial_policy",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Contact channels are commercial policy, not product performance proof."
+    },
+    "fact_icp_segments": {
+      "source_classification": "commercial_policy",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Audience targeting language is public positioning."
+    },
+    "fact_lead_form_docs": {
+      "source_classification": "product_code",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Lead form document intake is implemented in the landing/API code."
+    },
+    "fact_single_surface_demo": {
+      "source_classification": "product_code",
+      "effective_status": "verified",
+      "runtime_public": true,
+      "reason": "Clickable landing demo exists as code, but demo metrics remain prohibited."
+    },
+    "fact_roles_security": {
+      "source_classification": "marketing_copy_only",
+      "effective_status": "needs_confirmation",
+      "runtime_public": false,
+      "reason": "Temporary owner decision: security-related claims need confirmation."
+    }
+  },
+  "temporary_owner_decisions": [
+    {
+      "topic": "Price and six-month promotion",
+      "fact_ids": ["fact_pricing_promo", "fact_pricing_start_chip", "fact_promo_six_month"],
+      "effective_status": "needs_confirmation"
+    },
+    {
+      "topic": "One-day onboarding",
+      "fact_ids": ["fact_onboarding_one_day"],
+      "effective_status": "needs_confirmation",
+      "public_instruction": "May be described only as an early-access intent, not a guarantee."
+    },
+    {
+      "topic": "QR speed",
+      "fact_ids": ["fact_qr_no_terminal"],
+      "effective_status": "needs_confirmation",
+      "public_instruction": "Use quickly, never instantly."
+    },
+    {
+      "topic": "9,000+ SKU base",
+      "fact_ids": ["fact_sku_base_excel"],
+      "effective_status": "needs_confirmation"
+    },
+    {
+      "topic": "Roadmap functionality",
+      "fact_ids": ["fact_branches_multipoint", "fact_turnover_analytics", "fact_loyalty"],
+      "effective_status": "needs_confirmation",
+      "public_instruction": "Never describe roadmap functionality as currently shipped."
+    },
+    {
+      "topic": "Equipment delivery, installation and instalments",
+      "fact_ids": ["fact_equipment_optional_kit", "fact_equipment_platforms", "fact_support_onboarding_help"],
+      "effective_status": "needs_confirmation"
+    },
+    {
+      "topic": "Existing-store/customer claims",
+      "fact_ids": ["fact_real_shops_badge"],
+      "effective_status": "prohibited"
+    },
+    {
+      "topic": "Demo metrics",
+      "fact_ids": [
+        "fact_demo_revenue",
+        "fact_demo_avg_check",
+        "fact_demo_sales_delta",
+        "fact_demo_stock",
+        "fact_demo_receipt",
+        "fact_demo_cashiers_returns"
+      ],
+      "source_classification": "demo_placeholder",
+      "effective_status": "prohibited"
+    },
+    {
+      "topic": "30-minute, 5-minute and 15-second claims",
+      "fact_ids": ["fact_onboarding_cashier_30min", "fact_install_time", "fact_sale_flow_15s"],
+      "effective_status": "prohibited"
+    },
+    {
+      "topic": "Security, unlimited cashiers and 200 checks/day",
+      "fact_ids": ["fact_roles_security", "fact_unlimited_cashiers_early", "fact_segment_sizing_200"],
+      "effective_status": "needs_confirmation"
+    }
+  ]
+}

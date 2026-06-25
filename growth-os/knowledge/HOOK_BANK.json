@@ -1,0 +1,602 @@
+[
+  {
+    "id": "hook_ru_op_001",
+    "locale": "ru",
+    "pain": "operational pain",
+    "angle": "pain",
+    "semantic_hook": "Касса в одном месте, склад в другом, оплаты в третьем, а долги в тетради.",
+    "visual_hook_suggestion": "Бумажный фон, четыре разрозненных листка и тетрадь, разбросанные по столу, рядом один спокойный телефон с экраном BirLiy.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["Описывает только разрозненность учёта, без обещаний результата", "Опирается на fact_positioning, без выдуманных цифр"]
+  },
+  {
+    "id": "hook_ru_op_002",
+    "locale": "ru",
+    "pain": "operational pain",
+    "angle": "result",
+    "semantic_hook": "Касса, склад, оплаты и долги в одном приложении на телефоне.",
+    "visual_hook_suggestion": "Один телефон крупным планом на бумажном фоне, на экране одна аккуратная панель вместо нескольких программ.",
+    "suitable_formats": ["instagram_single", "telegram_post", "instagram_carousel"],
+    "risk_notes": ["Описывает заявленную функцию по fact_positioning и fact_single_surface_demo", "Не обещает экономию времени в процентах"]
+  },
+  {
+    "id": "hook_ru_op_003",
+    "locale": "ru",
+    "pain": "operational pain",
+    "angle": "belief_break",
+    "semantic_hook": "Чтобы навести порядок в магазине, не нужны три программы и компьютер.",
+    "visual_hook_suggestion": "Перечёркнутый ряд иконок программ и большого монитора, рядом один телефон.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_equipment_phone_only и fact_positioning", "Не называет конкретные программы конкурентов"]
+  },
+  {
+    "id": "hook_ru_rev_001",
+    "locale": "ru",
+    "pain": "revenue visibility",
+    "angle": "pain",
+    "semantic_hook": "Сколько вы заработали сегодня, прямо сейчас, без подсчётов?",
+    "visual_hook_suggestion": "Крупный вопрос на бумажном фоне, под ним телефон с экраном дневной выручки, цифры размыты как пример.",
+    "suitable_formats": ["instagram_single", "telegram_post", "reel_hook"],
+    "risk_notes": ["Вопрос без обещания конкретной суммы", "Не показывать демо-цифры как реальные (fact_demo_revenue prohibited)"]
+  },
+  {
+    "id": "hook_ru_rev_002",
+    "locale": "ru",
+    "pain": "revenue visibility",
+    "angle": "result",
+    "semantic_hook": "Выручку за день видно с телефона, даже когда вас нет в магазине.",
+    "visual_hook_suggestion": "Владелец смотрит в телефон вне магазина, на экране дневная выручка как пример без точных чисел.",
+    "suitable_formats": ["instagram_single", "telegram_post", "reel_hook"],
+    "risk_notes": ["Опирается на fact_owner_remote и fact_reporting", "Любые цифры на экране подписать как пример, не реальные"]
+  },
+  {
+    "id": "hook_ru_rev_003",
+    "locale": "ru",
+    "pain": "revenue visibility",
+    "angle": "discovery",
+    "semantic_hook": "Итоги смены и дня приходят владельцу в Telegram сами.",
+    "visual_hook_suggestion": "Экран Telegram с коротким сообщением-сводкой о смене, без конкретных сумм.",
+    "suitable_formats": ["telegram_post", "instagram_carousel"],
+    "risk_notes": ["Опирается на fact_owner_remote", "Не указывать конкретное содержание сводки как гарантию точных чисел"]
+  },
+  {
+    "id": "hook_ru_stock_001",
+    "locale": "ru",
+    "pain": "stock loss",
+    "angle": "pain",
+    "semantic_hook": "Остатки в тетради расходятся с полкой, а пересчёт съедает вечер.",
+    "visual_hook_suggestion": "Тетрадь с зачёркнутыми строчками рядом с полупустой полкой, тёплый бумажный фон.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["Описывает узнаваемую боль из брифа qoldiq-nazorati", "Не обещает точность учёта в процентах"]
+  },
+  {
+    "id": "hook_ru_stock_002",
+    "locale": "ru",
+    "pain": "stock loss",
+    "angle": "result",
+    "semantic_hook": "Остаток обновляется сам после каждой продажи, а когда товар заканчивается, программа подскажет.",
+    "visual_hook_suggestion": "Экран товара, остаток уменьшается после продажи, мягкая отметка о низком остатке зелёным акцентом.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_stock_auto_low_alert", "Низкий остаток подсказывается, без обещания нулевых потерь"]
+  },
+  {
+    "id": "hook_ru_stock_003",
+    "locale": "ru",
+    "pain": "stock loss",
+    "angle": "belief_break",
+    "semantic_hook": "Чтобы знать, что осталось на полке, не нужно закрывать магазин на пересчёт.",
+    "visual_hook_suggestion": "Закрытая дверь магазина с надписью пересчёт, перечёркнута, рядом телефон с экраном остатков.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_catalog_stock и fact_stock_auto_low_alert", "Не утверждает мгновенную точность как гарантию"]
+  },
+  {
+    "id": "hook_ru_cashier_001",
+    "locale": "ru",
+    "pain": "cashier control",
+    "angle": "pain",
+    "semantic_hook": "Вы не за прилавком, а кто и что пробил, остаётся непонятным.",
+    "visual_hook_suggestion": "Пустое место владельца за прилавком, вопросительный знак, рядом телефон с журналом действий.",
+    "suitable_formats": ["telegram_post", "instagram_carousel", "reel_hook"],
+    "risk_notes": ["Описывает беспокойство владельца, без обвинений в адрес кассиров", "Опирается на fact_roles_security"]
+  },
+  {
+    "id": "hook_ru_cashier_002",
+    "locale": "ru",
+    "pain": "cashier control",
+    "angle": "result",
+    "semantic_hook": "Каждый кассир заходит по своему PIN, а журнал хранит, что продано, списано и возвращено.",
+    "visual_hook_suggestion": "Экран входа по PIN и под ним строка журнала с именем кассира, зелёный акцент на одной отметке.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_roles_security", "Не превращать в широкую гарантию защиты данных (условие F1)"]
+  },
+  {
+    "id": "hook_ru_cashier_003",
+    "locale": "ru",
+    "pain": "cashier control",
+    "angle": "discovery",
+    "semantic_hook": "Владелец видит с телефона, кто сейчас на смене и какими были последние продажи.",
+    "visual_hook_suggestion": "Телефон владельца с панелью смены, имя кассира на смене, без конкретных сумм.",
+    "suitable_formats": ["telegram_post", "instagram_single"],
+    "risk_notes": ["Опирается на fact_owner_remote и fact_roles_security", "Демо-числа кассиров и возвратов не показывать как реальные (fact_demo_cashiers_returns)"]
+  },
+  {
+    "id": "hook_ru_notebook_001",
+    "locale": "ru",
+    "pain": "notebook/manual accounting",
+    "angle": "pain",
+    "semantic_hook": "Вечером вы складываете кассу, склад и тетрадь по отдельности и всё равно не сходится.",
+    "visual_hook_suggestion": "Усталый стол вечером: калькулятор, тетрадь, стопка чеков, тёплый свет, рядом спокойный телефон.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["Берёт боль из брифа kechki-hisob", "Не обещает, что сходится всегда, говорит о заявленном удобстве"]
+  },
+  {
+    "id": "hook_ru_notebook_002",
+    "locale": "ru",
+    "pain": "notebook/manual accounting",
+    "angle": "result",
+    "semantic_hook": "Каждая продажа записывается сразу, поэтому вечером не нужно считать вручную.",
+    "visual_hook_suggestion": "Сравнение: слева закрытая тетрадь, справа телефон, где продажи уже собраны в список.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_positioning и fact_checkout_sales", "Описывает заявленное удобство, без процента экономии времени"]
+  },
+  {
+    "id": "hook_ru_notebook_003",
+    "locale": "ru",
+    "pain": "notebook/manual accounting",
+    "angle": "belief_break",
+    "semantic_hook": "Тетрадь не теряется и не путается, когда учёт уже в телефоне.",
+    "visual_hook_suggestion": "Закрытая запылённая тетрадь убрана в сторону, на первом плане телефон с аккуратным учётом.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_competitive_vs_notebook_1c", "Не утверждает полное отсутствие ошибок"]
+  },
+  {
+    "id": "hook_ru_nasiya_001",
+    "locale": "ru",
+    "pain": "nasiya/debt",
+    "angle": "pain",
+    "semantic_hook": "Кто взял в долг, сколько и когда обещал вернуть, помнит только тетрадь, пока её не потеряли.",
+    "visual_hook_suggestion": "Долговая тетрадь с размытыми именами, одна страница загнута, тёплый бумажный фон.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["Берёт боль из брифа qarz-daftar", "Не обещает возврат всех долгов"]
+  },
+  {
+    "id": "hook_ru_nasiya_002",
+    "locale": "ru",
+    "pain": "nasiya/debt",
+    "angle": "result",
+    "semantic_hook": "Долги покупателей видно в приложении вместо бумажной тетради: кто сколько должен и когда обещал оплатить.",
+    "visual_hook_suggestion": "Экран списка должников на телефоне, рядом отложенная в сторону долговая тетрадь.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_nasiya_debt", "Лимит долга на покупателя не упоминать как факт (только блог, E4)"]
+  },
+  {
+    "id": "hook_ru_nasiya_003",
+    "locale": "ru",
+    "pain": "nasiya/debt",
+    "angle": "discovery",
+    "semantic_hook": "В долг тоже учитывается: насия стоит рядом с наличными, картой и QR в одном учёте.",
+    "visual_hook_suggestion": "Четыре способа оплаты в ряд на экране оплаты, метка в долг подсвечена зелёным акцентом.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_payment_methods и fact_nasiya_debt", "Не называет банк или платёжного провайдера"]
+  },
+  {
+    "id": "hook_ru_queue_001",
+    "locale": "ru",
+    "pain": "queue speed",
+    "angle": "pain",
+    "semantic_hook": "Пока вы ищете товар в тетради, у прилавка копится очередь.",
+    "visual_hook_suggestion": "Очередь у прилавка, владелец листает тетрадь, рядом контраст с телефоном и быстрым поиском.",
+    "suitable_formats": ["reel_hook", "instagram_carousel", "telegram_post"],
+    "risk_notes": ["Описывает узнаваемую ситуацию", "Не приводит число секунд как гарантию"]
+  },
+  {
+    "id": "hook_ru_queue_002",
+    "locale": "ru",
+    "pain": "queue speed",
+    "angle": "result",
+    "semantic_hook": "Скан или поиск, корзина, оплата, чек в Telegram: продажа без переключений между приложениями.",
+    "visual_hook_suggestion": "Короткая раскадровка шагов продажи на одном экране, по одному кадру на шаг.",
+    "suitable_formats": ["reel_hook", "instagram_carousel"],
+    "risk_notes": ["Опирается на fact_sale_flow_15s и fact_checkout_sales", "15 секунд держать как описание, не как гарантию (условие)"]
+  },
+  {
+    "id": "hook_ru_queue_003",
+    "locale": "ru",
+    "pain": "queue speed",
+    "angle": "discovery",
+    "semantic_hook": "Камера телефона читает штрих-код, а можно подключить любой 2D Bluetooth-сканер.",
+    "visual_hook_suggestion": "Телефон сканирует штрих-код товара камерой, рядом небольшой беспроводной сканер.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["Опирается на fact_scanner_2d_bluetooth", "Не указывать модели или цены оборудования"]
+  },
+  {
+    "id": "hook_ru_fear_001",
+    "locale": "ru",
+    "pain": "fear of complicated software",
+    "angle": "pain",
+    "semantic_hook": "Кажется, что любая программа учёта - это сложно, дорого и надо звать настройщика.",
+    "visual_hook_suggestion": "Запутанный интерфейс на старом мониторе, рядом простой светлый экран телефона.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_competitive_vs_notebook_1c", "Не называет 1C напрямую в первой строке, говорит обобщённо"]
+  },
+  {
+    "id": "hook_ru_fear_002",
+    "locale": "ru",
+    "pain": "fear of complicated software",
+    "angle": "belief_break",
+    "semantic_hook": "Понятно без обучения: начать можно с телефона, без компьютера и без техника.",
+    "visual_hook_suggestion": "Один телефон в руке, чистый понятный экран, тёплый бумажный фон, много воздуха.",
+    "suitable_formats": ["instagram_single", "telegram_post", "reel_hook"],
+    "risk_notes": ["Опирается на fact_equipment_phone_only", "Тайминги (5 минут, один день) держать как типичные, не гарантия"]
+  },
+  {
+    "id": "hook_ru_fear_003",
+    "locale": "ru",
+    "pain": "fear of complicated software",
+    "angle": "result",
+    "semantic_hook": "С запуском помогаем вместе: установка, загрузка товаров и первый чек с командой.",
+    "visual_hook_suggestion": "Менеджер и владелец смотрят в один телефон, делают первую продажу, спокойная сцена.",
+    "suitable_formats": ["telegram_post", "instagram_carousel"],
+    "risk_notes": ["Опирается на fact_onboarding_service и fact_support_onboarding_help", "Один день подавать как типичный срок, не как жёсткую гарантию (B1)"]
+  },
+  {
+    "id": "hook_ru_price_001",
+    "locale": "ru",
+    "pain": "price objection",
+    "angle": "belief_break",
+    "semantic_hook": "Цена известна заранее: первые 6 месяцев 49 000 сум в месяц, дальше 149 000, без скрытых платежей.",
+    "visual_hook_suggestion": "Две спокойные строки с ценой на бумажном фоне, без огня и без капса, зелёная отметка у первой цены.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_pricing_promo и fact_pricing_start_chip", "Цена пилотная и нуждается в подтверждении актуальности (A1), без фейкового дефицита"]
+  },
+  {
+    "id": "hook_ru_price_002",
+    "locale": "ru",
+    "pain": "price objection",
+    "angle": "result",
+    "semantic_hook": "Полный функционал, без скрытых платежей: списаний без вашего согласия не будет.",
+    "visual_hook_suggestion": "Короткая фраза о прозрачной цене на бумажном фоне, спокойная типографика.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_pricing_promo", "Не называть конкретные цены оборудования (G1)"]
+  },
+  {
+    "id": "hook_ru_price_003",
+    "locale": "ru",
+    "pain": "price objection",
+    "angle": "discovery",
+    "semantic_hook": "Стартовая цена для первой когорты: 49 000 сум в месяц первые 6 месяцев.",
+    "visual_hook_suggestion": "Крупная цифра 49 000 сум/мес на бумажном фоне, подпись про первую когорту.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_promo_six_month", "Указывать условие первой когорты, без давления и фейковой срочности"]
+  },
+  {
+    "id": "hook_ru_trust_001",
+    "locale": "ru",
+    "pain": "trust objection",
+    "angle": "belief_break",
+    "semantic_hook": "Не безликое облако из интернета: сделано для бизнеса в Узбекистане.",
+    "visual_hook_suggestion": "Спокойная фраза сделано для Узбекистана на бумажном фоне, локальный визуальный мотив без флагов-клише.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["Опирается на fact_made_for_uzbekistan", "Никогда не расширять до названия банка или родительской компании"]
+  },
+  {
+    "id": "hook_ru_trust_002",
+    "locale": "ru",
+    "pain": "trust objection",
+    "angle": "pain",
+    "semantic_hook": "Боитесь доверить учёт чужой программе? Вход по PIN и журнал всех действий рядом.",
+    "visual_hook_suggestion": "Экран входа по PIN и строка журнала действий, спокойный тёмно-синий текст.",
+    "suitable_formats": ["telegram_post", "instagram_carousel"],
+    "risk_notes": ["Опирается на fact_roles_security", "Не превращать в широкую гарантию защиты данных (F1)"]
+  },
+  {
+    "id": "hook_ru_trust_003",
+    "locale": "ru",
+    "pain": "trust objection",
+    "angle": "discovery",
+    "semantic_hook": "Сейчас открываем ранний доступ для первых магазинов Ташкента, честно про этап.",
+    "visual_hook_suggestion": "Спокойная карточка ранний доступ 2026, Ташкент, без обещаний массовой базы клиентов.",
+    "suitable_formats": ["telegram_post", "instagram_single"],
+    "risk_notes": ["Опирается на fact_stage_early_access", "Не использовать фразу про реальные магазины уже работают (fact_real_shops_badge prohibited)"]
+  },
+  {
+    "id": "hook_uz_op_001",
+    "locale": "uz",
+    "pain": "operational pain",
+    "angle": "pain",
+    "semantic_hook": "Kassa bir joyda, ombor boshqa joyda, to'lovlar uchinchi joyda, qarzlar esa daftarda.",
+    "visual_hook_suggestion": "Qog'oz fon, stol ustida tarqab yotgan to'rtta varaq va bitta daftar, yonida bitta tinch telefon BirLiy ekrani bilan.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["Faqat hisobning tarqoqligini tasvirlaydi, natija va'da qilinmaydi", "fact_positioning'ga tayanadi, o'ylab topilgan raqamsiz"]
+  },
+  {
+    "id": "hook_uz_op_002",
+    "locale": "uz",
+    "pain": "operational pain",
+    "angle": "result",
+    "semantic_hook": "Kassa, ombor, to'lovlar va qarzlar telefondagi bitta ilovada.",
+    "visual_hook_suggestion": "Qog'oz fonda yaqindan bitta telefon, ekranda bir nechta dastur o'rniga bitta tartibli panel.",
+    "suitable_formats": ["instagram_single", "telegram_post", "instagram_carousel"],
+    "risk_notes": ["fact_positioning va fact_single_surface_demo bo'yicha e'lon qilingan funksiya", "Vaqt tejash foizini va'da qilmaydi"]
+  },
+  {
+    "id": "hook_uz_op_003",
+    "locale": "uz",
+    "pain": "operational pain",
+    "angle": "belief_break",
+    "semantic_hook": "Do'konda tartib o'rnatish uchun uchta dastur va kompyuter shart emas.",
+    "visual_hook_suggestion": "Ustidan chizilgan dastur ikonkalari qatori va katta monitor, yonida bitta telefon.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_equipment_phone_only va fact_positioning'ga tayanadi", "Raqobatchi dasturlarning nomini aytmaydi"]
+  },
+  {
+    "id": "hook_uz_rev_001",
+    "locale": "uz",
+    "pain": "revenue visibility",
+    "angle": "pain",
+    "semantic_hook": "Bugun qancha ishlab topdingiz, hisoblab o'tirmasdan, hozir ayta olasizmi?",
+    "visual_hook_suggestion": "Qog'oz fonda yirik savol, ostida kunlik tushum ekrani bo'lgan telefon, raqamlar namuna sifatida xira.",
+    "suitable_formats": ["instagram_single", "telegram_post", "reel_hook"],
+    "risk_notes": ["Aniq summa va'da qilmaydigan savol", "Demo raqamlarni haqiqiy deb ko'rsatmaslik (fact_demo_revenue prohibited)"]
+  },
+  {
+    "id": "hook_uz_rev_002",
+    "locale": "uz",
+    "pain": "revenue visibility",
+    "angle": "result",
+    "semantic_hook": "Kunlik tushum telefonda ko'rinadi, hatto do'konda bo'lmasangiz ham.",
+    "visual_hook_suggestion": "Egasi do'kondan tashqarida telefonga qaraydi, ekranda kunlik tushum namuna sifatida, aniq raqamsiz.",
+    "suitable_formats": ["instagram_single", "telegram_post", "reel_hook"],
+    "risk_notes": ["fact_owner_remote va fact_reporting'ga tayanadi", "Ekrandagi raqamlarni namuna deb belgilash, haqiqiy emas"]
+  },
+  {
+    "id": "hook_uz_rev_003",
+    "locale": "uz",
+    "pain": "revenue visibility",
+    "angle": "discovery",
+    "semantic_hook": "Smena va kun yakunlari egasiga Telegramga o'zi keladi.",
+    "visual_hook_suggestion": "Telegram ekrani qisqa smena yakuni xabari bilan, aniq summalarsiz.",
+    "suitable_formats": ["telegram_post", "instagram_carousel"],
+    "risk_notes": ["fact_owner_remote'ga tayanadi", "Yakun mazmunini aniq raqamlar kafolati sifatida ko'rsatmaslik"]
+  },
+  {
+    "id": "hook_uz_stock_001",
+    "locale": "uz",
+    "pain": "stock loss",
+    "angle": "pain",
+    "semantic_hook": "Daftardagi qoldiq javondagi tovar bilan to'g'ri kelmaydi, qayta sanash esa kechni oladi.",
+    "visual_hook_suggestion": "Chizilgan satrli daftar yarim bo'sh javon yonida, iliq qog'oz fon.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["qoldiq-nazorati brifidagi tanish og'riqni tasvirlaydi", "Hisob aniqligini foizda va'da qilmaydi"]
+  },
+  {
+    "id": "hook_uz_stock_002",
+    "locale": "uz",
+    "pain": "stock loss",
+    "angle": "result",
+    "semantic_hook": "Qoldiq har bir sotuvdan keyin o'zi yangilanadi, tovar tugayotganini tizim oldindan eslatadi.",
+    "visual_hook_suggestion": "Tovar ekrani, sotuvdan keyin qoldiq kamayadi, kam qolgani yumshoq yashil belgi bilan.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_stock_auto_low_alert'ga tayanadi", "Kam qoldiq eslatiladi, nol yo'qotish va'da qilinmaydi"]
+  },
+  {
+    "id": "hook_uz_stock_003",
+    "locale": "uz",
+    "pain": "stock loss",
+    "angle": "belief_break",
+    "semantic_hook": "Javonda nima qolganini bilish uchun do'konni sanash uchun yopish shart emas.",
+    "visual_hook_suggestion": "Ustidan chizilgan sanash yozuvli yopiq do'kon eshigi, yonida qoldiq ekranli telefon.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_catalog_stock va fact_stock_auto_low_alert'ga tayanadi", "Bir zumda aniqlikni kafolat sifatida aytmaydi"]
+  },
+  {
+    "id": "hook_uz_cashier_001",
+    "locale": "uz",
+    "pain": "cashier control",
+    "angle": "pain",
+    "semantic_hook": "Siz peshtaxta yonida emassiz, kim nima urganini esa bilib bo'lmayapti.",
+    "visual_hook_suggestion": "Peshtaxta yonidagi egasining bo'sh joyi, savol belgisi, yonida amallar jurnalli telefon.",
+    "suitable_formats": ["telegram_post", "instagram_carousel", "reel_hook"],
+    "risk_notes": ["Egasining xavotirini tasvirlaydi, kassirlarni ayblamaydi", "fact_roles_security'ga tayanadi"]
+  },
+  {
+    "id": "hook_uz_cashier_002",
+    "locale": "uz",
+    "pain": "cashier control",
+    "angle": "result",
+    "semantic_hook": "Har bir kassir o'z PIN'i bilan kiradi, jurnal esa nima sotilgan, hisobdan chiqarilgan va qaytarilganini saqlaydi.",
+    "visual_hook_suggestion": "PIN orqali kirish ekrani, ostida kassir ismi bilan jurnal qatori, bitta belgida yashil urg'u.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_roles_security'ga tayanadi", "Keng ma'lumot himoyasi kafolatiga aylantirmaslik (F1 sharti)"]
+  },
+  {
+    "id": "hook_uz_cashier_003",
+    "locale": "uz",
+    "pain": "cashier control",
+    "angle": "discovery",
+    "semantic_hook": "Egasi telefondan ko'radi: hozir kim smenada va oxirgi sotuvlar qanday bo'lgan.",
+    "visual_hook_suggestion": "Egasining telefoni smena paneli bilan, smenadagi kassir ismi, aniq summalarsiz.",
+    "suitable_formats": ["telegram_post", "instagram_single"],
+    "risk_notes": ["fact_owner_remote va fact_roles_security'ga tayanadi", "Demo kassir va qaytarish raqamlarini haqiqiy deb ko'rsatmaslik (fact_demo_cashiers_returns)"]
+  },
+  {
+    "id": "hook_uz_notebook_001",
+    "locale": "uz",
+    "pain": "notebook/manual accounting",
+    "angle": "pain",
+    "semantic_hook": "Kechqurun kassa, ombor va daftarni alohida qo'shasiz, baribir to'g'ri kelmaydi.",
+    "visual_hook_suggestion": "Kechki charchagan stol: kalkulyator, daftar, cheklar dastasi, iliq yorug'lik, yonida tinch telefon.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["kechki-hisob brifidagi og'riqdan olingan", "Har doim to'g'ri keladi deb va'da qilmaydi, e'lon qilingan qulaylik haqida"]
+  },
+  {
+    "id": "hook_uz_notebook_002",
+    "locale": "uz",
+    "pain": "notebook/manual accounting",
+    "angle": "result",
+    "semantic_hook": "Har bir sotuv darhol yoziladi, shuning uchun kechqurun qo'lda sanash shart emas.",
+    "visual_hook_suggestion": "Solishtirish: chapda yopiq daftar, o'ngda sotuvlar ro'yxatga yig'ilgan telefon.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_positioning va fact_checkout_sales'ga tayanadi", "E'lon qilingan qulaylikni tasvirlaydi, vaqt tejash foizisiz"]
+  },
+  {
+    "id": "hook_uz_notebook_003",
+    "locale": "uz",
+    "pain": "notebook/manual accounting",
+    "angle": "belief_break",
+    "semantic_hook": "Hisob telefonda bo'lsa, daftar yo'qolmaydi va chalkashmaydi.",
+    "visual_hook_suggestion": "Yopiq changli daftar chetga surilgan, oldida tartibli hisobli telefon.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_competitive_vs_notebook_1c'ga tayanadi", "Xatolar butunlay yo'q deb aytmaydi"]
+  },
+  {
+    "id": "hook_uz_nasiya_001",
+    "locale": "uz",
+    "pain": "nasiya/debt",
+    "angle": "pain",
+    "semantic_hook": "Kim nasiyaga oldi, qancha va qachon qaytarishni va'da qildi, buni faqat daftar biladi, yo'qolmaguncha.",
+    "visual_hook_suggestion": "Ismlari xira qarz daftari, bir sahifasi bukilgan, iliq qog'oz fon.",
+    "suitable_formats": ["instagram_carousel", "telegram_post", "reel_hook"],
+    "risk_notes": ["qarz-daftar brifidagi og'riqdan olingan", "Barcha qarzlar qaytishini va'da qilmaydi"]
+  },
+  {
+    "id": "hook_uz_nasiya_002",
+    "locale": "uz",
+    "pain": "nasiya/debt",
+    "angle": "result",
+    "semantic_hook": "Xaridorlar nasiyasi qog'oz daftar o'rniga ilovada ko'rinadi: kim qancha qarz va qachon to'lashni va'da qilgan.",
+    "visual_hook_suggestion": "Telefonda qarzdorlar ro'yxati ekrani, yonida chetga qo'yilgan qarz daftari.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_nasiya_debt'ga tayanadi", "Xaridor uchun qarz limitini fakt sifatida aytmaslik (faqat blogda, E4)"]
+  },
+  {
+    "id": "hook_uz_nasiya_003",
+    "locale": "uz",
+    "pain": "nasiya/debt",
+    "angle": "discovery",
+    "semantic_hook": "Nasiya ham hisobga olinadi: qarzga naqd, karta va QR bilan bitta hisobda turadi.",
+    "visual_hook_suggestion": "To'lov ekranida to'rtta usul qatorda, qarzga belgisi yashil urg'u bilan yoritilgan.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_payment_methods va fact_nasiya_debt'ga tayanadi", "Bank yoki to'lov provayderini aytmaydi"]
+  },
+  {
+    "id": "hook_uz_queue_001",
+    "locale": "uz",
+    "pain": "queue speed",
+    "angle": "pain",
+    "semantic_hook": "Tovarni daftardan qidirayotganingizda, peshtaxta oldida navbat to'planadi.",
+    "visual_hook_suggestion": "Peshtaxta oldida navbat, egasi daftarni varaqlaydi, yonida telefon va tez qidiruv kontrasti.",
+    "suitable_formats": ["reel_hook", "instagram_carousel", "telegram_post"],
+    "risk_notes": ["Tanish vaziyatni tasvirlaydi", "Soniyalar sonini kafolat sifatida keltirmaydi"]
+  },
+  {
+    "id": "hook_uz_queue_002",
+    "locale": "uz",
+    "pain": "queue speed",
+    "angle": "result",
+    "semantic_hook": "Skan yoki qidiruv, savat, to'lov, Telegramda chek: ilovalar orasida o'tishsiz sotuv.",
+    "visual_hook_suggestion": "Bitta ekranda sotuv qadamlarining qisqa ketma-ketligi, har qadamga bir kadr.",
+    "suitable_formats": ["reel_hook", "instagram_carousel"],
+    "risk_notes": ["fact_sale_flow_15s va fact_checkout_sales'ga tayanadi", "15 soniyani tavsif sifatida saqlash, kafolat emas (shart)"]
+  },
+  {
+    "id": "hook_uz_queue_003",
+    "locale": "uz",
+    "pain": "queue speed",
+    "angle": "discovery",
+    "semantic_hook": "Telefon kamerasi shtrix-kodni o'qiydi, xohlasangiz har qanday 2D Bluetooth skaner ham ulanadi.",
+    "visual_hook_suggestion": "Telefon tovar shtrix-kodini kamera bilan skanerlaydi, yonida kichik simsiz skaner.",
+    "suitable_formats": ["instagram_carousel", "telegram_post"],
+    "risk_notes": ["fact_scanner_2d_bluetooth'ga tayanadi", "Uskuna modeli yoki narxini aytmaslik"]
+  },
+  {
+    "id": "hook_uz_fear_001",
+    "locale": "uz",
+    "pain": "fear of complicated software",
+    "angle": "pain",
+    "semantic_hook": "Har qanday hisob dasturi murakkab, qimmat va sozlovchi chaqirish kerakdek tuyuladi.",
+    "visual_hook_suggestion": "Eski monitorda chalkash interfeys, yonida sodda yorug' telefon ekrani.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_competitive_vs_notebook_1c'ga tayanadi", "Birinchi qatorda 1C'ni to'g'ridan-to'g'ri aytmaydi, umumiy gapiradi"]
+  },
+  {
+    "id": "hook_uz_fear_002",
+    "locale": "uz",
+    "pain": "fear of complicated software",
+    "angle": "belief_break",
+    "semantic_hook": "O'rganishsiz tushunarli: telefondan boshlash mumkin, kompyutersiz va sozlovchisiz.",
+    "visual_hook_suggestion": "Qo'ldagi bitta telefon, toza tushunarli ekran, iliq qog'oz fon, ko'p havo.",
+    "suitable_formats": ["instagram_single", "telegram_post", "reel_hook"],
+    "risk_notes": ["fact_equipment_phone_only'ga tayanadi", "Vaqtlar (5 daqiqa, bir kun) kafolat emas, odatiy deb berish"]
+  },
+  {
+    "id": "hook_uz_fear_003",
+    "locale": "uz",
+    "pain": "fear of complicated software",
+    "angle": "result",
+    "semantic_hook": "Boshlashda birga yordam beramiz: o'rnatish, tovarlarni yuklash va birinchi chek jamoa bilan.",
+    "visual_hook_suggestion": "Menejer va egasi bitta telefonga qaraydi, birinchi sotuvni qiladi, tinch sahna.",
+    "suitable_formats": ["telegram_post", "instagram_carousel"],
+    "risk_notes": ["fact_onboarding_service va fact_support_onboarding_help'ga tayanadi", "Bir kunni odatiy muddat deb berish, qattiq kafolat emas (B1)"]
+  },
+  {
+    "id": "hook_uz_price_001",
+    "locale": "uz",
+    "pain": "price objection",
+    "angle": "belief_break",
+    "semantic_hook": "Narx oldindan ma'lum: birinchi 6 oy oyiga 49 000 so'm, keyin 149 000, yashirin to'lovlarsiz.",
+    "visual_hook_suggestion": "Qog'oz fonda narxning ikkita tinch qatori, olovsiz va katta harfsiz, birinchi narxda yashil belgi.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_pricing_promo va fact_pricing_start_chip'ga tayanadi", "Narx pilot va dolzarbligini tasdiqlash kerak (A1), soxta tanqislik yo'q"]
+  },
+  {
+    "id": "hook_uz_price_002",
+    "locale": "uz",
+    "pain": "price objection",
+    "angle": "result",
+    "semantic_hook": "To'liq funksionallik, yashirin to'lovlarsiz: roziligingizsiz hech narsa yechib olinmaydi.",
+    "visual_hook_suggestion": "Qog'oz fonda shaffof narx haqida qisqa ibora, tinch tipografiya.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_pricing_promo'ga tayanadi", "Aniq uskuna narxlarini aytmaslik (G1)"]
+  },
+  {
+    "id": "hook_uz_price_003",
+    "locale": "uz",
+    "pain": "price objection",
+    "angle": "discovery",
+    "semantic_hook": "Birinchi kogorta uchun start narxi: birinchi 6 oy oyiga 49 000 so'm.",
+    "visual_hook_suggestion": "Qog'oz fonda yirik 49 000 so'm/oy raqami, birinchi kogorta haqida izoh.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_promo_six_month'ga tayanadi", "Birinchi kogorta shartini ko'rsatish, bosimsiz va soxta shoshqaloqliksiz"]
+  },
+  {
+    "id": "hook_uz_trust_001",
+    "locale": "uz",
+    "pain": "trust objection",
+    "angle": "belief_break",
+    "semantic_hook": "Internetdan kelgan begona bulut emas: O'zbekiston uchun yaratilgan.",
+    "visual_hook_suggestion": "Qog'oz fonda O'zbekiston uchun yaratilgan iborasi, klishe bayroqlarsiz mahalliy mavzu.",
+    "suitable_formats": ["instagram_single", "telegram_post"],
+    "risk_notes": ["fact_made_for_uzbekistan'ga tayanadi", "Hech qachon bank yoki bosh kompaniya nomigacha kengaytirmaslik"]
+  },
+  {
+    "id": "hook_uz_trust_002",
+    "locale": "uz",
+    "pain": "trust objection",
+    "angle": "pain",
+    "semantic_hook": "Hisobni begona dasturga ishonishdan qo'rqasizmi? PIN orqali kirish va barcha amallar jurnali yonida.",
+    "visual_hook_suggestion": "PIN orqali kirish ekrani va amallar jurnali qatori, tinch to'q ko'k matn.",
+    "suitable_formats": ["telegram_post", "instagram_carousel"],
+    "risk_notes": ["fact_roles_security'ga tayanadi", "Keng ma'lumot himoyasi kafolatiga aylantirmaslik (F1)"]
+  },
+  {
+    "id": "hook_uz_trust_003",
+    "locale": "uz",
+    "pain": "trust objection",
+    "angle": "discovery",
+    "semantic_hook": "Hozir Toshkentning birinchi do'konlari uchun erta kirishni ochmoqdamiz, bosqich haqida ochiq aytamiz.",
+    "visual_hook_suggestion": "Tinch karta erta kirish 2026, Toshkent, ommaviy mijozlar bazasi va'dasisiz.",
+    "suitable_formats": ["telegram_post", "instagram_single"],
+    "risk_notes": ["fact_stage_early_access'ga tayanadi", "Haqiqiy do'konlar allaqachon ishlamoqda iborasini ishlatmaslik (fact_real_shops_badge prohibited)"]
+  }
+]

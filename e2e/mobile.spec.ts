@@ -18,12 +18,26 @@ const LOCALES = [
 
 const ARTICLE = "pos-tizimi-uzbekistan-minimarket";
 
+async function gotoLanding(page: Page, path: "/" | "/ru", lang: "ru" | "uz") {
+  const res = await page.goto(path);
+  await page.waitForFunction(
+    (expected) => document.documentElement.dataset.birliyLandingReady === expected,
+    lang,
+  );
+  return res;
+}
+
 async function expectNoHOverflow(page: Page, label: string) {
   const { scrollW, clientW } = await page.evaluate(() => {
     const d = document.documentElement;
     return { scrollW: d.scrollWidth, clientW: d.clientWidth };
   });
   expect(scrollW, `${label}: horizontal overflow (${scrollW} > ${clientW})`).toBeLessThanOrEqual(clientW + 1);
+}
+
+async function scrollPastHero(page: Page) {
+  await page.locator("#reveal").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(250);
 }
 
 // ─── Layout: no document-level horizontal overflow, all widths × locales ───
@@ -33,7 +47,7 @@ for (const width of WIDTHS) {
 
     for (const { path, lang } of LOCALES) {
       test(`${path} (${lang}) landing has no horizontal overflow`, async ({ page }) => {
-        const res = await page.goto(path);
+        const res = await gotoLanding(page, path, lang);
         expect(res?.status()).toBe(200);
         await expectNoHOverflow(page, `landing ${path}`);
       });
@@ -42,6 +56,7 @@ for (const width of WIDTHS) {
     test("blog index + article have no horizontal overflow (uz + ru parity)", async ({ page }) => {
       for (const url of ["/blog", `/blog/${ARTICLE}`, "/ru/blog", `/ru/blog/${ARTICLE}`]) {
         await page.goto(url);
+        await page.waitForTimeout(250);
         await expectNoHOverflow(page, url);
       }
     });
@@ -54,7 +69,7 @@ test.describe("interactions @390px", () => {
 
   for (const { path, lang, cta, close } of LOCALES) {
     test(`${path} (${lang}) mobile menu opens and closes`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       const menu = page.locator("#concept-mobile-menu");
       await expect(menu).toBeHidden();
       await page.getByRole("button", { name: "Menu" }).click();
@@ -63,16 +78,51 @@ test.describe("interactions @390px", () => {
       await expect(menu).toBeHidden();
     });
 
+    test(`${path} (${lang}) mobile menu hides the sticky dock while open`, async ({ page }) => {
+      await gotoLanding(page, path, lang);
+      const sticky = page.getByTestId("mobile-sticky");
+      await scrollPastHero(page);
+      await expect(sticky).toHaveAttribute("aria-hidden", "false");
+
+      await page.getByRole("button", { name: "Menu" }).click();
+      await expect(page.locator("#concept-mobile-menu")).toBeVisible();
+      await expect(sticky).toHaveAttribute("aria-hidden", "true");
+    });
+
+    test(`${path} (${lang}) mobile menu links go to assigned sections`, async ({ page }) => {
+      await gotoLanding(page, path, lang);
+
+      for (const [href, id] of [
+        ["#flow", "flow"],
+        ["#owner", "owner"],
+        ["#modules", "modules"],
+        ["#blog", "blog"],
+        ["#price", "price"],
+      ] as const) {
+        await page.getByRole("button", { name: "Menu" }).click();
+        await page.locator("#concept-mobile-menu").locator(`a[href="${href}"]`).click();
+        await expect(page.locator(`#${id}`)).toBeInViewport({ timeout: 5_000 });
+        await expect(page.locator("#concept-mobile-menu")).toBeHidden();
+      }
+    });
+
     test(`${path} (${lang}) hero/menu CTA opens the lead modal, scrolls to submit, closes`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       // The header CTA is desktop-only; on mobile the lead modal opens from the menu.
       await page.getByRole("button", { name: "Menu" }).click();
       await page.locator("#concept-mobile-menu").getByRole("button", { name: cta }).click();
 
       const dialog = page.getByRole("dialog");
       await expect(dialog).toBeVisible();
+      await expect(dialog.locator('input[type="file"]')).toHaveCount(0);
+      await expect(dialog).not.toContainText(/Pilotga ariza|Заявка в пилот|Hujjat|Документ/i);
+      await expect(
+        dialog.getByRole("button", {
+          name: lang === "uz" ? "Menga jihoz kerak: planshet, skaner va chek printeri" : "Нужен комплект: планшет, сканер и чековый принтер",
+        }),
+      ).toBeVisible();
 
-      const submit = dialog.locator('button[type="submit"]');
+      const submit = dialog.locator('button[type="submit"]').first();
       await submit.scrollIntoViewIfNeeded();
       await expect(submit).toBeVisible();
 
@@ -82,7 +132,7 @@ test.describe("interactions @390px", () => {
     });
 
     test(`${path} (${lang}) lead modal also closes on Escape`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       await page.getByRole("button", { name: "Menu" }).click();
       await page.locator("#concept-mobile-menu").getByRole("button", { name: cta }).click();
       const dialog = page.getByRole("dialog");
@@ -91,8 +141,26 @@ test.describe("interactions @390px", () => {
       await expect(dialog).toBeHidden();
     });
 
+    test(`${path} (${lang}) mobile equipment CTA opens form with equipment preselected`, async ({ page }) => {
+      await gotoLanding(page, path, lang);
+      await page.locator("#modules").scrollIntoViewIfNeeded();
+      await page
+        .getByRole("button", {
+          name: lang === "uz" ? "Menga jihoz kerak: planshet, skaner va printer" : "Нужен комплект: планшет, сканер и принтер",
+        })
+        .click();
+
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("button", {
+          name: lang === "uz" ? "Menga jihoz kerak: planshet, skaner va chek printeri" : "Нужен комплект: планшет, сканер и чековый принтер",
+        }),
+      ).toHaveAttribute("aria-pressed", "true");
+    });
+
     test(`${path} (${lang}) sticky CTA: hidden in hero, visible mid-page, hidden at lead + footer`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       const sticky = page.getByTestId("mobile-sticky");
 
       // Top of page: the hero has its own CTA, so the sticky bar stays hidden.
@@ -100,10 +168,7 @@ test.describe("interactions @390px", () => {
       await expect(sticky).toHaveAttribute("aria-hidden", "true");
 
       // Mid-page (past the hero, before the lead section): sticky shows.
-      const flowY = await page.evaluate(
-        () => (document.getElementById("flow")?.getBoundingClientRect().top ?? 0) + window.scrollY,
-      );
-      await page.evaluate((y) => window.scrollTo(0, y), Math.max(0, flowY - 150));
+      await scrollPastHero(page);
       await expect(sticky).toHaveAttribute("aria-hidden", "false");
       await expect(sticky).toBeInViewport();
 
@@ -117,12 +182,9 @@ test.describe("interactions @390px", () => {
     });
 
     test(`${path} (${lang}) sticky CTA hides while the lead modal is open`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       const sticky = page.getByTestId("mobile-sticky");
-      const flowY = await page.evaluate(
-        () => (document.getElementById("flow")?.getBoundingClientRect().top ?? 0) + window.scrollY,
-      );
-      await page.evaluate((y) => window.scrollTo(0, y), Math.max(0, flowY - 150));
+      await scrollPastHero(page);
       await expect(sticky).toHaveAttribute("aria-hidden", "false");
 
       await sticky.getByRole("button", { name: cta }).click();
@@ -131,7 +193,7 @@ test.describe("interactions @390px", () => {
     });
 
     test(`${path} (${lang}) hidden sticky CTA is inert (not focusable or clickable)`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       const sticky = page.getByTestId("mobile-sticky");
       const button = sticky.locator("button");
 
@@ -145,10 +207,7 @@ test.describe("interactions @390px", () => {
       expect(focusedWhenHidden).toBe(false);
 
       // Mid-page the bar shows -> not inert; its button is focusable again.
-      const flowY = await page.evaluate(
-        () => (document.getElementById("flow")?.getBoundingClientRect().top ?? 0) + window.scrollY,
-      );
-      await page.evaluate((y) => window.scrollTo(0, y), Math.max(0, flowY - 150));
+      await scrollPastHero(page);
       await expect(sticky).toHaveJSProperty("inert", false);
       const focusedWhenShown = await button.evaluate((b) => {
         (b as HTMLElement).focus();
@@ -157,8 +216,40 @@ test.describe("interactions @390px", () => {
       expect(focusedWhenShown).toBe(true);
     });
 
+    test(`${path} (${lang}) mobile bottom dock has 4 thumb-sized targets`, async ({ page }) => {
+      await gotoLanding(page, path, lang);
+      const sticky = page.getByTestId("mobile-sticky");
+      await scrollPastHero(page);
+      await expect(sticky).toHaveAttribute("aria-hidden", "false");
+
+      const targets = sticky.locator("nav a, nav button");
+      await expect(targets).toHaveCount(4);
+      for (let i = 0; i < 4; i++) {
+        const box = await targets.nth(i).boundingBox();
+        expect(box, `mobile dock target ${i} missing box`).not.toBeNull();
+        expect(box!.height, `mobile dock target ${i} height ${box!.height}px`).toBeGreaterThanOrEqual(44);
+        expect(box!.width, `mobile dock target ${i} width ${box!.width}px`).toBeGreaterThanOrEqual(44);
+      }
+    });
+
+    test(`${path} (${lang}) mobile bottom dock links go to assigned sections`, async ({ page }) => {
+      await gotoLanding(page, path, lang);
+      const sticky = page.getByTestId("mobile-sticky");
+      await scrollPastHero(page);
+      await expect(sticky).toHaveAttribute("aria-hidden", "false");
+
+      for (const [href, id] of [
+        ["#flow", "flow"],
+        ["#reveal", "reveal"],
+        ["#price", "price"],
+      ] as const) {
+        await sticky.locator(`nav a[href="${href}"]`).click();
+        await expect(page.locator(`#${id}`)).toBeInViewport({ timeout: 5_000 });
+      }
+    });
+
     test(`${path} (${lang}) cashier/owner demo toggle works`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       const reveal = page.locator("#reveal");
       await reveal.scrollIntoViewIfNeeded();
       const toggles = reveal.locator("button[aria-pressed]");
@@ -172,7 +263,7 @@ test.describe("interactions @390px", () => {
     });
 
     test(`${path} (${lang}) demo horizontal nav is usable with >=44px targets`, async ({ page }) => {
-      await page.goto(path);
+      await gotoLanding(page, path, lang);
       await page.locator("#reveal").scrollIntoViewIfNeeded();
       const nav = page.getByTestId("demo-mobile-nav");
       await expect(nav).toBeVisible();
@@ -191,6 +282,7 @@ test.describe("interactions @390px", () => {
 
   test("blog header + footer touch targets are >=44px", async ({ page }) => {
     await page.goto(`/blog/${ARTICLE}`);
+    await page.waitForTimeout(250);
     const links = page.locator("header a, footer a");
     const n = await links.count();
     expect(n).toBeGreaterThan(0);

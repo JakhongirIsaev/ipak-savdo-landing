@@ -1,0 +1,1505 @@
+{
+  "meta": {
+    "title": "BirLiy ICP and Pain Map (Deliverable 4)",
+    "purpose": "Machine-readable buyer profiles for the BirLiy CMO. One PRIMARY segment and four SECONDARY segments. Each field separates documented info (tied to an APPROVED_FACTS id and/or a source file) from reasonable hypothesis (marked hypothesis: true).",
+    "generated_for": "BirLiy CMO brain pack",
+    "currency_style": "RU 'сум' / UZ 'so'm', never 'UZS'",
+    "tone": "calm experienced shopkeeper-neighbour. 'Меньше частей. Больше ясности.' No hype words, no fake scarcity, max 1-2 emoji.",
+    "hard_rules": [
+      "Use only facts from APPROVED_FACTS.json; cite ids. Never invent numbers, customer counts, %, testimonials, integrations, deadlines, completion states.",
+      "Never present a prohibited fact (demo numbers, 'real shops already working') as real.",
+      "Qualify every needs_confirmation fact as a stated/pilot claim, not a guarantee.",
+      "Never name a bank, Ipak Yuli, or any parent company.",
+      "No em-dash character in any public-facing copy field; use ':' ',' or '-'.",
+      "Two approved CTAs only: 'Оставить заявку' (birliy.uz #lead) and 'Написать в Telegram' (+998 97 421 24 54)."
+    ],
+    "source_legend": {
+      "approved_fact": "Claim is provable from APPROVED_FACTS.json; the fact id is cited.",
+      "landing": "lib/landing/i18n.ts and/or components/concept/ConceptLanding.tsx (mediated via APPROVED_FACTS).",
+      "blog": "lib/blog/posts/*.ts (ICP pain articles).",
+      "strategy": "marketing/01-strategy.md and marketing/02-content-system.md.",
+      "social_brief": "D:/birliy/birliy-reels/social-posts/*/brief.md.",
+      "hypothesis": "Reasonable inference about the buyer, NOT proven from any BirLiy source. Marked hypothesis: true."
+    },
+    "fact_status_reminder": {
+      "verified": "Reusable as public product capability copy.",
+      "needs_confirmation": "Reusable wording but must be framed as a stated/pilot claim, never a guarantee.",
+      "prohibited": "Never present as real (demo mockup numbers, 'real shops already working')."
+    },
+    "approved_cta_catalog": {
+      "leave_request": {
+        "ru": "Оставить заявку",
+        "uz": "Ariza qoldirish",
+        "destination": "birliy.uz (#lead block)",
+        "source_fact": "fact_lead_form_docs",
+        "source": "strategy marketing/01-strategy.md section 8"
+      },
+      "write_telegram": {
+        "ru": "Написать в Telegram",
+        "uz": "Telegramga yozish",
+        "destination": "+998 97 421 24 54",
+        "source_fact": "fact_contacts",
+        "source": "strategy marketing/01-strategy.md section 8"
+      }
+    }
+  },
+  "primary": {
+    "segment_id": "neighbourhood_grocery_minimarket",
+    "label_ru": "Магазин у дома и минимаркет",
+    "label_uz": "Uy yonidagi do'kon va minimarket",
+    "priority": "PRIMARY",
+    "source": [
+      "approved_fact:fact_icp_segments",
+      "approved_fact:fact_positioning",
+      "strategy marketing/01-strategy.md section 2",
+      "social_brief post-004-kimlar-uchun"
+    ],
+    "one_line_who_ru": "Владелец магазина у дома или минимаркета в Узбекистане, который ведёт учёт в тетради, в Excel или в голове; не технарь, занят, устал сводить кассу, склад и долги по отдельности.",
+    "one_line_who_uz": "O'zbekistondagi uy yonidagi do'kon yoki minimarket egasi: hisobni daftarda, Excel'da yoki yoddan yuritadi; texnik emas, band, kassa, ombor va qarzni alohida-alohida moslashtirib charchagan.",
+    "decision_maker": {
+      "value": "Owner is the buyer and very often also the cashier; decides alone, fast, by phone or in person.",
+      "source": [
+        "strategy marketing/01-strategy.md section 2"
+      ]
+    },
+    "daily_workflow": {
+      "documented": [
+        {
+          "step": "Serves a queue of customers, rings up sales, sometimes misses writing two or three sales when it gets busy and the phone rings.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "blog dokonda-nima-qolganini-telefondan-bilish"
+          ]
+        },
+        {
+          "step": "Takes payment in mixed forms across the day: cash, card on a terminal, QR, and 'on credit' (nasiya).",
+          "source": [
+            "approved_fact:fact_payment_methods"
+          ]
+        },
+        {
+          "step": "Writes customer debts into a paper debt notebook (qarz daftari): who owes, how much, when they promised to pay.",
+          "source": [
+            "approved_fact:fact_nasiya_debt",
+            "blog qarz-daftar-orniga-nima",
+            "social_brief post-007-qarz-daftar"
+          ]
+        },
+        {
+          "step": "Restocks by guessing what is running low, because the notebook does not show stock dropping in real time; a popular item runs out unnoticed and a customer leaves empty-handed.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "blog dokonda-nima-qolganini-telefondan-bilish",
+            "social_brief post-002-qoldiq-nazorati"
+          ]
+        },
+        {
+          "step": "Sits down in the evening (often around ten at night) to tally the day's sales by hand with a calculator across notebook, debt page and stock.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "social_brief post-008-kechki-hisob"
+          ]
+        }
+      ],
+      "hypothesis": [
+        {
+          "step": "Often leaves the shop with a family member or hired cashier and worries about what happens at the counter while away.",
+          "hypothesis": true,
+          "rationale": "Inferred from the owner-remote-view value prop and the 'свобода собственника' message; not stated as a documented daily behaviour."
+        }
+      ]
+    },
+    "jobs_to_be_done": {
+      "documented": [
+        {
+          "jtbd_ru": "Знать, сколько я на самом деле заработал сегодня, не сводя три источника ночью.",
+          "jtbd_uz": "Bugun aslida qancha ishlaganimni kechqurun uch joyni solishtirmasdan bilish.",
+          "source": [
+            "approved_fact:fact_reporting",
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "social_brief post-008-kechki-hisob"
+          ]
+        },
+        {
+          "jtbd_ru": "Знать, что осталось на полке, и не упускать ходовой товар.",
+          "jtbd_uz": "Tokchada nima qolganini bilish va ketadigan tovarni qo'ldan chiqarmaslik.",
+          "source": [
+            "approved_fact:fact_stock_auto_low_alert",
+            "approved_fact:fact_catalog_stock",
+            "social_brief post-002-qoldiq-nazorati"
+          ]
+        },
+        {
+          "jtbd_ru": "Видеть, кто сколько должен и когда обещал вернуть, без бумажной тетради.",
+          "jtbd_uz": "Kim qancha qarzdor va qachon to'lashga va'da berganini qog'oz daftarsiz ko'rish.",
+          "source": [
+            "approved_fact:fact_nasiya_debt",
+            "blog qarz-daftar-orniga-nima"
+          ]
+        },
+        {
+          "jtbd_ru": "Принимать оплату удобным для покупателя способом, чтобы он не ушёл в соседний магазин.",
+          "jtbd_uz": "Xaridorga qulay usulda to'lov qabul qilib, uni yon do'konga ketkazmaslik.",
+          "source": [
+            "approved_fact:fact_payment_methods",
+            "approved_fact:fact_qr_no_terminal"
+          ]
+        },
+        {
+          "jtbd_ru": "Видеть магазин с телефона, когда меня нет за прилавком.",
+          "jtbd_uz": "Prilavka ortida bo'lmaganimda do'konni telefondan ko'rish.",
+          "source": [
+            "approved_fact:fact_owner_remote",
+            "approved_fact:fact_roles_security"
+          ]
+        },
+        {
+          "jtbd_ru": "Обойтись без тяжёлой и дорогой программы, которая требует компьютера и обучения.",
+          "jtbd_uz": "Kompyuter va o'rgatish talab qiladigan og'ir va qimmat dasturdan voz kechish.",
+          "source": [
+            "approved_fact:fact_equipment_phone_only",
+            "approved_fact:fact_competitive_vs_notebook_1c"
+          ]
+        }
+      ],
+      "hypothesis": []
+    },
+    "operational_pains": {
+      "documented": [
+        {
+          "pain_ru": "Незаписанные продажи: в час пик две-три продажи не попадают в тетрадь, и касса перестаёт сходиться с остатком.",
+          "pain_uz": "Yozilmagan savdo: gavjum payt ikki-uchta savdo daftarga tushmaydi, kassa qoldiq bilan to'g'ri kelmay qoladi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        },
+        {
+          "pain_ru": "Тетрадь молчит: при ошибке нет сигнала, недостача растёт тихо и замечается только в конце месяца.",
+          "pain_uz": "Daftar jim turadi: xatoda signal yo'q, kamomad jimgina o'sadi va faqat oy oxirida seziladi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        },
+        {
+          "pain_ru": "Товар заканчивается незаметно: ходовая позиция кончилась, владелец не знает, покупатель уходит ни с чем.",
+          "pain_uz": "Tovar sezdirmay tugaydi: ketadigan pozitsiya tugagan, ega bilmaydi, xaridor quruq ketadi.",
+          "source": [
+            "blog dokonda-nima-qolganini-telefondan-bilish",
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "social_brief post-002-qoldiq-nazorati"
+          ]
+        },
+        {
+          "pain_ru": "Долговая тетрадь путается: страницы смешиваются, запись мокнет или стирается, и кто сколько должен забывается.",
+          "pain_uz": "Qarz daftar chalkashadi: betlar aralashadi, yozuv ho'l bo'lib o'chadi, kim qancha qarzdorligi esdan chiqadi.",
+          "source": [
+            "blog qarz-daftar-orniga-nima",
+            "approved_fact:fact_nasiya_debt"
+          ]
+        },
+        {
+          "pain_ru": "Ручной счёт вечером: каждый вечер сводить кассу, склад и долги по отдельности, это долго и легко ошибиться.",
+          "pain_uz": "Kechki qo'lda hisob: har oqshom kassa, ombor va qarzni alohida solishtirish uzoq davom etadi va xato qilish oson.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "social_brief post-008-kechki-hisob"
+          ]
+        },
+        {
+          "pain_ru": "Несколько кассиров, нет контроля: не видно, кто что продал, списал или вернул.",
+          "pain_uz": "Bir nechta kassir, nazorat yo'q: kim nima sotgani, hisobdan chiqargani yoki qaytargani ko'rinmaydi.",
+          "source": [
+            "approved_fact:fact_roles_security",
+            "strategy marketing/01-strategy.md section 2"
+          ]
+        }
+      ],
+      "hypothesis": [
+        {
+          "pain_ru": "Учёт держится на одном человеке: если владелец заболел, второй человек не может разобраться в тетради.",
+          "pain_uz": "Hisob bitta odamga bog'liq: ega kasal bo'lsa, ikkinchi odam daftarni tushunolmaydi.",
+          "hypothesis": true,
+          "rationale": "Stated as a narrative example in the notebook blog, framed here as a buyer pain; treat as a realistic illustration, not a measured fact.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        }
+      ]
+    },
+    "financial_pains": {
+      "documented": [
+        {
+          "pain_ru": "Деньги уходят тихо: незаписанные продажи и забытые долги превращаются в потери, которые никто не возвращает.",
+          "pain_uz": "Pul jimgina ketadi: yozilmagan savdo va unutilgan qarz yo'qotishga aylanadi, uni hech kim qaytarmaydi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "blog qarz-daftar-orniga-nima"
+          ],
+          "note": "The blog uses an arithmetic illustration (two missed sales a day). Do NOT quote any specific sum, %, or loss figure as a real merchant result; keep it as plain logic, never a measured outcome."
+        },
+        {
+          "pain_ru": "Нет терминала, упущена продажа: покупатель хочет оплатить картой или QR и уходит туда, где это можно.",
+          "pain_uz": "Terminal yo'q, savdo qo'ldan ketdi: xaridor karta yoki QR bilan to'lamoqchi, imkon bor joyga ketadi.",
+          "source": [
+            "approved_fact:fact_qr_no_terminal",
+            "approved_fact:fact_payment_methods"
+          ]
+        },
+        {
+          "pain_ru": "1С слишком дорога и сложна для маленького магазина.",
+          "pain_uz": "1C kichik do'kon uchun juda qimmat va murakkab.",
+          "source": [
+            "approved_fact:fact_competitive_vs_notebook_1c"
+          ]
+        },
+        {
+          "pain_ru": "Невозвратные долги: продажа в долг без лимита и срока копит убыток.",
+          "pain_uz": "Qaytmaydigan qarz: chegarasiz va muddatsiz nasiya zarar to'playdi.",
+          "source": [
+            "blog qarz-daftar-orniga-nima"
+          ],
+          "note": "Blog gives an illustrative 500 000 / 10% example. Never present it as a real merchant statistic."
+        }
+      ],
+      "hypothesis": [
+        {
+          "pain_ru": "Боязнь обмана кассиром: подозрение, что часть наличных не доходит до владельца.",
+          "pain_uz": "Kassir aldovidan qo'rquv: naqdning bir qismi egaga yetib bormasligi shubhasi.",
+          "hypothesis": true,
+          "rationale": "Strategy lists 'а вдруг кассир обманет' as a fear the PIN and action log answer; framed here as a financial worry of the buyer.",
+          "source": [
+            "strategy marketing/01-strategy.md section 4",
+            "approved_fact:fact_roles_security"
+          ]
+        }
+      ]
+    },
+    "emotional_pains": {
+      "documented": [
+        {
+          "pain_ru": "Усталость от вечернего пересчёта и тревога, что цифры всё равно не сходятся.",
+          "pain_uz": "Kechki qayta hisobdan charchoq va baribir raqamlar to'g'ri kelmasligidan xavotir.",
+          "source": [
+            "social_brief post-008-kechki-hisob",
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        },
+        {
+          "pain_ru": "Неловкость и споры с покупателем из-за суммы долга по нечитаемой записи.",
+          "pain_uz": "O'qib bo'lmaydigan yozuv tufayli qarz summasi borasida mijoz bilan noqulay tortishuv.",
+          "source": [
+            "blog qarz-daftar-orniga-nima"
+          ]
+        }
+      ],
+      "hypothesis": [
+        {
+          "pain_ru": "Чувство, что не контролируешь свой же магазин, когда отходишь от прилавка.",
+          "pain_uz": "Prilavkadan uzoqlashganda o'z do'koningni nazorat qilolmayotgandek tuyg'u.",
+          "hypothesis": true,
+          "rationale": "Inferred from the owner-freedom message; emotional framing is not literally stated in source.",
+          "source": [
+            "strategy marketing/01-strategy.md section 3",
+            "approved_fact:fact_owner_remote"
+          ]
+        }
+      ]
+    },
+    "objections": {
+      "documented": [
+        {
+          "objection_ru": "Сложно настроить?",
+          "objection_uz": "Sozlash qiyinmi?",
+          "answer_ru": "Нет. База товаров готова, команда помогает с загрузкой каталога, подключение делаем вместе. Подключение обычно занимает один день, это типичный случай, а не жёсткая гарантия.",
+          "answer_uz": "Yo'q. Tovarlar bazasi tayyor, jamoa katalogni yuklashda yordam beradi, ulashni birga qilamiz. Ulanish odatda bir kunda bo'ladi, bu odatiy holat, qat'iy kafolat emas.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "approved_fact:fact_onboarding_service",
+            "approved_fact:fact_onboarding_one_day",
+            "approved_fact:fact_sku_base_excel"
+          ],
+          "note": "fact_onboarding_one_day and fact_sku_base_excel are needs_confirmation: state one-day as typical and 9 000+ as a stated base size, not a fixed guarantee."
+        },
+        {
+          "objection_ru": "Кассир будет против нового?",
+          "objection_uz": "Kassir yangilikka qarshi bo'ladimi?",
+          "answer_ru": "Поначалу любое новое чужое, но приложение упрощает работу кассира: нет калькулятора, нет путаницы. Привыкает за пару дней.",
+          "answer_uz": "Boshida har qanday yangilik begona, lekin ilova kassir ishini osonlashtiradi: kalkulyator yo'q, chalkashlik yo'q. Bir necha kunda ko'nikadi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "approved_fact:fact_onboarding_cashier_30min"
+          ],
+          "note": "fact_onboarding_cashier_30min is needs_confirmation: 30 minutes is a typical learning time, not a guarantee."
+        },
+        {
+          "objection_ru": "Дорого?",
+          "objection_uz": "Qimmatmi?",
+          "answer_ru": "Стартовая цена для первой когорты: 49 000 сум в месяц первые 6 месяцев, дальше 149 000 сум. Полный функционал, без скрытых платежей, списаний без согласия не будет.",
+          "answer_uz": "Birinchi kogorta uchun start narxi: birinchi 6 oy oyiga 49 000 so'm, keyin 149 000 so'm. To'liq funksionallik, yashirin to'lovlarsiz, roziligingizsiz hech narsa yechilmaydi.",
+          "source": [
+            "approved_fact:fact_pricing_promo",
+            "approved_fact:fact_promo_six_month"
+          ],
+          "note": "needs_confirmation: present as the current first-cohort starting price; confirm it is committed before quoting as fixed."
+        },
+        {
+          "objection_ru": "Нужно покупать оборудование?",
+          "objection_uz": "Uskuna sotib olish kerakmi?",
+          "answer_ru": "Нет, для старта хватает смартфона или планшета, компьютер не нужен. Сканер, планшет на подставке и принтер чеков можно подключить позже и по желанию.",
+          "answer_uz": "Yo'q, boshlash uchun smartfon yoki planshet yetadi, kompyuter kerak emas. Skaner, stenddagi planshet va chek printerini keyin va xohishingizga ko'ra ulashingiz mumkin.",
+          "source": [
+            "approved_fact:fact_equipment_phone_only",
+            "approved_fact:fact_equipment_optional_kit",
+            "social_brief post-005-telefon-bilan-boshlash"
+          ],
+          "note": "fact_equipment_optional_kit service claims (delivery, install, installments) are needs_confirmation; never invent kit prices."
+        },
+        {
+          "objection_ru": "А если пропадёт интернет?",
+          "objection_uz": "Internet uzilsa-chi?",
+          "answer_ru": "Касса продолжает работать: продажи сохраняются локально и синхронизируются сами, когда связь вернётся.",
+          "answer_uz": "Kassa ishlashda davom etadi: sotuvlar lokal saqlanadi va aloqa qaytganda o'zi sinxronlanadi.",
+          "source": [
+            "approved_fact:fact_offline"
+          ]
+        }
+      ],
+      "hypothesis": [
+        {
+          "objection_ru": "Мои данные не утекут?",
+          "objection_uz": "Ma'lumotlarim sizib chiqmaydimi?",
+          "answer_ru": "Вход по PIN, роли и журнал всех действий разделяют доступ. Это реальные механики; мы не обещаем больше, чем есть, и на детали ответим в Telegram.",
+          "answer_uz": "PIN orqali kirish, rollar va barcha amallar jurnali kirishni ajratadi. Bu haqiqiy mexanizmlar; bor narsadan ko'pini va'da qilmaymiz, tafsilotlarga Telegramda javob beramiz.",
+          "hypothesis": true,
+          "rationale": "Data-safety objection inferred; the broad 'данные защищены' assurance must not be overstated.",
+          "source": [
+            "approved_fact:fact_roles_security",
+            "UNVERIFIED_CLAIMS_REPORT F1"
+          ]
+        }
+      ]
+    },
+    "trigger_events": {
+      "documented": [
+        {
+          "trigger_ru": "Месячная ревизия не сошлась: касса и остаток расходятся, причина непонятна.",
+          "trigger_uz": "Oylik reviziya to'g'ri kelmadi: kassa va qoldiq farq qiladi, sababi noma'lum.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        },
+        {
+          "trigger_ru": "Потеряли или испортили долговую тетрадь и не помнят, кто сколько должен.",
+          "trigger_uz": "Qarz daftar yo'qoldi yoki buzildi, kim qancha qarzdorligi esda yo'q.",
+          "source": [
+            "blog qarz-daftar-orniga-nima"
+          ]
+        },
+        {
+          "trigger_ru": "Нанимают второго кассира и понимают, что учёт в голове больше не работает.",
+          "trigger_uz": "Ikkinchi kassir olinadi va yoddagi hisob endi ishlamasligi anglashiladi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "approved_fact:fact_roles_security"
+          ]
+        }
+      ],
+      "hypothesis": [
+        {
+          "trigger_ru": "Покупатель ушёл, потому что не было QR или терминала.",
+          "trigger_uz": "QR yoki terminal bo'lmagani uchun xaridor ketib qoldi.",
+          "hypothesis": true,
+          "rationale": "Plausible buying trigger inferred from the payment value prop; not documented as a stated event.",
+          "source": [
+            "approved_fact:fact_qr_no_terminal"
+          ]
+        },
+        {
+          "trigger_ru": "Открывают вторую точку и нужен общий контроль.",
+          "trigger_uz": "Ikkinchi nuqta ochiladi va umumiy nazorat kerak bo'ladi.",
+          "hypothesis": true,
+          "rationale": "Multi-point need is plausible but the consolidated-reporting feature itself is needs_confirmation.",
+          "source": [
+            "approved_fact:fact_branches_multipoint"
+          ]
+        }
+      ]
+    },
+    "current_alternatives": {
+      "documented": [
+        {
+          "alternative_ru": "Бумажная тетрадь (отдельно продажи, долги, товар).",
+          "alternative_uz": "Qog'oz daftar (savdo, qarz, tovar alohida).",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin",
+            "approved_fact:fact_competitive_vs_notebook_1c"
+          ]
+        },
+        {
+          "alternative_ru": "Excel: лучше тетради, но каждую продажу вбивать руками, в занятой день таблица пустует.",
+          "alternative_uz": "Excel: daftardan yaxshi, lekin har savdoni qo'lda kiritish kerak, band kunda jadval bo'sh qoladi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        },
+        {
+          "alternative_ru": "Учёт в голове: работает неделю, рушится при втором человеке или болезни.",
+          "alternative_uz": "Yoddan hisob: bir hafta ishlaydi, ikkinchi odam yoki kasallikda quladi.",
+          "source": [
+            "blog uchet-v-tetradi-skolko-teryaet-magazin"
+          ]
+        },
+        {
+          "alternative_ru": "1С: мощно, но сложно и дорого для маленького магазина.",
+          "alternative_uz": "1C: kuchli, lekin kichik do'kon uchun murakkab va qimmat.",
+          "source": [
+            "approved_fact:fact_competitive_vs_notebook_1c"
+          ]
+        }
+      ],
+      "hypothesis": []
+    },
+    "desired_outcomes": {
+      "documented": [
+        {
+          "outcome_ru": "Вечером цифры сходятся сами: касса, склад, долги и отчёт в одном экране.",
+          "outcome_uz": "Kechqurun raqamlar o'z-o'zidan to'g'ri keladi: kassa, ombor, qarz va hisobot bitta ekranda.",
+          "source": [
+            "approved_fact:fact_positioning",
+            "approved_fact:fact_reporting",
+            "social_brief post-008-kechki-hisob"
+          ]
+        },
+        {
+          "outcome_ru": "Остаток обновляется сам после каждой продажи, программа подсказывает, когда товар заканчивается.",
+          "outcome_uz": "Qoldiq har savdodan keyin o'zi yangilanadi, tovar tugayotganini dastur eslatadi.",
+          "source": [
+            "approved_fact:fact_stock_auto_low_alert"
+          ]
+        },
+        {
+          "outcome_ru": "Долги хранятся со своим хозяином, остаток обновляется при частичной оплате.",
+          "outcome_uz": "Qarzlar o'z egasi bilan saqlanadi, qisman to'lovda qoldiq yangilanadi.",
+          "source": [
+            "approved_fact:fact_nasiya_debt",
+            "blog qarz-daftar-orniga-nima"
+          ]
+        },
+        {
+          "outcome_ru": "Владелец видит магазин с телефона: выручка, остатки, кто на смене, последние продажи.",
+          "outcome_uz": "Ega do'konni telefondan ko'radi: tushum, qoldiqlar, kim smenada, oxirgi sotuvlar.",
+          "source": [
+            "approved_fact:fact_owner_remote"
+          ]
+        }
+      ],
+      "hypothesis": []
+    },
+    "relevant_birliy_capability": {
+      "documented": [
+        {
+          "fact_id": "fact_nasiya_debt",
+          "status": "verified",
+          "why": "Sharpest differentiator for this ICP: in-app nasiya ledger replaces the paper debt notebook."
+        },
+        {
+          "fact_id": "fact_stock_auto_low_alert",
+          "status": "verified",
+          "why": "Auto stock decrement plus low-stock warning solves the silent stock-out."
+        },
+        {
+          "fact_id": "fact_reporting",
+          "status": "verified",
+          "why": "Daily revenue, average check, top products, cashier performance kill the evening manual tally. Week/month range is needs_confirmation."
+        },
+        {
+          "fact_id": "fact_payment_methods",
+          "status": "verified",
+          "why": "Cash, card, QR, on credit in one ledger."
+        },
+        {
+          "fact_id": "fact_qr_no_terminal",
+          "status": "needs_confirmation",
+          "why": "QR on phone, no terminal needed. 'Money arrives instantly' is a settlement claim to soften; never name a bank or PSP."
+        },
+        {
+          "fact_id": "fact_equipment_phone_only",
+          "status": "verified",
+          "why": "Phone-only start removes the equipment barrier."
+        },
+        {
+          "fact_id": "fact_offline",
+          "status": "verified",
+          "why": "Works offline, syncs on reconnect; matters on weak internet."
+        },
+        {
+          "fact_id": "fact_roles_security",
+          "status": "verified",
+          "why": "Owner / Cashier / Superadmin, PIN, action log, shift log for cashier control."
+        },
+        {
+          "fact_id": "fact_owner_remote",
+          "status": "verified",
+          "why": "Remote owner view plus Telegram summaries."
+        },
+        {
+          "fact_id": "fact_competitive_vs_notebook_1c",
+          "status": "verified",
+          "why": "Positioning vs notebook, Excel and 1C."
+        },
+        {
+          "fact_id": "fact_onboarding_service",
+          "status": "verified",
+          "why": "Hands-on rollout: install, Excel import or first 100 SKU, cashier training, first receipt."
+        },
+        {
+          "fact_id": "fact_pricing_promo",
+          "status": "needs_confirmation",
+          "why": "First-cohort starting price; frame as stated, not fixed."
+        }
+      ],
+      "must_qualify_if_used": [
+        "fact_qr_no_terminal",
+        "fact_pricing_promo",
+        "fact_promo_six_month",
+        "fact_onboarding_one_day",
+        "fact_onboarding_cashier_30min",
+        "fact_sku_base_excel",
+        "fact_branches_multipoint",
+        "fact_equipment_optional_kit",
+        "fact_equipment_platforms"
+      ],
+      "never_use_as_real": [
+        "fact_demo_revenue",
+        "fact_demo_avg_check",
+        "fact_demo_sales_delta",
+        "fact_demo_stock",
+        "fact_demo_receipt",
+        "fact_demo_cashiers_returns",
+        "fact_real_shops_badge"
+      ]
+    },
+    "proof_required": {
+      "documented": [
+        {
+          "item": "Live, clickable two-role demo (cashier and owner) on the landing.",
+          "source": [
+            "approved_fact:fact_single_surface_demo"
+          ]
+        },
+        {
+          "item": "Hands-on onboarding offer the team performs with the owner.",
+          "source": [
+            "approved_fact:fact_onboarding_service",
+            "approved_fact:fact_support_onboarding_help"
+          ]
+        },
+        {
+          "item": "Made for Uzbekistan trust line, never expanded to a bank name.",
+          "source": [
+            "approved_fact:fact_made_for_uzbekistan"
+          ]
+        },
+        {
+          "item": "Early access 2026, first pilot cohort, Tashkent first, stated honestly.",
+          "source": [
+            "approved_fact:fact_stage_early_access"
+          ]
+        }
+      ],
+      "hypothesis": [
+        {
+          "item": "A short owner video walkthrough of the evening report and nasiya screen would lift trust.",
+          "hypothesis": true,
+          "rationale": "Content recommendation, not a documented asset."
+        }
+      ],
+      "must_not_use_as_proof": [
+        "Demo dashboard numbers",
+        "Sample receipt",
+        "'Реальные магазины уже работают' / 'Haqiqiy do'konlar allaqachon ishlamoqda' badge",
+        "Any shop or customer count",
+        "Any revenue or time-saving %"
+      ]
+    },
+    "safe_cta": {
+      "primary": {
+        "ru": "Оставить заявку",
+        "uz": "Ariza qoldirish",
+        "destination": "birliy.uz #lead",
+        "source_fact": "fact_lead_form_docs"
+      },
+      "secondary": {
+        "ru": "Написать в Telegram",
+        "uz": "Telegramga yozish",
+        "destination": "+998 97 421 24 54",
+        "source_fact": "fact_contacts"
+      },
+      "rule": "Every message ends with exactly one of these two; no CTA means not publishable."
+    },
+    "unsuitable_messaging": [
+      "Hype words: революция, инновация, лучший, №1, трансформация, синергия, экосистема as a buzzword.",
+      "Fake scarcity: 'осталось 2 места', countdowns; the 49 000 offer stands on its own.",
+      "Any shop or customer count, or 'нас выбрали N магазинов'.",
+      "'Реальные магазины уже работают' / 'Haqiqiy do'konlar allaqachon ishlamoqda' as a present fact (prohibited, contradicts early access).",
+      "Demo dashboard numbers (3 450 000, 87 000, 42, +12%, 18, 3 cashiers, 2 returns) or the sample receipt as real results.",
+      "Any revenue, profit, or time-saving % for a merchant.",
+      "Naming a bank, Ipak Yuli, or any parent company; never expand 'Сделано для Узбекистана'.",
+      "QR settlement as a guaranteed instant time; say 'fast', never name a PSP.",
+      "Promising not-yet-confirmed modules (loyalty, turnover analytics, multi-point reports, week/month delta, real-time day register) as already shipped.",
+      "Heavy-ERP, corporate, technical jargon; this owner is non-technical.",
+      "Em-dash in any copy; use ':' ',' or '-'."
+    ],
+    "purchase_readiness_stage": {
+      "value": "Problem-aware to solution-aware. Feels the notebook and nasiya pain daily but may not know a phone-only POS exists or that it is affordable.",
+      "primary_message_priority": [
+        "Всё в одном (kassa + sklad + oplata + dolgi)",
+        "Просто, без компьютера",
+        "Свобода собственника",
+        "Доверие (PIN, журнал)",
+        "Оффер (49 000 первые 6 месяцев)"
+      ],
+      "best_channel": "Telegram for the lead (warm, reads full text); Instagram for reach and to push to Telegram or the site.",
+      "source": [
+        "strategy marketing/01-strategy.md sections 3,6",
+        "strategy marketing/02-content-system.md"
+      ],
+      "hypothesis_note": "The exact readiness split is a reasonable inference from the strategy doc, not a measured funnel stat."
+    }
+  },
+  "secondary": [
+    {
+      "segment_id": "pharmacy",
+      "label_ru": "Аптека",
+      "label_uz": "Dorixona",
+      "priority": "SECONDARY",
+      "source": [
+        "approved_fact:fact_icp_segments",
+        "strategy marketing/01-strategy.md section 2",
+        "COMPANY_CONTEXT.md secondary segments"
+      ],
+      "positioning_angle_ru": "Точный учёт по наименованиям.",
+      "positioning_angle_uz": "Pozitsiyalar bo'yicha aniq hisob.",
+      "daily_workflow": {
+        "documented": [
+          {
+            "step": "Sells many distinct items by name and needs precise per-item stock accounting.",
+            "source": [
+              "strategy marketing/01-strategy.md section 2",
+              "approved_fact:fact_catalog_stock"
+            ]
+          },
+          {
+            "step": "Accepts cash, card, QR and sometimes on credit, all in one ledger.",
+            "source": [
+              "approved_fact:fact_payment_methods"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "step": "Checks product expiry dates and tries to sell shorter-dated stock first.",
+            "hypothesis": true,
+            "rationale": "COMPANY_CONTEXT names 'expiry control' as a pharmacy concern, but no APPROVED_FACT confirms an expiry-tracking feature ships."
+          }
+        ]
+      },
+      "jobs_to_be_done": {
+        "documented": [
+          {
+            "jtbd_ru": "Вести точный учёт по каждому наименованию и не путать позиции.",
+            "jtbd_uz": "Har bir nom bo'yicha aniq hisob yuritish va pozitsiyalarni chalkashtirmaslik.",
+            "source": [
+              "approved_fact:fact_catalog_stock",
+              "approved_fact:fact_stock_auto_low_alert"
+            ]
+          },
+          {
+            "jtbd_ru": "Принимать оплату по QR без отдельного терминала.",
+            "jtbd_uz": "QR orqali alohida terminalsiz to'lov qabul qilish.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "jtbd_ru": "Контролировать сроки годности, чтобы не списывать просрочку.",
+            "jtbd_uz": "Yaroqlilik muddatini nazorat qilib, muddati o'tganini hisobdan chiqarmaslik.",
+            "hypothesis": true,
+            "rationale": "Expiry control is a stated pharmacy concern, not a confirmed BirLiy capability."
+          }
+        ]
+      },
+      "operational_pains": {
+        "documented": [
+          {
+            "pain_ru": "Сотни наименований, легко потерять остаток по конкретной позиции.",
+            "pain_uz": "Yuzlab nomlar, aniq pozitsiya bo'yicha qoldiqni yo'qotish oson.",
+            "source": [
+              "approved_fact:fact_catalog_stock",
+              "blog skladskoy-uchet-v-malenkom-magazine"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "pain_ru": "Просрочка: товар портится незаметно и уходит в списание.",
+            "pain_uz": "Muddati o'tishi: tovar sezdirmay buziladi va hisobdan chiqadi.",
+            "hypothesis": true,
+            "rationale": "Expiry pain inferred from COMPANY_CONTEXT; no confirmed expiry feature, do not promise it."
+          }
+        ]
+      },
+      "financial_pains": {
+        "documented": [
+          {
+            "pain_ru": "Упущенная продажа без QR или терминала.",
+            "pain_uz": "QR yoki terminalsiz qo'ldan ketgan savdo.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "pain_ru": "Деньги, замороженные в просроченном товаре.",
+            "pain_uz": "Muddati o'tgan tovarda muzlatilgan pul.",
+            "hypothesis": true,
+            "rationale": "Inferred from expiry concern; not a documented BirLiy outcome."
+          }
+        ]
+      },
+      "emotional_pains": {
+        "documented": [],
+        "hypothesis": [
+          {
+            "pain_ru": "Тревога ошибиться в точном учёте, где цена ошибки выше.",
+            "pain_uz": "Aniq hisobda xato qilishdan xavotir, bunda xato narxi yuqori.",
+            "hypothesis": true,
+            "rationale": "Reasonable inference for a precision-sensitive segment; not stated in source."
+          }
+        ]
+      },
+      "objections": {
+        "documented": [
+          {
+            "objection_ru": "Хватит ли точности склада для аптеки?",
+            "objection_uz": "Dorixona uchun ombor aniqligi yetadimi?",
+            "answer_ru": "Каталог и склад ведут товары, категории, штучные и весовые позиции, остатки и списания; остаток обновляется после каждой продажи. По специфике аптеки уточним детали в Telegram.",
+            "answer_uz": "Katalog va ombor tovarlar, kategoriyalar, donali va vaznli pozitsiyalar, qoldiqlar va hisobdan chiqarishni yuritadi; qoldiq har savdodan keyin yangilanadi. Dorixona xususiyatlari bo'yicha tafsilotlarni Telegramda aniqlaymiz.",
+            "source": [
+              "approved_fact:fact_catalog_stock",
+              "approved_fact:fact_stock_auto_low_alert"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "objection_ru": "Есть ли контроль сроков годности?",
+            "objection_uz": "Yaroqlilik muddati nazorati bormi?",
+            "answer_ru": "По срокам годности уточним в Telegram, что доступно сегодня, и не обещаем того, чего ещё нет.",
+            "answer_uz": "Yaroqlilik muddati bo'yicha bugun nima borligini Telegramda aniqlaymiz va hali yo'q narsani va'da qilmaymiz.",
+            "hypothesis": true,
+            "rationale": "Expiry tracking is not a confirmed feature; route specifics to the team rather than claim it."
+          }
+        ]
+      },
+      "trigger_events": {
+        "documented": [],
+        "hypothesis": [
+          {
+            "trigger_ru": "Ревизия выявила расхождение по конкретным позициям.",
+            "trigger_uz": "Reviziya aniq pozitsiyalarda farq aniqladi.",
+            "hypothesis": true,
+            "rationale": "Plausible trigger for a precision segment; not documented."
+          }
+        ]
+      },
+      "current_alternatives": {
+        "documented": [
+          {
+            "alternative_ru": "Тетрадь, Excel или тяжёлая программа учёта.",
+            "alternative_uz": "Daftar, Excel yoki og'ir hisob dasturi.",
+            "source": [
+              "approved_fact:fact_competitive_vs_notebook_1c"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "desired_outcomes": {
+        "documented": [
+          {
+            "outcome_ru": "Точный остаток по каждой позиции и подсказка, когда товар заканчивается.",
+            "outcome_uz": "Har pozitsiya bo'yicha aniq qoldiq va tovar tugayotganida eslatma.",
+            "source": [
+              "approved_fact:fact_catalog_stock",
+              "approved_fact:fact_stock_auto_low_alert"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "relevant_birliy_capability": {
+        "documented": [
+          {
+            "fact_id": "fact_catalog_stock",
+            "status": "verified",
+            "why": "Per-item, piece and weight stock accounting."
+          },
+          {
+            "fact_id": "fact_stock_auto_low_alert",
+            "status": "verified",
+            "why": "Auto decrement and low-stock warning."
+          },
+          {
+            "fact_id": "fact_payment_methods",
+            "status": "verified",
+            "why": "Cash, card, QR, credit in one ledger."
+          },
+          {
+            "fact_id": "fact_qr_no_terminal",
+            "status": "needs_confirmation",
+            "why": "QR without a terminal; soften settlement timing."
+          },
+          {
+            "fact_id": "fact_roles_security",
+            "status": "verified",
+            "why": "Roles, PIN, action log for staff control."
+          }
+        ],
+        "must_qualify_if_used": [
+          "fact_qr_no_terminal"
+        ],
+        "never_use_as_real": [
+          "fact_demo_revenue",
+          "fact_demo_avg_check",
+          "fact_demo_sales_delta",
+          "fact_demo_stock",
+          "fact_demo_receipt",
+          "fact_real_shops_badge"
+        ],
+        "do_not_claim_unconfirmed": [
+          "Expiry-date tracking (no APPROVED_FACT confirms it)"
+        ]
+      },
+      "proof_required": {
+        "documented": [
+          {
+            "item": "Live two-role demo and catalog/stock screens.",
+            "source": [
+              "approved_fact:fact_single_surface_demo",
+              "approved_fact:fact_catalog_stock"
+            ]
+          },
+          {
+            "item": "Made for Uzbekistan, early access 2026 stated honestly.",
+            "source": [
+              "approved_fact:fact_made_for_uzbekistan",
+              "approved_fact:fact_stage_early_access"
+            ]
+          }
+        ],
+        "hypothesis": [],
+        "must_not_use_as_proof": [
+          "Demo numbers",
+          "Sample receipt",
+          "Real-shops badge",
+          "Any expiry-control claim until confirmed"
+        ]
+      },
+      "safe_cta": {
+        "primary": {
+          "ru": "Оставить заявку",
+          "uz": "Ariza qoldirish",
+          "destination": "birliy.uz #lead",
+          "source_fact": "fact_lead_form_docs"
+        },
+        "secondary": {
+          "ru": "Написать в Telegram",
+          "uz": "Telegramga yozish",
+          "destination": "+998 97 421 24 54",
+          "source_fact": "fact_contacts"
+        }
+      },
+      "unsuitable_messaging": [
+        "Promising expiry tracking, batch or lot control before the team confirms it ships.",
+        "Implying regulatory or medical-compliance features that are not in source.",
+        "Demo numbers, sample receipt, or the real-shops badge as real.",
+        "Naming a bank or any parent company; hype words; fake scarcity; em-dash."
+      ],
+      "purchase_readiness_stage": {
+        "value": "Solution-aware but cautious; needs reassurance on per-item precision. Secondary priority, do not let it dilute the primary offer.",
+        "hypothesis_note": "Readiness is an inference; pharmacies are a stated secondary segment, not a measured cohort.",
+        "source": [
+          "strategy marketing/01-strategy.md section 2"
+        ]
+      }
+    },
+    {
+      "segment_id": "cafe_fast_service",
+      "label_ru": "Кафе и точка быстрого питания",
+      "label_uz": "Kafe va tez ovqatlanish nuqtasi",
+      "priority": "SECONDARY",
+      "source": [
+        "approved_fact:fact_icp_segments",
+        "strategy marketing/01-strategy.md section 2",
+        "COMPANY_CONTEXT.md (cafe appears in ConceptLanding segment cards only)"
+      ],
+      "positioning_angle_ru": "QR-оплата и чек в Telegram, без принтера и лишней техники.",
+      "positioning_angle_uz": "QR-to'lov va Telegramda chek, printersiz va ortiqcha texnikasiz.",
+      "segment_caution": "Cafe appears only in ConceptLanding segment cards. Treat as a lighter segment: do not over-promise restaurant, kitchen, or hospitality features.",
+      "daily_workflow": {
+        "documented": [
+          {
+            "step": "Takes fast payments at a small counter with little space for hardware.",
+            "source": [
+              "strategy marketing/01-strategy.md section 2"
+            ]
+          },
+          {
+            "step": "Accepts cash, card, QR in one ledger and sends the receipt to Telegram.",
+            "source": [
+              "approved_fact:fact_payment_methods",
+              "approved_fact:fact_ereceipt_telegram"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "step": "Serves repeat regulars across the day and wants quick repeat orders.",
+            "hypothesis": true,
+            "rationale": "Plausible cafe behaviour; not documented in source."
+          }
+        ]
+      },
+      "jobs_to_be_done": {
+        "documented": [
+          {
+            "jtbd_ru": "Принимать оплату быстро по QR без терминала.",
+            "jtbd_uz": "QR orqali terminalsiz tez to'lov qabul qilish.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal"
+            ]
+          },
+          {
+            "jtbd_ru": "Отдавать чек в Telegram, не ставя бумажный принтер.",
+            "jtbd_uz": "Qog'oz printer qo'ymasdan chekni Telegramga berish.",
+            "source": [
+              "approved_fact:fact_ereceipt_telegram"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "operational_pains": {
+        "documented": [
+          {
+            "pain_ru": "Мало места под кассовую технику и принтер.",
+            "pain_uz": "Kassa texnikasi va printer uchun joy kam.",
+            "source": [
+              "strategy marketing/01-strategy.md section 2",
+              "approved_fact:fact_equipment_phone_only"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "pain_ru": "Очередь в час пик, нужна скорость на кассе.",
+            "pain_uz": "Gavjum paytda navbat, kassada tezlik kerak.",
+            "hypothesis": true,
+            "rationale": "Inferred; the '15-second sale' speed is a needs_confirmation marketing claim, keep descriptive."
+          }
+        ]
+      },
+      "financial_pains": {
+        "documented": [
+          {
+            "pain_ru": "Покупатель уходит без оплаты картой или QR.",
+            "pain_uz": "Xaridor karta yoki QR to'lovsiz ketadi.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "emotional_pains": {
+        "documented": [],
+        "hypothesis": [
+          {
+            "pain_ru": "Стресс из-за толкотни и медленной оплаты в пик.",
+            "pain_uz": "Gavjumlik va sekin to'lovdan pikda stress.",
+            "hypothesis": true,
+            "rationale": "Reasonable inference; not stated."
+          }
+        ]
+      },
+      "objections": {
+        "documented": [
+          {
+            "objection_ru": "Нужен ли терминал и принтер?",
+            "objection_uz": "Terminal va printer kerakmi?",
+            "answer_ru": "Нет. QR показывается на экране телефона, отдельный терминал не нужен, чек уходит в Telegram, печать можно подключить позже по желанию.",
+            "answer_uz": "Yo'q. QR telefon ekranida ko'rsatiladi, alohida terminal kerak emas, chek Telegramga ketadi, bosib chiqarishni keyin xohishingizga ko'ra ulashingiz mumkin.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal",
+              "approved_fact:fact_ereceipt_telegram"
+            ],
+            "note": "Frame QR settlement as fast, not guaranteed-instant; never name a PSP."
+          }
+        ],
+        "hypothesis": [
+          {
+            "objection_ru": "А кухня и заказы по столам?",
+            "objection_uz": "Oshxona va stollar bo'yicha buyurtmalar-chi?",
+            "answer_ru": "BirLiy сделан как простая касса и склад на телефоне, а не как ресторанная система. Что подходит для вашей точки, разберём в Telegram.",
+            "answer_uz": "BirLiy telefonda oddiy kassa va ombor sifatida yaratilgan, restoran tizimi emas. Nuqtangizga nima mosligini Telegramda ko'rib chiqamiz.",
+            "hypothesis": true,
+            "rationale": "Hospitality features are not in source; do not over-promise."
+          }
+        ]
+      },
+      "trigger_events": {
+        "documented": [],
+        "hypothesis": [
+          {
+            "trigger_ru": "Покупатели всё чаще просят оплату по QR.",
+            "trigger_uz": "Xaridorlar tobora ko'proq QR to'lovni so'raydi.",
+            "hypothesis": true,
+            "rationale": "Plausible trigger; not documented."
+          }
+        ]
+      },
+      "current_alternatives": {
+        "documented": [
+          {
+            "alternative_ru": "Наличные и блокнот, отдельный терминал у банка.",
+            "alternative_uz": "Naqd va bloknot, bankdan alohida terminal.",
+            "source": [
+              "approved_fact:fact_payment_methods",
+              "approved_fact:fact_competitive_vs_notebook_1c"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "desired_outcomes": {
+        "documented": [
+          {
+            "outcome_ru": "Быстрая оплата по QR и чек в Telegram, без лишней техники на стойке.",
+            "outcome_uz": "Tez QR-to'lov va Telegramda chek, prilavkada ortiqcha texnikasiz.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal",
+              "approved_fact:fact_ereceipt_telegram",
+              "approved_fact:fact_equipment_phone_only"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "relevant_birliy_capability": {
+        "documented": [
+          {
+            "fact_id": "fact_qr_no_terminal",
+            "status": "needs_confirmation",
+            "why": "QR on phone, no terminal; core cafe angle. Soften settlement timing."
+          },
+          {
+            "fact_id": "fact_ereceipt_telegram",
+            "status": "verified",
+            "why": "E-receipt to Telegram, printing optional."
+          },
+          {
+            "fact_id": "fact_payment_methods",
+            "status": "verified",
+            "why": "Cash, card, QR in one ledger."
+          },
+          {
+            "fact_id": "fact_equipment_phone_only",
+            "status": "verified",
+            "why": "Phone-only, fits a small counter."
+          },
+          {
+            "fact_id": "fact_checkout_sales",
+            "status": "verified",
+            "why": "Quick search, discounts, refund, deferred receipt."
+          }
+        ],
+        "must_qualify_if_used": [
+          "fact_qr_no_terminal",
+          "fact_sale_flow_15s"
+        ],
+        "never_use_as_real": [
+          "fact_demo_revenue",
+          "fact_demo_avg_check",
+          "fact_demo_sales_delta",
+          "fact_demo_receipt",
+          "fact_real_shops_badge"
+        ],
+        "do_not_claim_unconfirmed": [
+          "Restaurant, kitchen, table-order, or hospitality features (not in source)"
+        ]
+      },
+      "proof_required": {
+        "documented": [
+          {
+            "item": "Live payment and receipt screens in the demo.",
+            "source": [
+              "approved_fact:fact_single_surface_demo",
+              "approved_fact:fact_ereceipt_telegram"
+            ]
+          },
+          {
+            "item": "Made for Uzbekistan, early access 2026 stated honestly.",
+            "source": [
+              "approved_fact:fact_made_for_uzbekistan",
+              "approved_fact:fact_stage_early_access"
+            ]
+          }
+        ],
+        "hypothesis": [],
+        "must_not_use_as_proof": [
+          "Demo numbers",
+          "Sample receipt",
+          "Real-shops badge",
+          "Any hospitality feature claim"
+        ]
+      },
+      "safe_cta": {
+        "primary": {
+          "ru": "Оставить заявку",
+          "uz": "Ariza qoldirish",
+          "destination": "birliy.uz #lead",
+          "source_fact": "fact_lead_form_docs"
+        },
+        "secondary": {
+          "ru": "Написать в Telegram",
+          "uz": "Telegramga yozish",
+          "destination": "+998 97 421 24 54",
+          "source_fact": "fact_contacts"
+        }
+      },
+      "unsuitable_messaging": [
+        "Promising restaurant, kitchen display, table management, or delivery features.",
+        "Guaranteeing instant QR settlement or naming a PSP.",
+        "Quoting the '15-second sale' as a hard guarantee; keep it descriptive.",
+        "Demo numbers, sample receipt, real-shops badge as real; hype words; fake scarcity; em-dash."
+      ],
+      "purchase_readiness_stage": {
+        "value": "Solution-aware on payments. Lighter, secondary segment; lead with QR plus Telegram receipt, do not dilute the primary shop offer.",
+        "hypothesis_note": "Readiness is inferred; cafe is a ConceptLanding-only secondary segment."
+      }
+    },
+    {
+      "segment_id": "service_business",
+      "label_ru": "Сервисная точка (ремонт, химчистка, ателье)",
+      "label_uz": "Xizmat nuqtasi (ta'mirlash, kimyoviy tozalash, atelye)",
+      "priority": "SECONDARY",
+      "source": [
+        "approved_fact:fact_icp_segments",
+        "strategy marketing/01-strategy.md section 2",
+        "COMPANY_CONTEXT.md secondary segments"
+      ],
+      "positioning_angle_ru": "Приём оплаты и учёт заказов в одном.",
+      "positioning_angle_uz": "To'lovni qabul qilish va buyurtmalar hisobi bitta joyda.",
+      "daily_workflow": {
+        "documented": [
+          {
+            "step": "Takes in orders and collects payment, partly upfront and partly on completion.",
+            "source": [
+              "strategy marketing/01-strategy.md section 2"
+            ]
+          },
+          {
+            "step": "Accepts cash, card, QR, and sometimes on credit in one ledger.",
+            "source": [
+              "approved_fact:fact_payment_methods"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "step": "Keeps a list of jobs in progress and which are ready for pickup.",
+            "hypothesis": true,
+            "rationale": "Order-log workflow is implied by the strategy 'журнал заказов' angle; BirLiy has no confirmed dedicated order-management module."
+          }
+        ]
+      },
+      "jobs_to_be_done": {
+        "documented": [
+          {
+            "jtbd_ru": "Принимать оплату удобным способом без отдельного терминала.",
+            "jtbd_uz": "Qulay usulda alohida terminalsiz to'lov qabul qilish.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal",
+              "approved_fact:fact_payment_methods"
+            ]
+          },
+          {
+            "jtbd_ru": "Видеть выручку и работу точки с телефона.",
+            "jtbd_uz": "Tushum va nuqta ishini telefondan ko'rish.",
+            "source": [
+              "approved_fact:fact_owner_remote",
+              "approved_fact:fact_reporting"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "jtbd_ru": "Держать журнал заказов: что принято, что готово, что оплачено.",
+            "jtbd_uz": "Buyurtmalar jurnalini yuritish: nima qabul qilingan, nima tayyor, nima to'langan.",
+            "hypothesis": true,
+            "rationale": "Strategy mentions an order log angle, but no APPROVED_FACT confirms a dedicated order-tracking feature."
+          }
+        ]
+      },
+      "operational_pains": {
+        "documented": [
+          {
+            "pain_ru": "Учёт оплат и заказов вразброс, по тетрадям и в голове.",
+            "pain_uz": "To'lovlar va buyurtmalar hisobi tarqoq, daftarlarda va yodda.",
+            "source": [
+              "strategy marketing/01-strategy.md section 2",
+              "approved_fact:fact_competitive_vs_notebook_1c"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "pain_ru": "Забывают, кто что сдал и кто доплатит при выдаче.",
+            "pain_uz": "Kim nimani topshirgani va chiqarishda kim qo'shimcha to'lashini unutadi.",
+            "hypothesis": true,
+            "rationale": "Plausible service pain; not documented in source."
+          }
+        ]
+      },
+      "financial_pains": {
+        "documented": [
+          {
+            "pain_ru": "Упущенная безналичная оплата без QR или терминала.",
+            "pain_uz": "QR yoki terminalsiz qo'ldan ketgan naqdsiz to'lov.",
+            "source": [
+              "approved_fact:fact_qr_no_terminal"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "pain_ru": "Недополученная доплата при выдаче заказа.",
+            "pain_uz": "Buyurtmani chiqarishda olinmagan qo'shimcha to'lov.",
+            "hypothesis": true,
+            "rationale": "Inferred; not documented."
+          }
+        ]
+      },
+      "emotional_pains": {
+        "documented": [],
+        "hypothesis": [
+          {
+            "pain_ru": "Неудобно перед клиентом, когда путаешься в его заказе или сумме.",
+            "pain_uz": "Mijoz oldida buyurtması yoki summasida chalkashganda noqulay.",
+            "hypothesis": true,
+            "rationale": "Reasonable inference; not stated."
+          }
+        ]
+      },
+      "objections": {
+        "documented": [
+          {
+            "objection_ru": "Подойдёт ли для сервиса, а не для магазина?",
+            "objection_uz": "Do'kon emas, xizmat uchun mos keladimi?",
+            "answer_ru": "BirLiy принимает оплату всеми способами и показывает выручку и работу точки с телефона. Что именно подходит вашей точке, разберём в Telegram, без обещаний того, чего ещё нет.",
+            "answer_uz": "BirLiy barcha usullarda to'lov qabul qiladi va tushum hamda nuqta ishini telefondan ko'rsatadi. Nuqtangizga aynan nima mosligini Telegramda ko'rib chiqamiz, hali yo'q narsani va'da qilmasdan.",
+            "source": [
+              "approved_fact:fact_payment_methods",
+              "approved_fact:fact_owner_remote"
+            ]
+          }
+        ],
+        "hypothesis": [
+          {
+            "objection_ru": "Есть ли отдельный модуль заказов?",
+            "objection_uz": "Buyurtmalar uchun alohida modul bormi?",
+            "answer_ru": "По журналу заказов уточним в Telegram, что доступно сегодня. Мы не выдаём планы за готовое.",
+            "answer_uz": "Buyurtmalar jurnali bo'yicha bugun nima borligini Telegramda aniqlaymiz. Rejani tayyor deb bermaymiz.",
+            "hypothesis": true,
+            "rationale": "No confirmed order-management module; route specifics to the team."
+          }
+        ]
+      },
+      "trigger_events": {
+        "documented": [],
+        "hypothesis": [
+          {
+            "trigger_ru": "Перепутали заказы или сумму и потеряли доверие клиента.",
+            "trigger_uz": "Buyurtmalarni yoki summani chalkashtirib mijoz ishonchini yo'qotdi.",
+            "hypothesis": true,
+            "rationale": "Plausible trigger; not documented."
+          }
+        ]
+      },
+      "current_alternatives": {
+        "documented": [
+          {
+            "alternative_ru": "Тетрадь, квитанции и учёт в голове.",
+            "alternative_uz": "Daftar, kvitansiya va yoddan hisob.",
+            "source": [
+              "approved_fact:fact_competitive_vs_notebook_1c"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "desired_outcomes": {
+        "documented": [
+          {
+            "outcome_ru": "Все оплаты в одном учёте и выручка точки видна с телефона.",
+            "outcome_uz": "Barcha to'lovlar bitta hisobda va nuqta tushumi telefondan ko'rinadi.",
+            "source": [
+              "approved_fact:fact_payment_methods",
+              "approved_fact:fact_owner_remote"
+            ]
+          }
+        ],
+        "hypothesis": []
+      },
+      "relevant_birliy_capability": {
+        "documented": [
+          {
+            "fact_id": "fact_payment_methods",
+            "status": "verified",
+            "why": "Cash, card, QR, credit in one ledger for intake."
+          },
+          {
+            "fact_id": "fact_qr_no_terminal",
+            "status": "needs_confirmation",
+            "why": "QR without a terminal; soften settlement timing."
+          },
+          {
+            "fact_id": "fact_owner_remote",
+            "status": "verified",
+            "why": "Owner sees revenue and the point from a phone."
+          },
+          {
+            "fact_id": "fact_reporting",
+            "status": "verified",
+            "why": "Daily revenue and average check."
+          },
+          {
+            "fact_id": "fact_roles_security",
+            "status": "verified",
+            "why": "Roles, PIN, action log for staff."
+          }
+        ],
+        "must_qualify_if_used": [
+          "fact_qr_no_terminal"
+        ],
+        "never_use_as_real": [
+          "fact_demo_revenue",
+          "fact_demo_avg_check",
+          "fact_demo_sales_delta",
+          "fact_demo_receipt",
+          "fact_real_shops_badge"
+        ],
+        "do_not_claim_unconfirmed": [
+          "A dedicated order-management or repair-ticket module (not confirmed in source)"
+        ]
+      },
+      "proof_required": {
+        "documented": [
+          {
+            "item": "Live payment and owner screens in the demo.",
+            "source": [
+              "approved_fact:fact_single_surface_demo",
+              "approved_fact:fact_owner_remote"
+            ]
+          },
+          {
+            "item": "Made for Uzbekistan, early access 2026 stated honestly.",
+            "source": [
+              "approved_fact:fact_made_for_uzbekistan",
+              "approved_fact:fact_stage_early_access"
+            ]
+          }
+        ],
+        "hypothesis": [],
+        "must_not_use_as_proof": [
+          "Demo numbers",
+          "Sample receipt",
+          "Real-shops badge",
+          "Any order-module claim until confirmed"
+        ]
+      },
+      "safe_cta": {
+        "primary": {
+          "ru": "Оставить заявку",
+          "uz": "Ariza qoldirish",
+          "destination": "birliy.uz #lead",
+          "source_fact": "fact_lead_form_docs"
+        },
+        "secondary": {
+          "ru": "Написать в Telegram",
+          "uz": "Telegramga yozish",
+          "destination": "+998 97 421 24 54",
+          "source_fact": "fact_contacts"
+        }
+      },
+      "unsuitable_messaging": [
+        "Promising a full order-management, repair-ticket, or booking module that is not confirmed in source.",
+        "Guaranteeing instant QR settlement or naming a PSP.",
+        "Demo numbers, sample receipt, real-shops badge as real; hype words; fake scarcity; em-dash."
+      ],
+      "purchase_readiness_stage": {
+        "value": "Problem-aware on scattered payments and records. Secondary; lead with payment intake plus owner view, keep order-log claims to what the team confirms.",
+        "hypothesis_note": "Readiness inferred from the stated secondary-segment angle, not a measured cohort."
+      }
+    }
+  ],
+  "global_guardrails": {
+    "currency": "RU 'сум' / UZ 'so'm'. Never 'UZS'.",
+    "never_name": "No bank, no Ipak Yuli, no parent company. Never expand 'Сделано для Узбекистана' / 'O'zbekiston uchun yaratilgan'.",
+    "prohibited_facts_never_real": [
+      "fact_demo_revenue",
+      "fact_demo_avg_check",
+      "fact_demo_sales_delta",
+      "fact_demo_stock",
+      "fact_demo_receipt",
+      "fact_demo_cashiers_returns",
+      "fact_real_shops_badge"
+    ],
+    "must_qualify_facts": [
+      "fact_pricing_promo",
+      "fact_pricing_start_chip",
+      "fact_promo_six_month",
+      "fact_onboarding_one_day",
+      "fact_onboarding_cashier_30min",
+      "fact_install_time",
+      "fact_qr_no_terminal",
+      "fact_sku_base_excel",
+      "fact_day_register_realtime",
+      "fact_branches_multipoint",
+      "fact_turnover_analytics",
+      "fact_loyalty",
+      "fact_unlimited_cashiers_early",
+      "fact_equipment_platforms",
+      "fact_equipment_optional_kit",
+      "fact_sale_flow_15s",
+      "fact_segment_sizing_200",
+      "fact_support_onboarding_help"
+    ],
+    "never_claim": [
+      "Any shop or customer count",
+      "Any revenue, profit, or time-saving % for a merchant",
+      "Any testimonial or named customer",
+      "Any named bank or PSP integration",
+      "Any launch or delivery deadline beyond 'early access 2026'",
+      "Guaranteed instant QR settlement",
+      "'Real shops already working' as a present fact"
+    ],
+    "tone": "Calm experienced shopkeeper-neighbour. 'Меньше частей. Больше ясности.' Short sentences, plain words, real verbs. Max 1-2 emoji. No hype words, no fake scarcity.",
+    "copy_hygiene": "No em-dash character in any public-facing copy field; use ':' ',' or '-'. RU and UZ must carry equivalent meaning and read native.",
+    "cta_rule": "Every public message ends with exactly one approved CTA: 'Оставить заявку' (birliy.uz #lead) or 'Написать в Telegram' (+998 97 421 24 54). No CTA means not publishable."
+  }
+}
