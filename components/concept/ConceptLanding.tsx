@@ -78,6 +78,18 @@ const copy = {
       call: "Позвонить",
       up: "Наверх",
       heroPhotoBadge: "Ранний доступ: подключаем первые магазины",
+      trustStrip: ["Сделано для Узбекистана", "Запуск за 1 день", "Работает офлайн"],
+    },
+    byNumbers: {
+      eyebrow: "В цифрах",
+      title: "Что входит уже на старте",
+      items: [
+        { value: "49 000", suffix: "сум/мес", label: "стартовая цена" },
+        { value: "1", suffix: "день", label: "на подключение" },
+        { value: "0", suffix: "оборудования", label: "нужно для старта" },
+        { value: "4", suffix: "способа", label: "оплаты: наличные, карта, QR, долг" },
+        { value: "9 000+", suffix: "SKU", label: "база товаров" },
+      ],
     },
     nav: [
       { label: "Как работает", href: "#flow" },
@@ -281,6 +293,9 @@ const copy = {
       eyebrow: "Стартовая цена",
       amount: "49 000",
       suffix: "сум / месяц",
+      laterAmount: "149 000",
+      laterSuffix: "сум / месяц",
+      scarcity: "Цена раннего доступа для первых магазинов",
       body: "Первые 6 месяцев: 49 000 сум/мес. Дальше прозрачно: 149 000 сум в месяц. Полный функционал и помощь с запуском.",
       bullets: ["Касса, склад, QR-оплата и отчёты", "Без обязательной покупки оборудования в первый день", "Помощь с первым запуском"],
       cta: "Подать заявку",
@@ -342,6 +357,18 @@ const copy = {
       call: "Qo'ng'iroq",
       up: "Yuqoriga",
       heroPhotoBadge: "Erta kirish: birinchi do'konlar ulanmoqda",
+      trustStrip: ["O'zbekiston uchun", "1 kunda ulanish", "Oflayn ishlaydi"],
+    },
+    byNumbers: {
+      eyebrow: "Raqamlarda",
+      title: "Startning o'zida nima bor",
+      items: [
+        { value: "49 000", suffix: "so'm/oy", label: "start narxi" },
+        { value: "1", suffix: "kun", label: "ulanish uchun" },
+        { value: "0", suffix: "uskuna", label: "start uchun kerak" },
+        { value: "4", suffix: "usul", label: "to'lov: naqd, karta, QR, nasiya" },
+        { value: "9 000+", suffix: "SKU", label: "tovarlar bazasi" },
+      ],
     },
     nav: [
       { label: "Qanday ishlaydi", href: "#flow" },
@@ -545,6 +572,9 @@ const copy = {
       eyebrow: "Start narx",
       amount: "49 000",
       suffix: "so'm / oy",
+      laterAmount: "149 000",
+      laterSuffix: "so'm / oy",
+      scarcity: "Birinchi do'konlar uchun erta kirish narxi",
       body: "Birinchi 6 oy: oyiga 49 000 so'm. Keyin shaffof: oyiga 149 000 so'm. To'liq funksiyalar va ishga tushirishda yordam.",
       bullets: ["Kassa, ombor, QR-to'lov va hisobotlar", "Birinchi kuni majburiy uskuna xaridi yo'q", "Birinchi startda yordam"],
       cta: "Ariza topshirish",
@@ -1105,6 +1135,20 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
               </a>
             </motion.div>
 
+            {/* Honest hero trust strip: made-for-UZ, one-day setup, works offline.
+                Slim row near the CTA; brand green accent on the lucide icons. */}
+            <motion.ul {...fade(0.3, true)} className="mx-auto mt-5 flex max-w-md flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:mx-0 lg:max-w-none lg:justify-start">
+              {t.meta.trustStrip.map((item, i) => {
+                const TrustIcon = [ShieldCheck, Clock3, Smartphone][i] ?? ShieldCheck;
+                return (
+                  <li key={item} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 lg:text-white/80">
+                    <TrustIcon size={15} strokeWidth={2.25} className="text-green-700 lg:text-green-300" aria-hidden />
+                    {item}
+                  </li>
+                );
+              })}
+            </motion.ul>
+
             {/* Full four-card grid: desktop only. Compact viewports keep the BR
                 price / one-day / no-equipment proof points above. */}
             <motion.div {...fade(0.34, true)} className="mt-7 hidden gap-3 lg:grid lg:grid-cols-2 xl:grid-cols-4">
@@ -1362,8 +1406,10 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                       className="pointer-events-none absolute left-[33px] top-12 h-[calc(100%+1rem)] w-0.5 bg-[linear-gradient(to_bottom,#03b73d,rgba(3,183,61,0.18))] sm:hidden"
                     />
                   )}
-                  {/* Step number badge: top-left on mobile, inline above the icon on wide screens. */}
-                  <span className="absolute left-4 top-5 grid h-9 w-9 place-items-center rounded-full bg-green-700 text-sm font-extrabold text-white ring-2 ring-green-700/20 sm:static sm:mb-4 sm:h-8 sm:w-8">
+                  {/* Step number badge: top-left on mobile (geometry unchanged so the
+                      vertical connector stays aligned), enlarged and bolder on wide
+                      screens for clear 1-2-3-4-5 sequencing. */}
+                  <span className="absolute left-4 top-5 grid h-9 w-9 place-items-center rounded-full bg-green-700 text-sm font-extrabold text-white ring-2 ring-green-700/20 sm:static sm:mb-4 sm:h-12 sm:w-12 sm:text-2xl sm:ring-4">
                     {index + 1}
                   </span>
                   <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-green-50 text-green-700">
@@ -1374,6 +1420,31 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
                 </motion.article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* By the numbers: honest product facts only (no client counts / testimonials). */}
+      <section id="numbers" className="scroll-mt-24 border-y border-[#d9e2db] bg-[#f7faf8] py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div {...reveal(0, reduce)} className="max-w-3xl">
+            <SectionLabel>{t.byNumbers.eyebrow}</SectionLabel>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-4xl">{t.byNumbers.title}</h2>
+          </motion.div>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
+            {t.byNumbers.items.map((item, index) => (
+              <motion.div
+                key={item.label}
+                {...reveal(index * 0.05, reduce)}
+                className="rounded-2xl border border-[#d9e2db] bg-white p-4 shadow-[0_1px_2px_rgba(11,24,38,0.04)] sm:p-5"
+              >
+                <p className="flex flex-wrap items-baseline gap-1.5">
+                  <CountUp value={item.value} className="text-3xl font-extrabold leading-none text-green-700 sm:text-4xl" />
+                  <span className="text-sm font-bold text-ink-500">{item.suffix}</span>
+                </p>
+                <p className="mt-2 text-sm font-semibold leading-5 text-ink-700">{item.label}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -1878,9 +1949,20 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-8">
           <motion.div {...reveal(0, reduce)}>
             <SectionLabel>{t.price.eyebrow}</SectionLabel>
-            <h2 className="max-w-[13ch] text-4xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-5xl">
-              <CountUp value={t.price.amount} /> <span className="text-green-700">{t.price.suffix}</span>
+            <span className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-bold uppercase tracking-normal text-green-800 ring-1 ring-green-500/25">
+              <Clock3 size={13} strokeWidth={2.5} aria-hidden />
+              {t.price.scarcity}
+            </span>
+            {/* Scarcity framing: early-access rate emphasised, full rate shown honestly. */}
+            <h2 className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-4xl font-extrabold leading-tight tracking-normal text-ink-900 sm:text-5xl">
+              <span className="text-green-700">
+                <CountUp value={t.price.amount} /> <span className="text-2xl sm:text-3xl">{t.price.suffix}</span>
+              </span>
             </h2>
+            <p className="mt-2 text-base font-semibold text-ink-500">
+              {locale === "ru" ? "дальше " : "keyin "}
+              <span className="text-ink-700 line-through decoration-ink-300">{t.price.laterAmount} {t.price.laterSuffix}</span>
+            </p>
             <p className="mt-5 max-w-xl text-lg font-medium leading-8 text-ink-700">{t.price.body}</p>
             <button
               type="button"
