@@ -4,6 +4,11 @@ import { businessTypes, languages } from "@/lib/db/schema";
 export const leadInputSchema = z
   .object({
     business_name: z.string().trim().max(100).optional().nullable(),
+    // Optional city/district. Native select of 12 large UZ cities (Tashkent
+    // first) + a free-text "other" reveal on the form; the chosen or typed value
+    // is sent as this single string. Must stay optional so empty submissions and
+    // existing tests keep passing.
+    city: z.string().trim().max(80).optional().nullable(),
     business_type: z.enum(businessTypes),
     business_type_other: z.string().trim().min(1).max(50).optional().nullable(),
     owner_name: z.string().trim().min(2).max(50),

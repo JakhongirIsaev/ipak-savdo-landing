@@ -38,6 +38,30 @@ type FormState = "idle" | "submitting" | "sent" | "error";
 
 const COMMENT_MAX = 500; // must match lib/validators/lead.ts comment.max(500)
 
+// 12 large Uzbek cities, Tashkent first (shared order for both locales). The
+// city is an OPTIONAL real `city` field now (not folded into comment). The last
+// option ("other") reveals a free-text input so an owner can type a small city
+// we intentionally do not pre-list. Labels are localized below via CITY_LABELS.
+const CITY_OPTIONS = [
+  "tashkent",
+  "samarkand",
+  "namangan",
+  "andijan",
+  "fergana",
+  "bukhara",
+  "nukus",
+  "karshi",
+  "kokand",
+  "margilan",
+  "jizzakh",
+  "urgench",
+] as const;
+
+const CITY_LABELS: Record<"ru" | "uz", string[]> = {
+  ru: ["Ташкент", "Самарканд", "Наманган", "Андижан", "Фергана", "Бухара", "Нукус", "Карши", "Коканд", "Маргилан", "Джизак", "Ургенч"],
+  uz: ["Toshkent", "Samarqand", "Namangan", "Andijon", "Farg'ona", "Buxoro", "Nukus", "Qarshi", "Qo'qon", "Marg'ilon", "Jizzax", "Urganch"],
+};
+
 const STR = {
   ru: {
     eyebrow: "05 / Заявка",
@@ -75,7 +99,10 @@ const STR = {
     businessName: "Название магазина",
     cityTitle: "Город / район",
     cityDesc: "Где находится точка",
-    city: "Город или район",
+    city: "Город",
+    cityPlaceholder: "Выберите город (необязательно)",
+    cityOther: "Другой город",
+    cityOtherPh: "Введите ваш город",
     other: "Уточните тип бизнеса",
     sendContacts: "Отправить заявку",
     equipTitle: "Оборудование",
@@ -136,7 +163,10 @@ const STR = {
     businessName: "Do'kon nomi",
     cityTitle: "Shahar / tuman",
     cityDesc: "Nuqta qayerda joylashgan",
-    city: "Shahar yoki tuman",
+    city: "Shahar",
+    cityPlaceholder: "Shaharni tanlang (ixtiyoriy)",
+    cityOther: "Boshqa shahar",
+    cityOtherPh: "Shahringizni kiriting",
     other: "Biznes turini aniqlang",
     sendContacts: "Ariza yuborish",
     equipTitle: "Jihozlar",
@@ -203,6 +233,21 @@ function LeadForm({ locale, segment, initialNeedsEquipment = false }: { locale: 
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [businessType, setBusinessType] = useState<string>("");
+  // City selector: `cityChoice` holds the select value (one of CITY_OPTIONS,
+  // "other", or "" for unset); `cityOtherText` holds the free text when "other"
+  // is chosen. Resolved to a single optional `city` string via a hidden input.
+  const [cityChoice, setCityChoice] = useState<string>("");
+  const [cityOtherText, setCityOtherText] = useState<string>("");
+  const cityLabels = CITY_LABELS[locale];
+  const cityIndex = CITY_OPTIONS.indexOf(cityChoice as (typeof CITY_OPTIONS)[number]);
+  // The value posted as `city`: the localized label for a listed city, the typed
+  // text for "other", else empty (field stays optional end to end).
+  const resolvedCity =
+    cityChoice === "other"
+      ? cityOtherText.trim()
+      : cityIndex >= 0
+        ? cityLabels[cityIndex]
+        : "";
   const [equipmentBundle, setEquipmentBundle] = useState(initialNeedsEquipment);
   const [phone, setPhone] = useState("");
   const startedRef = useRef(false);
@@ -246,17 +291,15 @@ function LeadForm({ locale, segment, initialNeedsEquipment = false }: { locale: 
 
     const equip = [equipmentBundle ? t.equipBundle : null].filter(Boolean) as string[];
     fd.set("needs_equipment", equip.length > 0 ? "true" : "false");
-    // City/district + the segment card have NO DB column (lib/db/schema.ts) and
-    // are not in the Zod schema, so we fold them into `comment` (the only free
-    // text the server stores) instead of inventing columns. The server caps
-    // `comment` at 500; build the prefix from equipment + city + segment, then
-    // trim the user's text to the remaining budget so it can never overflow and
+    // City is now a real, optional server field (its own `city` column), carried
+    // by the hidden `city` input below — no longer folded into comment. The
+    // equipment flag and the segment card still have no column, so they are
+    // folded into `comment` (the only free text the server stores). The server
+    // caps `comment` at 500; build the prefix from equipment + segment, then trim
+    // the user's text to the remaining budget so it can never overflow and
     // silently fail server validation (which would drop the lead).
-    const city = String(fd.get("city") ?? "").trim();
-    fd.delete("city"); // not a server field; carried inside comment only
     const tags = [
       equip.length ? `${t.equipLabel}: ${equip.join(", ")}` : null,
-      city ? `${t.city}: ${city}` : null,
       segment ? `segment: ${segment}` : null,
     ].filter(Boolean) as string[];
     const prefix = tags.join(" · ");
@@ -381,9 +424,34 @@ function LeadForm({ locale, segment, initialNeedsEquipment = false }: { locale: 
         </SectionRow>
 
         <SectionRow title={t.cityTitle} desc={t.cityDesc}>
-          {/* Required (name + phone + city are the only required fields). Not a
-              server column: folded into `comment` on submit. */}
-          <input required name="city" maxLength={80} minLength={2} aria-label={t.city} placeholder={t.city} onInvalid={(e) => e.currentTarget.setCustomValidity(t.validation)} onInput={(e) => e.currentTarget.setCustomValidity("")} className={inputCls} />
+          {/* OPTIONAL city selector. The select + "other" text are controlled
+              (no `name`, so they are never force-validated and never double-post);
+              the resolved value rides a single hidden `city` field to the server,
+              where it lands in the real `city` column. */}
+          <select
+            aria-label={t.city}
+            value={cityChoice}
+            onChange={(e) => setCityChoice(e.target.value)}
+            className={`${inputCls} ${cityChoice === "" ? "text-ink-500" : "text-ink-900"}`}
+          >
+            <option value="">{t.cityPlaceholder}</option>
+            {CITY_OPTIONS.map((value, i) => (
+              <option key={value} value={value} className="text-ink-900">{cityLabels[i]}</option>
+            ))}
+            <option value="other" className="text-ink-900">{t.cityOther}</option>
+          </select>
+          {cityChoice === "other" && (
+            <input
+              aria-label={t.cityOther}
+              placeholder={t.cityOtherPh}
+              maxLength={80}
+              value={cityOtherText}
+              onChange={(e) => setCityOtherText(e.target.value)}
+              className={inputCls}
+            />
+          )}
+          {/* Single source of truth posted to the server (optional). */}
+          <input type="hidden" name="city" value={resolvedCity} />
         </SectionRow>
 
         <SectionRow title={t.equipTitle} desc={t.equipDesc}>

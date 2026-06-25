@@ -26,6 +26,7 @@ import {
   BarChart3,
   Boxes,
   ChevronDown,
+  ChevronUp,
   Clock3,
   Languages,
   Menu,
@@ -47,6 +48,7 @@ type Copy = {
   meta: {
     otherLang: string;
     primaryCta: string;
+    up: string;
     mobileTitleLead: string;
     mobileTitleAccent: string;
     mobileSubtitle: string;
@@ -99,6 +101,32 @@ export function MobileLanding({
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number>(0);
   const faqBtnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Back-to-top: appears once the user scrolls past ~80% of the page; hides near
+  // the top. Smooth scroll by default, instant jump when reduced motion.
+  const [showTop, setShowTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const scrolled = window.scrollY + window.innerHeight;
+      const ratio = scrolled / doc.scrollHeight;
+      setShowTop(ratio > 0.8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+  const scrollToTop = () => {
+    const behavior: ScrollBehavior = prefersReduce ? "auto" : "smooth";
+    const top = document.getElementById("m-top");
+    if (top) top.scrollIntoView({ behavior, block: "start" });
+    else window.scrollTo({ top: 0, behavior });
+    trackSiteEvent("cta_click", { placement: "mobile_back_to_top" });
+  };
 
   const otherHref = locale === "ru" ? "/" : "/ru";
   const otherLocale: Locale = locale === "ru" ? "uz" : "ru";
@@ -449,6 +477,18 @@ export function MobileLanding({
         </div>
         <p className="mt-4 text-xs font-semibold text-ink-500">{t.footer.copyright}</p>
       </footer>
+
+      {/* Back-to-top: floating green circle above the sticky CTA, shown once the
+          page is scrolled near the bottom (>80%). 48px tap target, focus ring,
+          reduced-motion aware (instant jump). */}
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label={t.meta.up}
+        className={`fixed bottom-[92px] right-4 z-50 grid h-12 w-12 place-items-center rounded-full bg-green-500 text-white shadow-[0_14px_34px_-14px_rgba(3,183,61,0.95)] transition-opacity duration-200 ease-birliy hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 motion-reduce:transition-none ${showTop ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      >
+        <ChevronUp size={22} strokeWidth={2.5} aria-hidden />
+      </button>
 
       {/* Single sticky full-width green pill CTA. Bottom padding on the page tail
           (pb in lead/footer) plus this fixed bar; spacer below keeps content from

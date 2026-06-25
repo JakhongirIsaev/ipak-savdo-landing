@@ -20,6 +20,7 @@ import {
   Boxes,
   Check,
   ChevronDown,
+  ChevronUp,
   Clock3,
   Languages,
   Menu,
@@ -820,6 +821,16 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
   const coarse = useCoarsePointer();
   const reduce = prefersReduce || coarse;
   const t = copy[locale];
+
+  // Back-to-top: smooth by default, instant jump when the user prefers reduced
+  // motion. Targets the hero anchor (#top); falls back to window scroll.
+  const scrollToTop = () => {
+    const behavior: ScrollBehavior = prefersReduce ? "auto" : "smooth";
+    const top = document.getElementById("top");
+    if (top) top.scrollIntoView({ behavior, block: "start" });
+    else window.scrollTo({ top: 0, behavior });
+    trackSiteEvent("cta_click", { placement: "back_to_top" });
+  };
 
   // Where the language switch navigates, plus an accessible name that contains
   // the visible "UZ"/"RU" label (WCAG 2.5.3).
@@ -2238,6 +2249,19 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           </button>
         </nav>
       </div>
+
+      {/* Back-to-top: floating green circle shown once the page is scrolled near
+          the bottom (lead/footer in view via `nearBottom`). Desktop only
+          (lg+) — mobile has its own inside MobileLanding. Hidden while the lead
+          modal is open so it never overlaps the dialog. */}
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label={t.meta.up}
+        className={`fixed bottom-6 right-6 z-40 hidden h-12 w-12 place-items-center rounded-full bg-green-500 text-white shadow-[0_18px_42px_-18px_rgba(3,183,61,0.95)] transition-opacity duration-200 ease-birliy hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 motion-reduce:transition-none lg:grid ${nearBottom && !leadOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      >
+        <ChevronUp size={22} strokeWidth={2.5} aria-hidden />
+      </button>
 
       <LeadModal
         open={leadOpen}
