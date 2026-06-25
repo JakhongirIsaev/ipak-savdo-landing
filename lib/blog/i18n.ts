@@ -121,7 +121,6 @@ export function landingPath(locale: BlogLocale): string {
 export const CATEGORY_LABEL: Record<BlogCategory, Record<BlogLocale, string>> = {
   product: { uz: "Mahsulot", ru: "Продукт", en: "Product" },
   "ai-tech": { uz: "AI va texnologiya", ru: "AI и технологии", en: "AI & Technology" },
-  football: { uz: "Futbol", ru: "Футбол", en: "Football" },
 };
 
 export function blogCategoryPath(locale: BlogLocale, category: BlogCategory): string {

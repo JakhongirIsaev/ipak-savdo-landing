@@ -20,16 +20,12 @@ describe("postCategory", () => {
 });
 
 describe("postsByCategory", () => {
-  it("returns the 8 product posts (4 original guides + 4 new product articles)", () => {
-    expect(postsByCategory("product")).toHaveLength(8);
+  it("returns the 9 product posts", () => {
+    expect(postsByCategory("product")).toHaveLength(9);
   });
 
   it("returns the 2 ai-tech articles", () => {
     expect(postsByCategory("ai-tech")).toHaveLength(2);
-  });
-
-  it("returns the 4 football articles", () => {
-    expect(postsByCategory("football")).toHaveLength(4);
   });
 });
 

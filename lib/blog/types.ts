@@ -3,7 +3,7 @@
 
 export type BlogLocale = "uz" | "ru" | "en";
 
-export type BlogCategory = "product" | "ai-tech" | "football";
+export type BlogCategory = "product" | "ai-tech";
 
 export interface BlogSection {
   h2: string;

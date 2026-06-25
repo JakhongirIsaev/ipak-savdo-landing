@@ -84,11 +84,10 @@ describe("sitemap", () => {
     }
   });
 
-  it("includes product, ai-tech and football category indexes now that all have posts", () => {
+  it("includes product and ai-tech category indexes now that all have posts", () => {
     for (const prefix of LOCALE_PREFIX) {
       expect(byUrl.has(`${SITE}${prefix}/blog/category/product`), `${prefix} product`).toBe(true);
       expect(byUrl.has(`${SITE}${prefix}/blog/category/ai-tech`), `${prefix} ai-tech`).toBe(true);
-      expect(byUrl.has(`${SITE}${prefix}/blog/category/football`), `${prefix} football`).toBe(true);
     }
   });
 

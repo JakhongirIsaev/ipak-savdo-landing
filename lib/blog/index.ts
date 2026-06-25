@@ -11,11 +11,6 @@ import { post as dokondaNimaQolgan } from "./posts/dokonda-nima-qolganini-telefo
 // AI & technology (2026-06-19)
 import { post as aiQidiruvAgentlar } from "./posts/ai-qidiruv-va-agentlar-kichik-biznes";
 import { post as aiFoydaMalumotlar } from "./posts/ai-dan-foyda-malumotlar-va-nazorat";
-// Football business lessons (2026-06-19)
-import { post as futbolPortugaliyaKongo } from "./posts/futbol-saboq-portugaliya-kongo";
-import { post as futbolAngliyaXorvatiya } from "./posts/futbol-saboq-angliya-xorvatiya";
-import { post as futbolGanaPanama } from "./posts/futbol-saboq-gana-panama";
-import { post as futbolUzbekistonKolumbiya } from "./posts/futbol-saboq-uzbekiston-kolumbiya";
 import { post as debtNotebookSmallShop } from "./posts/debt-notebook-small-shop";
 
 // Newest first: this order drives the blog index pages.
@@ -27,17 +22,13 @@ export const POSTS: BlogPost[] = [
   dokondaNimaQolgan,
   aiQidiruvAgentlar,
   aiFoydaMalumotlar,
-  futbolPortugaliyaKongo,
-  futbolAngliyaXorvatiya,
-  futbolGanaPanama,
-  futbolUzbekistonKolumbiya,
   minimarketPosGuide,
   choosePos,
   notebookLosses,
   inventoryGuide,
 ];
 
-export const BLOG_CATEGORIES = ["product", "ai-tech", "football"] as const;
+export const BLOG_CATEGORIES = ["product", "ai-tech"] as const;
 
 export function postCategory(post: BlogPost): BlogCategory {
   return post.category ?? "product";
