@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { PosDemo } from "./PosDemo";
 import { AdminDemo } from "./AdminDemo";
 import { LeadSection, LeadModal } from "./LeadSection";
+import { MobileLanding } from "./MobileLanding";
 import { CountUp } from "./CountUp";
 import { EcosystemStrip } from "./EcosystemStrip";
 import { useCoarsePointer } from "./useCoarsePointer";
@@ -950,6 +951,20 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
       >
         {locale === "ru" ? "Перейти к содержимому" : "Asosiy qismga o'tish"}
       </a>
+
+      {/* Native mobile experience (separate from desktop, not a shrunk copy).
+          Shown below lg; desktop tree below is wrapped in `hidden lg:block`. */}
+      <div className="lg:hidden">
+        <MobileLanding
+          locale={locale}
+          t={t}
+          openLead={(placement) => openLead(placement)}
+          leadSection={<LeadSection locale={locale} onOpenForm={() => openLead("mobile_lead_section")} />}
+        />
+      </div>
+
+      {/* Desktop layout — unchanged, only gated to lg+ so it is pixel-identical. */}
+      <div className="hidden lg:block">
       <section className="relative overflow-visible bg-[#f4f7f2] text-ink-900 lg:overflow-hidden lg:bg-[#08131c] lg:text-white">
         <div
           aria-hidden
@@ -2181,12 +2196,16 @@ export default function ConceptLanding({ initialLocale = "uz" }: { initialLocale
           </div>
         </div>
       </footer>
+      </div>
+      {/* end desktop-only tree (hidden lg:block) */}
 
+      {/* Legacy mobile dock is retired: MobileLanding owns the single sticky CTA.
+          Kept rendered but fully hidden so its observers/state stay harmless. */}
       <div
         ref={stickyRef}
         data-testid="mobile-sticky"
-        aria-hidden={!showSticky}
-        className={`fixed inset-x-0 bottom-0 z-30 border-t border-[#d9e2db] bg-white/92 px-3 pt-2 pb-[calc(0.55rem+env(safe-area-inset-bottom))] shadow-[0_-18px_50px_-34px_rgba(11,24,38,0.6)] backdrop-blur transition-transform duration-300 ease-birliy motion-reduce:transition-none lg:hidden ${showSticky ? "translate-y-0" : "translate-y-full"}`}
+        aria-hidden
+        className="hidden"
       >
         {/* App-style mobile dock: primary sections are one tap away, while the
             application button stays visually dominant. It hides over #lead and
