@@ -8,6 +8,7 @@ import { getClientIp } from "@/lib/http/get-ip";
 import { notifyNewLead, notifyDocsUndelivered } from "@/lib/telegram/notify";
 import { sendLeadDocsAlbum } from "@/lib/telegram/send-docs";
 import { uploadLeadDoc, type LeadDocKind } from "@/lib/supabase/storage";
+import { forwardLeadToMaster } from "@/lib/master/forward-lead";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -164,6 +165,12 @@ async function handleMultipart(req: Request, ip: string | null): Promise<Respons
 
   try {
     const lead = await insertLead(baseValues(parsed.data, req, ip));
+
+    // 0) forward to the BirLiy master leads admin (single source of truth).
+    // Best-effort: the lead is already saved locally, so a master outage never
+    // breaks intake — but failures are logged (not swallowed) so the sync can't
+    // silently stop the way it did before this was wired up.
+    await forwardLeadToMaster(lead);
 
     // 1) text card first (lead has no file_ids yet → card only, no duplicate album)
     const { messageId } = await notifyNewLead(lead);
