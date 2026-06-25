@@ -33,6 +33,8 @@ describe("SEO keyword pages", () => {
       "/uz/nasiya-daftar",
       "/uz/ombor-dasturi",
       "/uz/telefon-kassa",
+      "/uz/shtrix-kod-kassa",
+      "/uz/kunlik-tushum",
     ]);
     expect(seoKeywordPagesForLocale("ru").map((page) => page.path)).toEqual([
       "/ru/programma-dlya-magazina",
