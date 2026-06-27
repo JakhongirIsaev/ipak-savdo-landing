@@ -13,9 +13,11 @@ import { post as aiQidiruvAgentlar } from "./posts/ai-qidiruv-va-agentlar-kichik
 import { post as aiFoydaMalumotlar } from "./posts/ai-dan-foyda-malumotlar-va-nazorat";
 import { post as debtNotebookSmallShop } from "./posts/debt-notebook-small-shop";
 import { post as posTizimMagazinUchun } from "./posts/pos-tizim-magazin-uchun";
+import { post as miniMarketDasturi } from "./posts/mini-market-dasturi";
 
 // Newest first: this order drives the blog index pages.
 export const POSTS: BlogPost[] = [
+  miniMarketDasturi,
   posTizimMagazinUchun,
   debtNotebookSmallShop,
   kassaApparatsizSavdo,
