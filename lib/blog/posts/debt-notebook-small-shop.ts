@@ -3,8 +3,8 @@ import type { BlogPost } from "../types";
 export const post: BlogPost = {
   slug: "debt-notebook-small-shop",
   category: "product",
-  date: "2026-06-28",
-  modified: "2026-06-28",
+  date: "2026-06-29",
+  modified: "2026-06-29",
   image: { square: "https://birliy.uz/photos/blog/debt-notebook-small-shop-1x1.jpg", landscape: "https://birliy.uz/photos/blog/debt-notebook-small-shop-4x3.jpg", wide: "https://birliy.uz/photos/blog/debt-notebook-small-shop-16x9.jpg" },
   locales: {
     uz: {
