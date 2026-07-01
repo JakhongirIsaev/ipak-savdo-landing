@@ -17,9 +17,11 @@ import { post as miniMarketDasturi } from "./posts/mini-market-dasturi";
 import { post as posTizimDokonEgasigaYordam } from "./posts/pos-tizim-dokon-egasiga-yordam";
 import { post as miniMarketDasturiKassaOmborNasiya } from "./posts/mini-market-dasturi-kassa-ombor-nasiya";
 import { post as kassaDasturiNarxiUzbekistan } from "./posts/kassa-dasturi-narxi-uzbekistan";
+import { post as kakVybratProgrammuDlyaMagazina } from "./posts/kak-vybrat-programmu-dlya-magazina";
 
 // Newest first: this order drives the blog index pages.
 export const POSTS: BlogPost[] = [
+  kakVybratProgrammuDlyaMagazina,
   kassaDasturiNarxiUzbekistan,
   miniMarketDasturiKassaOmborNasiya,
   posTizimDokonEgasigaYordam,
